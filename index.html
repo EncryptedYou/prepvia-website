@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Prep.via | JEE & NEET Success Package</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#06101f;
+    color:#ffffff;
+    overflow-x:hidden;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* ---------------- TOP BAR ---------------- */
+
+.top-bar{
+    background:#0d6efd;
+    text-align:center;
+    padding:10px;
+    font-size:13px;
+    font-weight:700;
+}
+
+/* ---------------- NAVBAR ---------------- */
+
+nav{
+    max-width:1150px;
+    margin:auto;
+    padding:22px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-family:Outfit;
+    font-size:27px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#38bdf8;
+}
+
+.nav-button{
+    background:#1677ff;
+    padding:13px 22px;
+    border-radius:10px;
+    font-weight:800;
+}
+
+/* ---------------- HERO ---------------- */
+
+.hero{
+    position:relative;
+    text-align:center;
+    padding:70px 20px 90px;
+    background:
+    radial-gradient(circle at 50% 10%,rgba(22,119,255,.30),transparent 35%),
+    #06101f;
+}
+
+.small-badge{
+    display:inline-block;
+    background:rgba(22,119,255,.15);
+    border:1px solid rgba(56,189,248,.35);
+    color:#7dd3fc;
+    padding:9px 16px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.hero h1{
+    max-width:950px;
+    margin:22px auto;
+    font-family:Outfit;
+    font-size:clamp(42px,7vw,82px);
+    line-height:1;
+    letter-spacing:-3px;
+}
+
+.hero h1 span{
+    color:#38bdf8;
+}
+
+.hero p{
+    max-width:650px;
+    margin:auto;
+    color:#a9b8cb;
+    font-size:17px;
+    line-height:1.7;
+}
+
+.price-row{
+    margin:30px 0 20px;
+}
+
+.old-price{
+    color:#64748b;
+    text-decoration:line-through;
+    font-size:18px;
+}
+
+.main-price{
+    font-family:Outfit;
+    font-size:70px;
+    font-weight:900;
+    color:#ffffff;
+}
+
+.cta{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:10px;
+    padding:18px 35px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#1677ff,#0755d9);
+    font-weight:900;
+    box-shadow:0 15px 40px rgba(22,119,255,.35);
+    transition:.25s;
+}
+
+.cta:hover{
+    transform:translateY(-4px);
+}
+
+.secure-text{
+    margin-top:16px;
+    font-size:13px;
+    color:#94a3b8;
+}
+
+/* ---------------- TRUST BAR ---------------- */
+
+.trust{
+    max-width:1100px;
+    margin:-30px auto 0;
+    padding:20px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    position:relative;
+}
+
+.trust-item{
+    text-align:center;
+    padding:20px 10px;
+    background:#0a1729;
+    border:1px solid #19304d;
+    border-radius:14px;
+}
+
+.trust-item b{
+    display:block;
+    color:#7dd3fc;
+    font-size:19px;
+}
+
+.trust-item span{
+    color:#94a3b8;
+    font-size:12px;
+}
+
+/* ---------------- SECTIONS ---------------- */
+
+section{
+    padding:90px 20px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+}
+
+.section-tag{
+    color:#38bdf8;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:1.5px;
+}
+
+.section-title{
+    font-family:Outfit;
+    font-size:clamp(35px,5vw,60px);
+    margin-top:10px;
+    line-height:1.05;
+}
+
+.section-description{
+    max-width:650px;
+    margin-top:15px;
+    color:#94a3b8;
+    line-height:1.7;
+}
+
+/* ---------------- PREVIEW ---------------- */
+
+.preview-section{
+    text-align:center;
+}
+
+.preview-grid{
+    margin-top:45px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.preview-card{
+    background:#0a1729;
+    border:1px solid #1c3b60;
+    border-radius:20px;
+    padding:10px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.preview-card:hover{
+    transform:translateY(-10px);
+    border-color:#38bdf8;
+}
+
+.preview-card img{
+    width:100%;
+    height:420px;
+    object-fit:cover;
+    object-position:top;
+    border-radius:14px;   
+}
+
+/* ---------------- WHAT YOU GET ---------------- */
+
+.features{
+    margin-top:45px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.feature{
+    padding:28px;
+    background:#09182b;
+    border:1px solid #19304d;
+    border-radius:18px;
+    transition:.3s;
+}
+
+.feature:hover{
+    transform:translateY(-6px);
+    border-color:#1677ff;
+}
+
+.feature-icon{
+    font-size:30px;
+}
+
+.feature h3{
+    margin:18px 0 10px;
+    font-size:19px;
+}
+
+.feature p{
+    color:#94a3b8;
+    font-size:14px;
+    line-height:1.7;
+}
+
+/* ---------------- PROBLEM SECTION ---------------- */
+
+.problem-section{
+    background:#081424;
+}
+
+.problem-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    align-items:center;
+}
+
+.problem-list{
+    margin-top:25px;
+}
+
+.problem-item{
+    padding:16px;
+    margin-bottom:12px;
+    background:#0b1c30;
+    border-radius:12px;
+    color:#cbd5e1;
+}
+
+.problem-item span{
+    color:#38bdf8;
+    font-weight:bold;
+    margin-right:10px;
+}
+
+/* ---------------- CONTENT BOX ---------------- */
+
+.package-box{
+    margin-top:40px;
+    padding:35px;
+    border-radius:22px;
+    background:
+    radial-gradient(circle at top right,rgba(22,119,255,.20),transparent 30%),
+    #0a1729;
+
+    border:1px solid #1c3b60;
+}
+
+.package-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-top:25px;
+}
+
+.package-item{
+    padding:17px;
+    border-radius:12px;
+    background:#0d2036;
+    color:#d7e5f5;
+}
+
+.package-item::before{
+    content:"✓";
+    color:#38bdf8;
+    font-weight:bold;
+    margin-right:10px;
+}
+
+/* ---------------- HOW IT WORKS ---------------- */
+
+.steps{
+    margin-top:45px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+}
+
+.step{
+    text-align:center;
+    padding:30px 20px;
+}
+
+.step-number{
+    width:65px;
+    height:65px;
+    margin:auto;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:linear-gradient(135deg,#1677ff,#0755d9);
+    font-size:25px;
+    font-weight:900;
+    box-shadow:0 10px 30px rgba(22,119,255,.30);
+}
+
+.step h3{
+    margin-top:20px;
+}
+
+.step p{
+    margin-top:10px;
+    color:#94a3b8;
+    font-size:14px;
+}
+
+/* ---------------- FAQ ---------------- */
+
+.faq{
+    max-width:800px;
+    margin:40px auto 0;
+}
+
+.faq-item{
+    margin-bottom:12px;
+    background:#09182b;
+    border:1px solid #19304d;
+    border-radius:14px;
+    padding:20px;
+}
+
+.faq-item summary{
+    cursor:pointer;
+    font-weight:700;
+}
+
+.faq-item p{
+    margin-top:15px;
+    color:#94a3b8;
+    line-height:1.7;
+}
+
+/* ---------------- FINAL CTA ---------------- */
+
+.final-section{
+    padding-bottom:120px;
+}
+
+.final-box{
+    padding:60px 30px;
+    text-align:center;
+    border-radius:28px;
+    background:
+    radial-gradient(circle at top,rgba(56,189,248,.20),transparent 35%),
+    linear-gradient(135deg,#071b38,#091a31);
+
+    border:1px solid #2563eb;
+}
+
+.final-box h2{
+    font-family:Outfit;
+    font-size:clamp(40px,6vw,70px);
+    line-height:1;
+}
+
+.final-price{
+    font-family:Outfit;
+    font-size:75px;
+    font-weight:900;
+    margin:20px 0;
+    color:#7dd3fc;
+}
+
+/* ---------------- FOOTER ---------------- */
+
+footer{
+    padding:50px 20px 100px;
+    border-top:1px solid #19304d;
+    text-align:center;
+}
+
+footer p{
+    margin-top:15px;
+    color:#64748b;
+    font-size:13px;
+}
+
+.email{
+    color:#38bdf8;
+}
+
+/* ---------------- POPUP ---------------- */
+
+.lightbox{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.90);
+    z-index:1000;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.lightbox.active{
+    display:flex;
+}
+
+.lightbox img{
+    max-width:95%;
+    max-height:90vh;
+    border-radius:14px;
+}
+
+.close{
+    position:absolute;
+    top:20px;
+    right:25px;
+    font-size:40px;
+    cursor:pointer;
+}
+
+/* ---------------- MOBILE ---------------- */
+
+.mobile-buy{
+    display:none;
+}
+
+@media(max-width:800px){
+
+    .trust{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .preview-grid{
+        grid-template-columns:1fr;
+    }
+
+    .preview-card img{
+        height:auto;
+        max-height:500px;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .problem-grid{
+        grid-template-columns:1fr;
+    }
+
+    .package-grid{
+        grid-template-columns:1fr;
+    }
+
+    .steps{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:550px){
+
+    nav{
+        padding:18px 15px;
+    }
+
+    .nav-button{
+        padding:11px 13px;
+        font-size:12px;
+    }
+
+    .hero{
+        padding:55px 18px 80px;
+    }
+
+    .main-price{
+        font-size:60px;
+    }
+
+    .mobile-buy{
+        display:flex;
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        z-index:500;
+        background:#06101f;
+        border-top:1px solid #19304d;
+        padding:12px 15px;
+        align-items:center;
+        justify-content:space-between;
+    }
+
+    .mobile-buy-price{
+        font-family:Outfit;
+        font-size:23px;
+        font-weight:900;
+    }
+
+    .mobile-buy small{
+        display:block;
+        color:#94a3b8;
+    }
+
+    .mobile-buy .cta{
+        margin:0;
+        padding:13px 17px;
+        font-size:13px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">
+🚀 LIMITED TIME OFFER • GET THE SUCCESS PACKAGE FOR ₹249
+</div>
+
+<nav>
+
+<div class="logo">
+Prep.<span>via</span>
+</div>
+
+<a href="#buy" class="nav-button">
+Get Access
+</a>
+
+</nav>
+
+
+<!-- HERO -->
+
+<div class="hero">
+
+<div class="small-badge">
+JEE & NEET SUCCESS PACKAGE
+</div>
+
+<h1>
+Everything You Need<br>
+For <span>JEE & NEET</span><br>
+In One Place.
+</h1>
+
+<p>
+Stop wasting time searching across multiple websites and folders.
+Get a huge collection of study resources organized together
+for your preparation.
+</p>
+
+<div class="price-row">
+
+<div class="old-price">
+₹999
+</div>
+
+<div class="main-price">
+₹249
+</div>
+
+</div>
+
+<a href="https://rzp.io/rzp/SuccessPackage" class="cta">
+🚀 GET INSTANT ACCESS
+</a>
+
+<div class="secure-text">
+🔒 Secure Payment • 📱 Digital Access
+</div>
+
+</div>
+
+
+<!-- TRUST -->
+
+<div class="trust">
+
+<div class="trust-item">
+<b>50 GB+</b>
+<span>Study Resources</span>
+</div>
+
+<div class="trust-item">
+<b>1000+</b>
+<span>Files & PDFs</span>
+</div>
+
+<div class="trust-item">
+<b>JEE + NEET</b>
+<span>Preparation</span>
+</div>
+
+<div class="trust-item">
+<b>₹249</b>
+<span>One-Time Price</span>
+</div>
+
+</div>
+
+
+<!-- PREVIEW -->
+
+<section class="preview-section">
+
+<div class="container">
+
+<div class="section-tag">
+REAL PACKAGE PREVIEW
+</div>
+
+<h2 class="section-title">
+See What You're Getting.
+</h2>
+
+<p class="section-description">
+Real previews from the package so you can see
+how the resources are organized.
+</p>
+
+<div class="preview-grid">
+
+<div class="preview-card"
+onclick="openPreview('preview1.png')">
+
+<img src="preview1.png">
+
+</div>
+
+<div class="preview-card"
+onclick="openPreview('preview2.png')">
+
+<img src="preview2.png">
+
+</div>
+
+<div class="preview-card"
+onclick="openPreview('preview3.png')">
+
+<img src="preview3.png">
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- WHAT YOU GET -->
+
+<section>
+
+<div class="container">
+
+<div class="section-tag">
+WHAT'S INSIDE
+</div>
+
+<h2 class="section-title">
+One Package.<br>
+Everything You Need.
+</h2>
+
+<div class="features">
+
+<div class="feature">
+<div class="feature-icon">📁</div>
+<h3>Institute Modules</h3>
+<p>Useful preparation material and modules organized in one place.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">📝</div>
+<h3>Test Series</h3>
+<p>Practice resources and test material for better preparation.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">🎯</div>
+<h3>Previous Year Questions</h3>
+<p>PYQ resources for practice and understanding exam patterns.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">📚</div>
+<h3>Reference Books</h3>
+<p>Popular digital books and study references for important subjects.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">📄</div>
+<h3>Notes & PDFs</h3>
+<p>Large collections of topic-wise study material and PDFs.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">⚡</div>
+<h3>Easy Organization</h3>
+<p>Resources arranged in folders to make browsing easier.</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PROBLEM -->
+
+<section class="problem-section">
+
+<div class="container">
+
+<div class="problem-grid">
+
+<div>
+
+<div class="section-tag">
+THE PROBLEM
+</div>
+
+<h2 class="section-title">
+Stop Searching.<br>
+Start Preparing.
+</h2>
+
+<p class="section-description">
+Students often spend hours searching Telegram,
+Google Drive folders and websites for study material.
+</p>
+
+</div>
+
+<div class="problem-list">
+
+<div class="problem-item">
+<span>✕</span>
+Searching multiple websites
+</div>
+
+<div class="problem-item">
+<span>✕</span>
+Unorganized study material
+</div>
+
+<div class="problem-item">
+<span>✕</span>
+Missing useful resources
+</div>
+
+<div class="problem-item">
+<span>✕</span>
+Wasting valuable preparation time
+</div>
+
+<div class="problem-item">
+<span>✓</span>
+Prep.via organizes resources together
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PACKAGE -->
+
+<section>
+
+<div class="container">
+
+<div class="section-tag">
+SUCCESS PACKAGE
+</div>
+
+<h2 class="section-title">
+Here's What You Get.
+</h2>
+
+<div class="package-box">
+
+<h3>Complete Digital Study Resource Collection</h3>
+
+<div class="package-grid">
+
+<div class="package-item">50 GB+ Study Resources</div>
+
+<div class="package-item">Institute Modules</div>
+
+<div class="package-item">Test Series</div>
+
+<div class="package-item">Reference Books</div>
+
+<div class="package-item">Previous Year Questions</div>
+
+<div class="package-item">Topic-Wise PDFs</div>
+
+<div class="package-item">JEE Preparation Material</div>
+
+<div class="package-item">NEET Preparation Material</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- STEPS -->
+
+<section>
+
+<div class="container">
+
+<div class="section-tag">
+SIMPLE PROCESS
+</div>
+
+<h2 class="section-title">
+Get Access In 3 Steps.
+</h2>
+
+<div class="steps">
+
+<div class="step">
+
+<div class="step-number">1</div>
+
+<h3>Purchase</h3>
+
+<p>
+Click Get Access and complete your secure payment.
+</p>
+
+</div>
+
+<div class="step">
+
+<div class="step-number">2</div>
+
+<h3>Confirmation</h3>
+
+<p>
+Your successful payment confirms your package purchase.
+</p>
+
+</div>
+
+<div class="step">
+
+<div class="step-number">3</div>
+
+<h3>Access Resources</h3>
+
+<p>
+Receive your access details and start exploring resources.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FAQ -->
+
+<section>
+
+<div class="container">
+
+<div class="section-tag">
+FAQ
+</div>
+
+<h2 class="section-title">
+Frequently Asked Questions.
+</h2>
+
+<div class="faq">
+
+<details class="faq-item">
+
+<summary>
+What is included in the package?
+</summary>
+
+<p>
+The package contains a large collection of study resources,
+including modules, test series, PYQs, reference books,
+notes and PDFs.
+</p>
+
+</details>
+
+
+<details class="faq-item">
+
+<summary>
+What is the price?
+</summary>
+
+<p>
+The Success Package is currently available for ₹249.
+</p>
+
+</details>
+
+
+<details class="faq-item">
+
+<summary>
+How do I purchase?
+</summary>
+
+<p>
+Click the Get Access button and complete the payment
+through the Razorpay payment page.
+</p>
+
+</details>
+
+
+<details class="faq-item">
+
+<summary>
+Can I view the package before buying?
+</summary>
+
+<p>
+Yes. Scroll up to see real preview screenshots
+from the package.
+</p>
+
+</details>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FINAL CTA -->
+
+<section class="final-section" id="buy">
+
+<div class="container">
+
+<div class="final-box">
+
+<div class="section-tag">
+LIMITED TIME OFFER
+</div>
+
+<h2>
+Get The Complete<br>
+Success Package.
+</h2>
+
+<div class="final-price">
+₹249
+</div>
+
+<p class="section-description"
+style="margin:auto">
+Get access to a huge collection of organized
+JEE & NEET study resources.
+</p>
+
+<a href="https://rzp.io/rzp/SuccessPackage"
+class="cta">
+
+🚀 GET SUCCESS PACKAGE NOW
+
+</a>
+
+<div class="secure-text">
+🔒 Secure payment powered by Razorpay
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="logo">
+Prep.<span>via</span>
+</div>
+
+<p>
+Contact:
+<span class="email">
+prepVia.edu@gmail.com
+</span>
+</p>
+
+<p>
+© 2026 Prep.via. All rights reserved.
+</p>
+
+</footer>
+
+
+<!-- IMAGE POPUP -->
+
+<div class="lightbox"
+id="lightbox"
+onclick="closePreview()">
+
+<div class="close">×</div>
+
+<img id="popupImage">
+
+</div>
+
+
+<!-- MOBILE CTA -->
+
+<div class="mobile-buy">
+
+<div>
+
+<div class="mobile-buy-price">
+₹249
+</div>
+
+<small>Success Package</small>
+
+</div>
+
+<a href="https://rzp.io/rzp/SuccessPackage"
+class="cta">
+
+Get Access →
+
+</a>
+
+</div>
+
+
+<script>
+
+function openPreview(image){
+
+document.getElementById("popupImage").src=image;
+
+document.getElementById("lightbox")
+.classList.add("active");
+
+document.body.style.overflow="hidden";
+
+}
+
+function closePreview(){
+
+document.getElementById("lightbox")
+.classList.remove("active");
+
+document.body.style.overflow="";
+
+}
+
+</script>
+
+</body>
+</html>
