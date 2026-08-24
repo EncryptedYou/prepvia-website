@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prep.via | Success Package</title>
+<meta name="description" content="Complete JEE & NEET preparation resources with Prep.via Success Package.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:#201933;color:#fff;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+.navbar{position:sticky;top:0;z-index:1000;background:rgba(25,19,41,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-container{max-width:1200px;margin:auto;padding:18px 24px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;letter-spacing:-1px}.logo span{color:#e58a12}
+.nav-links{display:flex;gap:30px;align-items:center;color:#bcb7c7;font-size:15px}.nav-links a:hover{color:#fff}
+.nav-button{background:#e58a12;color:#fff;padding:12px 22px;border-radius:12px;font-weight:700}
+
+.hero{position:relative;overflow:hidden;min-height:720px;display:flex;align-items:center;padding:80px 24px;background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),radial-gradient(circle at 70% 20%,rgba(102,72,170,.35),transparent 35%),#211936;background-size:72px 72px,72px 72px,auto,auto}
+.hero:before{content:"";position:absolute;width:650px;height:650px;border:1px solid rgba(255,255,255,.07);border-radius:50%;right:-250px;top:-180px}
+.hero:after{content:"";position:absolute;width:900px;height:900px;border:1px solid rgba(255,255,255,.05);border-radius:50%;right:-500px;top:-300px}
+.hero-container{position:relative;z-index:2;width:100%;max-width:1200px;margin:auto}
+.offer-tag{display:inline-flex;gap:8px;background:rgba(229,138,18,.12);border:1px solid rgba(229,138,18,.3);color:#f0a23c;padding:10px 16px;border-radius:50px;font-size:14px;font-weight:700;margin-bottom:28px}
+.hero h1{max-width:900px;font-family:'Space Grotesk',sans-serif;font-size:clamp(50px,7vw,100px);line-height:1.02;letter-spacing:-4px;margin-bottom:26px}.hero h1 span{color:#e58a12;font-style:italic}
+.hero-text{max-width:690px;color:#c6c1cf;font-size:21px;line-height:1.7;margin-bottom:36px}
+.hero-buttons{display:flex;flex-wrap:wrap;gap:16px}
+.primary-button{display:inline-flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#f09a1c,#c96800);padding:18px 30px;border-radius:15px;font-weight:800;font-size:17px;box-shadow:0 12px 35px rgba(218,124,0,.25);transition:.3s}.primary-button:hover{transform:translateY(-3px)}
+.secondary-button{display:inline-flex;justify-content:center;align-items:center;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);padding:18px 30px;border-radius:15px;color:#eee;font-weight:700}
+.offer-countdown{display:flex;width:fit-content;align-items:center;justify-content:center;gap:12px;margin:22px auto 0;padding:12px 20px;border-radius:14px;background:rgba(255,255,255,.055);border:1px solid rgba(229,138,18,.24);color:#d8d2df;font-size:14px;font-weight:600;backdrop-filter:blur(10px);text-align:center}
+.offer-countdown .countdown-label{display:flex;align-items:center;gap:7px}
+.offer-countdown .countdown-label:before{content:"●";color:#f09a1c;font-size:10px;animation:offerPulse 1.3s infinite}
+.offer-countdown strong{color:#f5a234;font-family:'Space Grotesk',sans-serif;font-size:16px;letter-spacing:1px}
+@keyframes offerPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.75)}}
+
+.bonus-card{margin-top:55px;max-width:850px;padding:28px;display:flex;align-items:center;gap:22px;border-radius:24px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(15px)}
+.bonus-icon{width:76px;height:76px;flex-shrink:0;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:34px;background:rgba(229,138,18,.13)}
+.bonus-small{color:#b9b2c4;font-size:13px;letter-spacing:3px;font-weight:700;margin-bottom:8px}.bonus-card h3{font-size:28px;line-height:1.25}
+
+.stats{background:#191326;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
+.stats-container{max-width:1200px;margin:auto;padding:45px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:25px}.stat{text-align:center}.stat h2{font-size:36px;color:#f0a23c;margin-bottom:8px}.stat p{color:#aaa4b5}
+
+.section{padding:100px 24px}.container{max-width:1200px;margin:auto}.section-label{color:#e58a12;font-size:13px;font-weight:800;letter-spacing:3px;margin-bottom:16px}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(38px,5vw,65px);line-height:1.1;letter-spacing:-2px;max-width:850px}.section-text{margin-top:20px;max-width:680px;color:#aaa5b5;font-size:19px;line-height:1.7}
+
+.features-grid{margin-top:60px;display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.feature-card{position:relative;min-height:310px;padding:40px;border-radius:30px;background:linear-gradient(145deg,#332a4d,#29223f);border:1px solid rgba(255,255,255,.09);overflow:hidden;transition:.3s}.feature-card:hover{transform:translateY(-7px);border-color:rgba(229,138,18,.4)}
+.feature-number{position:absolute;right:35px;top:25px;font-size:70px;font-weight:800;color:rgba(255,255,255,.07)}
+.feature-icon{width:80px;height:80px;display:flex;align-items:center;justify-content:center;border-radius:24px;font-size:35px;background:rgba(229,138,18,.1);margin-bottom:45px}
+.feature-card h3{position:relative;font-size:32px;margin-bottom:15px}.feature-card p{position:relative;color:#aaa4b5;font-size:18px;line-height:1.6}
+
+.package-section{background:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),#1b152a;background-size:70px 70px}
+.package-list{margin-top:55px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.package-item{display:flex;align-items:center;gap:18px;padding:24px;background:#2a223e;border:1px solid rgba(255,255,255,.08);border-radius:20px}
+.check{width:42px;height:42px;min-width:42px;display:flex;align-items:center;justify-content:center;border-radius:14px;background:rgba(229,138,18,.12);color:#f09a1c;font-weight:800}
+.package-item h4{font-size:19px}.package-item p{color:#aaa4b5;margin-top:5px;font-size:14px}
+
+.pricing-card{margin-top:70px;position:relative;padding:55px;border-radius:32px;overflow:hidden;background:linear-gradient(135deg,#34264d,#211a34);border:1px solid rgba(229,138,18,.28)}
+.pricing-card:after{content:"";position:absolute;width:450px;height:450px;border-radius:50%;background:rgba(229,138,18,.08);right:-180px;top:-180px}
+.pricing-content{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:40px}.price-name{color:#c6c0d0;font-size:15px;letter-spacing:3px;font-weight:700}.price-title{font-size:45px;margin-top:10px}
+.price{margin-top:20px;display:flex;align-items:flex-end;gap:12px}.price h2{color:#f09a1c;font-size:72px}.price p{color:#aaa4b5;margin-bottom:15px}
+
+.reviews-grid{margin-top:55px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.review-card{padding:28px;border-radius:24px;background:#2a223e;border:1px solid rgba(255,255,255,.08)}
+.review-image{width:100%;height:220px;border-radius:16px;object-fit:cover;margin-bottom:20px;background:#39304f}.stars{color:#f0a23c;letter-spacing:3px;margin-bottom:15px}.review-card p{color:#c3bdcb;line-height:1.6;margin-bottom:18px}.review-card h4{font-size:16px}.review-card span{color:#8e879a;font-size:13px}
+
+.support-box{position:relative;overflow:hidden;padding:65px 55px;border-radius:32px;background:linear-gradient(135deg,#2f2150,#1c1630);border:1px solid rgba(229,138,18,.25)}
+.support-box:before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(229,138,18,.18),transparent 70%);top:-250px;right:-120px}
+.support-box>*{position:relative;z-index:1}
+.support-box h2{font-size:42px;margin-bottom:12px}.support-box p{color:#c8c1d1;font-size:18px;max-width:650px}
+.contact-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px}
+.contact-button{position:relative;overflow:hidden;min-height:62px;display:flex;align-items:center;justify-content:center;gap:10px;padding:18px 22px;border-radius:18px;font-weight:800;letter-spacing:1px;transition:.3s;box-shadow:0 10px 28px rgba(0,0,0,.18)}
+.contact-button:before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.22),transparent 35%,rgba(255,255,255,.08));transform:translateX(-110%);transition:.55s}
+.contact-button:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 18px 38px rgba(0,0,0,.28)}
+.contact-button:hover:before{transform:translateX(110%)}
+.contact-button span{position:relative;z-index:1}
+.instagram-button{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)}
+.telegram-button{background:linear-gradient(135deg,#229ED9,#1677b8)}
+.email-button{background:linear-gradient(135deg,#ea4335,#c5221f,#8e1711)}
+.contact-icon{width:25px;height:25px;object-fit:contain;display:block;position:relative;z-index:1;filter:brightness(0) invert(1)}
+@media(max-width:800px){.support-box{padding:42px 24px}.support-box h2{font-size:34px}.contact-buttons{grid-template-columns:1fr;margin-top:30px}.contact-button{min-height:58px}}
+
+.faq{max-width:850px;margin:55px auto 0}details{background:#2a223e;border:1px solid rgba(255,255,255,.08);border-radius:18px;margin-bottom:14px;padding:22px 25px}summary{cursor:pointer;font-size:18px;font-weight:700}details p{margin-top:18px;color:#aaa4b5;line-height:1.6}
+
+footer{background:#15101f;padding:60px 24px 120px}.footer-grid{max-width:1200px;margin:auto;display:grid;grid-template-columns:1fr;gap:30px}.footer-logo{font-size:30px;font-weight:800;margin-bottom:16px}.footer-text{color:#928b9d;max-width:350px;line-height:1.7}.footer-title{font-weight:800;margin-bottom:18px}.footer-links{display:flex;flex-direction:column;gap:12px;color:#a59eaf}.copyright{max-width:1200px;margin:50px auto 0;padding-top:25px;border-top:1px solid rgba(255,255,255,.07);color:#756e7d;font-size:14px}
+
+.mobile-cta{display:none;position:fixed;bottom:0;left:0;width:100%;z-index:2000;padding:14px 18px;background:rgba(38,30,57,.97);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.1)}.mobile-cta-content{display:flex;align-items:center;justify-content:space-between;gap:15px}.mobile-price h4{font-size:18px}.mobile-price p{color:#aaa4b5;font-size:13px;margin-top:3px}.mobile-button{background:linear-gradient(135deg,#f09a1c,#c96800);padding:15px 25px;border-radius:16px;font-weight:800;white-space:nowrap}
+
+@media(max-width:800px){
+.nav-links{display:none}.nav-container{padding:16px 20px}.hero{min-height:auto;padding:65px 22px 80px;background-size:55px 55px,55px 55px,auto,auto}.hero h1{font-size:52px;letter-spacing:-2.5px}.hero-text{font-size:18px}.hero-buttons{flex-direction:column}.primary-button,.secondary-button{width:100%}
+.bonus-card{padding:22px;margin-top:38px}.bonus-icon{width:62px;height:62px;font-size:28px}.bonus-small{font-size:10px;letter-spacing:2px}.bonus-card h3{font-size:21px}
+.stats-container{grid-template-columns:repeat(2,1fr);padding:35px 20px}.stat h2{font-size:29px}.section{padding:75px 22px}.section-title{font-size:42px;letter-spacing:-1.5px}.section-text{font-size:17px}
+.features-grid,.package-list,.reviews-grid{grid-template-columns:1fr}.feature-card{min-height:280px;padding:30px;border-radius:25px}.feature-card h3{font-size:29px}.feature-icon{margin-bottom:35px}.feature-number{font-size:60px;right:25px}
+.pricing-card{padding:35px 25px}.pricing-content{flex-direction:column;align-items:flex-start}.price-title{font-size:36px}.price h2{font-size:65px}.pricing-content .primary-button{width:100%}
+.support-box{padding:35px 25px;flex-direction:column;align-items:flex-start}.support-box h2{font-size:34px}.support-button{width:100%;text-align:center}.footer-grid{grid-template-columns:1fr;gap:35px}.mobile-cta{display:block}footer{padding-bottom:120px}
+}
+
+
+/* ============================= */
+/* 6 IMAGE MANUAL CAROUSEL */
+/* ============================= */
+
+.image-carousel{
+    margin:55px 0 20px;
+    width:100%;
+}
+
+.carousel-viewport{
+    width:100%;
+    overflow:hidden;
+    border-radius:28px;
+    border:1px solid rgba(255,255,255,.10);
+    background:#2a223e;
+    touch-action:pan-y;
+}
+
+.carousel-slides{
+    display:flex;
+    transition:transform .45s ease;
+}
+
+.carousel-slide{
+    min-width:100%;
+    aspect-ratio:1/1;
+    background:#2a223e;
+}
+
+.carousel-slide img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+}
+
+.carousel-controls{
+    margin-top:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+}
+
+.carousel-arrow{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.14);
+    background:#332a4d;
+    color:#fff;
+    font-size:26px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.carousel-arrow:hover{
+    border-color:#e58a12;
+    color:#e58a12;
+}
+
+.carousel-dots{
+    display:flex;
+    gap:8px;
+}
+
+.carousel-dot{
+    width:9px;
+    height:9px;
+    border:none;
+    border-radius:50%;
+    padding:0;
+    background:#766e84;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.carousel-dot.active{
+    width:24px;
+    border-radius:10px;
+    background:#e58a12;
+}
+
+@media(max-width:800px){
+    .image-carousel{
+        margin-top:40px;
+    }
+
+    .carousel-viewport{
+        border-radius:20px;
+    }
+
+    .carousel-controls{
+        margin-top:14px;
+    }
+
+    .carousel-arrow{
+        width:42px;
+        height:42px;
+        font-size:23px;
+    }
+}
+
+
+/* Auto + manual carousel behavior */
+.carousel-slides{
+    will-change:transform;
+}
+
+
+/* ============================= */
+/* PREMIUM FAQ + SCROLL REVEAL   */
+/* ============================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(35px);
+    transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+}
+
+.reveal.reveal-left{
+    transform:translateX(-45px);
+}
+
+.reveal.reveal-right{
+    transform:translateX(45px);
+}
+
+.reveal.show{
+    opacity:1;
+    transform:translate(0,0);
+}
+
+.reveal-delay-1{transition-delay:.08s}
+.reveal-delay-2{transition-delay:.16s}
+.reveal-delay-3{transition-delay:.24s}
+.reveal-delay-4{transition-delay:.32s}
+.reveal-delay-5{transition-delay:.40s}
+.reveal-delay-6{transition-delay:.48s}
+
+.faq{
+    max-width:900px;
+    margin:60px auto 0;
+}
+
+.faq details{
+    position:relative;
+    margin-bottom:16px;
+    padding:0;
+    overflow:hidden;
+    border-radius:22px;
+    background:linear-gradient(135deg,rgba(51,42,77,.95),rgba(35,28,54,.95));
+    border:1px solid rgba(255,255,255,.08);
+    transition:border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+
+.faq details:hover{
+    transform:translateY(-3px);
+    border-color:rgba(229,138,18,.28);
+}
+
+.faq details[open]{
+    border-color:rgba(229,138,18,.48);
+    box-shadow:0 14px 38px rgba(0,0,0,.16);
+}
+
+.faq summary{
+    position:relative;
+    list-style:none;
+    cursor:pointer;
+    padding:24px 70px 24px 28px;
+    font-size:18px;
+    font-weight:800;
+    color:#fff;
+}
+
+.faq summary::-webkit-details-marker{
+    display:none;
+}
+
+.faq summary:after{
+    content:"+";
+    position:absolute;
+    right:22px;
+    top:50%;
+    width:38px;
+    height:38px;
+    transform:translateY(-50%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    background:rgba(229,138,18,.12);
+    color:#f0a23c;
+    font-size:27px;
+    font-weight:500;
+    transition:transform .3s ease, background .3s ease, color .3s ease;
+}
+
+.faq details[open] summary:after{
+    content:"−";
+    transform:translateY(-50%) rotate(180deg);
+    background:linear-gradient(135deg,#f09a1c,#c96800);
+    color:#fff;
+}
+
+.faq-answer{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .38s ease;
+}
+
+.faq details[open] .faq-answer{
+    grid-template-rows:1fr;
+}
+
+.faq-answer-inner{
+    overflow:hidden;
+}
+
+.faq-answer-inner p{
+    margin:0;
+    padding:0 28px 26px;
+    color:#b8b1c2;
+    line-height:1.75;
+    font-size:16px;
+}
+
+@media(max-width:800px){
+    .reveal{transform:translateY(24px)}
+    .reveal.reveal-left,.reveal.reveal-right{transform:translateY(24px)}
+    .faq{margin-top:42px}
+    .faq summary{padding:20px 64px 20px 20px;font-size:16px;line-height:1.45}
+    .faq summary:after{right:16px;width:34px;height:34px;border-radius:11px}
+    .faq-answer-inner p{padding:0 20px 22px;font-size:15px}
+}
+
+
+/* ============================= */
+/* CTA PULSE + FLOATING SUPPORT  */
+/* ============================= */
+
+.hero .primary-button{
+    animation:ctaGlow 2.2s ease-in-out infinite;
+}
+
+@keyframes ctaGlow{
+    0%,100%{box-shadow:0 12px 35px rgba(218,124,0,.25)}
+    50%{box-shadow:0 14px 42px rgba(240,154,28,.52)}
+}
+
+.floating-support{
+    position:fixed;
+    right:22px;
+    bottom:92px;
+    z-index:3000;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:13px 18px 13px 15px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);
+    color:#fff;
+    font-size:14px;
+    font-weight:800;
+    box-shadow:0 14px 35px rgba(0,0,0,.3);
+    transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.floating-support:hover{
+    transform:translateY(-4px) scale(1.03);
+    box-shadow:0 20px 45px rgba(0,0,0,.4);
+}
+
+.floating-support img{
+    width:24px;
+    height:24px;
+    object-fit:contain;
+    filter:brightness(0) invert(1);
+}
+
+.back-to-top{
+    position:fixed;
+    right:24px;
+    bottom:22px;
+    width:52px;
+    height:52px;
+    z-index:3000;
+    border:none;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#f09a1c,#c96800);
+    color:#fff;
+    font-size:25px;
+    font-weight:800;
+    cursor:pointer;
+    box-shadow:0 12px 30px rgba(218,124,0,.28);
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(15px);
+    transition:.3s ease;
+}
+
+.back-to-top.show{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+.back-to-top:hover{
+    transform:translateY(-4px);
+}
+
+@media(max-width:800px){
+    /* Keep floating controls above the fixed mobile purchase bar */
+    .floating-support{
+        right:16px;
+        bottom:125px;
+        width:52px;
+        height:52px;
+        padding:0;
+        justify-content:center;
+        border-radius:18px;
+    }
+
+    .floating-support span{
+        display:none;
+    }
+
+    .floating-support img{
+        width:24px;
+        height:24px;
+    }
+
+    .back-to-top{
+        right:16px;
+        bottom:190px;
+        width:48px;
+        height:48px;
+        border-radius:15px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-container">
+<a href="#" class="logo">Prep<span>.via</span></a>
+<div class="nav-links">
+<a href="#package">Package</a>
+<a href="#reviews">Reviews</a>
+<a href="#faq">FAQ</a>
+<a href="https://rzp.io/rzp/SuccessPackage" class="nav-button">Get Access</a>
+</div>
+</div>
+</nav>
+
+<section class="hero">
+<div class="hero-container">
+<div class="offer-tag">✦ LIMITED TIME OFFER</div>
+<h1>Crack JEE & NEET<br>with <span>Confidence.</span></h1>
+<p class="hero-text">Get access to a complete JEE & NEET preparation toolkit with 50GB+ premium study resources, institute modules, test series, notes and much more.</p>
+<div class="hero-buttons">
+<a href="https://rzp.io/rzp/SuccessPackage" class="primary-button">Unlock Success Package →</a>
+<a href="#package" class="secondary-button">Explore Package</a>
+</div>
+<div class="offer-countdown" aria-live="polite">
+<span class="countdown-label">OFFER ENDS IN</span>
+<strong id="offerTimer">24:00:00</strong>
+</div>
+<div class="bonus-card">
+<div class="bonus-icon">🎁</div>
+<div><p class="bonus-small">COMPLETE STUDY BUNDLE</p><h3>Everything you need for JEE & NEET preparation.</h3></div>
+</div>
+</div>
+</section>
+
+<section class="stats reveal"><div class="stats-container">
+<div class="stat"><h2>50GB+</h2><p>Study Resources</p></div>
+<div class="stat"><h2>500+</h2><p>JEE & NEET Books</p></div>
+<div class="stat"><h2>₹249</h2><p>One-Time Access</p></div>
+<div class="stat"><h2>24/7</h2><p>Support Available</p></div>
+</div></section>
+
+<section class="section reveal"><div class="container">
+<p class="section-label">GET COMPLETE ACCESS</p>
+<h2 class="section-title">Everything you need.<br>One Success Package.</h2>
+<p class="section-text">A carefully organised collection of resources designed to help you study smarter, practise more and prepare better.</p>
+<div class="features-grid">
+<div class="feature-card reveal reveal-delay-1"><div class="feature-number">01</div><div class="feature-icon">📚</div><h3>Institute Materials</h3><p>Access premium modules and study material from leading JEE and NEET preparation institutes.</p></div>
+<div class="feature-card reveal reveal-delay-2"><div class="feature-number">02</div><div class="feature-icon">📝</div><h3>Test Series</h3><p>Practice with important tests and strengthen your preparation before examinations.</p></div>
+<div class="feature-card reveal reveal-delay-3"><div class="feature-number">03</div><div class="feature-icon">⚡</div><h3>Quick Revision Notes</h3><p>Well-organised notes for faster revision and efficient last-minute preparation.</p></div>
+<div class="feature-card reveal reveal-delay-4"><div class="feature-number">04</div><div class="feature-icon">📊</div><h3>PYQs & Practice</h3><p>Important previous year questions and practice resources to strengthen concepts.</p></div>
+</div>
+</div></section>
+
+<section class="section package-section reveal" id="package"><div class="container">
+<p class="section-label">SUCCESS PACKAGE</p>
+<h2 class="section-title">What you'll get access to.</h2>
+<p class="section-text">One complete bundle containing useful resources for your JEE and NEET preparation journey.</p>
+<div class="image-carousel" id="successCarousel">
+
+    <div class="carousel-viewport">
+        <div class="carousel-slides">
+
+            <div class="carousel-slide">
+                <img src="carousel1.jpg" alt="Success Package Preview 1">
+            </div>
+
+            <div class="carousel-slide">
+                <img src="carousel2.jpg" alt="Success Package Preview 2">
+            </div>
+
+            <div class="carousel-slide">
+                <img src="carousel3.jpg" alt="Success Package Preview 3">
+            </div>
+
+            <div class="carousel-slide">
+                <img src="carousel4.jpg" alt="Success Package Preview 4">
+            </div>
+
+            <div class="carousel-slide">
+                <img src="carousel5.jpg" alt="Success Package Preview 5">
+            </div>
+
+            <div class="carousel-slide">
+                <img src="carousel6.jpg" alt="Success Package Preview 6">
+            </div>
+
+        </div>
+    </div>
+
+    <div class="carousel-controls">
+        
+
+        <div class="carousel-dots">
+            <button class="carousel-dot active" type="button" aria-label="Go to image 1"></button>
+            <button class="carousel-dot" type="button" aria-label="Go to image 2"></button>
+            <button class="carousel-dot" type="button" aria-label="Go to image 3"></button>
+            <button class="carousel-dot" type="button" aria-label="Go to image 4"></button>
+            <button class="carousel-dot" type="button" aria-label="Go to image 5"></button>
+            <button class="carousel-dot" type="button" aria-label="Go to image 6"></button>
+        </div>
+
+        
+    </div>
+
+</div>
+
+<div class="package-list">
+<div class="package-item"><div class="check">✓</div><div><h4>50GB+ Study Materials</h4><p>Large collection of useful preparation resources.</p></div></div>
+<div class="package-item"><div class="check">✓</div><div><h4>Institute Modules</h4><p>Quality modules and learning material.</p></div></div>
+<div class="package-item"><div class="check">✓</div><div><h4>Test Series</h4><p>Practice material for better preparation.</p></div></div>
+<div class="package-item"><div class="check">✓</div><div><h4>Reference Books</h4><p>Helpful books and additional resources.</p></div></div>
+<div class="package-item"><div class="check">✓</div><div><h4>PYQs</h4><p>Previous year questions for practice.</p></div></div>
+<div class="package-item"><div class="check">✓</div><div><h4>Revision Notes</h4><p>Quick notes for efficient revision.</p></div></div>
+</div>
+<div class="pricing-card"><div class="pricing-content">
+<div><p class="price-name">PREP.VIA SUCCESS PACKAGE</p><h2 class="price-title">Complete Access</h2><div class="price"><h2>₹249</h2><p>One-time payment</p></div></div>
+<a href="https://rzp.io/rzp/SuccessPackage" class="primary-button">Get Access Now →</a>
+</div></div>
+</div></section>
+
+<section class="section reveal" id="reviews"><div class="container">
+<p class="section-label">STUDENT REVIEWS</p>
+<h2 class="section-title">Loved by students.</h2>
+<p class="section-text">See what students are saying about the Prep.via Success Package.</p>
+<div class="reviews-grid">
+<div class="review-card reveal reveal-delay-1"><img src="review1.jpg" class="review-image" alt="Student Review" onerror="this.style.display='none'"><div class="stars">★★★★★</div><p>Amazing collection of resources. Everything was properly organised and easy to access.</p><h4>Mohit Goyal</h4><span>JEE 2027 Aspirant</span></div>
+<div class="review-card reveal reveal-delay-2"><img src="review2.jpg" class="review-image" alt="Student Review" onerror="this.style.display='none'"><div class="stars">★★★★★</div><p>Really useful for preparation. The package contains many resources at a very affordable price.</p><h4>Anuska Vyas</h4><span>NEET 2027 Aspirant</span></div>
+<div class="review-card reveal reveal-delay-3"><img src="review3.jpg" class="review-image" alt="Student Review" onerror="this.style.display='none'"><div class="stars">★★★★★</div><p>Great value for money. Helpful study material and easy access to important resources.</p><h4>Manoj Kumar</h4><span>Class 12 CBSE Board</span></div>
+</div>
+</div></section>
+
+<section class="section"><div class="container"><div class="support-box">
+<div>
+<h2>Get in touch with Prep.via</h2>
+<p>Have questions about the Success Package or payment? Connect with us directly through any of the platforms below.</p>
+<div class="contact-buttons">
+<a href="https://instagram.com/Prep.via" target="_blank" rel="noopener" class="contact-button instagram-button"><img src="https://cdn.simpleicons.org/instagram/white" alt="Instagram" class="contact-icon"><span>INSTAGRAM</span></a>
+<a href="https://t.me/Prepvia" target="_blank" rel="noopener" class="contact-button telegram-button"><img src="https://cdn.simpleicons.org/telegram/white" alt="Telegram" class="contact-icon"><span>TELEGRAM</span></a>
+<a href="mailto:prepVia.edu@gmail.com" class="contact-button email-button"><img src="https://cdn.simpleicons.org/gmail/white" alt="Gmail" class="contact-icon"><span>EMAIL US</span></a>
+</div>
+</div>
+</div></div></section>
+
+<section class="section reveal" id="faq"><div class="container">
+<center><p class="section-label">QUESTIONS</p><h2 class="section-title">Frequently asked questions.</h2></center>
+<div class="faq">
+<details class="reveal">
+<summary>What is included in the Success Package?</summary>
+<div class="faq-answer"><div class="faq-answer-inner"><p>The package includes a collection of JEE and NEET study resources, modules, practice material, test series, reference books, PYQs and revision resources.</p></div></div>
+</details>
+<details class="reveal reveal-delay-1">
+<summary>How much does the package cost?</summary>
+<div class="faq-answer"><div class="faq-answer-inner"><p>The Success Package is currently available for ₹249.</p></div></div>
+</details>
+<details class="reveal reveal-delay-2">
+<summary>How will I receive the Success Package?</summary>
+<div class="faq-answer"><div class="faq-answer-inner"><p>After your payment is successfully completed, the Drive link will be sent to your registered email address. Your access request will be approved within 1–2 hours.</p></div></div>
+</details>
+<details class="reveal reveal-delay-3">
+<summary>What if my payment fails?</summary>
+<div class="faq-answer"><div class="faq-answer-inner"><p>If you face any payment related issue, contact the admin support with relevant payment details.</p></div></div>
+</details>
+</div>
+</div></section>
+
+<footer><div class="footer-grid">
+<div><div class="footer-logo">Prep<span style="color:#e58a12">.via</span></div><p class="footer-text">Making quality JEE and NEET preparation resources more accessible for students.</p></div>
+
+
+</div><div class="copyright">© 2026 Prep.via. All rights reserved.</div></footer>
+
+<div class="mobile-cta"><div class="mobile-cta-content">
+<div class="mobile-price"><h4>Success Package • ₹249</h4><p>Complete JEE & NEET Resources</p></div>
+<a href="https://rzp.io/rzp/SuccessPackage" class="mobile-button">Unlock</a>
+</div></div>
+
+
+<script>
+(function () {
+    const timer = document.getElementById("offerTimer");
+    if (!timer) return;
+
+    // Fixed offer deadline: 31 August 2026, 11:59:00 PM India Standard Time
+    const offerEndTime = new Date("2026-08-31T23:59:00+05:30").getTime();
+
+    function updateTimer() {
+        const remaining = offerEndTime - Date.now();
+
+        if (remaining <= 0) {
+            timer.textContent = "OFFER ENDED";
+            return;
+        }
+
+        const totalSeconds = Math.floor(remaining / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        timer.textContent =
+            days + "d " +
+            String(hours).padStart(2, "0") + "h " +
+            String(minutes).padStart(2, "0") + "m " +
+            String(seconds).padStart(2, "0") + "s";
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+})();
+</script>
+
+<script>
+(function () {
+    const carousel = document.getElementById("successCarousel");
+    if (!carousel) return;
+
+    const slides = carousel.querySelector(".carousel-slides");
+    const dots = Array.from(carousel.querySelectorAll(".carousel-dot"));
+    const total = 6;
+
+    let current = 0;
+    let startX = 0;
+    let startY = 0;
+    let autoTimer;
+
+    function showSlide(index) {
+        current = (index + total) % total;
+        slides.style.transform = "translateX(-" + (current * 100) + "%)";
+
+        dots.forEach(function (dot, i) {
+            dot.classList.toggle("active", i === current);
+        });
+    }
+
+    function startAutoSlide() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(function () {
+            showSlide(current + 1);
+        }, 3500);
+    }
+
+    function resetAutoSlide() {
+        startAutoSlide();
+    }
+
+    // Manual dot navigation
+    dots.forEach(function (dot, i) {
+        dot.addEventListener("click", function () {
+            showSlide(i);
+            resetAutoSlide();
+        });
+    });
+
+    // Manual swipe navigation
+    carousel.addEventListener("touchstart", function (event) {
+        clearInterval(autoTimer);
+        startX = event.touches[0].clientX;
+        startY = event.touches[0].clientY;
+    }, { passive: true });
+
+    carousel.addEventListener("touchend", function (event) {
+        const endX = event.changedTouches[0].clientX;
+        const endY = event.changedTouches[0].clientY;
+
+        const distanceX = endX - startX;
+        const distanceY = endY - startY;
+
+        // Only change slide for a clear horizontal swipe.
+        if (Math.abs(distanceX) > 35 && Math.abs(distanceX) > Math.abs(distanceY)) {
+            if (distanceX < 0) {
+                showSlide(current + 1);
+            } else {
+                showSlide(current - 1);
+            }
+        }
+
+        resetAutoSlide();
+    }, { passive: true });
+
+    // Pause autoplay while desktop user is interacting, then resume.
+    carousel.addEventListener("mouseenter", function () {
+        clearInterval(autoTimer);
+    });
+
+    carousel.addEventListener("mouseleave", function () {
+        startAutoSlide();
+    });
+
+    // Start automatic movement.
+    showSlide(0);
+    startAutoSlide();
+})();
+</script>
+
+
+<script>
+(function () {
+    const revealElements = document.querySelectorAll(".reveal");
+
+    if (!("IntersectionObserver" in window)) {
+        revealElements.forEach(function (element) {
+            element.classList.add("show");
+        });
+        return;
+    }
+
+    const observer = new IntersectionObserver(function (entries, obs) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+                obs.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+    });
+
+    revealElements.forEach(function (element) {
+        observer.observe(element);
+    });
+})();
+</script>
+
+
+<a href="https://instagram.com/Prep.via" target="_blank" rel="noopener" class="floating-support" aria-label="Contact Prep.via on Instagram">
+    <img src="https://cdn.simpleicons.org/instagram/white" alt="Instagram">
+    <span>Instagram Support</span>
+</a>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
+
+<script>
+(function () {
+    const backToTop = document.getElementById("backToTop");
+    if (!backToTop) return;
+
+    function toggleBackToTop() {
+        if (window.scrollY > 500) {
+            backToTop.classList.add("show");
+        } else {
+            backToTop.classList.remove("show");
+        }
+    }
+
+    window.addEventListener("scroll", toggleBackToTop, { passive:true });
+    toggleBackToTop();
+
+    backToTop.addEventListener("click", function () {
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+    });
+})();
+</script>
+
+</body>
+</html>
