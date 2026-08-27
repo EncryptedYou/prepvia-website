@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/coupon.js": {
+      "maxDuration": 10
+    }
+  }
+}
