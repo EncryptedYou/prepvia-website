@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Prep.via</title>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+:root{
+  --purple:#5B22AF;
+  --purple-dark:#3f147d;
+  --bg:#f7f5fb;
+  --text:#18151f;
+  --muted:#6e6878;
+  --border:#e7e1ef;
+  --white:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+.topbar{
+  height:68px;background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+}
+.logo{
+  color:var(--purple);font-size:25px;font-weight:800;letter-spacing:-.7px;
+}
+.wrap{max-width:1050px;margin:0 auto;padding:42px 20px 60px}
+.heading{text-align:center;margin-bottom:28px}
+.heading h1{font-size:32px;letter-spacing:-1px;margin-bottom:7px}
+.heading p{color:var(--muted);font-size:15px}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:22px}
+.card{
+  background:var(--white);border:1px solid var(--border);border-radius:18px;
+  box-shadow:0 12px 35px rgba(45,20,80,.07);padding:26px;
+}
+.card h2{font-size:19px;margin-bottom:20px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
+.field input{
+  width:100%;height:48px;border:1px solid #dcd5e7;border-radius:10px;
+  padding:0 14px;font-size:15px;outline:none;background:#fff;
+}
+.field input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(91,34,175,.10)}
+.help{font-size:12px;color:var(--muted);margin-top:6px}
+.product{
+  display:flex;gap:14px;align-items:center;padding-bottom:20px;
+  border-bottom:1px solid var(--border);margin-bottom:18px;
+}
+.product-icon{
+  width:58px;height:58px;border-radius:13px;background:var(--purple);
+  display:grid;place-items:center;color:#fff;font-weight:800;font-size:18px;
+}
+.product h3{font-size:15px;line-height:1.35}
+.product p{font-size:12px;color:var(--muted);margin-top:4px}
+.row{display:flex;justify-content:space-between;gap:15px;margin:11px 0;font-size:14px}
+.total{font-size:19px;font-weight:800;padding-top:15px;margin-top:15px;border-top:1px solid var(--border)}
+.pay{
+  width:100%;height:52px;border:0;border-radius:11px;background:var(--purple);
+  color:#fff;font-size:16px;font-weight:800;cursor:pointer;margin-top:21px;
+}
+.pay:hover{background:var(--purple-dark)}
+.pay:disabled{opacity:.6;cursor:not-allowed}
+.secure{text-align:center;color:var(--muted);font-size:12px;margin-top:13px}
+.terms{font-size:12px;color:var(--muted);line-height:1.5;margin-top:15px}
+.terms input{vertical-align:middle;margin-right:5px}
+.status{display:none;margin-top:15px;padding:12px;border-radius:9px;font-size:13px}
+.status.show{display:block}
+.status.error{background:#fff0f0;color:#a02020}
+.status.ok{background:#effaf2;color:#17652a}
+@media(max-width:760px){
+  .wrap{padding-top:28px}
+  .grid{grid-template-columns:1fr}
+  .heading h1{font-size:27px}
+  .card{padding:21px}
+}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="logo">Prep.via</div></header>
+
+<main class="wrap">
+  <div class="heading">
+    <h1>Complete Your Order</h1>
+    <p>Enter your details and continue to secure payment.</p>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Customer Details</h2>
+
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input id="name" type="text" autocomplete="name" placeholder="Enter your full name">
+      </div>
+
+      <div class="field">
+        <label for="email">Email Address</label>
+        <input id="email" type="email" autocomplete="email" placeholder="Enter your email address">
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone Number</label>
+        <input id="phone" type="tel" inputmode="numeric" autocomplete="tel"
+               maxlength="10" placeholder="10-digit mobile number">
+        <div class="help">We'll use this to identify your order.</div>
+      </div>
+
+      <div class="terms">
+        <label><input id="agree" type="checkbox">
+          I agree to the Terms & Conditions and Privacy Policy.
+        </label>
+      </div>
+
+      <div id="status" class="status"></div>
+    </section>
+
+    <aside class="card">
+      <h2>Order Summary</h2>
+
+      <div class="product">
+        <div class="product-icon">P</div>
+        <div>
+          <h3>JEE &amp; NEET Success Package</h3>
+          <p>Digital study resources</p>
+        </div>
+      </div>
+
+      <div class="row"><span>Package</span><strong>₹249</strong></div>
+      <div class="row"><span>Discount</span><strong>₹0</strong></div>
+      <div class="row total"><span>Total</span><span>₹249</span></div>
+
+      <button id="payBtn" class="pay">Pay ₹249</button>
+      <div class="secure">🔒 Secure payment powered by Razorpay</div>
+    </aside>
+  </div>
+</main>
+
+<script>
+const AMOUNT = 24900;
+let RAZORPAY_KEY_ID = "";
+const CREATE_ORDER_URL = "/api/create-order";
+const VERIFY_PAYMENT_URL = "/api/verify-payment";
+
+const $ = (id) => document.getElementById(id);
+const statusBox = $("status");
+
+function showStatus(message, type){
+  statusBox.textContent = message;
+  statusBox.className = "status show " + type;
+}
+
+function validEmail(email){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+$("payBtn").addEventListener("click", async function(){
+  const name = $("name").value.trim();
+  const email = $("email").value.trim();
+  const phone = $("phone").value.trim();
+
+  if(name.length < 2) return showStatus("Please enter your full name.", "error");
+  if(!validEmail(email)) return showStatus("Please enter a valid email address.", "error");
+  if(!/^\d{10}$/.test(phone)) return showStatus("Please enter a valid 10-digit phone number.", "error");
+  if(!$("agree").checked) return showStatus("Please accept the terms to continue.", "error");
+
+    const button = $("payBtn");
+  button.disabled = true;
+  button.textContent = "Creating secure payment…";
+
+  try{
+    const response = await fetch(CREATE_ORDER_URL, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        name:name,
+        email:email,
+        phone:phone,
+        amount:AMOUNT,
+        product:"JEE & NEET Success Package"
+      })
+    });
+
+    const data = await response.json();
+    if(!response.ok || !data.order_id || !data.key_id) throw new Error(data.message || "Unable to create order.");
+    RAZORPAY_KEY_ID = data.key_id;
+
+    const options = {
+      key: RAZORPAY_KEY_ID,
+      amount: AMOUNT,
+      currency: "INR",
+      name: "Prep.via",
+      description: "JEE & NEET Success Package",
+      order_id: data.order_id,
+      prefill: {name:name, email:email, contact:phone},
+      theme: {color:"#5B22AF"},
+      handler: async function(payment){
+        button.textContent = "Verifying payment…";
+
+        const verify = await fetch(VERIFY_PAYMENT_URL, {
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            name:name,
+            email:email,
+            phone:phone,
+            product:"JEE & NEET Success Package",
+            order_id:payment.razorpay_order_id,
+            payment_id:payment.razorpay_payment_id,
+            signature:payment.razorpay_signature
+          })
+        });
+
+        const result = await verify.json();
+        if(!verify.ok || !result.success) throw new Error(result.message || "Payment verification failed.");
+
+        if(result.verified_token){ window.location.href="/success.html?token="+encodeURIComponent(result.verified_token); return; }
+        throw new Error("Verified payment token was not issued.");
+      },
+      modal: {
+        ondismiss: function(){
+          button.disabled = false;
+          button.textContent = "Pay ₹249";
+        }
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.on("payment.failed", function(){
+      button.disabled = false;
+      button.textContent = "Pay ₹249";
+      showStatus("Payment failed or was cancelled. Please try again.", "error");
+    });
+    rzp.open();
+
+  }catch(error){
+    button.disabled = false;
+    button.textContent = "Pay ₹249";
+    showStatus(error.message || "Something went wrong. Please try again.", "error");
+  }
+});
+</script>
+</body>
+</html>
