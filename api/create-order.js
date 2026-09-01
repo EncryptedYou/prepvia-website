@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
       method:"POST",
       headers:{Authorization:"Basic " + auth, "Content-Type":"application/json"},
       body:JSON.stringify({
-        amount:24900, currency:"INR",
+        amount:100, currency:"INR",
         receipt:"pv_" + Date.now() + "_" + crypto.randomBytes(4).toString("hex"),
         notes:{product:"JEE & NEET Success Package", name:String(name), email:String(email), phone:String(phone)}
       })
