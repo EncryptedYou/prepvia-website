@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Prep.via</title>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+:root{
+  --accent:#7c3aed;
+  --accent2:#9b5cf5;
+  --ink:#17151d;
+  --muted:#77717f;
+  --line:#e8e5ea;
+  --surface:#ffffff;
+  --page:#f6f5f8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{min-height:100%;background:var(--page)}
+body{
+  min-height:100vh;
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 50% -10%,rgba(190,120,255,.16),transparent 34%),
+    linear-gradient(180deg,#fbf7ff 0,#f7f5f9 25%,#f5f5f7 100%);
+}
+.topbar{
+  height:62px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.86);
+  border-bottom:1px solid rgba(230,226,234,.8);
+  backdrop-filter:blur(18px);
+}
+.logo{
+  font-size:24px;font-weight:850;letter-spacing:-1px;
+  color:#111016;
+}
+.wrap{
+  width:min(920px,100%);
+  margin:0 auto;
+  padding:22px 18px 28px;
+}
+.heading{text-align:center;margin-bottom:16px}
+.heading h1{
+  font-size:27px;line-height:1.12;font-weight:800;letter-spacing:-1px;
+}
+.heading p{font-size:13px;color:var(--muted);margin-top:5px}
+.grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 330px;
+  gap:16px;
+  align-items:start;
+}
+.card{
+  background:rgba(255,255,255,.97);
+  border:1px solid #e5e1e8;
+  border-radius:18px;
+  box-shadow:0 18px 50px rgba(31,22,43,.08);
+  padding:21px;
+  animation:cardIn .55s ease both;
+}
+.grid .card:nth-child(2){animation-delay:.08s}
+.card h2{
+  font-size:17px;
+  line-height:1.2;
+  margin-bottom:15px;
+  font-weight:800;
+}
+.order-dropbox{
+  border:1px solid #e1dce7;
+  border-radius:14px;
+  overflow:hidden;
+  background:#fff;
+  margin:-21px -21px 18px;
+}
+.order-dropbox summary{
+  list-style:none;
+  min-height:68px;
+  padding:0 17px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  cursor:pointer;
+  user-select:none;
+}
+.order-dropbox summary::-webkit-details-marker{display:none}
+.order-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+.order-title b{
+  font-size:17px;
+  font-weight:750;
+  white-space:nowrap;
+}
+.order-chevron{
+  width:28px;
+  height:28px;
+  flex:0 0 28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:9px;
+  background:#f1e8ff;
+  position:relative;
+  transition:transform .25s ease,background .2s ease;
+}
+.order-chevron::before{
+  content:"";
+  width:9px;
+  height:9px;
+  display:block;
+  border-right:2.5px solid #6d28d9;
+  border-bottom:2.5px solid #6d28d9;
+  transform:rotate(45deg);
+  margin-top:-5px;
+}
+.order-dropbox[open] .order-chevron{
+  transform:rotate(180deg);
+  background:#eadcff;
+}
+.order-price{
+  font-size:19px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.order-dropbox[open] .order-chevron{width:28px;height:28px;flex:0 0 28px;display:flex;align-items:center;justify-content:center;border-radius:9px;color:#6d28d9;background:#f1e8ff;transition:transform .25s ease,background .2s ease;position:relative}
+.drop-content{
+  border-top:1px solid var(--line);
+  padding:15px 17px 17px;
+  background:linear-gradient(180deg,#fcfbfd,#fff);
+  animation:dropOpen .28s ease;
+}
+.drop-product{
+  display:flex;align-items:center;gap:11px;
+  padding-bottom:13px;
+  border-bottom:1px solid var(--line);
+}
+.drop-icon{
+  width:42px;height:42px;flex:0 0 42px;
+  border-radius:11px;
+  display:grid;place-items:center;
+  color:#fff;font-weight:850;
+  background:linear-gradient(135deg,#8b5cf6,#5b21b6);
+  box-shadow:0 8px 18px rgba(109,40,217,.22);
+}
+.drop-product h3{font-size:13px;line-height:1.35}
+.drop-product p{font-size:10px;color:var(--muted);margin-top:3px}
+.drop-product strong{margin-left:auto;font-size:13px}
+.drop-row{
+  display:flex;justify-content:space-between;
+  font-size:12px;color:#655e6b;
+  margin-top:10px;
+}
+.drop-row strong{color:var(--ink)}
+.drop-total{
+  padding-top:11px;
+  border-top:1px solid var(--line);
+  margin-top:11px;
+  font-size:14px;font-weight:800;color:var(--ink);
+}
+.field{margin-bottom:13px}
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:750;
+  margin-bottom:6px;
+}
+.field input{
+  width:100%;
+  height:46px;
+  border:1px solid #dad6df;
+  border-radius:11px;
+  padding:0 14px;
+  background:#fff;
+  color:var(--ink);
+  font-size:14px;
+  outline:none;
+  transition:border .2s,box-shadow .2s,transform .2s;
+}
+.field input::placeholder{color:#99939f}
+.field input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(124,58,237,.10);
+}
+.help{font-size:11px;color:var(--muted);margin-top:5px}
+.terms{
+  font-size:11px;color:var(--muted);
+  line-height:1.45;margin-top:5px;
+}
+.terms input{
+  vertical-align:middle;
+  margin-right:5px;
+  accent-color:var(--accent);
+}
+.status{display:none;margin-top:12px;padding:11px;border-radius:10px;font-size:12px}
+.status.show{display:block}
+.status.error{background:#fff0f0;color:#a02020}
+.status.ok{background:#effaf2;color:#17652a}
+
+.summary{position:relative;overflow:hidden}
+.summary h2{margin-bottom:9px}
+.summary:before{
+  content:"";
+  position:absolute;
+  width:170px;height:170px;
+  right:-100px;top:-105px;
+  border-radius:50%;
+  background:rgba(124,58,237,.07);
+}
+.pay-note{
+  position:relative;
+  font-size:12px;
+  line-height:1.5;
+  color:var(--muted);
+  padding:12px;
+  border-radius:11px;
+  background:#faf7ff;
+  border:1px solid #eee7f8;
+}
+.pay{
+  position:relative;
+  overflow:hidden;
+  width:100%;
+  height:52px;
+  border:0;
+  border-radius:12px;
+  margin-top:16px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--accent2),#7431d2);
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:.1px;
+  cursor:pointer;
+  box-shadow:0 11px 26px rgba(124,58,237,.26);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.pay:before{
+  content:"";
+  position:absolute;
+  top:0;left:-70%;
+  width:42%;height:100%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.62),transparent);
+  transform:skewX(-20deg);
+  animation:shimmer 2.4s infinite;
+}
+.pay:hover{
+  transform:translateY(-2px);
+  box-shadow:0 15px 32px rgba(124,58,237,.33);
+}
+.pay:active{transform:translateY(0)}
+.pay:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.secure{
+  text-align:center;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:9px;
+}
+@keyframes shimmer{0%{left:-70%}45%,100%{left:135%}}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes dropOpen{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+
+@media(max-width:760px){
+  .topbar{height:55px}
+  .logo{font-size:22px}
+  .wrap{padding:18px 12px 22px}
+  .heading{margin-bottom:13px}
+  .heading h1{font-size:23px}
+  .heading p{font-size:11px}
+  .grid{grid-template-columns:1fr;gap:12px}
+  .card{
+    padding:17px;
+    border-radius:17px;
+  }
+  .grid .card:first-child{order:1}
+  .grid .card:last-child{order:2}
+  .order-dropbox{
+    margin:-17px -17px 17px;
+    border-radius:16px 16px 0 0;
+    border-left:0;border-right:0;
+  }
+  .order-dropbox summary{
+    min-height:67px;
+    padding:0 16px;
+  }
+  .order-title b{font-size:16px}
+  .order-price{font-size:18px}
+  .field input{height:45px}
+  .pay{height:51px}
+}
+@media(max-width:380px){
+  .wrap{padding-left:10px;padding-right:10px}
+  .card{padding:15px}
+  .order-dropbox{margin:-15px -15px 15px}
+  .order-dropbox summary{padding:0 14px}
+  .order-title b{font-size:15px}
+  .order-price{font-size:17px}
+}
+
+.coupon-box{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid var(--line);
+}
+.coupon-label{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-size:12px;
+  font-weight:750;
+  margin-bottom:7px;
+}
+.coupon-label span:last-child{
+  color:var(--accent);
+  font-size:10px;
+  font-weight:700;
+}
+.coupon-row{
+  display:flex;
+  gap:8px;
+}
+.coupon-input{
+  min-width:0;
+  flex:1;
+  height:42px;
+  border:1px solid #dad6df;
+  border-radius:10px;
+  padding:0 12px;
+  font-size:13px;
+  outline:none;
+  text-transform:uppercase;
+  transition:border .2s,box-shadow .2s;
+}
+.coupon-input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(124,58,237,.10);
+}
+.coupon-btn{
+  height:42px;
+  padding:0 16px;
+  border:1px solid #d9c9f5;
+  border-radius:10px;
+  background:#f5efff;
+  color:#6d28d9;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.2s ease;
+}
+.coupon-btn:hover{
+  background:#ede1ff;
+  transform:translateY(-1px);
+}
+.coupon-message{
+  min-height:16px;
+  margin-top:6px;
+  font-size:10px;
+  font-weight:650;
+}
+.coupon-message.success{color:#16803a}
+.coupon-message.error{color:#b42318}
+.coupon-applied{
+  display:none;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:7px;
+  padding:8px 10px;
+  border-radius:9px;
+  background:#f3fff6;
+  border:1px solid #d7f1dd;
+  color:#176b31;
+  font-size:10px;
+}
+.coupon-applied.show{display:flex}
+.coupon-remove{
+  border:0;
+  background:transparent;
+  color:#a02020;
+  font-size:10px;
+  font-weight:750;
+  cursor:pointer;
+}
+.price-breakdown{
+  margin-top:13px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+}
+.price-line{
+  display:flex;
+  justify-content:space-between;
+  font-size:11px;
+  color:#716b78;
+  margin-top:7px;
+}
+.price-line.discount strong{color:#16803a}
+.price-line.final{
+  font-size:15px;
+  color:var(--ink);
+  font-weight:800;
+  margin-top:10px;
+}
+@media(max-width:380px){
+  .coupon-btn{padding:0 13px}
+  .coupon-input{font-size:12px}
+}
+
+</style>
+</head>
+<body>
+<header class="topbar"><div class="logo">Prep.via</div></header>
+
+<main class="wrap">
+  <div class="heading">
+    <h1>Complete Your Order</h1>
+    <p>Enter your details and continue to secure payment.</p>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <details class="order-dropbox">
+        <summary>
+          <span class="order-title">
+            <span class="order-chevron" aria-hidden="true"></span>
+            <b>Show Order Summary</b>
+          </span>
+          <span id="topTotal" class="order-price">₹249.00</span>
+        </summary>
+        <div class="drop-content">
+          <div class="drop-product">
+            <div class="drop-icon">P</div>
+            <div>
+              <h3>JEE &amp; NEET Success Package</h3>
+              <p>Digital study resources</p>
+            </div>
+            <strong>₹249</strong>
+          </div>
+          <div class="drop-row"><span>Package</span><strong>₹249</strong></div>
+          <div class="drop-row"><span>Discount</span><strong>₹0</strong></div>
+          <div class="coupon-box">
+            <div class="coupon-label">
+              <span>Have a coupon?</span>
+              <span>Save instantly</span>
+            </div>
+            <div class="coupon-row">
+              <input id="couponInput" class="coupon-input" type="text"
+                     maxlength="20" autocomplete="off" placeholder="ENTER COUPON">
+              <button id="couponBtn" class="coupon-btn" type="button">Apply</button>
+            </div>
+            <div id="couponMessage" class="coupon-message"></div>
+            <div id="couponApplied" class="coupon-applied">
+              <span id="couponAppliedText">Coupon applied</span>
+              <button id="removeCoupon" class="coupon-remove" type="button">Remove</button>
+            </div>
+          </div>
+
+          <div class="price-breakdown">
+            <div class="price-line"><span>Package</span><strong id="couponPackagePrice">₹249.00</strong></div>
+            <div class="price-line discount"><span>Discount</span><strong id="couponDiscount">−₹0.00</strong></div>
+            <div class="price-line final"><span>Total</span><strong id="couponTotal">₹249.00</strong></div>
+          </div>
+        </div>
+      </details>
+
+      <h2>Customer Details</h2>
+
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input id="name" type="text" autocomplete="name" placeholder="Enter your full name">
+      </div>
+
+      <div class="field">
+        <label for="email">Email Address</label>
+        <input id="email" type="email" autocomplete="email" placeholder="Email Address *">
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone Number</label>
+        <input id="phone" type="tel" inputmode="numeric" autocomplete="tel"
+               maxlength="10" placeholder="Phone *">
+        
+      </div>
+
+      <div class="terms">
+        <label><input id="agree" type="checkbox">
+          I agree to the Terms & Conditions and Privacy Policy.
+        </label>
+      </div>
+
+      <div id="status" class="status"></div>
+    </section>
+
+    <aside class="card">
+      <h2>Secure Payment</h2>
+      <div class="pay-note">Pay securely using UPI, cards, net banking or wallets through Razorpay.</div>
+
+      <button id="payBtn" class="pay">Place Order&nbsp;&nbsp;₹249.00</button>
+      <div class="secure">🔒 Secure payment powered by Razorpay</div>
+    </aside>
+  </div>
+</main>
+
+<script>
+const BASE_AMOUNT = 24900;
+let currentAmount = BASE_AMOUNT;
+let appliedCoupon = null;
+let RAZORPAY_KEY_ID = "";
+
+// Edit/add your coupon codes here.
+// discountType: "percent" or "flat"
+const COUPONS = {
+  "PREP10": {discountType:"percent", value:10},
+  "PREP50": {discountType:"flat", value:50}
+};
+
+function money(paise){
+  return "₹" + (paise / 100).toFixed(2);
+}
+
+function updateCouponTotals(){
+  let discount = 0;
+
+  if(appliedCoupon){
+    if(appliedCoupon.discountType === "percent"){
+      discount = Math.round(BASE_AMOUNT * appliedCoupon.value / 100);
+    }else{
+      discount = appliedCoupon.value * 100;
+    }
+    if(discount > BASE_AMOUNT) discount = BASE_AMOUNT;
+  }
+
+  currentAmount = BASE_AMOUNT - discount;
+
+  $("couponPackagePrice").textContent = money(BASE_AMOUNT);
+  $("couponDiscount").textContent = "−" + money(discount);
+  $("couponTotal").textContent = money(currentAmount);
+  $("topTotal").textContent = money(currentAmount);
+  $("payBtn").innerHTML = "Place Order&nbsp;&nbsp;" + money(currentAmount);
+}
+
+function setCouponMessage(message, type){
+  const box = $("couponMessage");
+  box.textContent = message;
+  box.className = "coupon-message" + (type ? " " + type : "");
+}
+
+$("couponBtn").addEventListener("click", function(){
+  const input = $("couponInput");
+  const code = input.value.trim().toUpperCase();
+
+  if(!code){
+    setCouponMessage("Enter a coupon code.", "error");
+    return;
+  }
+
+  if(appliedCoupon){
+    setCouponMessage("A coupon is already applied.", "error");
+    return;
+  }
+
+  appliedCoupon = {code:code, ...COUPONS[code]};
+  updateCouponTotals();
+
+  $("couponInput").disabled = true;
+  $("couponBtn").disabled = true;
+  $("couponAppliedText").textContent =
+    code + " applied — you saved " +
+    (appliedCoupon.discountType === "percent"
+      ? appliedCoupon.value + "%"
+      : money(appliedCoupon.value * 100));
+
+  $("couponApplied").classList.add("show");
+  setCouponMessage("Coupon applied successfully.", "success");
+});
+
+$("couponInput").addEventListener("keydown", function(event){ if(event.key === "Enter"){ event.preventDefault(); $("couponBtn").click(); } });
+
+$("removeCoupon").addEventListener("click", function(){
+  appliedCoupon = null;
+  $("couponInput").disabled = false;
+  $("couponBtn").disabled = false;
+  $("couponInput").value = "";
+  $("couponApplied").classList.remove("show");
+  setCouponMessage("", "");
+  updateCouponTotals();
+});
+const CREATE_ORDER_URL = "/api/create-order";
+const VERIFY_PAYMENT_URL = "/api/verify-payment";
+const RELEASE_COUPON_URL = "/api/release-coupon-reservation";
+
+const $ = (id) => document.getElementById(id);
+const statusBox = $("status");
+
+function showStatus(message, type){
+  statusBox.textContent = message;
+  statusBox.className = "status show " + type;
+}
+
+function validEmail(email){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+async function releaseCouponReservation(orderId){
+  if(!appliedCoupon || !orderId) return;
+  try{
+    await fetch(RELEASE_COUPON_URL, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        email:$("email").value.trim(),
+        phone:$("phone").value.trim(),
+        order_id:orderId
+      })
+    });
+  }catch(e){}
+}
+
+$("payBtn").addEventListener("click", async function(){
+  const name = $("name").value.trim();
+  const email = $("email").value.trim();
+  const phone = $("phone").value.trim();
+
+  if(name.length < 2) return showStatus("Please enter your full name.", "error");
+  if(!validEmail(email)) return showStatus("Please enter a valid email address.", "error");
+  if(!/^\d{10}$/.test(phone)) return showStatus("Please enter a valid 10-digit phone number.", "error");
+  if(!$("agree").checked) return showStatus("Please accept the terms to continue.", "error");
+
+    const button = $("payBtn");
+  button.disabled = true;
+  button.textContent = "Creating secure payment…";
+
+  try{
+    const response = await fetch(CREATE_ORDER_URL, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        name:name,
+        email:email,
+        phone:phone,
+        amount:currentAmount,
+        product:"JEE & NEET Success Package",
+        coupon:appliedCoupon ? appliedCoupon.code : null
+      })
+    });
+
+    const data = await response.json();
+    if(!response.ok || !data.order_id || !data.key_id) throw new Error(data.message || "Unable to create order.");
+    RAZORPAY_KEY_ID = data.key_id;
+
+    // The server is authoritative for the final amount.
+    if(typeof data.amount === "number"){
+      currentAmount = data.amount;
+      updateCouponTotals();
+    }
+
+    const options = {
+      key: RAZORPAY_KEY_ID,
+      amount: currentAmount,
+      currency: "INR",
+      name: "Prep.via",
+      description: "JEE & NEET Success Package",
+      order_id: data.order_id,
+      prefill: {name:name, email:email, contact:phone},
+      theme: {color:"#5B22AF"},
+      handler: async function(payment){
+        button.textContent = "Verifying payment…";
+
+        const verify = await fetch(VERIFY_PAYMENT_URL, {
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            name:name,
+            email:email,
+            phone:phone,
+            product:"JEE & NEET Success Package",
+            coupon:appliedCoupon ? appliedCoupon.code : null,
+            order_id:payment.razorpay_order_id,
+            payment_id:payment.razorpay_payment_id,
+            signature:payment.razorpay_signature
+          })
+        });
+
+        const result = await verify.json();
+        if(!verify.ok || !result.success) throw new Error(result.message || "Payment verification failed.");
+
+        if(result.verified_token){ window.location.href="/success.html?token="+encodeURIComponent(result.verified_token); return; }
+        throw new Error("Verified payment token was not issued.");
+      },
+      modal: {
+        ondismiss: function(){
+          releaseCouponReservation(data.order_id);
+          button.disabled = false;
+          button.innerHTML = "Place Order&nbsp;&nbsp;" + money(currentAmount);
+        }
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.on("payment.failed", function(){
+      releaseCouponReservation(data.order_id);
+      button.disabled = false;
+      button.innerHTML = "Place Order&nbsp;&nbsp;" + money(currentAmount);
+      showStatus("Payment failed or was cancelled. Please try again.", "error");
+    });
+    rzp.open();
+
+  }catch(error){
+    button.disabled = false;
+    button.innerHTML = "Place Order&nbsp;&nbsp;" + money(currentAmount);
+    showStatus(error.message || "Something went wrong. Please try again.", "error");
+  }
+});
+</script>
+</body>
+</html>
