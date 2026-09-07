@@ -11,8 +11,48 @@ module.exports=async(req,res)=>{
   if(!auth(req)) return res.status(401).json({message:'Unauthorized.'});
   try{
     if(req.method==='GET'){
-      const s=await settings(); const raw=await redisGet('referral:index'); const ids=raw?JSON.parse(raw):[]; const out=[];
-      for(const id of ids){const u=await getUserById(id);if(!u)continue;const num=async k=>Number(await redisGet(k)||0);out.push({id:u.id,name:u.name,email:u.email,code:u.code,createdAt:u.createdAt,active:u.active!==false,clicks:await num('referral:clicks:'+id),uniqueVisitors:await setCardinality('referral:visitors:'+id),checkouts:await num('referral:checkouts:'+id),purchases:await num('referral:purchases:'+id),revenue:await num('referral:revenue:'+id),rewards:await num('referral:rewards:'+id),pendingRewards:await num('referral:pending:'+id)});}
+      const s=await settings();
+      let ids=[];
+      const raw=await redisGet('referral:index');
+      if(raw){try{ids=Array.isArray(JSON.parse(raw))?JSON.parse(raw):[]}catch{ids=[]}}
+
+      // Self-heal the admin index if an older/partial registration ever failed
+      // after creating the user record. Upstash Redis REST supports SCAN.
+      if(!ids.length){
+        try{
+          const url=process.env.KV_REST_API_URL, token=process.env.KV_REST_API_TOKEN;
+          if(url&&token){
+            let cursor='0', guard=0, recovered=[];
+            do{
+              const scan=await fetch(url+'/scan/'+encodeURIComponent(cursor)+'/match/'+encodeURIComponent('referral:user:*')+'/count/1000',{headers:{Authorization:'Bearer '+token}});
+              if(!scan.ok)break;
+              const data=await scan.json();
+              const result=data.result||['0',[]];
+              cursor=String(result[0]||'0');
+              for(const key of (result[1]||[])){
+                const id=String(key).slice('referral:user:'.length);
+                if(id&&!recovered.includes(id))recovered.push(id);
+              }
+              guard++;
+            }while(cursor!=='0'&&guard<20);
+            if(recovered.length){ids=recovered;await redisSet('referral:index',JSON.stringify(ids));}
+          }
+        }catch(e){console.warn('Referral index recovery skipped:',e.message)}
+      }
+
+      const out=[];
+      for(const id of ids){
+        const u=await getUserById(id);if(!u)continue;
+        const num=async k=>Number(await redisGet(k)||0);
+        out.push({
+          id:u.id,name:u.name,email:u.email,code:u.code,createdAt:u.createdAt,active:u.active!==false,
+          referral_url:'/?ref='+encodeURIComponent(u.code),
+          clicks:await num('referral:clicks:'+id),uniqueVisitors:await setCardinality('referral:visitors:'+id),
+          checkouts:await num('referral:checkouts:'+id),purchases:await num('referral:purchases:'+id),
+          revenue:await num('referral:revenue:'+id),rewards:await num('referral:rewards:'+id),pendingRewards:await num('referral:pending:'+id)
+        });
+      }
+      out.sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));
       return res.status(200).json({settings:{enabled:s.enabled,reward_rupees:s.reward_paise/100,attribution_days:s.attribution_days},referrers:out});
     }
     if(req.method==='PUT'){
