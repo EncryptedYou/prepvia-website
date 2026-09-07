@@ -1,4 +1,4 @@
-const { recordEvent } = require("./store");
+const { recordEvent } = require("../../lib/analytics-store");
 
 module.exports = async (req, res) => {
   if (req.method !== "POST") {
