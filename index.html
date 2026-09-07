@@ -4582,43 +4582,7 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
 </noscript>
 
 
-<script id="prepvia-referral-tracking">
-(() => {
-  "use strict";
-  const params = new URLSearchParams(location.search);
-  const code = (params.get("ref") || "").trim().toUpperCase();
-  if (!code) return;
-  try {
-    let visitorId = localStorage.getItem("prepvia_visitor_id");
-    if (!visitorId) { visitorId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2); localStorage.setItem("prepvia_visitor_id", visitorId); }
-    let sessionId = sessionStorage.getItem("prepvia_session_id");
-    if (!sessionId) { sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2); sessionStorage.setItem("prepvia_session_id", sessionId); }
-    const startedAt = Date.now();
-    let attributionId = sessionStorage.getItem("prepvia_referral_attribution") || "";
-    let minSeconds = 5, minScroll = 20, qualifiedSent = false, maxScroll = 0, timer = null;
-    const getScroll = () => Math.max(maxScroll, Math.round((window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight)) * 100));
-    const qualify = () => {
-      if (qualifiedSent || !attributionId) return;
-      maxScroll = Math.max(maxScroll, getScroll());
-      if ((Date.now()-startedAt) < minSeconds*1000 || maxScroll < minScroll) return;
-      qualifiedSent = true;
-      fetch("/api/referrals/track", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code,visitor_id:visitorId,session_id:sessionId,attribution_id:attributionId,stage:"qualify",scroll:maxScroll,view_seconds:(Date.now()-startedAt)/1000}),keepalive:true}).catch(()=>{});
-      window.removeEventListener("scroll", onScroll);
-      if(timer) clearInterval(timer);
-    };
-    const onScroll = () => { maxScroll=Math.max(maxScroll,getScroll()); qualify(); };
-    fetch("/api/referrals/track", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code,visitor_id:visitorId,session_id:sessionId,stage:"start"}),keepalive:true})
-      .then(r=>r.json()).then(d=>{
-        if(d?.attribution_id){ attributionId=d.attribution_id; sessionStorage.setItem("prepvia_referral_attribution",attributionId); }
-        minSeconds=Number(d?.min_view_seconds ?? 5); minScroll=Number(d?.min_scroll ?? 20);
-        qualify();
-      }).catch(()=>{});
-    window.addEventListener("scroll", onScroll, {passive:true});
-    timer=setInterval(qualify,1000);
-    setTimeout(()=>{ if(timer) clearInterval(timer); window.removeEventListener("scroll", onScroll); }, 30*60*1000);
-  } catch (_) {}
-})();
-</script>
+
 
 </head>
 
@@ -4664,7 +4628,6 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
                 <a href="#reviews" data-nav-target="reviews">Student Reviews</a>
                 <a href="#payment-process" data-nav-target="payment-process">How It Works</a>
                 <a href="#faq" data-nav-target="faq">FAQ</a>
-                <a href="/refer.html">Refer &amp; Earn</a>
                 <a class="mobile-nav-buy" href="#package-buy-button" data-nav-target="package-buy-button" id="drawerGetSuccess">Get Success Package · ₹249</a>
             </div>
         </div>
@@ -5530,14 +5493,7 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
 </section>
 
 
-<section id="refer-earn" style="padding:92px 18px 88px;background:linear-gradient(135deg,#f7f1ff,#fff9ef);text-align:center;">
-  <div style="max-width:900px;margin:0 auto;padding:42px 28px;border:1px solid rgba(91,34,175,.12);border-radius:30px;background:rgba(255,255,255,.78);box-shadow:0 20px 55px rgba(50,30,90,.08);">
-    <div style="display:inline-flex;padding:9px 15px;border-radius:999px;background:#eee5ff;color:#6d27d9;font-size:13px;font-weight:800;letter-spacing:.5px;">REFER &amp; EARN</div>
-    <h2 style="margin:18px 0 10px;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:clamp(32px,5vw,52px);letter-spacing:-2px;">Help a friend. <span style="color:#7a3fe0;">Earn rewards.</span></h2>
-    <p style="max-width:650px;margin:0 auto;color:#716a7d;font-size:17px;line-height:1.6;">Share your personal Prep Via referral link. When a new student completes a verified purchase through your link, you can earn a reward.</p>
-    <a href="/refer.html" style="display:inline-flex;align-items:center;justify-content:center;margin-top:24px;padding:14px 22px;border-radius:14px;background:#5B22AF;color:#fff;text-decoration:none;font-weight:800;box-shadow:0 12px 28px rgba(91,34,175,.2);">Open Refer &amp; Earn Dashboard →</a>
-  </div>
-</section>
+
 
 <!-- ================= PREP VIA FOOTER ================= -->
 

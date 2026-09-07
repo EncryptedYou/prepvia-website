@@ -440,20 +440,7 @@ body{
   </div>
 </main>
 
-<script id="prepvia-referral-checkout">
-(() => {
-  const params = new URLSearchParams(location.search);
-  const code = (params.get("ref") || "").trim().toUpperCase();
-  if (!code) return;
-  try {
-    let visitorId = localStorage.getItem("prepvia_visitor_id");
-    if (!visitorId) { visitorId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2); localStorage.setItem("prepvia_visitor_id", visitorId); }
-    let sessionId = sessionStorage.getItem("prepvia_session_id");
-    if (!sessionId) { sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2); sessionStorage.setItem("prepvia_session_id", sessionId); }
-    fetch("/api/referrals/track", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code,visitor_id:visitorId,session_id:sessionId}),keepalive:true}).catch(()=>{});
-  } catch (_) {}
-})();
-</script>
+
 
 <script>
 (() => {
@@ -622,8 +609,7 @@ body{
           phone,
           amount: currentAmount,
           coupon: appliedCoupon ? appliedCoupon.code : null,
-          product: "JEE & NEET Success Package",
-          referral_attribution: (() => { try { return document.cookie.match(/(?:^|; )prepvia_referral=([^;]+)/)?.[1] || ""; } catch (_) { return ""; } })()
+          product: "JEE & NEET Success Package"
         })
       });
 
