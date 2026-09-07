@@ -1,7 +1,7 @@
 const { cleanCode, getCoupon, redisGet, redisSet, redisDel } = require('../lib/coupons');
 
 function authorized(req) {
-  const secret = process.env.ADMIN_SECRET;
+  const secret = process.env.ADMIN_SECRET || process.env.ADMIN_PASSWORD;
   if (!secret) return false;
   return String(req.headers.authorization || '') === 'Bearer ' + secret;
 }
