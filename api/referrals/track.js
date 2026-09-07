@@ -54,7 +54,8 @@ module.exports = async (req,res) => {
       await increment('referral:qualified_views:'+user.id,1);
       let reward=0,earning=null;
       if(program.view_enabled){
-        reward=getViewRatePaise(program,unique);
+        reward=user.view_reward_override_paise==null?getViewRatePaise(program,unique):Math.max(0,Math.round(Number(user.view_reward_override_paise)));
+        if(unique < Number(program.view_start_threshold||0)) reward=0;
         if(reward>0){
           earning=await createPendingEarning(user.id,'view',reward,{qualified_view:unique,visitor_key:visitorKey,attribution_id:attributionId});
           await createNotification(user.id,'New view earning',`Qualified unique view #${unique} generated ₹${(reward/100).toFixed(2)} pending approval.`,'earning');

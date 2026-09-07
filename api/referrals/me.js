@@ -16,7 +16,8 @@ async function loadUserData(user){
   const qualified=await num('referral:qualified_views:'+user.id);
   const viewRewardsPaise=await num('referral:view_rewards_paise:'+user.id);
   const purchaseRewardsPaise=await num('referral:purchase_rewards_paise:'+user.id);
-  const currentViewRewardPaise=getViewRatePaise(settings,qualified);
+  const currentViewRewardPaise=user.view_reward_override_paise!=null?Math.max(0,Math.round(Number(user.view_reward_override_paise))):getViewRatePaise(settings,qualified);
+  const purchaseRewardPaise=user.purchase_reward_override_paise!=null?Math.max(0,Math.round(Number(user.purchase_reward_override_paise))):settings.purchase_reward_paise;
   const clicks=await num('referral:clicks:'+user.id);
   const actualVisitors=await require('../../lib/referrals-shared').setCardinality('referral:visitors:'+user.id);
   const withdrawalsRaw=await listRange('referral:withdrawals:'+user.id,0,20);
@@ -24,16 +25,15 @@ async function loadUserData(user){
   for(const id of (withdrawalsRaw||[])){const raw=await redisGet('referral:withdrawal:'+id);if(raw){try{withdrawals.push(JSON.parse(raw))}catch{}}}
   const notesRaw=await listRange('referral:notifications:'+user.id,0,19);
   const notifications=(notesRaw||[]).map(x=>{try{return JSON.parse(x)}catch{return null}}).filter(Boolean);
-  return {settings,stats:{clicks,unique_visitors:actualVisitors,qualified_unique_views:qualified,checkouts:await num('referral:checkouts:'+user.id),purchases:await num('referral:purchases:'+user.id),revenue:await num('referral:revenue:'+user.id),rewards_paise:rewardsPaise,pending_paise:pendingPaise,available_paise:availablePaise,paid_paise:paidPaise,rejected_paise:rejectedPaise,view_rewards_paise:viewRewardsPaise,purchase_rewards_paise:purchaseRewardsPaise,current_view_reward_paise:currentViewRewardPaise},withdrawals,notifications};
+  return {settings,stats:{clicks,unique_visitors:actualVisitors,qualified_unique_views:qualified,checkouts:await num('referral:checkouts:'+user.id),purchases:await num('referral:purchases:'+user.id),revenue:await num('referral:revenue:'+user.id),rewards_paise:rewardsPaise,pending_paise:pendingPaise,available_paise:availablePaise,paid_paise:paidPaise,rejected_paise:rejectedPaise,view_rewards_paise:viewRewardsPaise,purchase_rewards_paise:purchaseRewardsPaise,current_view_reward_paise:currentViewRewardPaise,current_purchase_reward_paise:purchaseRewardPaise},withdrawals,notifications};
 }
 module.exports=async(req,res)=>{
   try{
     const session=await getSession(req);if(!session)return res.status(401).json({message:'Session expired. Please log in again.'});
     const user=await getUserById(session.userId);if(!user)return res.status(401).json({message:'Account not found.'});
-    if(user.active===false)return res.status(403).json({message:'Your referral account has been disabled by Prep Via.'});
     if(req.method==='GET'){
       const d=await loadUserData(user);const s=d.settings;
-      return res.status(200).json({user:{id:user.id,name:user.name,email:user.email,code:user.code,upi_id:user.upi_id||''},stats:d.stats,settings:{enabled:s.enabled,purchase_enabled:s.purchase_enabled,view_enabled:s.view_enabled,purchase_reward_rupees:s.purchase_reward_paise/100,view_start_threshold:s.view_start_threshold,view_min_seconds:s.view_min_seconds,view_min_scroll:s.view_min_scroll,view_slabs:s.view_slabs,min_withdrawal_rupees:s.min_withdrawal_paise/100},withdrawals:d.withdrawals,notifications:d.notifications,referral_url:'/?ref='+encodeURIComponent(user.code)});
+      return res.status(200).json({user:{id:user.id,name:user.name,email:user.email,code:user.code,upi_id:user.upi_id||'',purchase_reward_override_rupees:user.purchase_reward_override_paise==null?null:user.purchase_reward_override_paise/100,view_reward_override_rupees:user.view_reward_override_paise==null?null:user.view_reward_override_paise/100},stats:d.stats,settings:{enabled:s.enabled,purchase_enabled:s.purchase_enabled,view_enabled:s.view_enabled,purchase_reward_rupees:s.purchase_reward_paise/100,view_start_threshold:s.view_start_threshold,view_min_seconds:s.view_min_seconds,view_min_scroll:s.view_min_scroll,view_slabs:s.view_slabs,min_withdrawal_rupees:s.min_withdrawal_paise/100},withdrawals:d.withdrawals,notifications:d.notifications,referral_url:'/?ref='+encodeURIComponent(user.code)});
     }
     if(req.method==='PUT'){
       const body=parseBody(req); const upi=String(body.upi_id||'').trim();if(upi&&!validUpi(upi))return res.status(400).json({message:'Enter a valid UPI ID.'});
