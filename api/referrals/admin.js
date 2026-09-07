@@ -1,4 +1,4 @@
-const { redisGet, redisSet, redisDel, getUserById, increment, setCardinality, REWARD_PAISE, ATTRIBUTION_DAYS } = require('./_shared');
+const { redisGet, redisSet, redisDel, getUserById, increment, setCardinality, REWARD_PAISE, ATTRIBUTION_DAYS } = require('../../lib/referrals-shared');
 function auth(req){return !!process.env.ADMIN_SECRET && String(req.headers.authorization||'')==='Bearer '+process.env.ADMIN_SECRET;}
 const SETTINGS_KEY='referral:settings';
 async function settings(){

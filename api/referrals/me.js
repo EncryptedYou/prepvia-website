@@ -1,4 +1,4 @@
-const { getSession, getUserById, redisGet, setCardinality } = require('./_shared');
+const { getSession, getUserById, redisGet, setCardinality } = require('../../lib/referrals-shared');
 module.exports = async (req,res)=>{
   if(req.method!=='GET') return res.status(405).json({message:'Method not allowed'});
   try{

@@ -1,6 +1,6 @@
 const crypto = require('crypto');
-const { redisGet, redisSet, randomId } = require('../coupons');
-const { normalizeEmail, hashPassword, makeCode, safeUser, createSession, getUserByEmail } = require('./_shared');
+const { redisGet, redisSet, randomId } = require('../../lib/coupons');
+const { normalizeEmail, hashPassword, makeCode, safeUser, createSession, getUserByEmail } = require('../../lib/referrals-shared');
 
 module.exports = async (req,res) => {
   if (req.method !== 'POST') return res.status(405).json({message:'Method not allowed'});

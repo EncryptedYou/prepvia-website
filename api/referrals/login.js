@@ -1,4 +1,4 @@
-const { safeUser, normalizeEmail, verifyPassword, getUserByEmail, createSession } = require('./_shared');
+const { safeUser, normalizeEmail, verifyPassword, getUserByEmail, createSession } = require('../../lib/referrals-shared');
 module.exports = async (req,res) => {
   if(req.method!=='POST') return res.status(405).json({message:'Method not allowed'});
   try{

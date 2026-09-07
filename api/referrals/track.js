@@ -1,4 +1,4 @@
-const { cleanCode, getUserByCode, increment, setAdd, setCardinality, ATTRIBUTION_TTL, redisSet, getReferralSettings } = require('./_shared');
+const { cleanCode, getUserByCode, increment, setAdd, setCardinality, ATTRIBUTION_TTL, redisSet, getReferralSettings } = require('../../lib/referrals-shared');
 function cookieHeader(id){ return 'prepvia_referral='+encodeURIComponent(id)+'; Max-Age='+ATTRIBUTION_TTL+'; Path=/; SameSite=Lax; Secure'; }
 module.exports = async (req,res) => {
   if(req.method!=='POST') return res.status(405).json({message:'Method not allowed'});
