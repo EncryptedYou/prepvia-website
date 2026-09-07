@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#212121">
+<script src="https://unpkg.com/lucide@latest"></script>
+<title>Prep Via — Refer & Earn</title>
+<style>
+:root{--bg:#212121;--bg2:#181818;--panel:#292929;--panel2:#303030;--line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.16);--text:#f7f7f7;--muted:#a9adb5;--blue:#2f6df6;--blue2:#1749c6;--gold:#ffd21a;--green:#45d39b;--red:#ff6b6b;--shadow:0 24px 70px rgba(0,0,0,.35)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden;width:100%;max-width:100%}body{margin:0;overflow-x:hidden;width:100%;max-width:100%;background:radial-gradient(circle at 10% 0%,#303030 0,#212121 30%,#181818 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;min-height:100vh}button,input{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}.hidden{display:none!important}.wrap{width:min(1160px,100%);margin:auto;padding-left:20px;padding-right:20px}
+.nav{position:sticky;top:0;z-index:50;background:rgba(33,33,33,.90);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.navin{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:11px;font-size:20px;font-weight:900}.brandmark{width:39px;height:39px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#fff,#9abaff);color:#212121;font-weight:950;box-shadow:0 8px 24px rgba(0,0,0,.25)}.navlinks{display:flex;align-items:center;gap:8px}.navlinks a{padding:10px 13px;border-radius:11px;color:#d7d9df;font-size:13px;font-weight:800}.navlinks a:hover{background:rgba(255,255,255,.07);color:#fff}.nav-cta{display:inline-flex;align-items:center;gap:7px;background:var(--gold)!important;color:#17120a!important;box-shadow:0 7px 24px rgba(255,210,26,.14)}.nav-cta svg{width:16px;height:16px;display:block;flex:0 0 16px;margin:0}
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}.hero:before{content:"";position:absolute;width:520px;height:520px;right:-220px;top:-260px;border-radius:50%;background:rgba(47,109,246,.16);filter:blur(10px)}.hero:after{content:"";position:absolute;width:420px;height:420px;left:-250px;bottom:-300px;border-radius:50%;background:rgba(255,210,26,.08);filter:blur(10px)}.hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1.02fr .98fr;gap:54px;align-items:center;padding-top:68px;padding-bottom:64px}.hero-copy{max-width:600px}.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line2);border-radius:999px;background:rgba(255,255,255,.055);font-size:11px;font-weight:900;letter-spacing:.6px;color:#e6e8ed}.eyebrow svg{width:14px;height:14px;color:var(--gold)}h1{font-size:clamp(42px,6vw,68px);line-height:1.02;letter-spacing:-3.2px;margin:19px 0 17px}.accent{color:#4e88ff}.hero-copy>p{margin:0;color:#b9bdc6;max-width:570px;font-size:16px;line-height:1.75}.feature-list{display:grid;gap:12px;margin-top:28px}.feature{display:flex;align-items:center;gap:14px;min-width:0;padding:15px 16px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.018));border-radius:17px;transition:.2s}.feature:hover{transform:translateY(-2px);border-color:rgba(47,109,246,.38);background:rgba(255,255,255,.06)}.feature-icon{width:46px;height:46px;flex:0 0 46px;border-radius:14px;display:grid;place-items:center;background:#123c9f;color:#fff;box-shadow:0 8px 22px rgba(20,73,198,.24)}.feature:nth-child(2) .feature-icon{background:#35217b}.feature:nth-child(3) .feature-icon{background:#155f48}.feature-icon svg{width:22px;height:22px;display:block;flex:0 0 auto;margin:0}.feature-icon{overflow:hidden}.feature strong{display:block;font-size:14px}.feature-copy{min-width:0}.feature-copy span{display:block;margin-top:3px;color:#969ba5;font-size:12px;line-height:1.5}
+.auth-area{width:100%;min-width:0}.auth-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#303030,#252525);border:1px solid var(--line2);border-radius:28px;padding:28px;box-shadow:var(--shadow)}.auth-card:before{content:"";position:absolute;width:210px;height:210px;left:-120px;top:-130px;border-radius:50%;background:rgba(47,109,246,.12)}.auth-top{position:relative;display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.auth-top>*{flex:0 0 auto}.auth-icon{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(145deg,#3274ff,#2256d0);box-shadow:0 15px 30px rgba(47,109,246,.24)}.auth-icon svg{width:27px;height:27px;display:block;flex:0 0 27px;margin:0}.secure{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:999px;background:rgba(47,109,246,.12);color:#77a1ff;font-size:11px;font-weight:900}.secure svg{width:16px;height:16px;display:block;flex:0 0 16px;margin:0}.auth-card h2{position:relative;margin:20px 0 6px;font-size:27px;letter-spacing:-1px}.auth-sub{position:relative;margin:0;color:#aeb2bb;font-size:13px;line-height:1.55}.form{position:relative;display:grid;gap:14px;margin-top:24px}.field{display:grid;gap:8px}.field label{display:flex;align-items:center;gap:7px;color:#c8cbd2;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.5px}.field label svg{width:16px;height:16px;color:#8daeff;display:block;flex:0 0 16px;margin:0}.input-wrap{position:relative}.field input{width:100%;height:53px;border:1px solid var(--line2);border-radius:14px;background:#222;color:#f7f7f7;outline:none;padding:0 15px;font-size:14px;transition:.2s}.field input::placeholder{color:#777c85}.field input:focus{border-color:#5d8dff;box-shadow:0 0 0 4px rgba(47,109,246,.13);background:#202020}.input-wrap input{padding-right:82px}.showpass{position:absolute;right:6px;top:6px;height:41px;padding:0 11px;border:0;border-radius:11px;background:#343b49;color:#d5d9e0;display:flex;align-items:center;gap:6px;font-size:11px;font-weight:900}.showpass svg{width:15px;height:15px;display:block;flex:0 0 15px;margin:0}.primary{min-height:53px;border:0;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;font-weight:900;box-shadow:0 14px 30px rgba(47,109,246,.23);display:flex;align-items:center;justify-content:center;gap:9px;transition:.2s}.primary:hover{transform:translateY(-1px);box-shadow:0 18px 35px rgba(47,109,246,.3)}.primary svg{width:19px;height:19px;display:block;flex:0 0 19px;margin:0}.form-note{display:flex;justify-content:center;align-items:center;gap:7px;color:#858a94;font-size:10px;line-height:1.5;text-align:center}.form-note svg{width:15px;height:15px;color:#5d8dff;display:block;flex:0 0 15px;margin:0}.msg{min-height:18px;font-size:12px;line-height:1.5}.msg.error{color:var(--red)}.msg.success{color:var(--green)}.switch{padding-top:4px;text-align:center;color:#858a94;font-size:12px}.switch button{padding:0;border:0;background:transparent;color:#5d91ff;font-weight:900}.divider{display:flex;align-items:center;gap:10px;color:#747982;font-size:10px;margin:1px 0}.divider:before,.divider:after{content:"";height:1px;flex:1;background:var(--line)}.loading{opacity:.65;pointer-events:none}
+.login-card{position:relative}.login-icon{background:linear-gradient(145deg,#3274ff,#2256d0)}
+.reward-strip{margin-top:28px;display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;padding:20px 22px;border:1px solid var(--line);border-radius:21px;background:linear-gradient(135deg,#292929,#242424);box-shadow:0 18px 45px rgba(0,0,0,.18)}.reward-copy{display:flex;align-items:center;gap:16px}.gift-box{width:58px;height:58px;flex:0 0 58px;border-radius:17px;display:grid;place-items:center;background:rgba(255,210,26,.10);color:var(--gold);border:1px solid rgba(255,210,26,.20)}.gift-box svg{width:29px;height:29px;display:block;flex:0 0 auto}.reward-copy h3{margin:0;font-size:18px}.reward-copy p{margin:4px 0 0;color:#9297a0;font-size:12px}.reward-value{min-width:190px;padding:13px 17px;border:1px solid var(--line2);border-radius:15px;background:#252525}.reward-value small{display:block;color:#8f949d;font-size:10px}.reward-value strong{display:block;color:var(--gold);font-size:22px;margin-top:3px}
+.how-section{padding-top:55px}.section-head{text-align:center}.section-head h2{margin:0;font-size:29px;letter-spacing:-1px}.section-head p{margin:7px 0 0;color:#8f949d;font-size:13px}.how{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:27px}.step{position:relative;padding:24px 18px 20px;background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:19px}.step-icon{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:#103d9f;color:#fff;box-shadow:0 8px 20px rgba(47,109,246,.18)}.step-icon svg{width:21px;height:21px;display:block;flex:0 0 auto}.step-no{position:absolute;right:14px;top:14px;color:#626770;font-size:10px;font-weight:900}.step h3{margin:17px 0 7px;font-size:14px}.step p{margin:0;color:#858a93;font-size:11px;line-height:1.65}
+.dashboard{display:none}.dash-wrap{padding-top:42px;padding-bottom:70px}.dash-head{position:relative;overflow:hidden;background:linear-gradient(135deg,#102b67,#173d91);border:1px solid rgba(255,255,255,.12);border-radius:26px;padding:26px;box-shadow:var(--shadow)}.dash-head:after{content:"";position:absolute;width:300px;height:300px;right:-150px;top:-180px;border-radius:50%;background:rgba(80,142,255,.22)}.dash-top{position:relative;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.dash-title{font-size:27px;font-weight:950;letter-spacing:-1px}.dash-sub{margin-top:5px;color:#c3d2f3;font-size:12px}.logout{display:flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;border-radius:11px;padding:10px 13px;font-size:11px;font-weight:900}.logout svg{width:15px;height:15px;display:block;flex:0 0 auto}.dash-code-row{position:relative;z-index:1;display:flex;gap:9px;margin-top:23px}.codebox{flex:1;min-width:0;height:51px;border:1px solid rgba(255,255,255,.15);border-radius:13px;background:rgba(0,0,0,.17);color:#fff;padding:0 14px;outline:none;font-size:12px}.copy{width:120px;border:0;border-radius:13px;background:var(--gold);color:#18120a;font-weight:950;display:flex;align-items:center;justify-content:center;gap:7px}.copy svg{width:16px;height:16px;display:block;flex:0 0 auto}.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}.metric,.panel{background:#292929;border:1px solid var(--line);border-radius:19px}.metric{padding:18px}.metric .micon{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:rgba(47,109,246,.12);color:#79a1ff}.metric .micon svg{width:18px;height:18px}.metric small{display:block;color:#8e939c;font-size:10px;margin-top:13px}.metric strong{display:block;color:#f6f6f6;font-size:25px;margin-top:4px;letter-spacing:-1px}.metric.green .micon{background:rgba(69,211,155,.10);color:var(--green)}.metric.green strong{color:var(--green)}.earn-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin-top:14px}.panel{padding:21px}.panel h3{margin:0;font-size:15px}.panel p{margin:6px 0 0;color:#858a93;font-size:11px;line-height:1.6}.earn-big{font-size:37px;font-weight:950;letter-spacing:-2px;margin:17px 0 4px}.subvalue{font-size:10px;color:#777c85}.progress{height:9px;background:#1f1f1f;border-radius:999px;overflow:hidden;margin-top:15px}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),#70a0ff);border-radius:inherit;transition:width .4s}.split-meta{display:flex;justify-content:space-between;gap:10px;margin-top:8px;font-size:10px;color:#777c85}.share-row{display:flex;gap:10px;margin-top:18px}.share-row .primary{flex:1}.refresh-note{text-align:right;color:#777c85;font-size:9px;margin-top:9px}.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.detail small{color:#777c85;font-size:10px}.detail strong{display:block;margin-top:4px;font-size:13px}.note{margin:18px 0 0;padding:12px;border-radius:12px;background:#232323;color:#858a93!important;border:1px solid var(--line)}
+.footer{border-top:1px solid var(--line);padding:28px 20px;text-align:center;color:#70757e;font-size:10px}.footer a{color:#8aaeff;font-weight:800}
+@media(max-width:900px){.hero-in{grid-template-columns:1fr;gap:28px;align-items:stretch}.auth-area{width:100%}.hero-copy{max-width:none}.auth-card{max-width:620px;margin:auto}.how{grid-template-columns:repeat(2,1fr)}.dash-grid{grid-template-columns:repeat(2,1fr)}.earn-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.wrap{padding-left:14px;padding-right:14px}.hero{overflow:visible}.navin{min-height:62px}.brand{font-size:18px}.brandmark{width:35px;height:35px}.navlinks a:not(.nav-cta){display:none}.nav-cta{padding:10px 13px}.hero-in{padding-top:43px;padding-bottom:38px}.eyebrow{font-size:9px}.hero-copy>p{font-size:14px;line-height:1.65}.hero-copy h1,h1{font-size:42px;letter-spacing:-2.5px}.feature{padding:13px}.feature-icon{width:42px;height:42px;flex-basis:42px}.feature strong{font-size:13px}.feature-copy span{font-size:11px}.auth-card{padding:21px;border-radius:23px}.auth-card h2{font-size:24px}.secure{font-size:9px;padding:8px 10px}.auth-icon{width:52px;height:52px}.reward-strip{grid-template-columns:1fr;padding:17px}.reward-value{min-width:0}.how{grid-template-columns:1fr}.how-section{padding-top:42px}.dash-wrap{padding-top:24px}.dash-head{padding:20px;border-radius:21px}.dash-top{flex-direction:column}.dash-title{font-size:23px}.dash-code-row{display:grid;grid-template-columns:1fr}.copy{width:100%;height:48px}.metric{padding:14px}.metric strong{font-size:21px}.earn-big{font-size:33px}.detail-grid{grid-template-columns:1fr 1fr}.share-row{display:grid}.footer{padding-bottom:30px}}
+@media(max-width:380px){.hero-copy h1,h1{font-size:38px}.auth-top{gap:9px}.secure{padding:7px 8px}.auth-card{padding:18px}.detail-grid{grid-template-columns:1fr}.dash-grid{gap:8px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap navin"><a class="brand" href="/"><span class="brandmark">PV</span><span>Prep Via</span></a><nav class="navlinks"><a href="/">Home</a><a href="#how">How it works</a><a href="#auth" class="nav-cta"><i data-lucide="gift"></i> Refer &amp; Earn</a></nav></div></header>
+
+<section class="hero" id="top"><div class="wrap hero-in">
+  <div class="hero-copy">
+    <span class="eyebrow"><i data-lucide="sparkles"></i> PREP VIA REFERRAL PROGRAM</span>
+    <h1>Refer. Help.<br><span class="accent">Earn.</span> It’s that simple.</h1>
+    <p>Invite fellow JEE &amp; NEET aspirants with your personal referral link. When an eligible purchase is successfully verified, your reward is recorded automatically.</p>
+    <div class="feature-list">
+      <div class="feature"><span class="feature-icon"><i data-lucide="link-2"></i></span><div class="feature-copy"><strong>Personal referral link</strong><span>Share your unique link with friends &amp; track clicks.</span></div></div>
+      <div class="feature"><span class="feature-icon"><i data-lucide="chart-no-axes-combined"></i></span><div class="feature-copy"><strong>Live performance stats</strong><span>Track clicks, checkouts and verified purchases.</span></div></div>
+      <div class="feature"><span class="feature-icon"><i data-lucide="badge-check"></i></span><div class="feature-copy"><strong>Verified purchases only</strong><span>Rewards are counted only after payment verification.</span></div></div>
+    </div>
+  </div>
+
+  <div id="auth" class="auth-area">
+    <div id="authArea" class="auth-card">
+      <div class="auth-top"><div class="auth-icon"><i data-lucide="user-plus"></i></div><span class="secure"><i data-lucide="lock-keyhole"></i> SECURE</span></div>
+      <h2>Create your referral account</h2>
+      <p class="auth-sub">Start earning rewards by referring friends to Prep Via.</p>
+      <form id="signupForm" class="form" onsubmit="return false;">
+        <div class="field"><label><i data-lucide="user"></i> Full name</label><input id="regName" autocomplete="name" placeholder="Enter your full name" minlength="2" maxlength="80" required></div>
+        <div class="field"><label><i data-lucide="mail"></i> Email address</label><input id="regEmail" type="email" autocomplete="email" placeholder="Enter your email address" required></div>
+        <div class="field"><label><i data-lucide="lock"></i> Create password</label><div class="input-wrap"><input id="regPassword" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required><button type="button" class="showpass" data-pass="regPassword"><i data-lucide="eye"></i><span>Show</span></button></div></div>
+        <button class="primary" type="submit" id="registerBtn"><i data-lucide="user-plus"></i> Create my referral account</button>
+        <div id="regMsg" class="msg" aria-live="polite"></div>
+        <div class="form-note"><i data-lucide="shield-check"></i><span>Your password is securely protected. Your account is only used for referral activity.</span></div>
+        <div class="divider"><span>OR</span></div>
+        <div class="switch"><span>Already have a referral account?</span> <button type="button" data-switch="login">Log in</button></div>
+      </form>
+    </div>
+
+    <div id="loginCard" class="auth-card login-card hidden">
+      <div class="auth-top"><div class="auth-icon login-icon"><i data-lucide="log-in"></i></div><span class="secure"><i data-lucide="lock-keyhole"></i> SECURE</span></div>
+      <h2>Welcome back</h2>
+      <p class="auth-sub">Log in to manage your referral link and earnings.</p>
+      <form id="loginForm" class="form" onsubmit="return false;">
+        <div class="field"><label><i data-lucide="mail"></i> Email address</label><input id="loginEmail" type="email" autocomplete="email" placeholder="Enter your email" required></div>
+        <div class="field"><label><i data-lucide="lock"></i> Password</label><div class="input-wrap"><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Enter your password" required><button type="button" class="showpass" data-pass="loginPassword"><i data-lucide="eye"></i><span>Show</span></button></div></div>
+        <button class="primary" type="submit" id="loginBtn"><i data-lucide="log-in"></i> Log in to dashboard</button>
+        <div id="loginMsg" class="msg" aria-live="polite"></div>
+        <div class="switch"><span>Don't have a referral account?</span> <button type="button" data-switch="signup">Create one</button></div>
+      </form>
+    </div>
+  </div>
+</div></section>
+
+<main class="wrap">
+  <section class="reward-strip" aria-label="Referral reward"><div class="reward-copy"><span class="gift-box"><i data-lucide="gift"></i></span><div><h3>The more you refer, the more you earn.</h3><p>No limit on referrals. Keep sharing and keep earning.</p></div></div><div class="reward-value"><small>Current reward / verified purchase*</small><strong>₹<span id="heroReward">50</span></strong></div></section>
+
+  <section id="how" class="how-section"><div class="section-head"><h2>How it works?</h2><p>Four simple steps from signup to reward.</p></div><div class="how">
+    <div class="step"><span class="step-no">01</span><span class="step-icon"><i data-lucide="link-2"></i></span><h3>Get your link</h3><p>Create your account and get your unique referral link automatically.</p></div>
+    <div class="step"><span class="step-no">02</span><span class="step-icon"><i data-lucide="send"></i></span><h3>Share with friends</h3><p>Share your link on WhatsApp, Telegram, Instagram or any platform.</p></div>
+    <div class="step"><span class="step-no">03</span><span class="step-icon"><i data-lucide="users"></i></span><h3>They purchase</h3><p>Your friends use your link and complete an eligible purchase.</p></div>
+    <div class="step"><span class="step-no">04</span><span class="step-icon"><i data-lucide="gift"></i></span><h3>You earn rewards</h3><p>You earn ₹<span id="heroRewardHow">50</span> for every verified qualifying purchase.</p></div>
+  </div></section>
+
+  <section id="dashboard" class="dashboard" aria-live="polite"><div class="dash-wrap">
+    <div class="dash-head"><div class="dash-top"><div><div class="dash-title">Hi, <span id="dashName">there</span> 👋</div><div class="dash-sub">Here’s how your referral link is performing.</div></div><button id="logout" class="logout"><i data-lucide="log-out"></i> Log out</button></div><div class="dash-code-row"><input id="link" class="codebox" readonly aria-label="Referral link"><button id="copy" class="copy"><i data-lucide="copy"></i> Copy link</button></div><div id="dashMsg" class="msg" style="color:#dbe6ff;margin-top:9px" aria-live="polite"></div></div>
+    <div class="dash-grid"><div class="metric"><span class="micon"><i data-lucide="mouse-pointer-click"></i></span><small>Total clicks</small><strong id="clicks">0</strong></div><div class="metric"><span class="micon"><i data-lucide="eye"></i></span><small>Unique visitors</small><strong id="visitors">0</strong></div><div class="metric"><span class="micon"><i data-lucide="shopping-cart"></i></span><small>Checkouts</small><strong id="checkouts">0</strong></div><div class="metric green"><span class="micon"><i data-lucide="badge-check"></i></span><small>Verified purchases</small><strong id="purchases">0</strong></div></div>
+    <div class="earn-grid"><div class="panel"><h3>Referral earnings</h3><p>Your rewards are based on successfully verified qualifying purchases.</p><div class="earn-big" id="rewards">₹0</div><div class="subvalue">Total rewards earned</div><div class="progress"><span id="progress"></span></div><div class="split-meta"><span id="conversionText">0% purchase conversion</span><span id="rewardRate">₹50 / purchase</span></div></div><div class="panel"><h3>Pending payout</h3><p>Rewards waiting to be paid are shown here. Payout handling is managed by Prep Via.</p><div class="earn-big" id="pending">₹0</div><div class="subvalue">Pending rewards</div><div class="share-row"><button class="primary" id="share"><i data-lucide="share-2"></i> Share referral link</button></div><div class="refresh-note" id="updated">Updating…</div></div></div>
+    <div class="panel" style="margin-top:14px"><h3>Referral details</h3><div class="detail-grid"><div class="detail"><small>Referral code</small><strong id="code">—</strong></div><div class="detail"><small>Attribution window</small><strong><span id="window">30</span> days</strong></div><div class="detail"><small>Revenue generated</small><strong id="revenue">₹0</strong></div></div><p class="note">A reward is credited only after the referred payment is successfully verified. Self-referrals are not eligible.</p></div>
+  </div></section>
+</main>
+<footer class="footer">© 2026 Prep Via · <a href="/">Back to Prep Via</a></footer>
+
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const TOKEN_KEY='prepvia_referral_token';
+const token=()=>localStorage.getItem(TOKEN_KEY)||'';
+const setToken=t=>t?localStorage.setItem(TOKEN_KEY,t):localStorage.removeItem(TOKEN_KEY);
+const icons=()=>{try{if(window.lucide&&typeof window.lucide.createIcons==='function')window.lucide.createIcons()}catch(_){} };
+function msg(id,text,type=''){const el=$(id);if(!el)return;el.textContent=text||'';el.className='msg '+type}
+async function api(path,opts={}){
+  const headers={'Content-Type':'application/json',...(opts.headers||{})};
+  const t=token(); if(t) headers.Authorization='Bearer '+t;
+  let r;
+  try{r=await fetch(path,{...opts,headers,cache:'no-store',credentials:'same-origin'});}catch(_){throw new Error('Network error. Please check your connection and try again.')}
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(d.message||d.error||'Something went wrong. Please try again.');
+  return d;
+}
+function busy(btn,on,label){
+  if(!btn)return;
+  if(on){btn.disabled=true;btn.classList.add('loading');btn.dataset.label=btn.innerHTML;btn.innerHTML='<i data-lucide="loader-circle"></i> '+(label||'Please wait…');icons()}
+  else{btn.disabled=false;btn.classList.remove('loading');btn.innerHTML=btn.dataset.label||btn.innerHTML;icons()}
+}
+function showAuth(){ $('authArea').classList.remove('hidden'); $('loginCard').classList.add('hidden'); $('dashboard').style.display='none'; }
+function showDashboard(){ $('authArea').classList.add('hidden'); $('loginCard').classList.add('hidden'); $('dashboard').style.display='block'; }
+function setMode(mode){
+  const signup=$('authArea'),login=$('loginCard'),auth=$('auth');
+  if(!signup||!login||!auth)return;
+  const before=auth.getBoundingClientRect().top;
+  if(mode==='login'){signup.classList.add('hidden');login.classList.remove('hidden');$('loginEmail')?.focus()}
+  else{login.classList.add('hidden');signup.classList.remove('hidden');$('regName')?.focus()}
+  icons();
+  requestAnimationFrame(()=>{const after=auth.getBoundingClientRect().top;window.scrollBy({top:after-before,left:0,behavior:'auto'});});
+}
+async function submitLogin(e){
+  if(e)e.preventDefault();
+  msg('loginMsg','');
+  const email=$('loginEmail')?.value.trim()||'', password=$('loginPassword')?.value||'';
+  if(!email||!password){msg('loginMsg','Enter your email and password.','error');return false}
+  const btn=$('loginBtn');busy(btn,true,'Signing in…');
+  try{
+    const d=await api('/api/referrals/login',{method:'POST',body:JSON.stringify({email,password})});
+    if(!d.token)throw new Error('Login succeeded but no session was returned. Please try again.');
+    setToken(d.token);
+    await loadDashboard(true);
+  }catch(err){setToken('');showAuth();msg('loginMsg',err.message,'error')}
+  finally{busy(btn,false)}
+  return false;
+}
+async function submitSignup(e){
+  if(e)e.preventDefault();
+  msg('regMsg','');
+  const name=$('regName')?.value.trim()||'',email=$('regEmail')?.value.trim()||'',password=$('regPassword')?.value||'';
+  if(name.length<2){msg('regMsg','Enter your name.','error');return false}
+  if(!email){msg('regMsg','Enter your email address.','error');return false}
+  if(password.length<6){msg('regMsg','Password must be at least 6 characters.','error');return false}
+  const btn=$('registerBtn');busy(btn,true,'Creating account…');
+  try{
+    const d=await api('/api/referrals/register',{method:'POST',body:JSON.stringify({name,email,password})});
+    if(!d.token)throw new Error('Account was created but no session was returned. Please try logging in.');
+    setToken(d.token);
+    await loadDashboard(true);
+  }catch(err){setToken('');msg('regMsg',err.message,'error')}
+  finally{busy(btn,false)}
+  return false;
+}
+function money(v){return '₹'+Number(v||0).toLocaleString('en-IN',{maximumFractionDigits:0})}
+async function loadDashboard(scroll=false){
+  try{
+    const d=await api('/api/referrals/me');
+    if(!d.user){throw new Error('Your referral session has expired. Please log in again.')}
+    showDashboard();
+    $('dashName').textContent=d.user.name||'there';
+    $('code').textContent=d.user.code||'—';
+    $('link').value=location.origin+(d.referral_url||'/?ref='+encodeURIComponent(d.user.code||''));
+    $('clicks').textContent=Number(d.stats?.clicks||0).toLocaleString('en-IN');
+    $('visitors').textContent=Number(d.stats?.unique_visitors||0).toLocaleString('en-IN');
+    $('checkouts').textContent=Number(d.stats?.checkouts||0).toLocaleString('en-IN');
+    $('purchases').textContent=Number(d.stats?.purchases||0).toLocaleString('en-IN');
+    $('revenue').textContent=money(d.stats?.revenue);
+    $('rewards').textContent=money(d.stats?.rewards);
+    $('pending').textContent=money(d.stats?.pending_rewards);
+    $('rewardRate').textContent=money(d.reward_per_purchase)+' / purchase';
+    $('window').textContent=Number(d.attribution_days||30);
+    $('heroReward').textContent=Number(d.reward_per_purchase||50).toLocaleString('en-IN');
+    $('heroRewardHow').textContent=Number(d.reward_per_purchase||50).toLocaleString('en-IN');
+    const p=Number(d.stats?.purchases||0),c=Number(d.stats?.clicks||0),rate=c?(p/c*100):0;
+    $('conversionText').textContent=rate.toFixed(rate>=10?0:1)+'% purchase conversion';
+    $('progress').style.width=Math.min(100,rate*5)+'%';
+    $('updated').textContent='Updated '+new Date().toLocaleTimeString();
+    if(scroll)window.scrollTo({top:document.getElementById('dashboard').offsetTop-75,behavior:'smooth'});
+    icons();
+  }catch(err){
+    setToken('');showAuth();msg('loginMsg',err.message,'error');
+  }
+}
+$('loginForm')?.addEventListener('submit',submitLogin);
+$('signupForm')?.addEventListener('submit',submitSignup);
+document.querySelectorAll('[data-switch]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();setMode(b.dataset.switch)}));
+document.querySelectorAll('[data-pass]').forEach(b=>b.addEventListener('click',e=>{
+  e.preventDefault();const x=$(b.dataset.pass);if(!x)return;const show=x.type==='password';x.type=show?'text':'password';b.innerHTML=show?'<i data-lucide="eye-off"></i><span>Hide</span>':'<i data-lucide="eye"></i><span>Show</span>';icons();
+}));
+$('logout')?.addEventListener('click',()=>{setToken('');showAuth();$('loginEmail')?.focus();});
+$('copy')?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('link').value)}catch{$('link').select();document.execCommand('copy')}$('copy').innerHTML='<i data-lucide="check"></i> Copied';icons();setTimeout(()=>{$('copy').innerHTML='<i data-lucide="copy"></i> Copy link';icons()},1500)});
+$('share')?.addEventListener('click',async()=>{const url=$('link').value;try{if(navigator.share){await navigator.share({title:'Prep Via — Refer & Earn',text:'Check out Prep Via:',url})}else{await navigator.clipboard.writeText(url);$('share').innerHTML='<i data-lucide="check"></i> Link copied';icons();setTimeout(()=>{$('share').innerHTML='<i data-lucide="share-2"></i> Share referral link';icons()},1500)}}catch(_){} });
+let refreshTimer=null;
+async function init(){if(token()){await loadDashboard(false);if(token())refreshTimer=setInterval(()=>{if(document.visibilityState==='visible'&&token())loadDashboard(false)},10000)}}
+icons();
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&token())loadDashboard(false)});
+init();
+})();
+</script>
+</body>
+</html>
