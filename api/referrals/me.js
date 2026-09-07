@@ -50,7 +50,7 @@ module.exports=async(req,res)=>{
       try{
         const pendingId=await redisGet('referral:withdrawal:pending:'+user.id);if(pendingId)return res.status(409).json({message:'You already have a pending withdrawal request.'});
         const available=await num('referral:available_paise:'+user.id);if(amount>available)return res.status(400).json({message:'Withdrawal amount exceeds your available balance.'});
-        const id=randomId();const record={id,userId:user.id,name:user.name,email:user.email,upi_id:user.upi_id,amount_paise:amount,status:'pending',createdAt:Date.now()};
+        const id=randomId();const record={id,userId:user.id,name:user.payout_name||user.name,email:user.email,upi_id:user.upi_id,amount_paise:amount,status:'pending',createdAt:Date.now()};
         await increment('referral:available_paise:'+user.id,-amount);await redisSet('referral:withdrawal:'+id,JSON.stringify(record));await require('../../lib/referrals-shared').pushList('referral:withdrawals:'+user.id,id);await require('../../lib/referrals-shared').pushList('referral:withdrawals:all',id);await redisSet('referral:withdrawal:pending:'+user.id,id,30*24*60*60);
         await createNotification(user.id,'Withdrawal request submitted',`Your ₹${(amount/100).toFixed(2)} withdrawal request is pending admin review.`,'withdrawal');
         return res.status(201).json({success:true,withdrawal:record});
