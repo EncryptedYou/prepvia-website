@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const {
   cleanCode, getUserByCode, getUserById, increment, setAdd, setCardinality,
   redisGet, redisSet, redisSetNX, getReferralSettings, getViewRatePaise,
-  ATTRIBUTION_DAYS, createNotification, createPendingEarning, hash
+  ATTRIBUTION_DAYS, createNotification, createPendingEarning, hash, parseBody
 } = require('../../lib/referrals-shared');
 function cookieHeader(id,ttl){return 'prepvia_referral='+encodeURIComponent(id)+'; Max-Age='+ttl+'; Path=/; SameSite=Lax; Secure';}
 function getCookie(req,name){const raw=String(req.headers.cookie||'');const m=raw.split(';').map(x=>x.trim()).find(x=>x.startsWith(name+'='));return m?decodeURIComponent(m.slice(name.length+1)):'';}
@@ -11,7 +11,7 @@ function userAgent(req){return String(req.headers['user-agent']||'').slice(0,300
 module.exports = async (req,res) => {
   if(req.method!=='POST')return res.status(405).json({message:'Method not allowed'});
   try{
-    const body=req.body||{};
+    const body=parseBody(req);
     const program=await getReferralSettings();
     if(!program.enabled)return res.status(403).json({message:'Referral program is currently disabled.'});
     const code=cleanCode(body.code);

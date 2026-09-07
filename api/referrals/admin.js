@@ -1,9 +1,9 @@
 const {
   redisGet,redisSet,redisDel,getUserById,increment,setCardinality,getReferralSettings,
-  DEFAULT_SETTINGS,REWARD_PAISE,ATTRIBUTION_DAYS, listRange, createNotification,
+  DEFAULT_SETTINGS,REWARD_PAISE,ATTRIBUTION_DAYS, listRange, createNotification, parseBody,
   redisSetNX, randomId
 } = require('../../lib/referrals-shared');
-function auth(req){return !!process.env.ADMIN_SECRET&&String(req.headers.authorization||'')==='Bearer '+process.env.ADMIN_SECRET;}
+function auth(req){const supplied=String(req.headers.authorization||'');const secret=process.env.ADMIN_SECRET||process.env.ADMIN_PASSWORD;return !!secret&&supplied==='Bearer '+secret;}
 function num(v){return Number(v||0);}
 function moneyPaise(v){return Math.round(num(v));}
 async function settings(){return getReferralSettings();}
@@ -37,7 +37,7 @@ module.exports=async(req,res)=>{
       return res.status(200).json({settings:{enabled:s.enabled,purchase_enabled:s.purchase_enabled,purchase_reward_rupees:s.purchase_reward_paise/100,view_enabled:s.view_enabled,view_start_threshold:s.view_start_threshold,view_min_seconds:s.view_min_seconds,view_min_scroll:s.view_min_scroll,view_default_reward_rupees:s.view_default_reward_paise/100,view_slabs:s.view_slabs.map(x=>({min:x.min,max:x.max,reward_rupees:x.reward_paise/100})),min_withdrawal_rupees:s.min_withdrawal_paise/100,anti_abuse_enabled:s.anti_abuse_enabled,max_ip_views_per_day:s.max_ip_views_per_day,attribution_days:s.attribution_days},referrers:out,withdrawals,pending_earnings:pendingEarnings.slice(0,200)});
     }
     if(req.method==='PUT'){
-      const b=req.body||{},s=await settings();
+      const b=parseBody(req),s=await settings();
       if('enabled' in b)s.enabled=!!b.enabled;if('purchase_enabled' in b)s.purchase_enabled=!!b.purchase_enabled;if('view_enabled' in b)s.view_enabled=!!b.view_enabled;
       if('purchase_reward_rupees' in b){const n=Number(b.purchase_reward_rupees);if(!Number.isFinite(n)||n<0||n>100000)return res.status(400).json({message:'Invalid sale reward.'});s.purchase_reward_paise=Math.round(n*100)}
       if('view_start_threshold' in b){const n=Number(b.view_start_threshold);if(!Number.isInteger(n)||n<0||n>100000000)return res.status(400).json({message:'Invalid view threshold.'});s.view_start_threshold=n}
@@ -48,10 +48,10 @@ module.exports=async(req,res)=>{
       if('min_withdrawal_rupees' in b){const n=Number(b.min_withdrawal_rupees);if(!Number.isFinite(n)||n<0||n>10000000)return res.status(400).json({message:'Invalid minimum withdrawal.'});s.min_withdrawal_paise=Math.round(n*100)}
       if('anti_abuse_enabled' in b)s.anti_abuse_enabled=!!b.anti_abuse_enabled;if('max_ip_views_per_day' in b){const n=Number(b.max_ip_views_per_day);if(!Number.isInteger(n)||n<1||n>1000)return res.status(400).json({message:'Invalid anti-abuse limit.'});s.max_ip_views_per_day=n}
       if('attribution_days' in b){const n=Number(b.attribution_days);if(!Number.isInteger(n)||n<1||n>365)return res.status(400).json({message:'Attribution days must be 1–365.'});s.attribution_days=n}
-      await redisSet('referral:settings',JSON.stringify(s));return res.status(200).json({success:true});
+      const saved=await redisSet('referral:settings',JSON.stringify(s));if(!saved)throw new Error('Settings could not be saved to Redis.');const verified=await getReferralSettings();return res.status(200).json({success:true,settings:{enabled:verified.enabled,purchase_enabled:verified.purchase_enabled,purchase_reward_rupees:verified.purchase_reward_paise/100,view_enabled:verified.view_enabled,view_start_threshold:verified.view_start_threshold,view_min_seconds:verified.view_min_seconds,view_min_scroll:verified.view_min_scroll,view_default_reward_rupees:verified.view_default_reward_paise/100,view_slabs:verified.view_slabs.map(x=>({min:x.min,max:x.max,reward_rupees:x.reward_paise/100})),min_withdrawal_rupees:verified.min_withdrawal_paise/100,anti_abuse_enabled:verified.anti_abuse_enabled,max_ip_views_per_day:verified.max_ip_views_per_day,attribution_days:verified.attribution_days}});
     }
     if(req.method==='PATCH'){
-      const b=req.body||{},id=String(b.id||''),action=String(b.action||'');
+      const b=parseBody(req),id=String(b.id||''),action=String(b.action||'');
       if(action==='approve_earning'||action==='reject_earning')return res.status(200).json(await processEarning(id,action));
       if(action==='approve_all_earnings'||action==='reject_all_earnings'){
         const ids2=await listRange('referral:pending_earnings:'+id,0,1000);let done=0;for(const eid of(ids2||[])){const r=await processEarning(eid,action==='approve_all_earnings'?'approve_earning':'reject_earning');if(r.ok&&!r.already)done++}
@@ -75,7 +75,7 @@ module.exports=async(req,res)=>{
       return res.status(400).json({message:'Unknown referral action.'});
     }
     if(req.method==='DELETE'){
-      const id=String(req.body?.id||'');if(!id)return res.status(400).json({message:'Referrer id required.'});const u=await getUserById(id);if(!u)return res.status(404).json({message:'Referrer not found.'});await redisDel('referral:user:'+id);await redisDel('referral:email:'+u.email);await redisDel('referral:code:'+u.code);const raw=await redisGet('referral:index');const ids=raw?JSON.parse(raw):[];await redisSet('referral:index',JSON.stringify(ids.filter(x=>x!==id)));return res.status(200).json({success:true});
+      const body=parseBody(req);const id=String(body.id||'');if(!id)return res.status(400).json({message:'Referrer id required.'});const u=await getUserById(id);if(!u)return res.status(404).json({message:'Referrer not found.'});await redisDel('referral:user:'+id);await redisDel('referral:email:'+u.email);await redisDel('referral:code:'+u.code);const raw=await redisGet('referral:index');const ids=raw?JSON.parse(raw):[];await redisSet('referral:index',JSON.stringify(ids.filter(x=>x!==id)));return res.status(200).json({success:true});
     }
     return res.status(405).json({message:'Method not allowed'});
   }catch(e){console.error('Referral admin error:',e);return res.status(500).json({message:e.message||'Unable to process referral admin request.'});}

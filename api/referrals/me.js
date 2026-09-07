@@ -1,5 +1,5 @@
 const {
-  getSession,getUserById,redisGet,redisSet,redisSetNX,increment,listRange,
+  getSession,getUserById,redisGet,redisSet,redisSetNX,increment,listRange,parseBody,
   getReferralSettings,getViewRatePaise,createNotification,randomId,normalizeEmail
 } = require('../../lib/referrals-shared');
 function validUpi(v){return /^[A-Za-z0-9._-]{2,100}@[A-Za-z0-9._-]{2,50}$/.test(String(v||'').trim());}
@@ -35,14 +35,14 @@ module.exports=async(req,res)=>{
       return res.status(200).json({user:{id:user.id,name:user.name,email:user.email,code:user.code,upi_id:user.upi_id||''},stats:d.stats,settings:{enabled:s.enabled,purchase_enabled:s.purchase_enabled,view_enabled:s.view_enabled,purchase_reward_rupees:s.purchase_reward_paise/100,view_start_threshold:s.view_start_threshold,view_min_seconds:s.view_min_seconds,view_min_scroll:s.view_min_scroll,view_slabs:s.view_slabs,min_withdrawal_rupees:s.min_withdrawal_paise/100},withdrawals:d.withdrawals,notifications:d.notifications,referral_url:'/?ref='+encodeURIComponent(user.code)});
     }
     if(req.method==='PUT'){
-      const upi=String(req.body?.upi_id||'').trim();if(upi&&!validUpi(upi))return res.status(400).json({message:'Enter a valid UPI ID.'});
+      const body=parseBody(req); const upi=String(body.upi_id||'').trim();if(upi&&!validUpi(upi))return res.status(400).json({message:'Enter a valid UPI ID.'});
       user.upi_id=upi;user.upi_updated_at=Date.now();await redisSet('referral:user:'+user.id,JSON.stringify(user));
       await createNotification(user.id,'Payment profile updated',upi?'Your UPI ID was updated successfully.':'Your UPI ID was removed.','profile');
       return res.status(200).json({success:true,upi_id:user.upi_id||''});
     }
     if(req.method==='POST'){
-      const action=String(req.body?.action||'');if(action!=='withdraw')return res.status(400).json({message:'Unknown referral action.'});
-      const amount=Math.round(Number(req.body?.amount_rupees||0)*100);if(!Number.isFinite(amount)||amount<=0)return res.status(400).json({message:'Enter a valid withdrawal amount.'});
+      const body=parseBody(req); const action=String(body.action||'');if(action!=='withdraw')return res.status(400).json({message:'Unknown referral action.'});
+      const amount=Math.round(Number(body.amount_rupees||0)*100);if(!Number.isFinite(amount)||amount<=0)return res.status(400).json({message:'Enter a valid withdrawal amount.'});
       if(!user.upi_id||!validUpi(user.upi_id))return res.status(400).json({message:'Add a valid UPI ID before requesting withdrawal.'});
       const settings=await getReferralSettings();if(amount<settings.min_withdrawal_paise)return res.status(400).json({message:`Minimum withdrawal is ₹${settings.min_withdrawal_paise/100}.`});
       const lock='referral:withdrawal:lock:'+user.id;if(!await redisSetNX(lock,'1',15))return res.status(409).json({message:'Another withdrawal request is being processed. Please try again.'});

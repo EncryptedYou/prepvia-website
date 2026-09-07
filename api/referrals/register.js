@@ -1,11 +1,11 @@
 const crypto = require('crypto');
 const { redisGet, redisSet, randomId } = require('../../lib/coupons');
-const { normalizeEmail, hashPassword, makeCode, safeUser, createSession, getUserByEmail } = require('../../lib/referrals-shared');
+const { normalizeEmail, hashPassword, makeCode, safeUser, createSession, getUserByEmail, parseBody } = require('../../lib/referrals-shared');
 
 module.exports = async (req,res) => {
   if (req.method !== 'POST') return res.status(405).json({message:'Method not allowed'});
   try {
-    const {name,email,password} = req.body || {};
+    const {name,email,password} = parseBody(req);
     const cleanName = String(name||'').trim();
     const cleanEmail = normalizeEmail(email);
     if (cleanName.length < 2 || cleanName.length > 80) return res.status(400).json({message:'Enter a valid name.'});
@@ -23,5 +23,5 @@ module.exports = async (req,res) => {
     const raw = await redisGet('referral:index'); const index = raw ? JSON.parse(raw) : []; index.push(id); await redisSet('referral:index',JSON.stringify(index));
     const session = await createSession(user);
     return res.status(201).json({user:safeUser(user),token:session,referral_url:'/\?ref='+encodeURIComponent(code)});
-  } catch(e) { console.error('Referral register error:',e); return res.status(500).json({message:'Unable to create referral account.'}); }
+  } catch(e) { console.error('Referral register error:',e); return res.status(500).json({message:e.message||'Unable to create referral account.'}); }
 };
