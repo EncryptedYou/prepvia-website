@@ -173,8 +173,23 @@ module.exports = async (req, res) => {
     const pageViews = Number(eventCounts.page_view || 0);
     const buyClicks = Number(eventCounts.buy_click || 0);
     const checkoutViews = Number(eventCounts.checkout_view || 0);
-    const paymentAttempts = Number(eventCounts.payment_attempt || 0);
-    const paymentFailures = Number(eventCounts.payment_failed || 0);
+
+    // Count only unique server-created Razorpay orders. Older click-only events
+    // without an order_id are intentionally excluded because they are not reliable payment attempts.
+    const attemptOrders = new Set();
+    const failedOrders = new Set();
+    for (const raw of rows) {
+      let e;
+      try { e = typeof raw === "string" ? JSON.parse(raw) : raw; } catch (_) { continue; }
+      const ts = Number(e?.ts);
+      if (!e || ts < start || ts >= end) continue;
+      const orderId = String(e?.data?.order_id || "").trim();
+      if (!orderId) continue;
+      if (e.event === "payment_attempt") attemptOrders.add(orderId);
+      if (e.event === "payment_failed") failedOrders.add(orderId);
+    }
+    const paymentAttempts = attemptOrders.size;
+    const paymentFailures = [...failedOrders].filter(id => attemptOrders.has(id)).length;
     const purchases = Number(eventCounts.purchase || 0);
     const revenue = Number(Math.max(daily.revenue, eventRevenue).toFixed(2));
 
@@ -200,7 +215,7 @@ module.exports = async (req, res) => {
       funnel,
       conversion_rate: buyClicks ? Number((purchases / buyClicks * 100).toFixed(2)) : 0,
       visitor_to_purchase_rate: daily.visitors ? Number((purchases / daily.visitors * 100).toFixed(2)) : 0,
-      payment_success_rate: paymentAttempts ? Number(((paymentAttempts - paymentFailures) / paymentAttempts * 100).toFixed(2)) : 0,
+      payment_success_rate: paymentAttempts ? Number((Math.max(0, paymentAttempts - paymentFailures) / paymentAttempts * 100).toFixed(2)) : 0,
       events: eventCounts,
       top_pages: Object.entries(daily.pages).sort((a,b) => b[1] - a[1]).slice(0, 8).map(([page,count]) => ({ page, count })),
       traffic_sources: Object.entries(daily.sources).sort((a,b) => b[1] - a[1]).slice(0, 8).map(([source,count]) => ({ source, count })),
