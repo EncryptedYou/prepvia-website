@@ -30,6 +30,7 @@ module.exports=async(req,res)=>{
   try{
     const session=await getSession(req);if(!session)return res.status(401).json({message:'Session expired. Please log in again.'});
     const user=await getUserById(session.userId);if(!user)return res.status(401).json({message:'Account not found.'});
+    if(user.active===false)return res.status(403).json({message:'Your referral account has been disabled by Prep Via.'});
     if(req.method==='GET'){
       const d=await loadUserData(user);const s=d.settings;
       return res.status(200).json({user:{id:user.id,name:user.name,email:user.email,code:user.code,upi_id:user.upi_id||''},stats:d.stats,settings:{enabled:s.enabled,purchase_enabled:s.purchase_enabled,view_enabled:s.view_enabled,purchase_reward_rupees:s.purchase_reward_paise/100,view_start_threshold:s.view_start_threshold,view_min_seconds:s.view_min_seconds,view_min_scroll:s.view_min_scroll,view_slabs:s.view_slabs,min_withdrawal_rupees:s.min_withdrawal_paise/100},withdrawals:d.withdrawals,notifications:d.notifications,referral_url:'/?ref='+encodeURIComponent(user.code)});

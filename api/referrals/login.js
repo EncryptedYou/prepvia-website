@@ -4,7 +4,7 @@ module.exports = async (req,res) => {
   try{
     const body=parseBody(req); const email=normalizeEmail(body.email), password=String(body.password||'');
     const user=await getUserByEmail(email);
-    if(!user || !verifyPassword(password,user)) return res.status(401).json({message:'Invalid email or password.'});
+    if(!user || user.active===false || !verifyPassword(password,user)) return res.status(401).json({message:'Invalid email or password.'});
     const token=await createSession(user);
     return res.status(200).json({user:safeUser(user),token,referral_url:'/?ref='+encodeURIComponent(user.code)});
   }catch(e){console.error('Referral login error:',e);return res.status(500).json({message:e.message||'Unable to log in.'});}
