@@ -92,15 +92,17 @@ module.exports = async (req, res) => {
 
     if (referralSnapshot) {
       const referralSettings=await getReferralSettings();
+      const referredUser=await getUserById(referralSnapshot.userId);
+      const purchaseRewardPaise=referredUser&&referredUser.purchase_reward_override_paise!=null?Math.max(0,Math.round(Number(referredUser.purchase_reward_override_paise))):referralSettings.purchase_reward_paise;
       if(!referralSettings.enabled) referralSnapshot=null;
       if (referralSnapshot) {
         await increment('referral:purchases:' + referralSnapshot.userId, 1);
         await increment('referral:revenue:' + referralSnapshot.userId, actualAmount / 100);
         if(referralSettings.purchase_enabled){
           const rewardKey='referral:reward:'+referralSnapshot.userId+':'+payment_id;
-          if(await redisSetNX(rewardKey,JSON.stringify({order_id,payment_id,amount:referralSettings.purchase_reward_paise,status:'pending',createdAt:Date.now()}),31536000)){
-            await createPendingEarning(referralSnapshot.userId,'purchase',referralSettings.purchase_reward_paise,{order_id,payment_id,amount:actualAmount/100,code:referralSnapshot.code});
-            await createNotification(referralSnapshot.userId,'New sale earning',`Verified purchase generated ₹${(referralSettings.purchase_reward_paise/100).toFixed(2)} pending approval.`,'earning');
+          if(await redisSetNX(rewardKey,JSON.stringify({order_id,payment_id,amount:purchaseRewardPaise,status:'pending',createdAt:Date.now()}),31536000)){
+            await createPendingEarning(referralSnapshot.userId,'purchase',purchaseRewardPaise,{order_id,payment_id,amount:actualAmount/100,code:referralSnapshot.code});
+            await createNotification(referralSnapshot.userId,'New sale earning',`Verified purchase generated ₹${(purchaseRewardPaise/100).toFixed(2)} pending approval.`,'earning');
           }
         }
       }
