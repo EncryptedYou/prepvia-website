@@ -1,4 +1,4 @@
-const { getCoupon, validateCoupon, calculateDiscount, BASE_AMOUNT } = require('./coupons');
+const { getCoupon, validateCoupon, calculateDiscount, BASE_AMOUNT } = require('../lib/coupons');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ valid: false, message: 'Method not allowed' });

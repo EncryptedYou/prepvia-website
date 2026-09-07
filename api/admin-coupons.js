@@ -1,4 +1,4 @@
-const { cleanCode, getCoupon, redisGet, redisSet, redisDel } = require('./coupons');
+const { cleanCode, getCoupon, redisGet, redisSet, redisDel } = require('../lib/coupons');
 
 function authorized(req) {
   const secret = process.env.ADMIN_SECRET;

@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { redisSetNX } = require('./coupons');
+const { redisSetNX } = require('../lib/coupons');
 
 const sign = (value, secret) =>
   crypto.createHmac('sha256', secret).update(value).digest('hex');

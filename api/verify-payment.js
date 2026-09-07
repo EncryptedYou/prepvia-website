@@ -2,9 +2,9 @@ const crypto = require('crypto');
 const sign = (v, s) => crypto.createHmac('sha256', s).update(v).digest('hex');
 const {
   BASE_AMOUNT, getCoupon, redisGet, redisSet, redisSetNX, redisDel
-} = require('./coupons');
-const { getUserById, redisSet: referralRedisSet, increment, getReferralSettings } = require('./referrals/_shared');
-const { recordVerifiedPurchase } = require('./analytics/store');
+} = require('../lib/coupons');
+const { getUserById, redisSet: referralRedisSet, increment, getReferralSettings } = require('../lib/referrals-shared');
+const { recordVerifiedPurchase } = require('../lib/analytics-store');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ message: 'Method not allowed' });

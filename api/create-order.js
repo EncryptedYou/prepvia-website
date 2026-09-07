@@ -2,8 +2,8 @@ const crypto = require('crypto');
 const {
   BASE_AMOUNT, RESERVATION_TTL, cleanCode, getCoupon, validateCoupon,
   calculateDiscount, redisSet, redisSetNX, redisDel, reservationKey, randomId, redisGet
-} = require('./coupons');
-const { getUserById, ATTRIBUTION_TTL, getReferralSettings } = require('./referrals/_shared');
+} = require('../lib/coupons');
+const { getUserById, ATTRIBUTION_TTL, getReferralSettings } = require('../lib/referrals-shared');
 
 function getCookie(req, name) {
   const raw = String(req.headers.cookie || '');
