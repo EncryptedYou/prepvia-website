@@ -621,6 +621,16 @@ body{
 
       RAZORPAY_KEY_ID = data.key_id;
 
+      // Count a payment attempt only after the server creates a real Razorpay order.
+      if (typeof window.prepViaCheckoutTrack === "function") {
+        window.prepViaCheckoutTrack("payment_attempt", {
+          order_id: String(data.order_id).slice(0,120),
+          amount: Number(data.amount || currentAmount) / 100,
+          currency: "INR",
+          product: "JEE & NEET Success Package"
+        });
+      }
+
       // Never trust the browser amount. Compare the server amount with the selected coupon result.
       const serverAmount = Number(data.amount);
 
@@ -709,7 +719,13 @@ body{
 
       const rzp = new Razorpay(options);
 
-      rzp.on("payment.failed", function() {
+      rzp.on("payment.failed", function(response) {
+        if (typeof window.prepViaCheckoutTrack === "function") {
+          window.prepViaCheckoutTrack("payment_failed", {
+            order_id: String(data.order_id || "").slice(0,120),
+            reason: String(response?.error?.reason || "payment_failed").slice(0,80)
+          });
+        }
         button.disabled = false;
         updatePriceUI();
         showStatus("Payment failed or was cancelled. Please try again.", "error");
@@ -795,12 +811,7 @@ body{
     });
   }
 
-  if (pay) {
-    pay.addEventListener("click", () => {
-      const amount = typeof currentAmount === "number" ? currentAmount / 100 : 2.49;
-      send("payment_attempt", {amount, currency:"INR", product:"JEE & NEET Success Package"});
-    });
-  }
+
 
   window.addEventListener("beforeunload", () => send("session_end", {}, true));
 })();
