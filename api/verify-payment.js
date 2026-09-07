@@ -3,7 +3,6 @@ const sign = (v, s) => crypto.createHmac('sha256', s).update(v).digest('hex');
 const {
   BASE_AMOUNT, getCoupon, redisGet, redisSet, redisSetNX, redisDel
 } = require('../lib/coupons');
-const { getUserById, redisSet: referralRedisSet, increment, getReferralSettings, createPendingEarning, createNotification } = require('../lib/referrals-shared');
 const { recordVerifiedPurchase } = require('../lib/analytics-store');
 
 module.exports = async (req, res) => {
@@ -11,7 +10,6 @@ module.exports = async (req, res) => {
   let processedKey = null;
   let couponUsedKey = null;
   let couponSnapshot = null;
-  let referralSnapshot = null;
   try {
     const { name, email, phone, order_id, payment_id, signature } = req.body || {};
     const secret = process.env.RAZORPAY_KEY_SECRET;
@@ -39,17 +37,6 @@ module.exports = async (req, res) => {
     processedKey = 'payment:processed:' + payment_id;
     if (!await redisSetNX(processedKey, '1', 31536000))
       return res.status(409).json({ message: 'This payment has already been processed.' });
-
-    const referralOrderKey = 'referral:order:' + order_id;
-    const referralRaw = await redisGet(referralOrderKey);
-    if (referralRaw) {
-      try { referralSnapshot = JSON.parse(referralRaw); } catch { throw new Error('Invalid referral order metadata.'); }
-      const referrer = await getUserById(referralSnapshot.userId);
-      if (!referrer) throw new Error('Referral account no longer exists.');
-      if (String(referrer.email).toLowerCase() === String(email || '').trim().toLowerCase()) {
-        referralSnapshot = null;
-      }
-    }
 
     const couponOrderKey = 'coupon:order:' + order_id;
     const raw = await redisGet(couponOrderKey);
@@ -90,25 +77,6 @@ module.exports = async (req, res) => {
       if (!wr.ok) throw new Error('Activepieces webhook failed.');
     }
 
-    if (referralSnapshot) {
-      const referralSettings=await getReferralSettings();
-      const referredUser=await getUserById(referralSnapshot.userId);
-      const purchaseRewardPaise=referredUser&&referredUser.purchase_reward_override_paise!=null?Math.max(0,Math.round(Number(referredUser.purchase_reward_override_paise))):referralSettings.purchase_reward_paise;
-      if(!referralSettings.enabled) referralSnapshot=null;
-      if (referralSnapshot) {
-        await increment('referral:purchases:' + referralSnapshot.userId, 1);
-        await increment('referral:revenue:' + referralSnapshot.userId, actualAmount / 100);
-        if(referralSettings.purchase_enabled){
-          const rewardKey='referral:reward:'+referralSnapshot.userId+':'+payment_id;
-          if(await redisSetNX(rewardKey,JSON.stringify({order_id,payment_id,amount:purchaseRewardPaise,status:'pending',createdAt:Date.now()}),31536000)){
-            await createPendingEarning(referralSnapshot.userId,'purchase',purchaseRewardPaise,{order_id,payment_id,amount:actualAmount/100,code:referralSnapshot.code});
-            await createNotification(referralSnapshot.userId,'New sale earning',`Verified purchase generated ₹${(purchaseRewardPaise/100).toFixed(2)} pending approval.`,'earning');
-          }
-        }
-      }
-      await redisDel(referralOrderKey).catch(() => {});
-    }
-
     if (couponSnapshot) {
       const current = await getCoupon(couponSnapshot.coupon);
       if (!current) throw new Error('Coupon no longer exists.');
@@ -127,7 +95,6 @@ module.exports = async (req, res) => {
         payment_id,
         amount: actualAmount / 100,
         coupon: couponSnapshot ? couponSnapshot.coupon : null,
-        referral_code: referralSnapshot ? referralSnapshot.code : null
       });
     } catch (analyticsError) {
       console.error('Verified purchase analytics error:', analyticsError);

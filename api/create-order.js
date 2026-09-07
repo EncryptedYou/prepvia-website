@@ -3,22 +3,12 @@ const {
   BASE_AMOUNT, RESERVATION_TTL, cleanCode, getCoupon, validateCoupon,
   calculateDiscount, redisSet, redisSetNX, redisDel, reservationKey, randomId, redisGet
 } = require('../lib/coupons');
-const { getUserById, getReferralSettings } = require('../lib/referrals-shared');
-
-function getCookie(req, name) {
-  const raw = String(req.headers.cookie || '');
-  const match = raw.split(';').map(x => x.trim()).find(x => x.startsWith(name + '='));
-  return match ? decodeURIComponent(match.slice(name.length + 1)) : '';
-}
-
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ message: 'Method not allowed' });
   let reservation = null;
   let orderCouponKey = null;
-  let referralSnapshot = null;
-  let referralOrderKey = null;
   try {
-    const { name, email, phone, coupon, referral_attribution } = req.body || {};
+    const { name, email, phone, coupon } = req.body || {};
     if (!name || !email || !/^\d{10}$/.test(String(phone || '')))
       return res.status(400).json({ message: 'Invalid customer details.' });
 
@@ -26,24 +16,6 @@ module.exports = async (req, res) => {
     const secret = process.env.RAZORPAY_KEY_SECRET;
     if (!key || !secret) return res.status(500).json({ message: 'Razorpay configuration missing.' });
 
-    let referralAttributionId = String(referral_attribution || getCookie(req, 'prepvia_referral') || '').trim().slice(0, 100);
-    let referralSettings=null;
-    if (referralAttributionId) {
-      referralSettings=await getReferralSettings();
-      if(!referralSettings.enabled) { referralAttributionId=''; }
-      if(referralAttributionId) {
-      const rawReferral = await redisGet('referral:attr:' + referralAttributionId);
-      if (rawReferral) {
-        try {
-          const attr = JSON.parse(rawReferral);
-          const referrer = await getUserById(attr.userId);
-          if (referrer && referrer.active!==false && Date.now() - Number(attr.attributedAt || 0) <= Number(referralSettings.attribution_days || 30) * 86400000) {
-            referralSnapshot = { attributionId: referralAttributionId, userId: referrer.id, code: referrer.code, referrerEmail: referrer.email, attributedAt: Number(attr.attributedAt || Date.now()) };
-          }
-        } catch (_) {}
-      }
-      }
-    }
 
     const code = cleanCode(coupon);
     let finalAmount = BASE_AMOUNT;
@@ -85,12 +57,6 @@ module.exports = async (req, res) => {
       return res.status(r.status).json({ message: data.error?.description || 'Order creation failed.' });
     }
 
-    if (referralSnapshot) {
-      referralOrderKey = 'referral:order:' + data.id;
-      await redisSet(referralOrderKey, JSON.stringify(referralSnapshot), Number(referralSettings?.attribution_days || 30) * 86400);
-      await fetch(process.env.KV_REST_API_URL + '/incrby/' + encodeURIComponent('referral:checkouts:' + referralSnapshot.userId) + '/1', { headers:{Authorization:'Bearer '+process.env.KV_REST_API_TOKEN} }).catch(()=>{});
-    }
-
     if (couponRecord) {
       orderCouponKey = 'coupon:order:' + data.id;
       const snapshot = {
@@ -109,7 +75,6 @@ module.exports = async (req, res) => {
     console.error('Order creation error:', error);
     if (reservation) await redisDel(reservation).catch(() => {});
     if (orderCouponKey) await redisDel(orderCouponKey).catch(() => {});
-    if (referralOrderKey) await redisDel(referralOrderKey).catch(() => {});
     return res.status(500).json({ message: 'Unable to create payment order.' });
   }
 };
