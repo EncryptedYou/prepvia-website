@@ -179,6 +179,7 @@ button.danger{background:#fee2e2;color:#991b1b}
   const referralApi = "/api/referrals/admin";
 
   function msg(id,t){$(id).textContent=t||""}
+  function esc(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))}
   function auth(){return {Authorization:"Bearer "+secret,"Content-Type":"application/json"}}
 
   let selectedRange = "today";
@@ -354,7 +355,17 @@ button.danger{background:#fee2e2;color:#991b1b}
     loadAnalytics();
   };
 
-  setInterval(()=>{if(!$("analyticsPanel").classList.contains("hidden"))loadAnalytics()},10000);
+  setInterval(()=>{
+    if(document.hidden)return;
+    if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();
+    else if(!$('couponsPanel').classList.contains('hidden'))loadCoupons();
+    else if(!$('referralsPanel').classList.contains('hidden'))loadReferrals();
+  },10000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){
+    if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();
+    else if(!$('couponsPanel').classList.contains('hidden'))loadCoupons();
+    else if(!$('referralsPanel').classList.contains('hidden'))loadReferrals();
+  }});
   if(secret)showApp();else showLogin();
 })();
 </script>
