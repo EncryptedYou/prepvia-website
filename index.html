@@ -4593,7 +4593,29 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
     if (!visitorId) { visitorId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2); localStorage.setItem("prepvia_visitor_id", visitorId); }
     let sessionId = sessionStorage.getItem("prepvia_session_id");
     if (!sessionId) { sessionId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2); sessionStorage.setItem("prepvia_session_id", sessionId); }
-    fetch("/api/referrals/track", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code,visitor_id:visitorId,session_id:sessionId}),keepalive:true}).catch(()=>{});
+    const startedAt = Date.now();
+    let attributionId = sessionStorage.getItem("prepvia_referral_attribution") || "";
+    let minSeconds = 5, minScroll = 20, qualifiedSent = false, maxScroll = 0, timer = null;
+    const getScroll = () => Math.max(maxScroll, Math.round((window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight)) * 100));
+    const qualify = () => {
+      if (qualifiedSent || !attributionId) return;
+      maxScroll = Math.max(maxScroll, getScroll());
+      if ((Date.now()-startedAt) < minSeconds*1000 || maxScroll < minScroll) return;
+      qualifiedSent = true;
+      fetch("/api/referrals/track", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code,visitor_id:visitorId,session_id:sessionId,attribution_id:attributionId,stage:"qualify",scroll:maxScroll,view_seconds:(Date.now()-startedAt)/1000}),keepalive:true}).catch(()=>{});
+      window.removeEventListener("scroll", onScroll);
+      if(timer) clearInterval(timer);
+    };
+    const onScroll = () => { maxScroll=Math.max(maxScroll,getScroll()); qualify(); };
+    fetch("/api/referrals/track", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code,visitor_id:visitorId,session_id:sessionId,stage:"start"}),keepalive:true})
+      .then(r=>r.json()).then(d=>{
+        if(d?.attribution_id){ attributionId=d.attribution_id; sessionStorage.setItem("prepvia_referral_attribution",attributionId); }
+        minSeconds=Number(d?.min_view_seconds ?? 5); minScroll=Number(d?.min_scroll ?? 20);
+        qualify();
+      }).catch(()=>{});
+    window.addEventListener("scroll", onScroll, {passive:true});
+    timer=setInterval(qualify,1000);
+    setTimeout(()=>{ if(timer) clearInterval(timer); window.removeEventListener("scroll", onScroll); }, 30*60*1000);
   } catch (_) {}
 })();
 </script>
