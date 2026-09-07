@@ -3,7 +3,7 @@ const {
   BASE_AMOUNT, RESERVATION_TTL, cleanCode, getCoupon, validateCoupon,
   calculateDiscount, redisSet, redisSetNX, redisDel, reservationKey, randomId, redisGet
 } = require('../lib/coupons');
-const { getUserById, ATTRIBUTION_TTL, getReferralSettings } = require('../lib/referrals-shared');
+const { getUserById, getReferralSettings } = require('../lib/referrals-shared');
 
 function getCookie(req, name) {
   const raw = String(req.headers.cookie || '');
@@ -27,8 +27,9 @@ module.exports = async (req, res) => {
     if (!key || !secret) return res.status(500).json({ message: 'Razorpay configuration missing.' });
 
     let referralAttributionId = String(referral_attribution || getCookie(req, 'prepvia_referral') || '').trim().slice(0, 100);
+    let referralSettings=null;
     if (referralAttributionId) {
-      const referralSettings=await getReferralSettings();
+      referralSettings=await getReferralSettings();
       if(!referralSettings.enabled) { referralAttributionId=''; }
       if(referralAttributionId) {
       const rawReferral = await redisGet('referral:attr:' + referralAttributionId);
@@ -36,7 +37,7 @@ module.exports = async (req, res) => {
         try {
           const attr = JSON.parse(rawReferral);
           const referrer = await getUserById(attr.userId);
-          if (referrer && referrer.active!==false && Date.now() - Number(attr.attributedAt || 0) <= ATTRIBUTION_TTL * 1000) {
+          if (referrer && referrer.active!==false && Date.now() - Number(attr.attributedAt || 0) <= Number(referralSettings.attribution_days || 30) * 86400000) {
             referralSnapshot = { attributionId: referralAttributionId, userId: referrer.id, code: referrer.code, referrerEmail: referrer.email, attributedAt: Number(attr.attributedAt || Date.now()) };
           }
         } catch (_) {}
@@ -86,7 +87,7 @@ module.exports = async (req, res) => {
 
     if (referralSnapshot) {
       referralOrderKey = 'referral:order:' + data.id;
-      await redisSet(referralOrderKey, JSON.stringify(referralSnapshot), ATTRIBUTION_TTL);
+      await redisSet(referralOrderKey, JSON.stringify(referralSnapshot), Number(referralSettings?.attribution_days || 30) * 86400);
       await fetch(process.env.KV_REST_API_URL + '/incrby/' + encodeURIComponent('referral:checkouts:' + referralSnapshot.userId) + '/1', { headers:{Authorization:'Bearer '+process.env.KV_REST_API_TOKEN} }).catch(()=>{});
     }
 

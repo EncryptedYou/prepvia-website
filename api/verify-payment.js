@@ -3,7 +3,7 @@ const sign = (v, s) => crypto.createHmac('sha256', s).update(v).digest('hex');
 const {
   BASE_AMOUNT, getCoupon, redisGet, redisSet, redisSetNX, redisDel
 } = require('../lib/coupons');
-const { getUserById, redisSet: referralRedisSet, increment, getReferralSettings } = require('../lib/referrals-shared');
+const { getUserById, redisSet: referralRedisSet, increment, getReferralSettings, createPendingEarning, createNotification } = require('../lib/referrals-shared');
 const { recordVerifiedPurchase } = require('../lib/analytics-store');
 
 module.exports = async (req, res) => {
@@ -94,13 +94,15 @@ module.exports = async (req, res) => {
       const referralSettings=await getReferralSettings();
       if(!referralSettings.enabled) referralSnapshot=null;
       if (referralSnapshot) {
-      const rewardKey = 'referral:reward:' + referralSnapshot.userId + ':' + payment_id;
-      if (await redisSetNX(rewardKey, JSON.stringify({order_id,payment_id,amount:referralSettings.reward_paise,status:'pending',createdAt:Date.now()}), 31536000)) {
         await increment('referral:purchases:' + referralSnapshot.userId, 1);
         await increment('referral:revenue:' + referralSnapshot.userId, actualAmount / 100);
-        await increment('referral:rewards:' + referralSnapshot.userId, referralSettings.reward_paise / 100);
-        await increment('referral:pending:' + referralSnapshot.userId, referralSettings.reward_paise / 100);
-      }
+        if(referralSettings.purchase_enabled){
+          const rewardKey='referral:reward:'+referralSnapshot.userId+':'+payment_id;
+          if(await redisSetNX(rewardKey,JSON.stringify({order_id,payment_id,amount:referralSettings.purchase_reward_paise,status:'pending',createdAt:Date.now()}),31536000)){
+            await createPendingEarning(referralSnapshot.userId,'purchase',referralSettings.purchase_reward_paise,{order_id,payment_id,amount:actualAmount/100,code:referralSnapshot.code});
+            await createNotification(referralSnapshot.userId,'New sale earning',`Verified purchase generated ₹${(referralSettings.purchase_reward_paise/100).toFixed(2)} pending approval.`,'earning');
+          }
+        }
       }
       await redisDel(referralOrderKey).catch(() => {});
     }
