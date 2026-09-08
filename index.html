@@ -4462,6 +4462,127 @@ html{scroll-behavior:auto;}
 }
 </style>
 
+
+<style id="prep-via-compact-spacing">
+/* Compact section spacing — keeps the same design, but removes excessive vertical gaps. */
+.resource-vault,
+.video-preview-section,
+.notes-preview-section,
+.book-preview-section,
+.package-section,
+.screenshot-reviews-section,
+.payment-process,
+.faq-section,
+.footer-section{
+  padding-top:44px !important;
+  padding-bottom:48px !important;
+}
+
+.video-preview-section{padding-top:46px !important;padding-bottom:50px !important;}
+.notes-preview-section{padding-top:44px !important;padding-bottom:46px !important;}
+.book-preview-section{padding-top:44px !important;padding-bottom:46px !important;}
+.package-modern{padding-top:52px !important;padding-bottom:56px !important;}
+.screenshot-reviews-section{padding-top:44px !important;padding-bottom:48px !important;}
+.payment-process{padding-top:44px !important;padding-bottom:48px !important;}
+.faq-section{padding-top:44px !important;padding-bottom:48px !important;}
+
+.resource-vault .section-heading,
+.video-preview-inner h2,
+.notes-preview-section h2,
+.book-preview-section h2,
+.package-modern h2,
+.screenshot-reviews-section h2{
+  margin-top:10px !important;
+}
+
+.resource-vault .section-subtitle,
+.video-preview-text,
+.notes-preview-subtitle,
+.book-preview-subtitle,
+.package-subtitle,
+.screenshot-reviews-subtitle{
+  margin-top:10px !important;
+  margin-bottom:22px !important;
+}
+
+@media(max-width:700px){
+  .resource-vault,
+  .video-preview-section,
+  .notes-preview-section,
+  .book-preview-section,
+  .package-section,
+  .screenshot-reviews-section,
+  .payment-process,
+  .faq-section,
+  .footer-section{
+    padding-top:34px !important;
+    padding-bottom:38px !important;
+  }
+  .package-modern{padding-top:40px !important;padding-bottom:44px !important;}
+  .screenshot-reviews-section{padding-top:36px !important;padding-bottom:40px !important;}
+}
+</style>
+
+<style id="prep-via-review-compact-ui">
+.screenshot-review-card{
+  padding:8px !important;
+  border-radius:18px !important;
+}
+.screenshot-review-head{
+  padding:7px 6px 9px !important;
+  font-size:11px !important;
+}
+.screenshot-review-image-wrap{
+  overflow:hidden !important;
+  border-radius:14px !important;
+  background:#f7f4fb !important;
+}
+.screenshot-review-image-wrap img{
+  display:block !important;
+  width:100% !important;
+  height:360px !important;
+  max-height:360px !important;
+  object-fit:cover !important;
+  object-position:top center !important;
+  border-radius:14px !important;
+}
+.screenshot-reviews-note{
+  margin-top:18px !important;
+  font-size:12px !important;
+  color:#81788e !important;
+}
+@media(max-width:900px){
+  .screenshot-review-image-wrap img{
+    height:330px !important;
+    max-height:330px !important;
+  }
+}
+@media(max-width:600px){
+  .screenshot-review-card{flex-basis:76% !important;}
+  .screenshot-review-image-wrap img{
+    height:350px !important;
+    max-height:350px !important;
+  }
+}
+</style>
+
+<style id="prep-via-buy-icon-polish">
+.package-modern .package-buy-button .buy-now-icon{
+  width:30px !important;
+  height:30px !important;
+  background:rgba(255,255,255,.18) !important;
+  border:1px solid rgba(255,255,255,.20);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.35);
+}
+.package-modern .package-buy-button .buy-now-icon svg{
+  width:21px !important;
+  height:21px !important;
+}
+.package-modern .package-buy-button{
+  gap:10px !important;
+  letter-spacing:.2px;
+}
+</style>
 </head>
 
 <body id="top">
@@ -5048,7 +5169,7 @@ html{scroll-behavior:auto;}
       </figure>
     </div>
 
-    <div class="screenshot-reviews-note">Add your screenshots to <strong>assets/reviews/</strong> on GitHub.</div>
+    <div class="screenshot-reviews-note">Real student experiences, shared after exploring the Prep Via resources.</div>
   </div>
 </section>
 
@@ -5327,7 +5448,7 @@ html{scroll-behavior:auto;}
 
             <div class="footer-column">
                 <h3>COMPANY</h3>
-                <a href="mailto:prepVia.edu@gmail.com">Contact Us</a>
+                <a href="https://www.instagram.com/prep.via/" target="_blank" rel="noopener">Contact Us</a>
                 <a href="https://www.instagram.com/prep.via/" target="_blank" rel="noopener">Instagram</a>
                 <a href="#top" onclick="scrollToTop(); return false;">Back to Top</a>
             </div>
@@ -5897,6 +6018,42 @@ html{scroll-behavior:auto;}
 })();
 </script>
 
+
+
+
+<script id="prep-via-dynamic-review-count-v2">
+(function(){
+  function initReviews(){
+    var section=document.getElementById('student-reviews');
+    var cards=document.querySelectorAll('#student-reviews .screenshot-review-card');
+    if(!section) return;
+
+    // The review section itself always remains visible. Only cards whose
+    // GitHub image does not exist are removed.
+    section.hidden=false;
+    section.style.removeProperty('display');
+    section.classList.remove('reviews-empty');
+
+    cards.forEach(function(card){
+      var img=card.querySelector('img');
+      if(!img) return;
+
+      function hideCard(){ card.classList.add('review-missing'); }
+      img.addEventListener('error',hideCard,{once:true});
+      if(img.complete && img.naturalWidth===0) hideCard();
+    });
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initReviews);
+  else initReviews();
+})();
+</script>
+
+<style id="prep-via-review-visibility-fix">
+#student-reviews{display:block !important;visibility:visible !important;}
+#student-reviews[hidden]{display:block !important;}
+#student-reviews .screenshot-review-card.review-missing{display:none !important;}
+</style>
 </body>
 </html>
 
