@@ -4524,6 +4524,7 @@ html{scroll-behavior:auto;}
 </style>
 
 <style id="prep-via-review-compact-ui">
+/* Review cards: keep the complete screenshot visible — never crop the chat/image. */
 .screenshot-review-card{
   padding:8px !important;
   border-radius:18px !important;
@@ -4540,10 +4541,10 @@ html{scroll-behavior:auto;}
 .screenshot-review-image-wrap img{
   display:block !important;
   width:100% !important;
-  height:360px !important;
-  max-height:360px !important;
-  object-fit:cover !important;
-  object-position:top center !important;
+  height:auto !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  object-position:center top !important;
   border-radius:14px !important;
 }
 .screenshot-reviews-note{
@@ -4553,15 +4554,17 @@ html{scroll-behavior:auto;}
 }
 @media(max-width:900px){
   .screenshot-review-image-wrap img{
-    height:330px !important;
-    max-height:330px !important;
+    height:auto !important;
+    max-height:none !important;
   }
 }
 @media(max-width:600px){
-  .screenshot-review-card{flex-basis:76% !important;}
+  .screenshot-review-card{
+    flex:0 0 72% !important;
+  }
   .screenshot-review-image-wrap img{
-    height:350px !important;
-    max-height:350px !important;
+    height:auto !important;
+    max-height:none !important;
   }
 }
 </style>
@@ -6017,24 +6020,75 @@ html{scroll-behavior:auto;}
   window.addEventListener("load", scrollDepthNow);
 })();
 </script>
-
-
-
-
-<script id="prep-via-dynamic-review-count-v2">
+<style id="prep-via-review-final-ui">
+/* Review section: always visible. Missing images hide only their own card. */
+#student-reviews{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+}
+#student-reviews .screenshot-reviews-inner{width:min(1120px,100%);margin:0 auto;}
+#student-reviews .screenshot-reviews-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:20px;
+  align-items:start;
+}
+#student-reviews .screenshot-review-card{
+  min-width:0;
+  height:auto !important;
+  overflow:hidden;
+}
+#student-reviews .screenshot-review-image-wrap{
+  width:100%;
+  height:auto !important;
+  max-height:none !important;
+  overflow:hidden;
+  border-radius:14px;
+  background:#f7f4fb;
+}
+#student-reviews .screenshot-review-image-wrap img{
+  display:block;
+  width:100% !important;
+  height:auto !important;
+  max-width:100% !important;
+  max-height:none !important;
+  object-fit:initial !important;
+  object-position:initial !important;
+}
+#student-reviews .screenshot-review-card.review-missing{display:none !important;}
+@media(max-width:900px){
+  #student-reviews .screenshot-reviews-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:600px){
+  #student-reviews .screenshot-reviews-grid{
+    display:flex;
+    overflow-x:auto;
+    gap:14px;
+    padding:2px 2px 10px;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  #student-reviews .screenshot-reviews-grid::-webkit-scrollbar{display:none;}
+  #student-reviews .screenshot-review-card{
+    flex:0 0 82% !important;
+    scroll-snap-align:center;
+  }
+}
+</style>
+<script id="prep-via-dynamic-review-count-final">
 (function(){
   function initReviews(){
     var section=document.getElementById('student-reviews');
-    var cards=document.querySelectorAll('#student-reviews .screenshot-review-card');
     if(!section) return;
 
-    // The review section itself always remains visible. Only cards whose
-    // GitHub image does not exist are removed.
+    /* Never hide/remove the review section itself. */
     section.hidden=false;
+    section.removeAttribute('hidden');
     section.style.removeProperty('display');
-    section.classList.remove('reviews-empty');
 
-    cards.forEach(function(card){
+    section.querySelectorAll('.screenshot-review-card').forEach(function(card){
       var img=card.querySelector('img');
       if(!img) return;
 
@@ -6043,17 +6097,13 @@ html{scroll-behavior:auto;}
       if(img.complete && img.naturalWidth===0) hideCard();
     });
   }
-
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initReviews);
-  else initReviews();
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initReviews,{once:true});
+  }else{
+    initReviews();
+  }
 })();
 </script>
-
-<style id="prep-via-review-visibility-fix">
-#student-reviews{display:block !important;visibility:visible !important;}
-#student-reviews[hidden]{display:block !important;}
-#student-reviews .screenshot-review-card.review-missing{display:none !important;}
-</style>
 </body>
 </html>
 
