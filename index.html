@@ -885,7 +885,6 @@ body{
 }
 
 
-
 /* ================= TRUST STATS ================= */
 
 .stats-section{
@@ -1291,332 +1290,6 @@ body{
     }
 }
 
-/* ================= STUDENT REVIEWS ================= */
-
-.reviews-section{
-    position:relative;
-    overflow:hidden;
-    padding:65px 0 75px;
-    background:
-        radial-gradient(circle at 12% 20%,rgba(124,57,237,.18),transparent 31%),
-        radial-gradient(circle at 86% 75%,rgba(255,193,7,.08),transparent 30%),
-        linear-gradient(180deg,#10071d 0%,#160a27 100%);
-    color:#fff;
-}
-
-.reviews-section::before{
-    content:"";
-    position:absolute;
-    width:650px;
-    height:650px;
-    border:1px solid rgba(255,255,255,.045);
-    border-radius:50%;
-    right:-340px;
-    top:180px;
-    pointer-events:none;
-}
-
-.reviews-inner{
-    width:100%;
-    margin:0 auto;
-    text-align:center;
-}
-
-.reviews-label{
-    display:inline-flex;
-    padding:10px 19px;
-    border-radius:999px;
-    color:#ffc91b;
-    background:rgba(255,201,27,.08);
-    border:1px solid rgba(255,201,27,.18);
-    font-size:14px;
-    font-weight:800;
-    letter-spacing:1px;
-}
-
-.reviews-section h2{
-    margin:25px auto 0;
-    padding:0 20px;
-    font-family:"Plus Jakarta Sans",system-ui,sans-serif;
-    font-size:clamp(40px,6vw,64px);
-    line-height:1.08;
-    letter-spacing:-3px;
-    font-weight:800;
-}
-
-.reviews-section h2 span{color:#ffc51a}
-
-.reviews-subtitle{
-    max-width:680px;
-    margin:21px auto 0;
-    padding:0 20px;
-    color:#a99fb5;
-    font-size:20px;
-    line-height:1.55;
-}
-
-.reviews-marquee{
-    display:flex;
-    flex-direction:column;
-    gap:22px;
-    margin-top:42px;
-}
-
-.reviews-window{
-    width:100%;
-    overflow:hidden;
-    position:relative;
-}
-
-.reviews-window::before,
-.reviews-window::after{
-    content:"";
-    position:absolute;
-    top:0;
-    bottom:0;
-    width:110px;
-    z-index:5;
-    pointer-events:none;
-}
-
-.reviews-window::before{
-    left:0;
-    background:linear-gradient(90deg,#10071d,transparent);
-}
-
-.reviews-window::after{
-    right:0;
-    background:linear-gradient(270deg,#10071d,transparent);
-}
-
-.reviews-track{
-    width:max-content;
-    display:flex;
-    gap:20px;
-    will-change:transform;
-}
-
-.reviews-track-left{
-    animation:reviewsMoveLeft 32s linear infinite;
-}
-
-.reviews-track-right{
-    animation:reviewsMoveRight 36s linear infinite;
-}
-
-.reviews-window:hover .reviews-track{
-    animation-play-state:paused;
-}
-
-.review-card{
-    width:340px;
-    min-height:220px;
-    flex:0 0 340px;
-    padding:22px;
-    border:1px solid rgba(255,255,255,.10);
-    border-radius:25px;
-    background:linear-gradient(145deg,rgba(45,31,61,.96),rgba(28,18,43,.96));
-    box-shadow:
-        0 18px 40px rgba(0,0,0,.20),
-        inset 0 1px rgba(255,255,255,.035);
-    text-align:left;
-    transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;
-}
-
-.review-card:hover{
-    transform:translateY(-7px);
-    border-color:rgba(255,196,0,.25);
-    box-shadow:0 24px 48px rgba(0,0,0,.28);
-}
-
-.stars{
-    color:#ffc719;
-    font-size:22px;
-    letter-spacing:2px;
-    line-height:1;
-}
-
-.review-card p{
-    min-height:62px;
-    margin-top:17px;
-    color:#ddd5e5;
-    font-size:15px;
-    line-height:1.65;
-}
-
-.review-bottom{
-    margin-top:17px;
-    padding-top:13px;
-    border-top:1px solid rgba(255,255,255,.08);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-}
-
-.review-bottom div{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-}
-
-.review-bottom strong{
-    font-family:"Plus Jakarta Sans",system-ui,sans-serif;
-    font-size:15px;
-    font-weight:800;
-}
-
-.review-bottom small{
-    color:#958ba2;
-    font-size:12px;
-}
-
-.result-badge{
-    flex-shrink:0;
-    padding:6px 10px;
-    border-radius:999px;
-    background:rgba(255,194,17,.10);
-    color:#ffc51a;
-    font-size:11px;
-    font-weight:800;
-}
-
-.review-note{
-    margin:38px auto 0;
-    padding:0 20px;
-    color:#756b80;
-    font-size:12px;
-}
-
-@keyframes reviewsMoveLeft{
-    from{transform:translateX(0)}
-    to{transform:translateX(calc(-50% - 10px))}
-}
-
-@keyframes reviewsMoveRight{
-    from{transform:translateX(calc(-50% - 10px))}
-    to{transform:translateX(0)}
-}
-
-@media (prefers-reduced-motion:reduce){
-    .reviews-track{
-        animation:none;
-        flex-wrap:wrap;
-        width:min(1080px,100%);
-        margin:auto;
-        justify-content:center;
-    }
-
-    .reviews-window{
-        overflow:visible;
-    }
-
-    .reviews-window::before,
-    .reviews-window::after{
-        display:none;
-    }
-}
-
-@media(max-width:700px){
-    .reviews-section{
-        padding:55px 0 65px;
-    
-    .reviews-section{
-        padding:55px 0 65px;
-    }
-
-    .reviews-section h2{
-        font-size:40px;
-        letter-spacing:-2px;
-    }
-
-    .reviews-subtitle{
-        font-size:17px;
-    }
-
-    .reviews-marquee{
-        gap:14px;
-        margin-top:45px;
-    }
-
-    .reviews-window::before,
-    .reviews-window::after{
-        width:45px;
-    }
-
-    .reviews-track{
-        gap:14px;
-    }
-
-    .reviews-track-left{
-        animation-duration:27s;
-    }
-
-    .reviews-track-right{
-        animation-duration:30s;
-    }
-
-    .review-card{
-        width:285px;
-        flex-basis:285px;
-        min-height:190px;
-        padding:18px;
-        border-radius:22px;
-    }
-
-    .review-card p{
-        font-size:14px;
-        min-height:58px;
-    }
-
-    .stars{
-        font-size:22px;
-    }
-}
-
-    .reviews-section h2{
-        font-size:40px;
-        letter-spacing:-2px;
-    }
-
-    .reviews-subtitle{
-        font-size:17px;
-    }
-
-    .reviews-window{
-        margin-top:45px;
-    }
-
-    .reviews-window::before,
-    .reviews-window::after{
-        width:45px;
-    }
-
-    .reviews-track{
-        gap:14px;
-        animation-duration:28s;
-    }
-
-    .review-card{
-        width:285px;
-        flex-basis:285px;
-        min-height:190px;
-        padding:18px;
-        border-radius:22px;
-    }
-
-    .review-card p{
-        font-size:14px;
-        min-height:58px;
-    }
-
-    .stars{
-        font-size:22px;
-    }
-}
-
-
-
 /* ================= MODERN SUCCESS PACKAGE ================= */
 
 .success-modern{
@@ -1700,9 +1373,6 @@ body{
     margin:23px auto 0;
     color:#6f687b;
     font-size:19px
-
-
-
 
 
 y:"Plus Jakarta Sans",system-ui,sans-serif;
@@ -1832,7 +1502,6 @@ y:"Plus Jakarta Sans",system-ui,sans-serif;
         line-height:1.45;
     }
 }
-
 
 
 /* ===== SUCCESS PACKAGE — PREMIUM PRODUCT SHOWCASE ===== */
@@ -2197,7 +1866,6 @@ y:"Plus Jakarta Sans",system-ui,sans-serif;
 }
 
 
-
 /* =========================================================
    SUCCESS PACKAGE — PREMIUM 2x2 FEATURE GRID
    ========================================================= */
@@ -2512,7 +2180,6 @@ y:"Plus Jakarta Sans",system-ui,sans-serif;
 }
 
 
-
 /* ================= FREQUENTLY ASKED QUESTIONS ================= */
 .faq-section{
     position:relative;
@@ -2805,7 +2472,6 @@ y:"Plus Jakarta Sans",system-ui,sans-serif;
 }
 
 
-
 /* ================= LEGAL POLICY MODAL ================= */
 .legal-modal{
     position:fixed;inset:0;z-index:9999;display:none;
@@ -2985,6 +2651,7 @@ y:"Plus Jakarta Sans",system-ui,sans-serif;
 .payment-process{padding-top:52px;padding-bottom:60px;}
 .reviews-section{padding-top:52px;padding-bottom:65px;}
 .faq-section{padding-top:50px;padding-bottom:58px;}
+.book-preview-section{padding-bottom:28px;}
 .footer-section{padding-top:48px;}
 
 @media(max-width:700px){
@@ -2995,6 +2662,7 @@ y:"Plus Jakarta Sans",system-ui,sans-serif;
     .payment-process{padding-top:44px;padding-bottom:52px;}
     .reviews-section{padding-top:44px;padding-bottom:56px;}
     .faq-section{padding-top:42px;padding-bottom:50px;}
+    .book-preview-section{padding-bottom:24px;}
     .footer-section{padding-top:42px;}
 }
 
@@ -3219,9 +2887,6 @@ y:"Plus Jakarta Sans",system-ui,sans-serif;
 .primary-btn:active{
   text-decoration:none !important;
 }
-
-
-
 
 
 .mobile-nav-buy{
@@ -3989,7 +3654,7 @@ y:"Plus Jakarta Sans",system-ui,sans-serif;
     filter:blur(1px);
     pointer-events:none;
     z-index:1;
-    animation:prepBuyShimmer 2.7s cubic-bezier(.4,0,.2,1) infinite;
+    animation:none;
 }
 
 .package-modern .package-buy-button span,
@@ -4121,7 +3786,7 @@ y:"Plus Jakarta Sans",system-ui,sans-serif;
     );
     pointer-events:none;
     z-index:1;
-    animation:floatingBuyShimmer 2.8s cubic-bezier(.4,0,.2,1) infinite;
+    animation:none;
 }
 
 .floating.ask span{
@@ -4455,7 +4120,7 @@ body.nav-menu-open{overflow:hidden}
 <style id="prep-via-performance-and-motion">
 /* Lightweight rendering and accessibility-friendly motion */
 section:not(.hero){content-visibility:auto;contain-intrinsic-size:720px}
-.package-card,.review-card,.payment-step,.faq-item,.package-buy-cta,.primary-btn,.secondary-btn,.package-buy-button,.floating{
+.package-card,.payment-step,.faq-item,.package-buy-cta,.primary-btn,.secondary-btn,.package-buy-button,.floating{
     will-change:auto;
 }
 @media(prefers-reduced-motion:reduce){
@@ -4582,7 +4247,220 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
 </noscript>
 
 
+<style id="prep-via-performance-mode">
+/* Performance pass: keep the premium look while removing expensive continuous effects. */
+html{scroll-behavior:auto;}
 
+/* Large blurred layers are decorative only; removing them saves paint/compositing work. */
+.hero .glow,.hero .particle{display:none!important;}
+
+/* Avoid GPU-heavy blur effects. */
+.backdrop-blur,.glass,.video-preview-section .package-video-wrap,#legalModal{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
+
+/* Keep cards crisp without repeatedly repainting large shadows. */
+.package-card,.note-preview-card,.book-preview-card,.vault-item{
+  transition:transform .16s ease,border-color .16s ease!important;
+}
+.package-card:hover,.note-preview-card:hover,.book-preview-card:hover,.vault-item:hover{
+  box-shadow:inherit!important;
+}
+
+/* Continuous decorative animations are disabled. Content remains fully functional. */
+.package-modern .package-buy-button::before,.floating.ask::before{
+  display:none!important;
+  animation:none!important;
+}
+.package-modern .package-buy-button,.floating.ask{
+  transform:translateZ(0);
+}
+
+
+/* Let below-the-fold sections render only as they approach the viewport. */
+.notes-preview-section,.book-preview-section,.package-section,.video-preview-section,.faq-section,.footer{
+  content-visibility:auto;
+  contain-intrinsic-size:700px;
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}
+}
+</style>
+
+
+<style id="prep-via-resource-mini-cards">
+/* Compact resource cards — lightweight, clean and mobile-friendly */
+.package-section .resources-summary{
+    width:min(980px,100%);
+    margin:30px auto 18px;
+    padding:14px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    border:1px solid rgba(116,59,213,.13);
+    border-radius:18px;
+    background:rgba(255,255,255,.72);
+    box-shadow:0 8px 24px rgba(47,31,78,.055),inset 0 1px 0 rgba(255,255,255,.9);
+}
+.package-section .resources-summary-main{display:flex;align-items:center;gap:12px;min-width:0;}
+.package-section .resources-summary-icon{
+    width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;
+    border-radius:13px;background:#f3eaff;border:1px solid rgba(116,59,213,.10);font-size:21px;
+}
+.package-section .resources-summary-main div{display:flex;flex-direction:column;gap:2px;}
+.package-section .resources-summary-main strong{font-size:15px;line-height:1.15;color:#241b2e;font-weight:850;letter-spacing:-.2px;}
+.package-section .resources-summary-main span{font-size:13px;line-height:1.25;color:#756d80;font-weight:650;}
+.package-section .resources-summary-badge{
+    padding:7px 10px;border-radius:999px;background:#f7f2ff;color:#6940a7;
+    font-size:10px;font-weight:800;letter-spacing:.65px;white-space:nowrap;
+}
+.package-section .resource-mini-grid{
+    width:min(980px,100%);
+    margin:0 auto 22px;
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:11px;
+}
+.package-section .resource-mini-card{
+    min-width:0;min-height:76px;padding:13px 13px;box-sizing:border-box;
+    display:flex;align-items:center;gap:10px;
+    border:1px solid rgba(116,59,213,.11);border-radius:17px;
+    background:rgba(255,255,255,.82);
+    box-shadow:0 7px 20px rgba(47,31,78,.055),inset 0 1px 0 rgba(255,255,255,.92);
+    transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+.package-section .resource-mini-card:hover{
+    transform:translateY(-2px);border-color:rgba(116,59,213,.22);
+    box-shadow:0 10px 24px rgba(47,31,78,.08),inset 0 1px 0 rgba(255,255,255,.96);
+}
+.package-section .resource-mini-icon{
+    width:39px;height:39px;flex:0 0 39px;display:grid;place-items:center;
+    border-radius:12px;background:linear-gradient(145deg,#f5edff,#fff8e9);
+    border:1px solid rgba(116,59,213,.09);font-size:19px;
+}
+.package-section .resource-mini-card div{min-width:0;display:flex;flex-direction:column;gap:3px;}
+.package-section .resource-mini-card strong{
+    color:#21182b;font-size:13px;line-height:1.18;font-weight:820;letter-spacing:-.15px;
+}
+.package-section .resource-mini-card small{
+    color:#82798d;font-size:10.5px;line-height:1.25;font-weight:600;
+}
+@media(max-width:900px){
+    .package-section .resource-mini-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:560px){
+    .package-section .resources-summary{margin:24px 0 14px;padding:12px;border-radius:16px;}
+    .package-section .resources-summary-icon{width:38px;height:38px;flex-basis:38px;border-radius:11px;font-size:19px;}
+    .package-section .resources-summary-main strong{font-size:14px;}
+    .package-section .resources-summary-main span{font-size:12px;}
+    .package-section .resources-summary-badge{font-size:8px;padding:6px 7px;letter-spacing:.35px;}
+    .package-section .resource-mini-grid{gap:9px;margin-bottom:18px;}
+    .package-section .resource-mini-card{min-height:69px;padding:10px;border-radius:15px;gap:8px;}
+    .package-section .resource-mini-icon{width:34px;height:34px;flex-basis:34px;border-radius:10px;font-size:17px;}
+    .package-section .resource-mini-card strong{font-size:11.5px;}
+    .package-section .resource-mini-card small{font-size:9.5px;}
+}
+@media(prefers-reduced-motion:reduce){.package-section .resource-mini-card{transition:none;}}
+</style>
+
+
+<style id="prep-via-premium-buy-cta-icons">
+/* Premium icon refinement — scoped only to the Success Package purchase CTA. */
+.package-modern .package-buy-trust{
+    align-items:center;
+    gap:8px 16px;
+}
+.package-modern .package-buy-trust .trust-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
+}
+.package-modern .package-buy-trust .trust-icon{
+    width:22px;
+    height:22px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid rgba(255,197,26,.26);
+    border-radius:50%;
+    background:rgba(255,197,26,.08);
+}
+.package-modern .package-buy-trust .trust-icon svg{
+    width:13px;
+    height:13px;
+    stroke:#ffc51a;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.package-modern .package-buy-button{
+    gap:12px !important;
+}
+.package-modern .package-buy-button .buy-now-icon{
+    width:27px;
+    height:27px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:rgba(255,255,255,.22);
+    box-shadow:inset 0 1px rgba(255,255,255,.35);
+    transition:transform .2s ease,background .2s ease;
+}
+.package-modern .package-buy-button .buy-now-icon svg{
+    width:20px;
+    height:20px;
+    stroke:currentColor;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.package-modern .package-buy-button:hover .buy-now-icon{
+    transform:translateX(2px) rotate(-5deg);
+    background:rgba(255,255,255,.30);
+}
+.package-modern .package-bottom-note{
+    gap:7px;
+}
+.package-modern .package-bottom-note .note-check{
+    width:18px;
+    height:18px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+}
+.package-modern .package-bottom-note .note-check svg{
+    width:15px;
+    height:15px;
+    stroke:#743bd5;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+@media(max-width:700px){
+    .package-modern .package-buy-trust{
+        justify-content:center;
+        gap:7px 12px;
+    }
+    .package-modern .package-buy-trust .trust-icon{
+        width:20px;
+        height:20px;
+    }
+    .package-modern .package-buy-trust .trust-icon svg{
+        width:12px;
+        height:12px;
+    }
+    .package-modern .package-buy-button .buy-now-icon{
+        width:25px;
+        height:25px;
+    }
+    .package-modern .package-buy-button .buy-now-icon svg{
+        width:18px;
+        height:18px;
+    }
+}
+</style>
 
 </head>
 
@@ -4625,7 +4503,6 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
                 <a href="#top" data-nav-target="top">Home</a>
                 <a href="#video-preview" data-nav-target="video-preview">Package Preview</a>
                 <a href="#package-buy-button" data-nav-target="package-buy-button" id="drawerSuccessPackage">Success Package</a>
-                <a href="#reviews" data-nav-target="reviews">Student Reviews</a>
                 <a href="#payment-process" data-nav-target="payment-process">How It Works</a>
                 <a href="#faq" data-nav-target="faq">FAQ</a>
                 <a class="mobile-nav-buy" href="#package-buy-button" data-nav-target="package-buy-button" id="drawerGetSuccess">Get Success Package · ₹249</a>
@@ -4678,65 +4555,53 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
 
 <!-- ================= 50GB+ RESOURCE VAULT ================= -->
 <style id="resource-vault-section">
-.resource-vault{position:relative;overflow:hidden;padding:58px 20px 64px;background:#faf9ff;color:#17121f;}
-.resource-vault:before{content:"";position:absolute;width:560px;height:560px;border-radius:50%;left:-300px;top:-290px;background:radial-gradient(circle,rgba(109,39,217,.13),transparent 68%);pointer-events:none;}
-.resource-vault:after{content:"";position:absolute;width:500px;height:500px;border-radius:50%;right:-270px;bottom:-300px;background:radial-gradient(circle,rgba(255,196,0,.14),transparent 68%);pointer-events:none;}
-.resource-vault-inner{position:relative;z-index:2;width:min(1080px,100%);margin:0 auto;text-align:center;}
-.resource-vault-kicker{display:inline-flex;align-items:center;gap:8px;padding:8px 15px;border:1px solid rgba(109,39,217,.18);border-radius:999px;background:#fff;color:#5d2baa;font-size:11px;font-weight:850;letter-spacing:1px;box-shadow:0 7px 20px rgba(48,30,75,.06);}
-.resource-vault-kicker i{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,#ffc400,#6d27d9);box-shadow:0 0 12px rgba(109,39,217,.35);}
-.resource-vault h2{margin:19px auto 0;max-width:720px;font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-size:clamp(35px,5vw,56px);line-height:1.04;letter-spacing:-2.7px;font-weight:850;}
+.resource-vault{position:relative;overflow:hidden;padding:54px 20px 58px;background:#faf9ff;color:#17121f;}
+.resource-vault:before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;left:-300px;top:-270px;background:radial-gradient(circle,rgba(109,39,217,.10),transparent 68%);pointer-events:none;}
+.resource-vault:after{content:"";position:absolute;width:460px;height:460px;border-radius:50%;right:-250px;bottom:-280px;background:radial-gradient(circle,rgba(255,196,0,.11),transparent 68%);pointer-events:none;}
+.resource-vault-inner{position:relative;z-index:2;width:min(1050px,100%);margin:0 auto;text-align:center;}
+.resource-vault-kicker{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border:1px solid rgba(109,39,217,.16);border-radius:999px;background:#fff;color:#5d2baa;font-size:10px;font-weight:850;letter-spacing:1px;box-shadow:0 6px 18px rgba(48,30,75,.05);}
+.resource-vault-kicker i{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,#ffc400,#6d27d9);}
+.resource-vault h2{margin:16px auto 0;max-width:760px;font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-size:clamp(34px,5vw,52px);line-height:1.06;letter-spacing:-2.5px;font-weight:850;}
 .resource-vault h2 span{background:linear-gradient(90deg,#ffc400 0%,#ff9f00 42%,#6d27d9 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
-.resource-vault-lead{max-width:680px;margin:15px auto 0;color:#70697a;font-size:15px;line-height:1.6;}
-.vault-card{position:relative;max-width:960px;margin:31px auto 0;padding:30px;border:1px solid rgba(109,39,217,.13);border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(247,243,255,.92));box-shadow:0 24px 65px rgba(48,30,75,.12),0 3px 12px rgba(48,30,75,.05);}
-.vault-card:before{content:"";position:absolute;inset:1px;border-radius:29px;background:linear-gradient(135deg,rgba(255,196,0,.10),transparent 35%,rgba(109,39,217,.09));pointer-events:none;}
-.vault-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:15px;}
-.vault-item{min-height:155px;padding:22px 16px 18px;border:1px solid rgba(33,33,33,.07);border-radius:22px;background:rgba(255,255,255,.86);box-shadow:0 12px 30px rgba(48,30,75,.07);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;}
-.vault-item:hover{transform:translateY(-5px);box-shadow:0 18px 38px rgba(48,30,75,.12);border-color:rgba(109,39,217,.16);}
-.vault-icon{width:52px;height:52px;margin:0 auto 13px;border-radius:17px;display:grid;place-items:center;font-size:25px;background:linear-gradient(145deg,#f0e7ff,#fff3c7);box-shadow:inset 0 0 0 1px rgba(109,39,217,.10);}
-.vault-item strong{display:block;font-size:16px;letter-spacing:-.2px;color:#241a2d;}
-.vault-item small{display:block;margin-top:6px;color:#7d7487;font-size:12px;line-height:1.45;}
-.vault-bottom{position:relative;z-index:2;margin-top:24px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;color:#61586c;font-size:13px;font-weight:800;}
-.vault-bottom span{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid rgba(109,39,217,.10);}
-.vault-cta{position:relative;z-index:2;display:inline-flex;align-items:center;justify-content:center;margin-top:22px;padding:13px 23px;border:0;border-radius:14px;background:linear-gradient(135deg,#ffc400,#ff9f00);color:#18120a;font-size:14px;font-weight:850;text-decoration:none;box-shadow:0 10px 26px rgba(255,170,0,.22);cursor:pointer;transition:transform .25s ease,box-shadow .25s ease;}
-.vault-cta:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(255,170,0,.28);}
-@media(max-width:800px){.vault-grid{grid-template-columns:repeat(2,1fr);}.vault-card{padding:20px;}}
-@media(max-width:560px){.resource-vault{padding:45px 15px 50px;}.resource-vault h2{font-size:36px;letter-spacing:-1.9px;}.resource-vault-lead{font-size:13px;}.vault-card{margin-top:25px;padding:12px;border-radius:24px;}.vault-grid{gap:10px;}.vault-item{min-height:140px;padding:17px 10px;border-radius:18px;}.vault-icon{width:45px;height:45px;border-radius:14px;font-size:21px;margin-bottom:10px;}.vault-item strong{font-size:14px;}.vault-item small{font-size:11px;}.vault-bottom{gap:7px;font-size:11px;}.vault-bottom span{padding:8px 10px;}.vault-cta{width:100%;margin-top:17px;}}
+.resource-vault-lead{max-width:680px;margin:12px auto 0;color:#70697a;font-size:14px;line-height:1.55;}
+.vault-card{position:relative;max-width:960px;margin:27px auto 0;padding:22px;border:1px solid rgba(109,39,217,.12);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(247,243,255,.92));box-shadow:0 18px 48px rgba(48,30,75,.09);}
+.vault-card:before{content:"";position:absolute;inset:1px;border-radius:27px;background:linear-gradient(135deg,rgba(255,196,0,.07),transparent 35%,rgba(109,39,217,.07));pointer-events:none;}
+.vault-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.vault-item{min-height:0;padding:15px 13px;border:1px solid rgba(33,33,33,.07);border-radius:16px;background:rgba(255,255,255,.9);box-shadow:0 7px 18px rgba(48,30,75,.045);display:flex;align-items:center;gap:11px;text-align:left;transition:transform .16s ease,border-color .16s ease;}
+.vault-item:hover{transform:translateY(-2px);border-color:rgba(109,39,217,.18);}
+.vault-icon{width:40px;height:40px;flex:0 0 40px;border-radius:12px;display:grid;place-items:center;font-size:19px;background:linear-gradient(145deg,#f0e7ff,#fff3c7);box-shadow:inset 0 0 0 1px rgba(109,39,217,.08);}
+.vault-item strong{display:block;font-size:13px;line-height:1.2;letter-spacing:-.15px;color:#241a2d;}
+.vault-item small{display:block;margin-top:3px;color:#81788e;font-size:10px;line-height:1.3;}
+.vault-bottom{position:relative;z-index:2;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;color:#61586c;font-size:12px;font-weight:800;}
+.vault-bottom span{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.82);border:1px solid rgba(109,39,217,.09);}
+.vault-cta{position:relative;z-index:2;display:inline-flex;align-items:center;justify-content:center;margin-top:17px;padding:11px 20px;border:0;border-radius:12px;background:linear-gradient(135deg,#ffc400,#ff9f00);color:#18120a;font-size:13px;font-weight:850;text-decoration:none;box-shadow:0 8px 20px rgba(255,170,0,.18);cursor:pointer;transition:transform .16s ease;}
+.vault-cta:hover{transform:translateY(-2px);}
+@media(max-width:800px){.vault-grid{grid-template-columns:repeat(2,1fr);}.vault-card{padding:16px;}}
+@media(max-width:560px){.resource-vault{padding:43px 15px 48px;}.resource-vault h2{font-size:34px;letter-spacing:-1.8px;}.resource-vault-lead{font-size:12.5px;}.vault-card{margin-top:22px;padding:10px;border-radius:22px;}.vault-grid{gap:8px;}.vault-item{padding:12px 9px;gap:8px;border-radius:14px;}.vault-icon{width:34px;height:34px;flex-basis:34px;border-radius:10px;font-size:17px;}.vault-item strong{font-size:11.5px;}.vault-item small{font-size:9px;}.vault-bottom{gap:6px;font-size:10px;}.vault-bottom span{padding:7px 9px;}.vault-cta{width:100%;margin-top:14px;}}
 @media(prefers-reduced-motion:reduce){.vault-item,.vault-cta{transition:none;}}
 </style>
 <section class="resource-vault" id="resource-vault" aria-label="50GB plus resource vault">
   <div class="resource-vault-inner">
     <div class="resource-vault-kicker"><i></i> ONE COMPLETE RESOURCE VAULT</div>
-    <h2>Everything You Need in <span>One Place.</span></h2>
-    <p class="resource-vault-lead">A complete collection of study and practice resources designed for both JEE &amp; NEET aspirants.</p>
+    <h2>JEE + NEET <span>50GB+ Resources.</span></h2>
+    <p class="resource-vault-lead">Everything you need for preparation — organized in one complete resource vault.</p>
 
     <div class="vault-card">
       <div class="vault-grid">
-        <article class="vault-item">
-          <div class="vault-icon">📚</div>
-          <strong>Books</strong>
-          <small>Reference &amp; study material</small>
-        </article>
-        <article class="vault-item">
-          <div class="vault-icon">📝</div>
-          <strong>Notes</strong>
-          <small>Revision-friendly notes</small>
-        </article>
-        <article class="vault-item">
-          <div class="vault-icon">🎯</div>
-          <strong>Tests</strong>
-          <small>Practice &amp; test resources</small>
-        </article>
-        <article class="vault-item">
-          <div class="vault-icon">📄</div>
-          <strong>PYQs</strong>
-          <small>Previous-year practice</small>
-        </article>
+        <article class="vault-item"><div class="vault-icon">📚</div><div><strong>Reference Books</strong><small>Concepts &amp; practice</small></div></article>
+        <article class="vault-item"><div class="vault-icon">✍️</div><div><strong>Handwritten Notes</strong><small>Revision-ready notes</small></div></article>
+        <article class="vault-item"><div class="vault-icon">📝</div><div><strong>Short Notes</strong><small>Quick revision</small></div></article>
+        <article class="vault-item"><div class="vault-icon">📖</div><div><strong>PYQs Books</strong><small>Previous-year practice</small></div></article>
+        <article class="vault-item"><div class="vault-icon">📘</div><div><strong>Modules</strong><small>Chapter-wise study</small></div></article>
+        <article class="vault-item"><div class="vault-icon">🎯</div><div><strong>Institute Test Series</strong><small>Mocks &amp; practice</small></div></article>
+        <article class="vault-item"><div class="vault-icon">🧠</div><div><strong>Mind Maps</strong><small>Visual revision</small></div></article>
+        <article class="vault-item"><div class="vault-icon">📒</div><div><strong>Handbooks</strong><small>Formulas &amp; key points</small></div></article>
       </div>
 
       <div class="vault-bottom">
         <span>💾 50GB+ Resources</span>
         <span>🎓 JEE + NEET</span>
-        <span>⚡ One Complete Package</span>
+        <span>⚡ One Complete Collection</span>
       </div>
       <button class="vault-cta" type="button" onclick="scrollToSection('video-preview'); return false;">✨ Explore What's Inside</button>
     </div>
@@ -4858,7 +4723,7 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
 
 <style id="book-preview-styles">
 .book-preview-section{
-  padding:72px 24px 78px;
+  padding:72px 24px 28px;
   background:#fff;
   text-align:center;
 }
@@ -4914,12 +4779,12 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
   font-weight:700;
 }
 @media(max-width:700px){
-  .book-preview-section{padding:52px 15px 58px;}
+  .book-preview-section{padding:52px 15px 24px;}
   .book-preview-grid{
     display:flex;
     overflow-x:auto;
     gap:16px;
-    padding:3px 3px 12px;
+    padding:3px 3px 6px;
     scroll-snap-type:x mandatory;
     scrollbar-width:none;
   }
@@ -5076,8 +4941,8 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
                     Get the complete package for <strong>₹249</strong>
                 </div>
                 <div class="package-buy-trust">
-                    <span>✓ One-time payment</span>
-                    <span>✓ Instant delivery</span>
+                    <span class="trust-pill"><span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 4.5h8.5A2.5 2.5 0 0 1 18 7v11.5H7A3 3 0 0 0 4 21V7.5a3 3 0 0 1 3-3Z"/><path d="M7 18.5h11"/><path d="M8 8h6M8 11h5"/></svg></span> One-time payment</span>
+                    <span class="trust-pill"><span class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2 5.5 13h6l-1 9L18.5 11h-6L13 2Z"/></svg></span> Instant delivery</span>
                 </div>
             </div>
 
@@ -5085,11 +4950,20 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
                id="package-buy-button"
                href="/checkout.html"
                aria-label="Buy Prep Via Success Package for ₹249">
-                <span>BUY NOW</span> <span class="buy-now-emoji" aria-hidden="true">🚀</span></a>
+                <span>BUY NOW</span>
+                <span class="buy-now-icon" aria-hidden="true">
+                    <svg viewBox="0 0 32 32" fill="none">
+                        <path d="M18.4 4.2c4.4-.8 7.2-.1 9.1 1.8 1.9 1.9 2.6 4.7 1.8 9.1-1 5.5-5.2 10.5-11.1 13.5l-4.1-4.1-4.1-4.1c3-5.9 8-10.1 13.5-11.1Z"/>
+                        <path d="M14.1 19.2 8 25.3"/>
+                        <path d="M8 25.3H4.5v-3.5"/>
+                        <circle cx="21.2" cy="10.8" r="2.7"/>
+                        <path d="M12.4 23.5c-2.3 1.2-4.5 1.1-6.2-.6-1.7-1.7-1.8-3.9-.6-6.2"/>
+                    </svg>
+                </span></a>
         </div>
 
         <div class="package-bottom-note">
-            <span class="note-check">✓</span>
+            <span class="note-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 14 9l5.5 2-5.5 2-2 5.5-2-5.5-5.5-2 5.5-2 2-5.5Z"/></svg></span>
             <span>JEE & NEET resources • Lifetime access • ₹249 one-time payment</span>
         </div>
 
@@ -5097,258 +4971,136 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
 </section>
 
 
-<section class="reviews-section" id="reviews">
-    <div class="reviews-inner">
+<!-- ================= SCREENSHOT REVIEWS ================= -->
+<section class="screenshot-reviews-section" id="student-reviews" aria-label="Student review screenshots">
+  <div class="screenshot-reviews-inner">
+    <div class="screenshot-reviews-kicker"><span></span> REAL STUDENT REVIEWS</div>
+    <h2>What Students <span>Shared.</span></h2>
+    <p class="screenshot-reviews-subtitle">
+      Real review screenshots from students who checked out the Prep Via resources.
+    </p>
 
-        <div class="reviews-label">TRUSTED BY ASPIRANTS</div>
-
-        <h2>
-            Real Students. <span>Real Reviews.</span>
-        </h2>
-
-        <p class="reviews-subtitle">
-            Hear from JEE & NEET aspirants who used Prep Via for their preparation.
-        </p>
-
-<section class="stats-section" id="stats">
-    <div class="stats-inner">
-
-        <div class="stats-grid">
-
-            <div class="stat-item">
-                <div class="stat-number animated-number" data-target="1500" data-suffix="K+">0<span class="gold">K+</span></div>
-                <div class="stat-text">Package Downloaders</div>
-            </div>
-
-            <div class="stat-item">
-                <div class="stat-number animated-number" data-target="4.8" data-decimal="1" data-suffix="★">0<span class="gold">★</span></div>
-                <div class="stat-text">Average Rating</div>
-            </div>
-
-            <div class="stat-item">
-                <div class="stat-number animated-number" data-target="59" data-suffix="%">0<span class="gold">%</span></div>
-                <div class="stat-text">JEE Aspirants</div>
-            </div>
-
-            <div class="stat-item">
-                <div class="stat-number animated-number" data-target="41" data-suffix="%">0<span class="gold">%</span></div>
-                <div class="stat-text">NEET Aspirants</div>
-            </div>
-
+    <div class="screenshot-reviews-grid">
+      <figure class="screenshot-review-card">
+        <div class="screenshot-review-head">
+          <span class="screenshot-review-icon">✦</span>
+          <span>Student Review</span>
+          <span class="screenshot-review-tag">REAL</span>
         </div>
+        <div class="screenshot-review-image-wrap">
+          <img src="assets/reviews/review-1.jpg" loading="lazy" decoding="async" alt="Student review screenshot 1">
+        </div>
+      </figure>
+
+      <figure class="screenshot-review-card">
+        <div class="screenshot-review-head">
+          <span class="screenshot-review-icon">✦</span>
+          <span>Student Review</span>
+          <span class="screenshot-review-tag">REAL</span>
+        </div>
+        <div class="screenshot-review-image-wrap">
+          <img src="assets/reviews/review-2.jpg" loading="lazy" decoding="async" alt="Student review screenshot 2">
+        </div>
+      </figure>
+
+      <figure class="screenshot-review-card">
+        <div class="screenshot-review-head">
+          <span class="screenshot-review-icon">✦</span>
+          <span>Student Review</span>
+          <span class="screenshot-review-tag">REAL</span>
+        </div>
+        <div class="screenshot-review-image-wrap">
+          <img src="assets/reviews/review-3.jpg" loading="lazy" decoding="async" alt="Student review screenshot 3">
+        </div>
+      </figure>
+
+      <figure class="screenshot-review-card">
+        <div class="screenshot-review-head">
+          <span class="screenshot-review-icon">✦</span>
+          <span>Student Review</span>
+          <span class="screenshot-review-tag">REAL</span>
+        </div>
+        <div class="screenshot-review-image-wrap">
+          <img src="assets/reviews/review-4.jpg" loading="lazy" decoding="async" alt="Student review screenshot 4">
+        </div>
+      </figure>
+
+      <figure class="screenshot-review-card">
+        <div class="screenshot-review-head">
+          <span class="screenshot-review-icon">✦</span>
+          <span>Student Review</span>
+          <span class="screenshot-review-tag">REAL</span>
+        </div>
+        <div class="screenshot-review-image-wrap">
+          <img src="assets/reviews/review-5.jpg" loading="lazy" decoding="async" alt="Student review screenshot 5">
+        </div>
+      </figure>
+
+      <figure class="screenshot-review-card">
+        <div class="screenshot-review-head">
+          <span class="screenshot-review-icon">✦</span>
+          <span>Student Review</span>
+          <span class="screenshot-review-tag">REAL</span>
+        </div>
+        <div class="screenshot-review-image-wrap">
+          <img src="assets/reviews/review-6.jpg" loading="lazy" decoding="async" alt="Student review screenshot 6">
+        </div>
+      </figure>
     </div>
+
+    <div class="screenshot-reviews-note">Add your screenshots to <strong>assets/reviews/</strong> on GitHub.</div>
+  </div>
 </section>
 
-
-
-
-
-
-        <div class="reviews-marquee">
-
-            <!-- ROW 1: moves left -->
-            <div class="reviews-window reviews-window-one">
-                <div class="reviews-track reviews-track-left">
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The resources made my revision much easier. Everything I needed for JEE preparation was organized in one place."</p>
-                        <div class="review-bottom">
-                            <div><strong>Devansh Tripathi</strong><small>JEE Aspirant</small></div>
-                            <span class="result-badge">JEE</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"Having notes, modules and practice material together saved me a lot of time during my NEET preparation."</p>
-                        <div class="review-bottom">
-                            <div><strong>Anushka Vyas</strong><small>NEET Aspirant</small></div>
-                            <span class="result-badge">NEET</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"A useful collection for revision and practice. I could quickly find material whenever I needed it."</p>
-                        <div class="review-bottom">
-                            <div><strong>Manoj Kumar</strong><small>JEE Aspirant</small></div>
-                            <span class="result-badge">JEE</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The biggest advantage for me was having multiple preparation resources available without searching everywhere."</p>
-                        <div class="review-bottom">
-                            <div><strong>Riya Sharma</strong><small>NEET Aspirant</small></div>
-                            <span class="result-badge">NEET</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The collection helped me structure my practice better and keep my revision material in one place."</p>
-                        <div class="review-bottom">
-                            <div><strong>Aditya Raj</strong><small>JEE Aspirant</small></div>
-                            <span class="result-badge">JEE</span>
-                        </div>
-                    </article>
-
-                    <!-- Exact duplicate set for seamless looping -->
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The resources made my revision much easier. Everything I needed for JEE preparation was organized in one place."</p>
-                        <div class="review-bottom">
-                            <div><strong>Devansh Tripathi</strong><small>JEE Aspirant</small></div>
-                            <span class="result-badge">JEE</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"Having notes, modules and practice material together saved me a lot of time during my NEET preparation."</p>
-                        <div class="review-bottom">
-                            <div><strong>Anushka Vyas</strong><small>NEET Aspirant</small></div>
-                            <span class="result-badge">NEET</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"A useful collection for revision and practice. I could quickly find material whenever I needed it."</p>
-                        <div class="review-bottom">
-                            <div><strong>Manoj Kumar</strong><small>JEE Aspirant</small></div>
-                            <span class="result-badge">JEE</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The biggest advantage for me was having multiple preparation resources available without searching everywhere."</p>
-                        <div class="review-bottom">
-                            <div><strong>Riya Sharma</strong><small>NEET Aspirant</small></div>
-                            <span class="result-badge">NEET</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The collection helped me structure my practice better and keep my revision material in one place."</p>
-                        <div class="review-bottom">
-                            <div><strong>Aditya Raj</strong><small>JEE Aspirant</small></div>
-                            <span class="result-badge">JEE</span>
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-
-            <!-- ROW 2: moves right -->
-            <div class="reviews-window reviews-window-two">
-                <div class="reviews-track reviews-track-right">
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"Prep resources were easy to access and helped me stay consistent with my NEET revision."</p>
-                        <div class="review-bottom">
-                            <div><strong>Kavya Sharma</strong><small>NEET Aspirant</small></div>
-                            <span class="result-badge">NEET</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The study material gave me a solid collection for practice without wasting time looking everywhere."</p>
-                        <div class="review-bottom">
-                            <div><strong>Arjun Mehta</strong><small>JEE Aspirant</small></div>
-                            <span class="result-badge">JEE</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"I liked having different resources together. It made my weekly revision much more organized."</p>
-                        <div class="review-bottom">
-                            <div><strong>Priya Verma</strong><small>NEET Aspirant</small></div>
-                            <span class="result-badge">NEET</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"Good collection for solving, revising and checking concepts during JEE preparation."</p>
-                        <div class="review-bottom">
-                            <div><strong>Rahul Singh</strong><small>JEE Aspirant</small></div>
-                            <span class="result-badge">JEE</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The convenience of keeping all the preparation resources in one place was really useful."</p>
-                        <div class="review-bottom">
-                            <div><strong>Mehak Gupta</strong><small>NEET Aspirant</small></div>
-                            <span class="result-badge">NEET</span>
-                        </div>
-                    </article>
-
-                    <!-- Exact duplicate set for seamless looping -->
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"Prep resources were easy to access and helped me stay consistent with my NEET revision."</p>
-                        <div class="review-bottom">
-                            <div><strong>Kavya Sharma</strong><small>NEET Aspirant</small></div>
-                            <span class="result-badge">NEET</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The study material gave me a solid collection for practice without wasting time looking everywhere."</p>
-                        <div class="review-bottom">
-                            <div><strong>Arjun Mehta</strong><small>JEE Aspirant</small></div>
-                            <span class="result-badge">JEE</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"I liked having different resources together. It made my weekly revision much more organized."</p>
-                        <div class="review-bottom">
-                            <div><strong>Priya Verma</strong><small>NEET Aspirant</small></div>
-                            <span class="result-badge">NEET</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"Good collection for solving, revising and checking concepts during JEE preparation."</p>
-                        <div class="review-bottom">
-                            <div><strong>Rahul Singh</strong><small>JEE Aspirant</small></div>
-                            <span class="result-badge">JEE</span>
-                        </div>
-                    </article>
-
-                    <article class="review-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The convenience of keeping all the preparation resources in one place was really useful."</p>
-                        <div class="review-bottom">
-                            <div><strong>Mehak Gupta</strong><small>NEET Aspirant</small></div>
-                            <span class="result-badge">NEET</span>
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-
-        </div>
-
-        <div class="review-note">
-            ★ Real reviews from students who used our JEE & NEET Resources Package.
-        </div>
-    </div>
-</section>
+<style id="screenshot-reviews-styles">
+.screenshot-reviews-section{
+  padding:68px 20px 72px;
+  background:
+    radial-gradient(circle at 10% 18%,rgba(124,57,237,.10),transparent 30%),
+    radial-gradient(circle at 90% 78%,rgba(255,193,7,.07),transparent 28%),
+    #faf9ff;
+  color:#181320;
+}
+.screenshot-reviews-inner{width:min(1120px,100%);margin:0 auto;text-align:center;}
+.screenshot-reviews-kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  color:#7040cf;font-size:13px;font-weight:800;letter-spacing:1.5px;
+}
+.screenshot-reviews-kicker span{width:7px;height:7px;border-radius:50%;background:#7040cf;display:inline-block;}
+.screenshot-reviews-section h2{
+  margin:16px 0 0;font-family:"Plus Jakarta Sans",system-ui,sans-serif;
+  font-size:clamp(36px,5vw,56px);line-height:1.08;letter-spacing:-2.5px;font-weight:800;
+}
+.screenshot-reviews-section h2 span{color:#7040cf;}
+.screenshot-reviews-subtitle{max-width:650px;margin:16px auto 0;color:#746b80;font-size:17px;line-height:1.55;}
+.screenshot-reviews-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;
+  margin:38px auto 0;align-items:start;
+}
+.screenshot-review-card{
+  margin:0;padding:10px;border:1px solid rgba(44,27,67,.09);border-radius:22px;
+  background:rgba(255,255,255,.88);box-shadow:0 12px 32px rgba(48,30,75,.08);
+  text-align:left;overflow:hidden;
+}
+.screenshot-review-head{display:flex;align-items:center;gap:8px;padding:4px 5px 10px;color:#5d5568;font-size:12px;font-weight:800;letter-spacing:.2px;}
+.screenshot-review-icon{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:#f0e9ff;color:#7040cf;font-size:13px;}
+.screenshot-review-tag{margin-left:auto;padding:5px 8px;border-radius:999px;background:#f4efff;color:#7040cf;font-size:9px;letter-spacing:1px;}
+.screenshot-review-image-wrap{border-radius:15px;overflow:hidden;background:#f2f0f5;}
+.screenshot-review-image-wrap img{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;}
+.screenshot-review-card{transition:transform .16s ease,border-color .16s ease;}
+.screenshot-review-card:hover{transform:translateY(-3px);border-color:rgba(112,64,207,.22);}
+.screenshot-reviews-note{margin-top:24px;color:#8a8191;font-size:12px;}
+@media(max-width:900px){.screenshot-reviews-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:600px){
+  .screenshot-reviews-section{padding:54px 14px 58px;}
+  .screenshot-reviews-section h2{font-size:38px;letter-spacing:-2px;}
+  .screenshot-reviews-subtitle{font-size:15px;}
+  .screenshot-reviews-grid{display:flex;overflow-x:auto;gap:14px;margin-top:30px;padding:2px 2px 10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .screenshot-reviews-grid::-webkit-scrollbar{display:none;}
+  .screenshot-review-card{flex:0 0 82%;scroll-snap-align:center;}
+  .screenshot-review-image-wrap img{max-height:none;}
+}
+</style>
 
 <section class="payment-process" id="payment-process">
     <div class="payment-process-inner">
@@ -5404,7 +5156,6 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
         </div>
     </div>
 </section>
-
 
 
 <section class="faq-section" id="faq">
@@ -5493,8 +5244,6 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
 </section>
 
 
-
-
 <!-- ================= PREP VIA FOOTER ================= -->
 
 <!-- ================= LEGAL POLICY MODALS ================= -->
@@ -5567,7 +5316,6 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
             <div class="footer-column">
                 <h3>PREPARATION</h3>
                 <a href="#package" onclick="scrollToSection('package'); return false;">JEE and Neet Resources</a>
-                <a href="#reviews" onclick="scrollToSection('reviews'); return false;">Student Reviews</a>
             </div>
 
             <div class="footer-column">
@@ -5607,69 +5355,6 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
     <span aria-hidden="true">💬</span>
     <span>Contact Us</span>
 </a>
-
-
-<script>
-(function(){
-    const numbers = document.querySelectorAll(".animated-number");
-    let started = false;
-
-    function animateNumbers(){
-        if(started) return;
-        started = true;
-
-        numbers.forEach(function(el){
-            const target = parseFloat(el.dataset.target);
-            const decimal = parseInt(el.dataset.decimal || "0", 10);
-            const duration = 1300;
-            const start = performance.now();
-
-            function update(now){
-                let progress = (now - start) / duration;
-                if(progress > 1) progress = 1;
-
-                // Smooth ease-out animation.
-                const eased = 1 - Math.pow(1 - progress, 3);
-                const value = target * eased;
-
-                let text;
-                if(decimal > 0){
-                    text = value.toFixed(decimal);
-                }else if(target >= 1000){
-                    text = (value / 1000).toFixed(1);
-                }else{
-                    text = Math.round(value).toString();
-                }
-
-                const suffix = el.querySelector(".gold");
-                el.childNodes[0].nodeValue = text;
-
-                if(progress < 1){
-                    requestAnimationFrame(update);
-                }
-            }
-
-            requestAnimationFrame(update);
-        });
-    }
-
-    const stats = document.querySelector(".reviews-section .stats-section");
-
-    if(stats && "IntersectionObserver" in window){
-        const observer = new IntersectionObserver(function(entries){
-            if(entries[0].isIntersecting){
-                animateNumbers();
-                observer.disconnect();
-            }
-        }, {threshold:0.35});
-
-        observer.observe(stats);
-    }else{
-        animateNumbers();
-    }
-})();
-</script>
-
 
 
 <script>
@@ -5753,9 +5438,6 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
     });
 })();
 </script>
-
-
-
 
 
 <script id="prep-via-legal-controller">
@@ -6164,7 +5846,7 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
   // Active-user heartbeat. The dashboard treats a session as active when
   // it has checked in during the last 90 seconds.
   send("heartbeat");
-  setInterval(() => send("heartbeat"), 30000);
+  setInterval(() => send("heartbeat"), 60000);
 
   const tracked = new Set();
   function once(key, event, data) {
@@ -6193,7 +5875,8 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
   // Preserve the existing GA4/Meta tracking and add the same milestones
   // to the first-party analytics dashboard.
   const marks = [25, 50, 75, 90, 100];
-  function scrollDepth() {
+  let scrollTicking = false;
+  function scrollDepthNow() {
     const doc = document.documentElement;
     const max = Math.max(1, doc.scrollHeight - window.innerHeight);
     const pct = Math.round((window.scrollY / max) * 100);
@@ -6201,8 +5884,16 @@ src="https://www.facebook.com/tr?id=1603265484823391&ev=PageView&noscript=1" alt
       if (pct >= mark) once("scroll_" + mark, "scroll_depth", {percent_scrolled: mark});
     });
   }
+  function scrollDepth() {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+      scrollDepthNow();
+      scrollTicking = false;
+    });
+  }
   window.addEventListener("scroll", scrollDepth, {passive:true});
-  window.addEventListener("load", scrollDepth);
+  window.addEventListener("load", scrollDepthNow);
 })();
 </script>
 
