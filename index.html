@@ -91,7 +91,7 @@ body {
 }
 
 .current {
-    font-size: 27px;
+    font-size: 22px;
     font-weight: 800;
     letter-spacing: -.5px;
 }
@@ -321,8 +321,8 @@ body {
         width: calc(100% - 36px);
         max-width: 620px;
         margin: 0 auto 12px;
-        padding: 10px 12px;
-        border-radius: 14px;
+        padding: 7px 12px;
+        border-radius: 12px;
         background: #ffe8b9;
         display: flex;
         align-items: center;
@@ -349,8 +349,8 @@ body {
     .timer {
         flex: 0 0 auto;
         min-width: 128px;
-        padding: 8px 7px;
-        border-radius: 11px;
+        padding: 6px 7px;
+        border-radius: 10px;
         background: #fff;
         display: flex;
         justify-content: center;
@@ -367,7 +367,7 @@ body {
 
     .timer-label {
         display: block;
-        margin-top: 4px;
+        margin-top: 3px;
         font-size: 7px;
         line-height: 1;
     }
@@ -434,7 +434,7 @@ body {
     .mobile-offer {
         width: calc(100% - 28px);
         padding: 9px 10px;
-        gap: 7px;
+        gap: 5px;
     }
 
     .offer-copy strong { font-size: 12px; }
@@ -442,7 +442,7 @@ body {
 
     .timer {
         min-width: 119px;
-        gap: 7px;
+        gap: 5px;
         padding: 8px 6px;
     }
 
@@ -475,8 +475,8 @@ body {
 /* Rating / sales card */
 .resource-stats {
     display: grid;
-    grid-template-columns: 1.02fr .98fr;
-    min-height: 118px;
+    grid-template-columns: 1fr 1fr;
+    min-height: 104px;
     background: #fff;
     border: 1px solid #e5e5e8;
     border-radius: 17px;
@@ -488,12 +488,20 @@ body {
     min-width: 0;
     display: flex;
     align-items: center;
-    padding: 20px 24px;
-    gap: 15px;
+    padding: 15px 20px;
+    gap: 12px;
 }
 
 .resource-stat + .resource-stat {
     border-left: 1px solid #e7e7e9;
+}
+
+.resource-rating-stat {
+    justify-content: center;
+}
+
+.resource-sales-stat {
+    justify-content: center;
 }
 
 .resource-rating-visual {
@@ -501,12 +509,12 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 7px;
+    gap: 5px;
 }
 
 .resource-stars {
     color: #f2a000;
-    font-size: 27px;
+    font-size: 22px;
     line-height: 1;
     letter-spacing: 1px;
     white-space: nowrap;
@@ -514,8 +522,8 @@ body {
 
 .resource-rating-label {
     color: #74747c;
-    font-size: 12px;
-    line-height: 1.15;
+    font-size: 11px;
+    line-height: 1.2;
     font-weight: 600;
     white-space: nowrap;
 }
@@ -527,24 +535,24 @@ body {
 .resource-stat-copy strong {
     display: block;
     color: #303038;
-    font-size: 19px;
-    line-height: 1.1;
-    font-weight: 800;
-    letter-spacing: -.35px;
+    font-size: 17px;
+    line-height: 1.15;
+    font-weight: 750;
+    letter-spacing: -.2px;
 }
 
 .resource-stat-copy span {
     display: block;
-    margin-top: 6px;
+    margin-top: 4px;
     color: #73737b;
-    font-size: 13px;
+    font-size: 11px;
     line-height: 1.25;
     font-weight: 500;
 }
 
 .resource-sales-icon {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     color: #ed9700;
     stroke-width: 2.5;
     flex: 0 0 auto;
@@ -552,13 +560,13 @@ body {
 
 /* Small supporting notice */
 .resource-note {
-    margin-top: 16px;
-    padding: 10px 14px;
+    margin-top: 14px;
+    padding: 9px 12px;
     border: 1px solid #e5e5e7;
     border-radius: 11px;
     background: #f8f8f7;
     color: #4c4c53;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.35;
     font-weight: 700;
     text-align: center;
@@ -566,8 +574,8 @@ body {
 
 /* Mediums */
 .resource-mediums {
-    margin-top: 16px;
-    padding: 18px 20px;
+    margin-top: 14px;
+    padding: 16px 18px;
     border: 1px solid #e7e7e9;
     border-radius: 14px;
     background: #f7f7f6;
@@ -600,8 +608,8 @@ body {
 }
 
 .resource-logo-card {
-    height: 58px;
-    padding: 7px 18px;
+    height: 54px;
+    padding: 5px 14px;
     border-radius: 11px;
     background: #fff;
     display: flex;
@@ -615,21 +623,28 @@ body {
     display: block;
     width: auto;
     max-width: 100%;
-    height: 42px;
+    height: 38px;
+    width: auto;
+    max-width: 155px;
     object-fit: contain;
 }
 
 /* Supporting 2026 copy */
 .resource-description {
-    margin-top: 22px;
-    max-width: 570px;
+    margin-top: 18px;
+    max-width: 590px;
     color: #676770;
-    font-size: 14px;
+    font-size: 13.5px;
     line-height: 1.5;
 }
 
 .resource-description strong {
     color: #27272d;
+    font-weight: 800;
+}
+
+.resource-description .highlight-accent {
+    color: #7b35c7;
     font-weight: 800;
 }
 
@@ -723,14 +738,14 @@ body {
     }
 
     .resource-stats {
-        min-height: 91px;
+        min-height: 78px;
         border-radius: 14px;
         grid-template-columns: 1fr 1fr;
     }
 
     .resource-stat {
-        padding: 13px 11px;
-        gap: 8px;
+        padding: 11px 12px;
+        gap: 7px;
     }
 
     .resource-stat + .resource-stat {
@@ -742,17 +757,17 @@ body {
     }
 
     .resource-stars {
-        font-size: 17px;
+        font-size: 16px;
         letter-spacing: 0;
     }
 
     .resource-rating-label {
-        font-size: 8.5px;
+        font-size: 9px;
     }
 
     .resource-sales-icon {
-        width: 21px;
-        height: 21px;
+        width: 20px;
+        height: 20px;
     }
 
     .resource-stat-copy strong {
@@ -761,7 +776,7 @@ body {
     }
 
     .resource-stat-copy span {
-        margin-top: 4px;
+        margin-top: 3px;
         font-size: 9.5px;
     }
 
@@ -793,7 +808,8 @@ body {
     }
 
     .resource-logo-card img {
-        height: 32px;
+        height: 34px;
+        max-width: 145px;
     }
 
     .resource-description {
@@ -824,11 +840,11 @@ body {
     }
 
     .resource-stars {
-        font-size: 15px;
+        font-size: 14px;
     }
 
     .resource-rating-label {
-        font-size: 8px;
+        font-size: 8.5px;
     }
 
     .resource-stat-copy strong {
@@ -868,7 +884,7 @@ body {
             <span class="old">₹3999</span>
         </div>
 
-        <button class="cta desktop-cta" onclick="window.location.href='#purchase'">
+        <button class="cta desktop-cta" onclick="window.location.href='./checkout.html'">
             GET LIFETIME ACCESS
         </button>
 
@@ -917,7 +933,7 @@ body {
             <span class="old">₹3999</span>
         </div>
 
-        <button class="cta mobile-cta" onclick="window.location.href='#purchase'">
+        <button class="cta mobile-cta" onclick="window.location.href='./checkout.html'">
             GET LIFETIME ACCESS
         </button>
     </div>
@@ -952,22 +968,18 @@ body {
 
     <div class="resource-left">
         <div class="resource-stats">
-            <div class="resource-stat">
+            <div class="resource-stat resource-rating-stat">
                 <div class="resource-rating-visual">
                     <div class="resource-stars" aria-label="4.7 plus out of 5 stars">★★★★★</div>
                     <div class="resource-rating-label">4.7+ User Ratings</div>
                 </div>
-                <div class="resource-stat-copy">
-                    <strong>Trusted by students</strong>
-                    <span>Rated by our learners</span>
-                </div>
             </div>
 
-            <div class="resource-stat">
+            <div class="resource-stat resource-sales-stat">
                 <i data-lucide="arrow-up-right" class="resource-sales-icon" aria-hidden="true"></i>
                 <div class="resource-stat-copy">
                     <strong>724 Units</strong>
-                    <span>sold in the last 7 days</span>
+                    <span>sold in last 7 days</span>
                 </div>
             </div>
         </div>
@@ -997,14 +1009,14 @@ body {
         </div>
 
         <p class="resource-description">
-            <strong>All Institute Material for 2026 is included in this package for both JEE &amp; NEET exams.</strong>
+            This package has <strong class="highlight-accent">50GB</strong> of JEE and NEET material, including all <strong class="highlight-accent">Institute Material</strong>, Modules, Test Series, PYQs, and Handbooks.
         </p>
     </div>
 
     <div class="resource-right">
         <div class="package-image-card">
             <img src="assets/package-includes.png"
-                 alt="This package includes Toppers Handwritten Notes, Reference Books, Question Banks, Mind Maps, Mock Tests and Previous Year Questions"
+                 alt="2026-27 latest resources: Toppers Handwritten Notes, 1K+ Reference Books, All Institute Material, Mind Maps, Mock Tests, Test Series and Previous Year Questions"
                  loading="lazy"
                  decoding="async">
         </div>
