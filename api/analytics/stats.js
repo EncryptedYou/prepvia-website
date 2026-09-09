@@ -138,9 +138,96 @@ async function getDailyAggregates(start, end) {
   return { events, pages, sources, devices, scroll, revenue, visitors: visitorIds.size, sessions: sessionIds.size, days: results };
 }
 
+async function rebuildHistoricalDimensions() {
+  const rawResult = await redis("lrange", "analytics:events", "0", "9999");
+  const rows = Array.isArray(rawResult.result) ? rawResult.result : [];
+  const pages = {}, sources = {}, devices = {}, buyClicks = {};
+  const days = new Set();
+  let parsed = 0, oldest = Infinity, newest = 0;
+
+  function sourceFromEvent(e) {
+    const explicit = String(e?.utm_source || "").trim().toLowerCase();
+    if (explicit) return explicit;
+    try {
+      const ref = e?.referrer ? new URL(e.referrer) : null;
+      const host = ref ? String(ref.hostname || "").toLowerCase().replace(/^www\./, "") : "";
+      const currentHost = String(e?.host || "").toLowerCase().replace(/^www\./, "");
+      if (host && (!currentHost || host !== currentHost) && host !== "localhost") return host;
+    } catch (_) {}
+    return "direct";
+  }
+
+  function isPrimaryBuyClick(e) {
+    if (e?.event !== "buy_click") return false;
+    const id = String(e?.data?.id || "").trim();
+    const cta = String(e?.data?.cta || "").trim();
+    return cta === "hero" || cta === "purchase_card" || cta === "package_preview" ||
+      id === "heroGetSuccess" || id === "package-buy-button" || id === "package-preview-buy";
+  }
+
+  for (const raw of rows) {
+    let e;
+    try { e = typeof raw === "string" ? JSON.parse(raw) : raw; } catch (_) { continue; }
+    const ts = Number(e?.ts);
+    if (!e || !Number.isFinite(ts)) continue;
+    parsed++; oldest = Math.min(oldest, ts); newest = Math.max(newest, ts);
+    const day = new Date(ts).toISOString().slice(0, 10); days.add(day);
+
+    if (e.event === "page_view") {
+      const page = String(e.page || "/");
+      pages[day] ||= {}; pages[day][page] = (pages[day][page] || 0) + 1;
+      const source = sourceFromEvent(e);
+      sources[day] ||= {}; sources[day][source] = (sources[day][source] || 0) + 1;
+      const device = String(e.device || "unknown");
+      devices[day] ||= {}; devices[day][device] = (devices[day][device] || 0) + 1;
+    }
+    if (isPrimaryBuyClick(e)) buyClicks[day] = (buyClicks[day] || 0) + 1;
+  }
+
+  const affectedDays = [...days].sort();
+  for (const day of affectedDays) {
+    await Promise.all([
+      redis("del", "analytics:pages:" + day),
+      redis("del", "analytics:sources:" + day),
+      redis("del", "analytics:devices:" + day)
+    ]);
+    const counterKey = "analytics:counter:" + day;
+    await redis("hdel", counterKey, "buy_click");
+
+    for (const [key, value] of Object.entries(pages[day] || {})) await redis("hincrby", "analytics:pages:" + day, key, value);
+    for (const [key, value] of Object.entries(sources[day] || {})) await redis("hincrby", "analytics:sources:" + day, key, value);
+    for (const [key, value] of Object.entries(devices[day] || {})) await redis("hincrby", "analytics:devices:" + day, key, value);
+    if (buyClicks[day]) await redis("hincrby", counterKey, "buy_click", buyClicks[day]);
+  }
+
+  return {
+    success: true,
+    message: "Historical analytics dimensions rebuilt successfully.",
+    parsed_events: parsed,
+    affected_days: affectedDays.length,
+    oldest_event: Number.isFinite(oldest) ? new Date(oldest).toISOString() : null,
+    newest_event: newest ? new Date(newest).toISOString() : null,
+    note: "Only the retained raw event stream (up to 10,000 events) can be reconstructed. Existing verified purchase, revenue, payment-attempt and payment-failure totals were left untouched."
+  };
+}
+
 module.exports = async (req, res) => {
-  if (req.method !== "GET") return res.status(405).json({ message: "Method not allowed" });
   if (!authorized(req)) return res.status(401).json({ message: "Unauthorized" });
+
+  if (req.method === "POST") {
+    try {
+      const confirm = String(req.body?.confirm || "");
+      if (confirm !== "REBUILD_ANALYTICS_DIMENSIONS") {
+        return res.status(400).json({ message: "Confirmation required." });
+      }
+      return res.status(200).json(await rebuildHistoricalDimensions());
+    } catch (error) {
+      console.error("Analytics migration error:", error);
+      return res.status(500).json({ message: error.message || "Analytics migration failed." });
+    }
+  }
+
+  if (req.method !== "GET") return res.status(405).json({ message: "Method not allowed" });
 
   try {
     const now = Date.now();
