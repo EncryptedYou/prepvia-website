@@ -1,6 +1,5 @@
 const redisUrl = process.env.KV_REST_API_URL;
 const redisToken = process.env.KV_REST_API_TOKEN;
-const adminSecret = process.env.ADMIN_SECRET || process.env.ADMIN_PASSWORD;
 
 async function redis(command, ...args) {
   if (!redisUrl || !redisToken) throw new Error("Redis analytics is not configured.");
@@ -13,8 +12,9 @@ async function redis(command, ...args) {
 }
 
 function authorized(req) {
-  const h = req.headers.authorization || "";
-  return !!adminSecret && h === "Bearer " + adminSecret;
+  const h = String(req.headers.authorization || "");
+  const secret = String(process.env.ADMIN_SECRET || '').trim();
+  return Boolean(secret) && h === 'Bearer ' + secret;
 }
 
 function isoDate(ts) {
