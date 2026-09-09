@@ -3,12 +3,13 @@ const {
   BASE_AMOUNT, RESERVATION_TTL, cleanCode, getCoupon, validateCoupon,
   calculateDiscount, redisSet, redisSetNX, redisDel, reservationKey, randomId, redisGet
 } = require('../lib/coupons');
+const { recordEvent } = require('../lib/analytics-store');
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ message: 'Method not allowed' });
   let reservation = null;
   let orderCouponKey = null;
   try {
-    const { name, email, phone, coupon } = req.body || {};
+    const { name, email, phone, coupon, analytics } = req.body || {};
     if (!name || !email || !/^\d{10}$/.test(String(phone || '')))
       return res.status(400).json({ message: 'Invalid customer details.' });
 
@@ -68,6 +69,31 @@ module.exports = async (req, res) => {
         createdAt: Date.now()
       };
       await redisSet(orderCouponKey, JSON.stringify(snapshot), RESERVATION_TTL);
+    }
+
+    // A payment attempt is a real Razorpay order, so record it server-side.
+    // This avoids counting client button clicks as payment attempts.
+    try {
+      await recordEvent('payment_attempt', {
+        visitor_id: analytics?.visitor_id,
+        session_id: analytics?.session_id,
+        page: '/checkout.html',
+        page_title: 'Checkout — Prep.via',
+        referrer: analytics?.referrer,
+        utm_source: analytics?.utm_source,
+        utm_medium: analytics?.utm_medium,
+        utm_campaign: analytics?.utm_campaign,
+        device: analytics?.device,
+        host: req.headers.host || '',
+        data: {
+          order_id: String(data.id).slice(0,120),
+          amount: finalAmount / 100,
+          currency: 'INR',
+          product: 'JEE & NEET Success Package'
+        }
+      });
+    } catch (analyticsError) {
+      console.error('Payment-attempt analytics error:', analyticsError);
     }
 
     return res.status(200).json({ order_id: data.id, key_id: key, amount: finalAmount, discount, coupon: code || null });
