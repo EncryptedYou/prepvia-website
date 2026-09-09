@@ -8194,6 +8194,79 @@ html{scroll-behavior:auto;}
   }, {passive:false});
 })();
 </script>
+
+
+<style id="prep-via-cta-button-shimmer-final">
+/* =========================================================
+   CTA BUTTON SHIMMER — BUTTONS ONLY
+   A soft diagonal highlight sweeps across the three visible
+   purchase CTAs without animating their parent cards.
+   ========================================================= */
+
+.primary-btn,
+.video-preview-purchase-button,
+.package-modern .package-buy-button{
+    position:relative !important;
+    isolation:isolate;
+    overflow:hidden !important;
+    transform:translateZ(0);
+}
+
+.primary-btn::after,
+.video-preview-purchase-button::after,
+.package-modern .package-buy-button::after{
+    content:"";
+    position:absolute;
+    top:-90%;
+    bottom:-90%;
+    left:-55%;
+    width:34%;
+    transform:translateX(-220%) rotate(22deg);
+    background:linear-gradient(
+        90deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,.10) 35%,
+        rgba(255,255,255,.72) 50%,
+        rgba(255,255,255,.10) 65%,
+        rgba(255,255,255,0) 100%
+    );
+    pointer-events:none;
+    z-index:1;
+    animation:prepViaCtaShimmer 3.6s ease-in-out infinite;
+}
+
+.video-preview-purchase-button strong,
+.video-preview-purchase-button span,
+.package-modern .package-buy-button span,
+.package-modern .package-buy-button b{
+    position:relative;
+    z-index:2;
+}
+
+@keyframes prepViaCtaShimmer{
+    0%, 55%{
+        transform:translateX(-220%) rotate(22deg);
+        opacity:0;
+    }
+    60%{
+        opacity:1;
+    }
+    78%, 100%{
+        transform:translateX(520%) rotate(22deg);
+        opacity:0;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+    .primary-btn::after,
+    .video-preview-purchase-button::after,
+    .package-modern .package-buy-button::after{
+        animation:none !important;
+        display:none !important;
+    }
+}
+</style>
+
 </body>
 </html>
 
