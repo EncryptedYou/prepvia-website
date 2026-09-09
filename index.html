@@ -8176,6 +8176,24 @@ html{scroll-behavior:auto;}
   }
 })();
 </script>
+
+<script>
+(() => {
+  // Browser-delivered HTML/CSS/JS can never be made impossible to save or inspect.
+  // These handlers only deter casual copying and do not affect payment forms.
+  const blocked = new Set(['s','u','p']);
+  document.addEventListener('contextmenu', e => e.preventDefault(), {passive:false});
+  document.addEventListener('dragstart', e => {
+    if (e.target && e.target.tagName === 'IMG') e.preventDefault();
+  }, {passive:false});
+  document.addEventListener('keydown', e => {
+    const k = String(e.key || '').toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && blocked.has(k)) e.preventDefault();
+    if (e.ctrlKey && e.shiftKey && (k === 'i' || k === 'j')) e.preventDefault();
+    if (e.key === 'F12') e.preventDefault();
+  }, {passive:false});
+})();
+</script>
 </body>
 </html>
 

@@ -61,7 +61,7 @@
 'use strict';
 const $=id=>document.getElementById(id);
 const couponApi='/api/admin-coupons', analyticsApi='/api/analytics/stats';
-let secret=localStorage.getItem('prepvia_admin_secret')||sessionStorage.getItem('prepvia_admin_secret')||'';
+let secret=sessionStorage.getItem('prepvia_admin_secret')||'';
 let selectedRange='today', loading=false;
 function auth(){return {Authorization:'Bearer '+secret,'Content-Type':'application/json'}}
 function msg(id,text,type=''){const el=$(id);if(!el)return;el.textContent=text||'';el.className='status '+type}
@@ -79,7 +79,7 @@ function renderCoupons(cs){$('couponRows').innerHTML=cs.length?cs.map(c=>{const 
 window.toggleCoupon=async(code,active)=>{try{await api(couponApi,{method:'PATCH',body:JSON.stringify({code,active})});msg('listMsg',active?'Coupon enabled.':'Coupon disabled.','success');await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('listMsg',e.message,'error')}};
 window.deleteCoupon=async code=>{if(!confirm('Delete '+code+' permanently?'))return;try{await api(couponApi,{method:'DELETE',body:JSON.stringify({code})});msg('listMsg','Coupon deleted.','success');await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('listMsg',e.message,'error')}};
 window.updateLimit=async code=>{const n=Number($('limit-'+code)?.value);if(!Number.isInteger(n)||n<0)return msg('listMsg','Usage limit must be a whole number.','error');try{await api(couponApi,{method:'PATCH',body:JSON.stringify({code,maxUses:n})});msg('listMsg','Usage limit updated.','success');await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('listMsg',e.message,'error')}};
-$('loginBtn').onclick=async()=>{const candidate=$('secret').value.trim();if(!candidate)return msg('loginMsg','Enter admin secret.','error');const b=$('loginBtn');b.disabled=true;b.textContent='Checking…';const old=secret;secret=candidate;try{await api(analyticsApi+'?range=today');if($('rememberMe').checked){localStorage.setItem('prepvia_admin_secret',candidate);sessionStorage.removeItem('prepvia_admin_secret')}else{sessionStorage.setItem('prepvia_admin_secret',candidate);localStorage.removeItem('prepvia_admin_secret')}msg('loginMsg','');showApp()}catch(e){secret=old;msg('loginMsg',e.message==='Unauthorized.'?'Invalid admin secret.':e.message,'error')}finally{b.disabled=false;b.textContent='Sign in'}};
+$('loginBtn').onclick=async()=>{const candidate=$('secret').value.trim();if(!candidate)return msg('loginMsg','Enter admin secret.','error');const b=$('loginBtn');b.disabled=true;b.textContent='Checking…';const old=secret;secret=candidate;try{await api(analyticsApi+'?range=today');sessionStorage.setItem('prepvia_admin_secret',candidate);msg('loginMsg','');showApp()}catch(e){secret=old;msg('loginMsg',e.message==='Unauthorized.'?'Invalid admin secret.':e.message,'error')}finally{b.disabled=false;b.textContent='Sign in'}};
 $('secret').addEventListener('keydown',e=>{if(e.key==='Enter')$('loginBtn').click()});
 $('logout').onclick=()=>{clearAuth();showLogin();msg('loginMsg','You have been logged out.','success')};
 function tab(active){[['analyticsTab','analyticsPanel'],['couponsTab','couponsPanel']].forEach(([b,p])=>{$(b).classList.toggle('active',b===active);$(p).classList.toggle('hidden',b!==active)});if(active==='analyticsTab')loadAnalytics();else loadCoupons()}
