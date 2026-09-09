@@ -107,7 +107,7 @@ async function getDailyAggregates(start, end) {
   for (let t = first; t <= last; t += 86400000) days.push(isoDate(t));
 
   const results = await Promise.all(days.map(async day => {
-    const [counter, revenue, visitors, sessions, pages, sources, devices, scroll] = await Promise.all([
+    const [counter, revenue, visitors, sessions, pages, sources, devices, scroll, buyCtas] = await Promise.all([
       redis("hgetall", "analytics:counter:" + day),
       redis("hget", "analytics:revenue:" + day, "value"),
       redis("smembers", "analytics:visitors:" + day),
@@ -115,12 +115,13 @@ async function getDailyAggregates(start, end) {
       redis("hgetall", "analytics:pages:" + day),
       redis("hgetall", "analytics:sources:" + day),
       redis("hgetall", "analytics:devices:" + day),
-      redis("hgetall", "analytics:scroll:" + day)
+      redis("hgetall", "analytics:scroll:" + day),
+      redis("hgetall", "analytics:buy_ctas:" + day)
     ]);
-    return { day, counter, revenue: Number(revenue.result || 0), visitors, sessions, pages, sources, devices, scroll };
+    return { day, counter, revenue: Number(revenue.result || 0), visitors, sessions, pages, sources, devices, scroll, buyCtas };
   }));
 
-  const events = {}, pages = {}, sources = {}, devices = {}, scroll = {};
+  const events = {}, pages = {}, sources = {}, devices = {}, scroll = {}, buyCtas = {};
   const visitorIds = new Set(), sessionIds = new Set();
   let revenue = 0;
   for (const row of results) {
@@ -129,6 +130,7 @@ async function getDailyAggregates(start, end) {
     addCounts(sources, row.sources);
     addCounts(devices, row.devices);
     addCounts(scroll, row.scroll);
+    addCounts(buyCtas, row.buyCtas);
     revenue += Number.isFinite(row.revenue) ? row.revenue : 0;
     const v = row.visitors && Array.isArray(row.visitors.result) ? row.visitors.result : [];
     const ss = row.sessions && Array.isArray(row.sessions.result) ? row.sessions.result : [];
@@ -138,94 +140,8 @@ async function getDailyAggregates(start, end) {
   return { events, pages, sources, devices, scroll, revenue, visitors: visitorIds.size, sessions: sessionIds.size, days: results };
 }
 
-async function rebuildHistoricalDimensions() {
-  const rawResult = await redis("lrange", "analytics:events", "0", "9999");
-  const rows = Array.isArray(rawResult.result) ? rawResult.result : [];
-  const pages = {}, sources = {}, devices = {}, buyClicks = {};
-  const days = new Set();
-  let parsed = 0, oldest = Infinity, newest = 0;
-
-  function sourceFromEvent(e) {
-    const explicit = String(e?.utm_source || "").trim().toLowerCase();
-    if (explicit) return explicit;
-    try {
-      const ref = e?.referrer ? new URL(e.referrer) : null;
-      const host = ref ? String(ref.hostname || "").toLowerCase().replace(/^www\./, "") : "";
-      const currentHost = String(e?.host || "").toLowerCase().replace(/^www\./, "");
-      if (host && (!currentHost || host !== currentHost) && host !== "localhost") return host;
-    } catch (_) {}
-    return "direct";
-  }
-
-  function isPrimaryBuyClick(e) {
-    if (e?.event !== "buy_click") return false;
-    const id = String(e?.data?.id || "").trim();
-    const cta = String(e?.data?.cta || "").trim();
-    return cta === "hero" || cta === "purchase_card" || cta === "package_preview" ||
-      id === "heroGetSuccess" || id === "package-buy-button" || id === "package-preview-buy";
-  }
-
-  for (const raw of rows) {
-    let e;
-    try { e = typeof raw === "string" ? JSON.parse(raw) : raw; } catch (_) { continue; }
-    const ts = Number(e?.ts);
-    if (!e || !Number.isFinite(ts)) continue;
-    parsed++; oldest = Math.min(oldest, ts); newest = Math.max(newest, ts);
-    const day = new Date(ts).toISOString().slice(0, 10); days.add(day);
-
-    if (e.event === "page_view") {
-      const page = String(e.page || "/");
-      pages[day] ||= {}; pages[day][page] = (pages[day][page] || 0) + 1;
-      const source = sourceFromEvent(e);
-      sources[day] ||= {}; sources[day][source] = (sources[day][source] || 0) + 1;
-      const device = String(e.device || "unknown");
-      devices[day] ||= {}; devices[day][device] = (devices[day][device] || 0) + 1;
-    }
-    if (isPrimaryBuyClick(e)) buyClicks[day] = (buyClicks[day] || 0) + 1;
-  }
-
-  const affectedDays = [...days].sort();
-  for (const day of affectedDays) {
-    await Promise.all([
-      redis("del", "analytics:pages:" + day),
-      redis("del", "analytics:sources:" + day),
-      redis("del", "analytics:devices:" + day)
-    ]);
-    const counterKey = "analytics:counter:" + day;
-    await redis("hdel", counterKey, "buy_click");
-
-    for (const [key, value] of Object.entries(pages[day] || {})) await redis("hincrby", "analytics:pages:" + day, key, value);
-    for (const [key, value] of Object.entries(sources[day] || {})) await redis("hincrby", "analytics:sources:" + day, key, value);
-    for (const [key, value] of Object.entries(devices[day] || {})) await redis("hincrby", "analytics:devices:" + day, key, value);
-    if (buyClicks[day]) await redis("hincrby", counterKey, "buy_click", buyClicks[day]);
-  }
-
-  return {
-    success: true,
-    message: "Historical analytics dimensions rebuilt successfully.",
-    parsed_events: parsed,
-    affected_days: affectedDays.length,
-    oldest_event: Number.isFinite(oldest) ? new Date(oldest).toISOString() : null,
-    newest_event: newest ? new Date(newest).toISOString() : null,
-    note: "Only the retained raw event stream (up to 10,000 events) can be reconstructed. Existing verified purchase, revenue, payment-attempt and payment-failure totals were left untouched."
-  };
-}
-
 module.exports = async (req, res) => {
   if (!authorized(req)) return res.status(401).json({ message: "Unauthorized" });
-
-  if (req.method === "POST") {
-    try {
-      const confirm = String(req.body?.confirm || "");
-      if (confirm !== "REBUILD_ANALYTICS_DIMENSIONS") {
-        return res.status(400).json({ message: "Confirmation required." });
-      }
-      return res.status(200).json(await rebuildHistoricalDimensions());
-    } catch (error) {
-      console.error("Analytics migration error:", error);
-      return res.status(500).json({ message: error.message || "Analytics migration failed." });
-    }
-  }
 
   if (req.method !== "GET") return res.status(405).json({ message: "Method not allowed" });
 
@@ -261,8 +177,8 @@ module.exports = async (req, res) => {
     // sources and devices. This avoids the 10,000-event stream cap for normal
     // dashboard ranges and uses the repaired dimensions after migration.
     const eventCounts = daily.events;
-    const pageViews = Number(eventCounts.page_view || 0);
-    const buyClicks = Number(eventCounts.buy_click || 0);
+    const pageViews = Object.values(daily.pages).reduce((sum, value) => sum + Number(value || 0), 0);
+    const buyClicks = Object.values(daily.buyCtas).reduce((sum, value) => sum + Number(value || 0), 0);
     const checkoutViews = Number(eventCounts.checkout_view || 0);
     const paymentAttempts = Number(eventCounts.payment_attempt_unique || 0);
     const paymentFailures = Number(eventCounts.payment_failed_unique || 0);
@@ -291,11 +207,12 @@ module.exports = async (req, res) => {
       funnel,
       conversion_rate: buyClicks ? Number((purchases / buyClicks * 100).toFixed(2)) : 0,
       visitor_to_purchase_rate: daily.visitors ? Number((purchases / daily.visitors * 100).toFixed(2)) : 0,
-      payment_success_rate: paymentAttempts ? Number((purchases / paymentAttempts * 100).toFixed(2)) : 0,
+      payment_success_rate: paymentAttempts ? Number(Math.min(100, Math.max(0, purchases / paymentAttempts * 100)).toFixed(2)) : 0,
       events: eventCounts,
       top_pages: Object.entries(daily.pages).sort((a,b) => b[1] - a[1]).slice(0, 8).map(([page,count]) => ({ page, count })),
       traffic_sources: Object.entries(daily.sources).sort((a,b) => b[1] - a[1]).slice(0, 8).map(([source,count]) => ({ source, count })),
       devices: Object.entries(daily.devices).sort((a,b) => b[1] - a[1]).map(([device,count]) => ({ device, count })),
+      buy_ctas: Object.entries(daily.buyCtas).sort((a,b) => b[1] - a[1]).map(([cta,count]) => ({ cta, count })),
       scroll_depth: daily.scroll
     });
   } catch (error) {
