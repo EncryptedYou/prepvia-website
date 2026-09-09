@@ -856,7 +856,8 @@ body{
           phone,
           amount: currentAmount,
           coupon: appliedCoupon ? appliedCoupon.code : null,
-          product: "JEE & NEET Success Package"
+          product: "JEE & NEET Success Package",
+          analytics: typeof window.prepViaCheckoutContext === "function" ? window.prepViaCheckoutContext() : null
         })
       });
 
@@ -867,16 +868,6 @@ body{
       }
 
       RAZORPAY_KEY_ID = data.key_id;
-
-      // Count a payment attempt only after the server creates a real Razorpay order.
-      if (typeof window.prepViaCheckoutTrack === "function") {
-        window.prepViaCheckoutTrack("payment_attempt", {
-          order_id: String(data.order_id).slice(0,120),
-          amount: Number(data.amount || currentAmount) / 100,
-          currency: "INR",
-          product: "JEE & NEET Success Package"
-        });
-      }
 
       // Never trust the browser amount. Compare the server amount with the selected coupon result.
       const serverAmount = Number(data.amount);
@@ -1000,66 +991,78 @@ body{
     try {
       let id = storage.getItem(key);
       if (!id) {
-        id = crypto.randomUUID ? crypto.randomUUID() :
-          Date.now().toString(36) + Math.random().toString(36).slice(2);
+        id = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
         storage.setItem(key, id);
       }
       return id;
-    } catch (_) {
-      return Date.now().toString(36);
-    }
+    } catch (_) { return Date.now().toString(36); }
   }
 
   const visitorId = idFor(localStorage, "prepvia_visitor_id");
   const sessionId = idFor(sessionStorage, "prepvia_session_id");
-  const params = new URLSearchParams(location.search);
 
-  function send(event, data, beacon=false) {
-    const body = JSON.stringify({
-      event,
+  function attribution() {
+    const params = new URLSearchParams(location.search);
+    let source = params.get("utm_source") || "";
+    let medium = params.get("utm_medium") || "";
+    let campaign = params.get("utm_campaign") || "";
+
+    try {
+      const saved = JSON.parse(sessionStorage.getItem("prepvia_attribution") || "null");
+      if (!source && saved) { source = saved.source || ""; medium = saved.medium || ""; campaign = saved.campaign || ""; }
+    } catch (_) {}
+
+    if (!source) {
+      try {
+        const ref = document.referrer ? new URL(document.referrer) : null;
+        const host = ref ? String(ref.hostname || "").toLowerCase().replace(/^www\./, "") : "";
+        const current = String(location.hostname || "").toLowerCase().replace(/^www\./, "");
+        if (host && host !== current && host !== "localhost") { source = host; medium = medium || "referral"; }
+      } catch (_) {}
+    }
+
+    if (!source) source = "direct";
+    return {source, medium, campaign};
+  }
+
+  const attr = attribution();
+  function context() {
+    return {
       visitor_id: visitorId,
       session_id: sessionId,
       page: location.pathname || "/checkout.html",
       page_title: document.title,
       referrer: document.referrer || "",
-      utm_source: params.get("utm_source") || "",
-      utm_medium: params.get("utm_medium") || "",
-      utm_campaign: params.get("utm_campaign") || "",
+      utm_source: attr.source,
+      utm_medium: attr.medium,
+      utm_campaign: attr.campaign,
       device: innerWidth <= 700 ? "mobile" : (innerWidth <= 1100 ? "tablet" : "desktop"),
-      host: window.location.host,
-      ts: Date.now(),
-      data: data || {}
-    });
+      host: window.location.host
+    };
+  }
+
+  function send(event, data, beacon=false) {
+    const body = JSON.stringify(Object.assign(context(), {event, ts: Date.now(), data: data || {}}));
     try {
       if (beacon && navigator.sendBeacon) {
         navigator.sendBeacon(ENDPOINT, new Blob([body], {type:"application/json"}));
       } else {
-        fetch(ENDPOINT, {
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
-          body,
-          keepalive:true
-        }).catch(()=>{});
+        fetch(ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body, keepalive:true}).catch(()=>{});
       }
     } catch (_) {}
   }
 
   window.prepViaCheckoutTrack = send;
+  window.prepViaCheckoutContext = context;
   send("checkout_view");
   send("heartbeat");
   setInterval(() => send("heartbeat"), 30000);
 
-  const pay = document.getElementById("payBtn");
   const coupon = document.getElementById("applyCoupon");
-
-  if (coupon) {
-    coupon.addEventListener("click", () => {
-      const code = (document.getElementById("couponCode")?.value || "").trim();
-      if (code) send("coupon_attempt", {coupon: code.slice(0,40)});
-    });
-  }
-
-
+  if (coupon) coupon.addEventListener("click", () => {
+    const code = (document.getElementById("couponCode")?.value || "").trim();
+    if (code) send("coupon_attempt", {coupon: code.slice(0,40)});
+  });
 
   window.addEventListener("beforeunload", () => send("session_end", {}, true));
 })();

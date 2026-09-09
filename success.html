@@ -251,5 +251,34 @@ h1{font-size:clamp(46px,8vw,88px);line-height:.95;letter-spacing:-4px;margin:22p
   }, {passive:false});
 })();
 </script>
+<script id="prepvia-success-analytics">
+(() => {
+  "use strict";
+  const ENDPOINT = "/api/analytics/event";
+  function idFor(storage, key) {
+    try {
+      let id = storage.getItem(key);
+      if (!id) { id = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2); storage.setItem(key, id); }
+      return id;
+    } catch (_) { return Date.now().toString(36); }
+  }
+  const visitorId = idFor(localStorage, "prepvia_visitor_id");
+  const sessionId = idFor(sessionStorage, "prepvia_session_id");
+  function attr() {
+    const p = new URLSearchParams(location.search);
+    let source = p.get("utm_source") || "", medium = p.get("utm_medium") || "", campaign = p.get("utm_campaign") || "";
+    try { const saved = JSON.parse(sessionStorage.getItem("prepvia_attribution") || "null"); if (!source && saved) { source=saved.source||""; medium=saved.medium||""; campaign=saved.campaign||""; } } catch (_) {}
+    if (!source) source = "direct";
+    return {source,medium,campaign};
+  }
+  const a = attr();
+  const body = JSON.stringify({
+    event:"page_view", visitor_id:visitorId, session_id:sessionId, page:"/success.html", page_title:document.title,
+    referrer:document.referrer||"", utm_source:a.source, utm_medium:a.medium, utm_campaign:a.campaign,
+    device:innerWidth<=700?"mobile":(innerWidth<=1100?"tablet":"desktop"), host:location.host, ts:Date.now(), data:{}
+  });
+  try { fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body,keepalive:true}).catch(()=>{}); } catch (_) {}
+})();
+</script>
 </body>
 </html>
