@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prep Via Analytics — Admin</title>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --bg:#f4f7fb;--surface:#fff;--surface2:#f8fafc;--text:#111827;--muted:#718096;
+  --line:#e6ebf2;--navy:#102a56;--blue:#2563eb;--green:#10b981;--red:#ef4444;
+  --purple:#7c3aed;--orange:#f59e0b;--shadow:0 18px 50px rgba(16,42,86,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.icon{width:18px;height:18px;stroke-width:2}
+.muted{color:var(--muted);font-size:13px;line-height:1.55}
+.page{min-height:100vh}
+/* LOGIN */
+.loginPage{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;background:#f8fafc}
+.loginVisual{position:relative;overflow:hidden;background:linear-gradient(145deg,#0b1f41 0%,#153a72 52%,#2563eb 100%);color:#fff;padding:clamp(34px,6vw,84px);display:flex;align-items:center}
+.loginVisual:before,.loginVisual:after{content:"";position:absolute;border-radius:50%;filter:blur(2px);opacity:.22}
+.loginVisual:before{width:420px;height:420px;border:70px solid #fff;right:-170px;top:-100px}
+.loginVisual:after{width:360px;height:360px;background:#6ee7b7;left:-230px;bottom:-220px}
+.visualContent{position:relative;z-index:2;max-width:560px}
+.logoRow{display:flex;align-items:center;gap:13px}
+.logoMark{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);font-weight:900;letter-spacing:-1px;box-shadow:0 10px 30px rgba(0,0,0,.16)}
+.loginVisual h1{font-size:clamp(38px,5vw,66px);line-height:1.02;letter-spacing:-2.8px;margin:28px 0 16px;max-width:650px}
+.loginVisual p{font-size:16px;color:rgba(255,255,255,.75);max-width:520px}
+.featureList{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px}
+.feature{display:flex;gap:10px;align-items:center;padding:14px;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.08);border-radius:16px;backdrop-filter:blur(12px);font-size:13px}
+.feature i{width:20px;height:20px;color:#a7f3d0}
+.loginSide{display:grid;place-items:center;padding:28px}
+.loginCard{width:min(440px,100%);background:#fff;border:1px solid var(--line);border-radius:28px;padding:34px;box-shadow:var(--shadow)}
+.loginCard .mini{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;background:#ecfdf5;color:#047857;font-size:12px;font-weight:800;margin-bottom:18px}
+.loginCard h2{font-size:28px;letter-spacing:-.7px;margin:0 0 7px}
+.field{margin-top:18px}
+.field label{display:block;font-size:12px;font-weight:800;color:#475569;margin-bottom:8px;letter-spacing:.3px}
+.fieldWrap{position:relative}
+.fieldWrap .icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#94a3b8}
+.fieldWrap input{padding-left:42px}
+input,select{width:100%;padding:12px 13px;border:1px solid #dbe2ea;border-radius:13px;background:#fff;color:var(--text);outline:none;transition:.2s}
+input:focus,select:focus{border-color:#93b4ff;box-shadow:0 0 0 4px rgba(37,99,235,.1)}
+.remember{display:flex;align-items:center;gap:8px;margin:13px 0;color:#64748b;font-size:13px}
+.remember input{width:16px}
+.primaryBtn{width:100%;border:0;border-radius:13px;padding:13px 16px;background:linear-gradient(135deg,#102a56,#2563eb);color:#fff;font-weight:850;box-shadow:0 10px 24px rgba(37,99,235,.22);transition:transform .2s,box-shadow .2s}
+.primaryBtn:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(37,99,235,.27)}
+.status{min-height:18px;font-size:13px;margin-top:10px}
+.status.error{color:#b91c1c}.status.success{color:#047857}
+/* APP */
+.shell{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;background:#0d1f3d;color:#fff;padding:22px 14px;display:flex;flex-direction:column;z-index:40}
+.sideBrand{display:flex;align-items:center;gap:11px;padding:4px 9px 25px}
+.sideBrand .logoMark{width:40px;height:40px;border-radius:12px;background:#fff;color:#102a56;border:0}
+.sideBrand b{font-size:17px;letter-spacing:-.3px}
+.sideBrand span{display:block;color:#8ea4c5;font-size:11px;margin-top:2px}
+.sideNav{display:grid;gap:6px}
+.sideNav button{display:flex;align-items:center;gap:11px;width:100%;padding:12px 13px;border:0;border-radius:12px;background:transparent;color:#aebed6;text-align:left;font-weight:750}
+.sideNav button:hover{background:rgba(255,255,255,.07);color:#fff}
+.sideNav button.active{background:#fff;color:#102a56;box-shadow:0 8px 22px rgba(0,0,0,.12)}
+.sideNav .icon{width:18px}
+.sideBottom{margin-top:auto}
+.connectionBox{padding:13px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);border-radius:15px;font-size:12px;color:#aebed6}
+.online{display:flex;align-items:center;gap:7px;color:#6ee7b7;font-weight:800}
+.dot{width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 0 5px rgba(16,185,129,.1)}
+.logout{width:100%;margin-top:10px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.1);padding:11px;border-radius:12px;font-weight:800}
+.main{min-width:0}
+.mainInner{max-width:1480px;margin:auto;padding:24px clamp(16px,3vw,36px) 50px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:22px}
+.titleGroup h1{font-size:28px;letter-spacing:-1px;margin:0}
+.titleGroup p{margin:4px 0 0}
+.topActions{display:flex;align-items:center;gap:9px}
+.topIcon{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);background:#fff;border-radius:12px;color:#475569}
+.mobileMenu{display:none}
+.refreshSpin{animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#102a56 0%,#17478f 58%,#2563eb 100%);color:#fff;border-radius:24px;padding:26px;box-shadow:0 20px 55px rgba(16,42,86,.16);margin-bottom:18px}
+.hero:after{content:"";position:absolute;width:260px;height:260px;border:55px solid rgba(255,255,255,.06);border-radius:50%;right:-90px;top:-120px}
+.heroContent{position:relative;z-index:2;display:flex;justify-content:space-between;gap:20px;align-items:center}
+.hero h2{font-size:24px;margin:0 0 6px;letter-spacing:-.7px}
+.hero p{margin:0;color:#bfd0ea;max-width:660px}
+.liveBadge{display:flex;align-items:center;gap:8px;white-space:nowrap;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);padding:10px 13px;border-radius:999px;font-size:12px;font-weight:850}
+.liveBadge .dot{box-shadow:none}
+.sectionCard{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 8px 30px rgba(15,23,42,.035);margin-bottom:16px}
+.sectionHead{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:15px}
+.sectionHead h2{margin:0;font-size:17px;letter-spacing:-.2px}
+.sectionHead p{margin:4px 0 0}
+.rangeLabel{font-size:12px;font-weight:800;color:#64748b;padding:8px 10px;background:#f8fafc;border-radius:10px;border:1px solid var(--line)}
+.rangeBar{display:flex;flex-wrap:wrap;gap:7px;position:relative;z-index:5}.rangeBtn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.rangeBtn{width:auto;border:1px solid var(--line);background:#fff;color:#475569;border-radius:10px;padding:9px 11px;font-size:12px;font-weight:750}
+.rangeBtn:hover{border-color:#bfd0ea}
+.rangeBtn.active{background:#102a56;color:#fff;border-color:#102a56}
+.customRange{display:flex;gap:8px;align-items:center;margin-top:10px}
+.customRange input{width:auto;min-width:150px}
+.applyBtn{width:auto;border:0;background:#eaf0ff;color:#21447d;padding:10px 13px;border-radius:11px;font-weight:800}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:11px;margin-bottom:16px}
+.kpi{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:17px;padding:16px;min-height:125px;box-shadow:0 7px 24px rgba(15,23,42,.035)}
+.kpi:after{content:"";position:absolute;width:70px;height:70px;border-radius:50%;right:-35px;bottom:-35px;background:#f4f7fb}
+.kpiTop{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.kpiIcon{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:#eef4ff;color:#2563eb}
+.kpi .label{font-size:11px;color:#718096;font-weight:800;text-transform:uppercase;letter-spacing:.4px;margin-top:13px}
+.kpi .value{font-size:25px;font-weight:900;letter-spacing:-.8px;margin-top:3px}
+.kpi .sub{font-size:11px;color:#94a3b8;margin-top:4px}
+.kpi.green .kpiIcon{background:#ecfdf5;color:#059669}.kpi.green .value{color:#047857}
+.kpi.purple .kpiIcon{background:#f3e8ff;color:#7c3aed}
+.kpi.orange .kpiIcon{background:#fff7ed;color:#ea580c}
+.kpi.red .kpiIcon{background:#fef2f2;color:#dc2626}
+.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.funnel{display:grid;gap:13px}
+.funnel-row{display:grid;grid-template-columns:155px 1fr 65px;align-items:center;gap:10px;font-size:12px}
+.funnel-row span{font-weight:700;color:#475569}
+.funnel-row b{text-align:right;font-size:12px}
+.bar{height:12px;border-radius:99px;background:#eef2f7;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#102a56,#3b82f6);border-radius:99px;transition:width .7s ease}
+.healthGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.healthItem{padding:14px;border:1px solid var(--line);border-radius:15px;background:#fafcff}
+.healthItem .smallLabel{font-size:11px;color:#718096;font-weight:750}
+.healthItem strong{display:block;font-size:22px;margin-top:4px}
+.successRate{display:flex;align-items:center;gap:13px}
+.ring{width:66px;height:66px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#10b981 var(--rate,0%),#e9eef5 0);position:relative;flex:none}
+.ring:after{content:"";position:absolute;inset:7px;background:#fff;border-radius:50%}
+.ring span{position:relative;z-index:1;font-size:11px;font-weight:900}
+.list{display:grid;gap:0}
+.list-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid #f0f3f7;font-size:13px}
+.list-row:last-child{border-bottom:0}
+.list-row span{color:#475569;display:flex;align-items:center;gap:8px}
+.rankDot{width:7px;height:7px;border-radius:50%;background:#3b82f6}
+.list-row b{font-size:12px}
+.empty{text-align:center;color:#94a3b8;padding:24px 10px}
+.tableWrap{overflow:auto}
+.table{width:100%;border-collapse:separate;border-spacing:0;min-width:850px}
+.table th{font-size:11px;text-transform:uppercase;letter-spacing:.35px;color:#94a3b8;background:#f8fafc;padding:11px 10px;text-align:left}
+.table th:first-child{border-radius:10px 0 0 10px}.table th:last-child{border-radius:0 10px 10px 0}
+.table td{padding:13px 10px;border-bottom:1px solid #eef2f7;font-size:13px}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;background:#ecfdf5;color:#047857;font-size:11px;font-weight:850}
+.pill.off{background:#f1f5f9;color:#64748b}
+.limitEdit{display:flex;gap:5px;align-items:center}
+.limitEdit input{width:72px;padding:7px}
+.smallBtn{width:auto!important;padding:7px 9px!important;font-size:11px;border-radius:9px;border:0}
+.secondary{background:#eef4ff;color:#21447d}
+.danger{background:#fee2e2;color:#991b1b}
+.formGrid{display:grid;grid-template-columns:1.3fr 1fr .8fr .8fr 1.1fr auto;gap:9px;align-items:end}
+.formField label{display:block;font-size:11px;color:#718096;font-weight:800;margin:0 0 6px}
+.formGrid button{height:44px;border:0;border-radius:12px;background:#102a56;color:#fff;font-weight:850;padding:0 18px}
+.note{display:flex;align-items:flex-start;gap:8px;padding:11px 12px;border-radius:12px;background:#f8fafc;color:#64748b;font-size:12px;margin-top:11px}
+.removeRow{display:flex;gap:8px;align-items:center}
+.removeRow input{max-width:320px}
+.removeRow button{width:auto;padding:11px 15px;border:0;border-radius:11px}
+.updated{font-size:11px;color:#94a3b8}
+.footerNote{text-align:center;color:#94a3b8;font-size:11px;padding:10px}
+#sidebarBackdrop{display:none}
+@media(max-width:1180px){
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .formGrid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:900px){
+  .shell{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:-270px;width:250px;transition:left .25s ease}
+  .sidebar.open{left:0}
+  #sidebarBackdrop.show{display:block;position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:30}
+  .mobileMenu{display:grid}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .healthGrid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:680px){
+  .loginPage{grid-template-columns:1fr}
+  .loginVisual{min-height:42vh;padding:28px}
+  .loginVisual h1{font-size:40px;letter-spacing:-1.8px}
+  .featureList{display:none}
+  .loginSide{padding:18px}
+  .loginCard{padding:24px;border-radius:22px}
+  .mainInner{padding:15px 12px 35px}
+  .topbar{align-items:flex-start}
+  .titleGroup h1{font-size:23px}
+  .topActions .topIcon:not(.mobileMenu){display:none}
+  .hero{padding:20px}
+  .heroContent{align-items:flex-start;flex-direction:column}
+  .kpis{grid-template-columns:repeat(2,1fr);gap:8px}
+  .kpi{min-height:115px;padding:13px}
+  .kpi .value{font-size:21px}
+  .sectionCard{padding:16px;border-radius:17px}
+  .customRange{flex-wrap:wrap}
+  .customRange input,.applyBtn{width:100%}
+  .formGrid{grid-template-columns:1fr}
+  .removeRow{flex-direction:column;align-items:stretch}
+  .removeRow input,.removeRow button{max-width:none;width:100%}
+  .funnel-row{grid-template-columns:112px 1fr 50px}
+  .healthGrid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Improved login -->
+<div id="login" class="loginPage">
+  <section class="loginVisual">
+    <div class="visualContent">
+      <div class="logoRow">
+        <div class="logoMark">PV</div>
+        <div><strong>Prep Via</strong><div style="color:#a9bad4;font-size:11px">Admin Intelligence</div></div>
+      </div>
+      <h1>Turn your data into better decisions. 📊</h1>
+      <p>One focused workspace for your sales funnel, visitors, checkout health and coupon operations.</p>
+      <div class="featureList">
+        <div class="feature"><i data-lucide="activity"></i><span>Live performance monitoring</span></div>
+        <div class="feature"><i data-lucide="trending-up"></i><span>Conversion insights</span></div>
+        <div class="feature"><i data-lucide="shield-check"></i><span>Protected admin access</span></div>
+        <div class="feature"><i data-lucide="ticket-percent"></i><span>Coupon management</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="loginSide">
+    <div class="loginCard">
+      <div class="mini"><span class="dot"></span> Secure admin workspace</div>
+      <h2>Welcome back 👋</h2>
+      <div class="muted">Sign in to open your Prep Via Analytics dashboard.</div>
+      <div class="field">
+        <label for="secret">ADMIN SECRET</label>
+        <div class="fieldWrap">
+          <i class="icon" data-lucide="key-round"></i>
+          <input id="secret" type="password" placeholder="Enter admin secret" autocomplete="current-password">
+        </div>
+      </div>
+      <label class="remember"><input id="rememberMe" type="checkbox" checked> <span>Keep me signed in on this device</span></label>
+      <button id="loginBtn" class="primaryBtn"><i class="icon" data-lucide="log-in" style="vertical-align:-4px"></i> Sign in securely</button>
+      <div id="loginMsg" class="status"></div>
+      <div class="muted" style="margin-top:18px;text-align:center">🔐 Your existing admin API authentication is preserved.</div>
+    </div>
+  </section>
+</div>
+
+<!-- Dashboard -->
+<div id="app" class="shell hidden">
+  <aside id="sidebar" class="sidebar">
+    <div class="sideBrand">
+      <div class="logoMark">PV</div>
+      <div><b>Prep Via</b><span>Analytics Console</span></div>
+    </div>
+    <nav class="sideNav">
+      <button data-tab="analytics" class="active"><i class="icon" data-lucide="layout-dashboard"></i> Overview</button>
+      <button data-tab="analytics"><i class="icon" data-lucide="bar-chart-3"></i> Analytics</button>
+      <button data-tab="coupons"><i class="icon" data-lucide="ticket-percent"></i> Coupons</button>
+      <button data-tab="analytics"><i class="icon" data-lucide="credit-card"></i> Payment Health</button>
+    </nav>
+    <div class="sideBottom">
+      <div class="connectionBox"><div class="online"><span class="dot"></span> <span id="globalSync">Connected</span></div><div style="margin-top:7px">Live data sync is enabled.</div></div>
+      <button class="logout" id="logout"><i class="icon" data-lucide="log-out" style="vertical-align:-4px"></i> Log out</button>
+    </div>
+  </aside>
+  <div id="sidebarBackdrop"></div>
+
+  <main class="main">
+    <div class="mainInner">
+      <header class="topbar">
+        <div class="titleGroup">
+          <h1>Prep Via Analytics</h1>
+          <p class="muted">Understand visitors, purchases and payment performance at a glance.</p>
+        </div>
+        <div class="topActions">
+          <button type="button" id="mobileMenu" class="topIcon mobileMenu" aria-label="Open menu"><i class="icon" data-lucide="menu"></i></button>
+          <button type="button" id="refreshBtn" class="topIcon" aria-label="Refresh data"><i class="icon" data-lucide="refresh-cw"></i></button>
+          <button class="topIcon" aria-label="Notifications"><i class="icon" data-lucide="bell"></i></button>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="heroContent">
+          <div>
+            <h2>Good to see you, Admin 👋</h2>
+            <p>Your analytics workspace is live. Review the funnel, payment health and traffic signals below.</p>
+          </div>
+          <div class="liveBadge"><span class="dot"></span><span id="liveUsers">0 active</span> users now</div>
+        </div>
+      </section>
+
+      <section id="analyticsPanel">
+        <div class="sectionCard">
+          <div class="sectionHead">
+            <div><h2>Analytics period</h2><p class="muted">Choose the time window you want to analyze.</p></div>
+            <div class="rangeLabel" id="rangeLabel">Today</div>
+          </div>
+          <div class="rangeBar">
+            <button type="button" class="rangeBtn active" data-range="today">Today</button>
+            <button type="button" class="rangeBtn" data-range="yesterday">Yesterday</button>
+            <button type="button" class="rangeBtn" data-range="7d">Last 7 Days</button>
+            <button type="button" class="rangeBtn" data-range="30d">Last 30 Days</button>
+            <button type="button" class="rangeBtn" data-range="this_week">This Week</button>
+            <button type="button" class="rangeBtn" data-range="last_week">Last Week</button>
+            <button type="button" class="rangeBtn" data-range="this_month">This Month</button>
+            <button type="button" class="rangeBtn" data-range="last_month">Last Month</button>
+          </div>
+          <div class="customRange">
+            <input id="customStart" type="date" aria-label="Start date">
+            <span class="muted">to</span>
+            <input id="customEnd" type="date" aria-label="End date">
+            <button type="button" id="customApply" class="applyBtn">Apply custom range</button>
+          </div>
+          <div class="note"><i class="icon" data-lucide="info"></i><span>Payment attempts are counted from unique Razorpay orders created by checkout, not repeated button clicks.</span></div>
+          <div class="note" style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><span><i class="icon" data-lucide="database-zap"></i> <b>Historical cleanup:</b> repair page/source/device and primary buy-click aggregates from retained raw events. Verified purchases, revenue and payment totals are preserved.</span><select id="analyticsTools" class="secondary smallBtn" aria-label="Analytics tools"><option value="">Analytics tools…</option><option value="rebuild">Rebuild historical analytics</option></select></div>
+          <div id="migrationMsg" class="status"></div>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi"><div class="kpiTop"><span class="kpiIcon"><i class="icon" data-lucide="radio"></i></span></div><div class="label">Active now</div><div class="value" id="kActive">0</div><div class="sub">Live visitors</div></div>
+          <div class="kpi"><div class="kpiTop"><span class="kpiIcon"><i class="icon" data-lucide="users"></i></span></div><div class="label">Unique visitors</div><div class="value" id="kVisitors">0</div><div class="sub">Reach in selected period</div></div>
+          <div class="kpi"><div class="kpiTop"><span class="kpiIcon"><i class="icon" data-lucide="eye"></i></span></div><div class="label">Page views</div><div class="value" id="kViews">0</div><div class="sub">Content engagement</div></div>
+          <div class="kpi purple"><div class="kpiTop"><span class="kpiIcon"><i class="icon" data-lucide="mouse-pointer-click"></i></span></div><div class="label">Buy clicks</div><div class="value" id="kClicks">0</div><div class="sub">Purchase intent</div></div>
+          <div class="kpi orange"><div class="kpiTop"><span class="kpiIcon"><i class="icon" data-lucide="shopping-bag"></i></span></div><div class="label">Purchases</div><div class="value" id="kPurchases">0</div><div class="sub">Completed orders</div></div>
+          <div class="kpi green"><div class="kpiTop"><span class="kpiIcon"><i class="icon" data-lucide="indian-rupee"></i></span></div><div class="label">Revenue</div><div class="value" id="kRevenue">₹0</div><div class="sub">Gross tracked revenue</div></div>
+        </div>
+
+        <div class="grid2">
+          <div class="sectionCard">
+            <div class="sectionHead"><div><h2>Purchase Funnel</h2><p class="muted">See where users progress or drop off before purchase.</p></div><div class="rangeLabel" id="conv">0% click → purchase</div></div>
+            <div class="funnel" id="funnel"></div>
+          </div>
+
+          <div class="sectionCard">
+            <div class="sectionHead"><div><h2>Payment Health</h2><p class="muted">Monitor checkout reliability and payment outcomes.</p></div><i class="icon" data-lucide="shield-check" style="color:#10b981"></i></div>
+            <div class="successRate">
+              <div class="ring" id="successRing"><span id="kSuccessRing">0%</span></div>
+              <div><div class="muted">Payment success rate</div><strong id="kSuccess" style="font-size:25px">0%</strong></div>
+            </div>
+            <div class="healthGrid" style="margin-top:15px">
+              <div class="healthItem"><div class="smallLabel">Checkout views</div><strong id="kCheckout">0</strong></div>
+              <div class="healthItem"><div class="smallLabel">Attempts</div><strong id="kAttempts">0</strong></div>
+              <div class="healthItem"><div class="smallLabel">Failures</div><strong id="kFailures">0</strong></div>
+              <div class="healthItem"><div class="smallLabel">Success</div><strong id="kSuccessSmall">0%</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="sectionCard"><div class="sectionHead"><div><h2>Top pages</h2><p class="muted">Pages receiving the most views.</p></div><i class="icon" data-lucide="file-bar-chart"></i></div><div class="list" id="pages"></div></div>
+          <div class="sectionCard"><div class="sectionHead"><div><h2>Traffic sources</h2><p class="muted">Where your visitors are coming from.</p></div><i class="icon" data-lucide="git-branch"></i></div><div class="list" id="sources"></div></div>
+          <div class="sectionCard"><div class="sectionHead"><div><h2>Devices</h2><p class="muted">Understand the devices used to visit.</p></div><i class="icon" data-lucide="smartphone"></i></div><div class="list" id="devices"></div></div>
+        </div>
+
+        <div class="sectionCard">
+          <div class="sectionHead"><div><h2>Scroll depth</h2><p class="muted">How far visitors move through your pages.</p></div><i class="icon" data-lucide="move-down"></i></div>
+          <div class="list" id="scroll"></div>
+          <div id="analyticsMsg" class="status"></div>
+        </div>
+      </section>
+
+      <section id="couponsPanel" class="hidden">
+        <div class="sectionCard">
+          <div class="sectionHead"><div><h2>Create coupon 🎟️</h2><p class="muted">Launch a fixed or percentage discount with usage and expiry controls.</p></div></div>
+          <div class="formGrid">
+            <div class="formField"><label>COUPON CODE</label><input id="code" placeholder="CODE2026" maxlength="40" autocomplete="off"></div>
+            <div class="formField"><label>DISCOUNT TYPE</label><select id="type"><option value="fixed">Fixed ₹ discount</option><option value="percent">Percentage discount</option></select></div>
+            <div class="formField"><label>DISCOUNT</label><input id="discount" type="number" min="1" step="1" placeholder="Discount"></div>
+            <div class="formField"><label>MAX USES</label><input id="maxUses" type="number" min="1" value="1"></div>
+            <div class="formField"><label>EXPIRES</label><input id="expiresAt" type="datetime-local"></div>
+            <button id="createBtn">Create coupon</button>
+          </div>
+          <div class="note"><i class="icon" data-lucide="lightbulb"></i><span>Fixed discounts are entered in rupees. Percentage discounts must be below 100%.</span></div>
+          <div id="createMsg" class="status"></div>
+        </div>
+
+        <div class="sectionCard">
+          <div class="sectionHead"><div><h2>Coupon management</h2><p class="muted">Review, enable, disable or permanently remove coupon definitions.</p></div><span class="updated" id="couponUpdated">Automatic sync</span></div>
+          <div class="tableWrap"><table class="table"><thead><tr><th>Code</th><th>Discount</th><th>Uses / Limit</th><th>Change limit</th><th>Status</th><th>Expiry</th><th>Action</th></tr></thead><tbody id="couponRows"></tbody></table></div>
+          <div id="listMsg" class="status"></div>
+        </div>
+
+        <div class="sectionCard">
+          <div class="sectionHead"><div><h2>Permanent removal</h2><p class="muted">Delete a coupon definition and its reservation data.</p></div><i class="icon" data-lucide="trash-2" style="color:#dc2626"></i></div>
+          <div class="removeRow"><input id="removeCode" placeholder="Coupon code" maxlength="40"><button id="removeBtn" class="danger">Remove permanently</button></div>
+          <div id="removeMsg" class="status"></div>
+        </div>
+      </section>
+
+      <div class="footerNote">Prep Via Analytics • Live admin console ✨</div>
+    </div>
+  </main>
+</div>
+
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const couponApi='/api/admin-coupons';
+const analyticsApi='/api/analytics/stats';
+let secret=localStorage.getItem('prepvia_admin_secret')||sessionStorage.getItem('prepvia_admin_secret')||'';
+let selectedRange='today';
+let analyticsRequestId=0;
+let analyticsBusy=false;
+
+function auth(){return {Authorization:'Bearer '+secret,'Content-Type':'application/json'}}
+function msg(id,text,type=''){const el=$(id);if(!el)return;el.textContent=text||'';el.className='status '+type}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function clearAuth(){secret='';localStorage.removeItem('prepvia_admin_secret');sessionStorage.removeItem('prepvia_admin_secret')}
+function showLogin(){ $('login').classList.remove('hidden'); $('app').classList.add('hidden'); $('secret').value=''; $('secret').focus(); }
+function showApp(){ $('login').classList.add('hidden'); $('app').classList.remove('hidden'); if(window.lucide) lucide.createIcons(); loadAnalytics(); loadCoupons(); }
+
+async function api(url,opts={}){
+  let r;
+  try{
+    r=await fetch(url,{...opts,headers:{...auth(),...(opts.headers||{})},cache:'no-store'});
+  }catch(e){throw new Error('Network error. Check your connection.')}
+  const d=await r.json().catch(()=>({}));
+  if(r.status===401){clearAuth();showLogin();msg('loginMsg','Session expired or admin credentials are invalid.','error');throw new Error('Unauthorized.')}
+  if(!r.ok)throw new Error(d.message||'Request failed.');
+  return d;
+}
+
+function rangeLabel(r){return {today:'Today',yesterday:'Yesterday','7d':'Last 7 Days','30d':'Last 30 Days',this_week:'This Week',last_week:'Last Week',this_month:'This Month',last_month:'Last Month',custom:'Custom Range'}[r]||'Custom Range'}
+function customQuery(){
+  const a=$('customStart').value,b=$('customEnd').value;
+  if(!a||!b)throw Error('Choose both custom dates.');
+  if(b<a)throw Error('End date must be on or after start date.');
+  // The API parses ISO strings; use the selected calendar dates explicitly.
+  return 'range=custom&start='+encodeURIComponent(a+'T00:00:00.000Z')+'&end='+encodeURIComponent(b+'T23:59:59.999Z');
+}
+function setRangeActive(value){
+  document.querySelectorAll('.rangeBtn').forEach(x=>x.classList.toggle('active',x.dataset.range===value));
+  $('rangeLabel').textContent=rangeLabel(value);
+}
+function setAnalyticsLoading(on){
+  analyticsBusy=on;
+  document.querySelectorAll('.rangeBtn,#customApply').forEach(b=>b.disabled=on);
+  const refresh=$('refreshBtn');
+  if(refresh)refresh.disabled=on;
+}
+
+async function loadAnalytics(){
+  if(!secret)return;
+  const requestId=++analyticsRequestId;
+  setAnalyticsLoading(true);
+  try{
+    let q='range='+encodeURIComponent(selectedRange);
+    if(selectedRange==='custom')q=customQuery();
+    const d=await api(analyticsApi+'?'+q);
+    // Ignore a slower response that belongs to an older click.
+    if(requestId!==analyticsRequestId)return;
+    $('rangeLabel').textContent=rangeLabel(selectedRange);
+    $('kActive').textContent=d.active_users||0;
+    $('liveUsers').textContent=(d.active_users||0)+' active';
+    $('kVisitors').textContent=d.funnel?.visitors||0;
+    $('kViews').textContent=d.funnel?.page_views||0;
+    $('kClicks').textContent=d.funnel?.buy_clicks||0;
+    $('kPurchases').textContent=d.funnel?.purchases||0;
+    $('kRevenue').textContent='₹'+Number(d.funnel?.revenue||0).toFixed(0);
+    $('kCheckout').textContent=d.funnel?.checkout_views||0;
+    $('kAttempts').textContent=d.funnel?.payment_attempts||0;
+    $('kFailures').textContent=d.funnel?.payment_failures||0;
+    $('kSuccess').textContent=Number(d.payment_success_rate||0).toFixed(1)+'%';
+    $('kSuccessSmall').textContent=Number(d.payment_success_rate||0).toFixed(1)+'%';
+    $('kSuccessRing').textContent=Number(d.payment_success_rate||0).toFixed(1)+'%';
+    $('successRing').style.setProperty('--rate',Math.min(100,Math.max(0,Number(d.payment_success_rate||0)))+'%');
+    $('conv').textContent=Number(d.conversion_rate||0).toFixed(2)+'% click → purchase';
+    const f=[['Unique visitors',d.funnel?.visitors],['Page views',d.funnel?.page_views],['Buy clicks',d.funnel?.buy_clicks],['Checkout views',d.funnel?.checkout_views],['Payment attempts',d.funnel?.payment_attempts],['Purchases',d.funnel?.purchases]],max=Math.max(1,...f.map(x=>Number(x[1]||0)));
+    $('funnel').innerHTML=f.map(x=>'<div class="funnel-row"><span>'+x[0]+'</span><div class="bar"><i style="width:'+Math.max(2,Number(x[1]||0)/max*100)+'%"></i></div><b>'+Number(x[1]||0)+'</b></div>').join('');
+    const list=(id,a,l,r)=>$(id).innerHTML=a?.length?a.map(x=>'<div class="list-row"><span><span class="rankDot"></span>'+esc(l(x))+'</span><b>'+esc(r(x))+'</b></div>').join(''):'<div class="empty">No data yet.</div>';
+    list('pages',d.top_pages,x=>x.page,x=>x.count);
+    list('sources',d.traffic_sources,x=>x.source,x=>x.count);
+    list('devices',d.devices,x=>x.device,x=>x.count);
+    list('scroll',Object.entries(d.scroll_depth||{}).sort((a,b)=>Number(a[0])-Number(b[0])).map(([mark,count])=>({mark,count})),x=>x.mark+'%',x=>x.count);
+    msg('analyticsMsg','Last updated '+new Date(d.generated_at||Date.now()).toLocaleTimeString(),'success');
+    $('globalSync').textContent='Synced '+new Date().toLocaleTimeString();
+    if(window.lucide)lucide.createIcons();
+  }catch(e){
+    if(e.message!=='Unauthorized.')msg('analyticsMsg',e.message,'error');
+    const gs=$('globalSync');if(gs)gs.textContent='Sync error';
+  }finally{
+    if(requestId===analyticsRequestId)setAnalyticsLoading(false);
+  }
+}
+
+async function loadCoupons(){if(!secret)return;try{const d=await api(couponApi);renderCoupons(d.coupons||[]);$('couponUpdated').textContent='Synced '+new Date().toLocaleTimeString()}catch(e){if(e.message!=='Unauthorized.')msg('listMsg',e.message,'error')}}
+function renderCoupons(cs){$('couponRows').innerHTML=cs.length?cs.map(c=>{const used=Number(c.used||0),limit=Number(c.maxUses||1),active=!!c.active&&(!c.expiresAt||Date.now()<Number(c.expiresAt))&&used<limit,disc=c.type==='percent'?Number(c.discount)+'%':'₹'+Number(c.discount).toFixed(2),code=esc(c.code),exp=c.expiresAt?new Date(Number(c.expiresAt)).toLocaleString():'Never';return '<tr><td><b>'+code+'</b></td><td>'+disc+'</td><td>'+used+' / '+limit+'</td><td><div class="limitEdit"><input id="limit-'+code+'" type="number" min="'+used+'" value="'+limit+'"><button type="button" class="secondary smallBtn" onclick="updateLimit(\''+code+'\')">Save</button></div></td><td>'+(active?'<span class="pill">Active</span>':'<span class="pill off">Inactive</span>')+'</td><td>'+esc(exp)+'</td><td><button type="button" class="secondary smallBtn" onclick="toggleCoupon(\''+code+'\','+(!c.active)+')">'+(c.active?'Disable':'Enable')+'</button> <button type="button" class="danger smallBtn" onclick="deleteCoupon(\''+code+'\')">Delete</button></td></tr>'}).join(''):'<tr><td colspan="7"><div class="empty"><b>No coupons yet</b><br>Create your first coupon above.</div></td></tr>'}
+window.toggleCoupon=async(code,active)=>{try{await api(couponApi,{method:'PATCH',body:JSON.stringify({code,active})});msg('listMsg',active?'Coupon enabled.':'Coupon disabled.','success');await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('listMsg',e.message,'error')}};
+window.deleteCoupon=async code=>{if(!confirm('Delete '+code+' permanently?'))return;try{await api(couponApi,{method:'DELETE',body:JSON.stringify({code})});msg('listMsg','Coupon deleted.','success');await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('listMsg',e.message,'error')}};
+window.updateLimit=async code=>{const n=Number($('limit-'+code)?.value);if(!Number.isInteger(n)||n<0)return msg('listMsg','Usage limit must be a whole number.','error');try{await api(couponApi,{method:'PATCH',body:JSON.stringify({code,maxUses:n})});msg('listMsg','Usage limit updated.','success');await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('listMsg',e.message,'error')}};
+
+$('loginBtn').onclick=async()=>{const candidate=$('secret').value.trim();if(!candidate)return msg('loginMsg','Enter admin secret.','error');const b=$('loginBtn');b.disabled=true;b.textContent='Checking…';const old=secret;secret=candidate;try{await api(analyticsApi+'?range=today');if($('rememberMe').checked){localStorage.setItem('prepvia_admin_secret',candidate);sessionStorage.removeItem('prepvia_admin_secret')}else{sessionStorage.setItem('prepvia_admin_secret',candidate);localStorage.removeItem('prepvia_admin_secret')}msg('loginMsg','');showApp()}catch(e){secret=old;msg('loginMsg',e.message==='Unauthorized.'?'Invalid admin secret.':e.message,'error')}finally{b.disabled=false;b.textContent='Sign in'}};
+$('secret').addEventListener('keydown',e=>{if(e.key==='Enter')$('loginBtn').click()});
+$('logout').onclick=()=>{clearAuth();showLogin();msg('loginMsg','You have been logged out.','success')};
+function tab(active){[['analyticsTab','analyticsPanel'],['couponsTab','couponsPanel']].forEach(([b,p])=>{$(b).classList.toggle('active',b===active);$(p).classList.toggle('hidden',b!==active)});if(active==='analyticsTab')loadAnalytics();else loadCoupons()}
+$('analyticsTab').onclick=()=>tab('analyticsTab');$('couponsTab').onclick=()=>tab('couponsTab');
+$('createBtn').onclick=async()=>{const code=$('code').value.trim().toUpperCase().replace(/\s+/g,'');const type=$('type').value;const discount=Number($('discount').value);const maxUses=Number($('maxUses').value);const expires=$('expiresAt').value;if(!code)return msg('createMsg','Enter a coupon code.','error');if(!Number.isFinite(discount)||discount<=0)return msg('createMsg','Enter a valid discount.','error');if(type==='percent'&&discount>=100)return msg('createMsg','Percentage discount must be below 100%.','error');if(!Number.isInteger(maxUses)||maxUses<1)return msg('createMsg','Usage limit must be at least 1.','error');const btn=$('createBtn');btn.disabled=true;btn.textContent='Creating…';try{await api(couponApi,{method:'POST',body:JSON.stringify({code,type,discount,maxUses,expiresAt:expires?new Date(expires).toISOString():null})});msg('createMsg','Coupon created successfully.','success');$('code').value='';$('discount').value='';$('maxUses').value='1';$('expiresAt').value='';await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('createMsg',e.message,'error')}finally{btn.disabled=false;btn.textContent='Create coupon'}};
+$('removeBtn').onclick=async()=>{const code=$('removeCode').value.trim().toUpperCase();if(!code)return msg('removeMsg','Enter a coupon code.','error');if(!confirm('Permanently remove '+code+'?'))return;try{await api(couponApi,{method:'DELETE',body:JSON.stringify({code})});msg('removeMsg','Coupon removed permanently.','success');$('removeCode').value='';await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('removeMsg',e.message,'error')}};
+
+// Use delegated pointer/click handling so mobile taps and dynamically-rendered controls work reliably.
+document.addEventListener('click',e=>{
+  const btn=e.target.closest('.rangeBtn');
+  if(!btn||btn.disabled)return;
+  e.preventDefault();
+  const next=btn.dataset.range;
+  if(!next)return;
+  selectedRange=next;
+  setRangeActive(next);
+  loadAnalytics();
+});
+$('customApply').onclick=()=>{try{selectedRange='custom';setRangeActive('custom');loadAnalytics()}catch(e){msg('analyticsMsg',e.message,'error')}};
+$('refreshBtn').onclick=()=>{if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();else loadCoupons()};
+$('mobileMenu').onclick=()=>{$('sidebar').classList.toggle('open');$('sidebarBackdrop').classList.toggle('show')};
+$('sidebarBackdrop').onclick=()=>{$('sidebar').classList.remove('open');$('sidebarBackdrop').classList.remove('show')};
+document.querySelectorAll('.sideNav button').forEach(b=>b.onclick=()=>{tab(b.dataset.tab==='analytics'?'analyticsTab':'couponsTab');$('sidebar').classList.remove('open');$('sidebarBackdrop').classList.remove('show')});
+
+$('analyticsTools').onchange=async()=>{
+  const tool=$('analyticsTools').value;$('analyticsTools').value='';
+  if(tool!=='rebuild'||!secret)return;
+  if(!confirm('Rebuild historical analytics from the retained raw event stream? This repairs page/source/device and primary buy-click aggregates only. Verified purchases, revenue and payment totals are preserved.'))return;
+  const select=$('analyticsTools');select.disabled=true;msg('migrationMsg','Rebuilding historical analytics…');
+  try{
+    // The migration is handled by the existing stats endpoint; no separate migrate.js is required.
+    const d=await api(analyticsApi,{method:'POST',body:JSON.stringify({confirm:'REBUILD_ANALYTICS_DIMENSIONS'})});
+    msg('migrationMsg',(d.message||'Historical analytics rebuilt.')+' Rebuilt '+(d.affected_days||0)+' day(s) from '+(d.parsed_events||0)+' retained event(s).'+(d.oldest_event?' Available raw-event window: '+new Date(d.oldest_event).toLocaleString()+' → '+new Date(d.newest_event).toLocaleString()+'.':'')+' '+(d.note||''),'success');
+    await loadAnalytics();
+  }catch(e){if(e.message!=='Unauthorized.')msg('migrationMsg',e.message,'error')}finally{select.disabled=false}
+};
+
+setInterval(()=>{if(document.hidden||!secret)return;if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();else loadCoupons()},30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&secret){if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();else loadCoupons()}});
+if(secret)showApp();else showLogin();
+if(window.lucide)lucide.createIcons();
+})();
+</script>
+</body>
+</html>
