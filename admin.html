@@ -51,13 +51,6 @@ input:focus,select:focus{border-color:#93b4ff;box-shadow:0 0 0 4px rgba(37,99,23
 .primaryBtn:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(37,99,235,.27)}
 .status{min-height:18px;font-size:13px;margin-top:10px}
 .status.error{color:#b91c1c}.status.success{color:#047857}
-/* TOASTS */
-.toastStack{position:fixed;right:18px;bottom:18px;z-index:9999;display:grid;gap:10px;width:min(380px,calc(100vw - 36px));pointer-events:none}
-.toast{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 14px;box-shadow:0 18px 45px rgba(15,23,42,.16);font-size:13px;font-weight:750;animation:toastIn .22s ease both;pointer-events:auto}
-.toast.success{border-color:#bbf7d0;color:#166534}.toast.error{border-color:#fecaca;color:#991b1b}.toast.info{border-color:#bfdbfe;color:#1d4ed8}
-.toast b{display:block;margin-bottom:2px}.toast small{display:block;font-weight:600;color:#64748b;line-height:1.45}
-@keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@media(max-width:600px){.toastStack{right:12px;bottom:12px;width:calc(100vw - 24px)}}
 /* APP */
 .shell{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
 .sidebar{position:sticky;top:0;height:100vh;background:#0d1f3d;color:#fff;padding:22px 14px;display:flex;flex-direction:column;z-index:40}
@@ -101,6 +94,8 @@ input:focus,select:focus{border-color:#93b4ff;box-shadow:0 0 0 4px rgba(37,99,23
 .rangeBtn{width:auto;border:1px solid var(--line);background:#fff;color:#475569;border-radius:10px;padding:9px 11px;font-size:12px;font-weight:750}
 .rangeBtn:hover{border-color:#bfd0ea}
 .rangeBtn.active{background:#102a56;color:#fff;border-color:#102a56}
+.rangeBtn,.applyBtn,#migrateBtn{position:relative;z-index:10;pointer-events:auto;touch-action:manipulation}
+.toast{position:fixed;right:18px;bottom:18px;z-index:10000;max-width:calc(100vw - 36px);padding:13px 16px;border-radius:12px;background:#102a56;color:#fff;font-size:13px;font-weight:800;box-shadow:0 15px 40px rgba(0,0,0,.2);opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translateY(0)}.toast.success{background:#047857}.toast.error{background:#b91c1c}
 .customRange{display:flex;gap:8px;align-items:center;margin-top:10px}
 .customRange input{width:auto;min-width:150px}
 .applyBtn{width:auto;border:0;background:#eaf0ff;color:#21447d;padding:10px 13px;border-radius:11px;font-weight:800}
@@ -202,7 +197,6 @@ input:focus,select:focus{border-color:#93b4ff;box-shadow:0 0 0 4px rgba(37,99,23
 </style>
 </head>
 <body>
-<div id="toastStack" class="toastStack" aria-live="polite" aria-atomic="true"></div>
 
 <!-- Improved login -->
 <div id="login" class="loginPage">
@@ -309,7 +303,7 @@ input:focus,select:focus{border-color:#93b4ff;box-shadow:0 0 0 4px rgba(37,99,23
             <button type="button" id="customApply" class="applyBtn">Apply custom range</button>
           </div>
           <div class="note"><i class="icon" data-lucide="info"></i><span>Payment attempts are counted from unique Razorpay orders created by checkout, not repeated button clicks.</span></div>
-          <div class="note" style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><span><i class="icon" data-lucide="database-zap"></i> <b>Historical cleanup:</b> repair page/source/device and primary buy-click aggregates from retained raw events. Verified purchases, revenue and payment totals are preserved.</span><select id="analyticsTools" class="secondary smallBtn" aria-label="Analytics tools"><option value="">Analytics tools…</option><option value="rebuild">Rebuild historical analytics</option></select></div>
+          <div class="note" style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><span><i class="icon" data-lucide="database-zap"></i> <b>Historical cleanup:</b> repair page/source/device and primary buy-click aggregates from retained raw events. Verified purchases, revenue and payment totals are preserved.</span><button type="button" id="migrateBtn" class="secondary smallBtn" style="background:#7c3aed;color:#fff;border-color:#7c3aed">Rebuild historical analytics</button></div>
           <div id="migrationMsg" class="status"></div>
         </div>
 
@@ -399,11 +393,10 @@ let secret=localStorage.getItem('prepvia_admin_secret')||sessionStorage.getItem(
 let selectedRange='today';
 let analyticsRequestId=0;
 let analyticsBusy=false;
-let analyticsAbortController=null;
 
 function auth(){return {Authorization:'Bearer '+secret,'Content-Type':'application/json'}}
 function msg(id,text,type=''){const el=$(id);if(!el)return;el.textContent=text||'';el.className='status '+type}
-function toast(title,text='',type='info',ms=4200){const stack=$('toastStack');if(!stack)return;const el=document.createElement('div');el.className='toast '+type;el.innerHTML='<div><b>'+esc(title)+'</b>'+(text?'<small>'+esc(text)+'</small>':'')+'</div>';stack.appendChild(el);if(ms>0)setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(8px)';setTimeout(()=>el.remove(),220)},ms)}
+function toast(text,type=''){const el=$('toast');if(!el)return;el.textContent=text;el.className='toast show '+type;clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>el.className='toast '+type,3000)}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function clearAuth(){secret='';localStorage.removeItem('prepvia_admin_secret');sessionStorage.removeItem('prepvia_admin_secret')}
 function showLogin(){ $('login').classList.remove('hidden'); $('app').classList.add('hidden'); $('secret').value=''; $('secret').focus(); }
@@ -434,57 +427,44 @@ function setRangeActive(value){
 }
 function setAnalyticsLoading(on){
   analyticsBusy=on;
-  document.querySelectorAll('.rangeBtn,#customApply').forEach(b=>b.disabled=false);
   const refresh=$('refreshBtn');
-  if(refresh)refresh.disabled=on;
+  if(refresh)refresh.disabled=false;
+  document.querySelectorAll('.rangeBtn,#customApply').forEach(b=>{b.disabled=false;b.style.pointerEvents='auto'});
 }
 
+let analyticsController=null;
 async function loadAnalytics(){
   if(!secret)return;
-  const requestId=++analyticsRequestId;
-  if(analyticsAbortController) analyticsAbortController.abort();
-  analyticsAbortController=new AbortController();
-  setAnalyticsLoading(true);
+  if(analyticsController)analyticsController.abort();
+  analyticsController=new AbortController();
+  const signal=analyticsController.signal;
+  const requestedRange=selectedRange;
   try{
-    let q='range='+encodeURIComponent(selectedRange);
-    if(selectedRange==='custom')q=customQuery();
-    const d=await api(analyticsApi+'?'+q,{signal:analyticsAbortController.signal});
-    // Ignore a slower response that belongs to an older click.
-    if(requestId!==analyticsRequestId)return;
-    $('rangeLabel').textContent=rangeLabel(selectedRange);
-    $('kActive').textContent=d.active_users||0;
-    $('liveUsers').textContent=(d.active_users||0)+' active';
-    $('kVisitors').textContent=d.funnel?.visitors||0;
-    $('kViews').textContent=d.funnel?.page_views||0;
-    $('kClicks').textContent=d.funnel?.buy_clicks||0;
-    $('kPurchases').textContent=d.funnel?.purchases||0;
-    $('kRevenue').textContent='₹'+Number(d.funnel?.revenue||0).toFixed(0);
-    $('kCheckout').textContent=d.funnel?.checkout_views||0;
-    $('kAttempts').textContent=d.funnel?.payment_attempts||0;
-    $('kFailures').textContent=d.funnel?.payment_failures||0;
-    $('kSuccess').textContent=Number(d.payment_success_rate||0).toFixed(1)+'%';
-    $('kSuccessSmall').textContent=Number(d.payment_success_rate||0).toFixed(1)+'%';
-    $('kSuccessRing').textContent=Number(d.payment_success_rate||0).toFixed(1)+'%';
-    $('successRing').style.setProperty('--rate',Math.min(100,Math.max(0,Number(d.payment_success_rate||0)))+'%');
-    $('conv').textContent=Number(d.conversion_rate||0).toFixed(2)+'% click → purchase';
-    const f=[['Unique visitors',d.funnel?.visitors],['Page views',d.funnel?.page_views],['Buy clicks',d.funnel?.buy_clicks],['Checkout views',d.funnel?.checkout_views],['Payment attempts',d.funnel?.payment_attempts],['Purchases',d.funnel?.purchases]],max=Math.max(1,...f.map(x=>Number(x[1]||0)));
-    $('funnel').innerHTML=f.map(x=>'<div class="funnel-row"><span>'+x[0]+'</span><div class="bar"><i style="width:'+Math.max(2,Number(x[1]||0)/max*100)+'%"></i></div><b>'+Number(x[1]||0)+'</b></div>').join('');
-    const list=(id,a,l,r)=>$(id).innerHTML=a?.length?a.map(x=>'<div class="list-row"><span><span class="rankDot"></span>'+esc(l(x))+'</span><b>'+esc(r(x))+'</b></div>').join(''):'<div class="empty">No data yet.</div>';
-    list('pages',d.top_pages,x=>x.page,x=>x.count);
-    list('sources',d.traffic_sources,x=>x.source,x=>x.count);
-    list('devices',d.devices,x=>x.device,x=>x.count);
-    list('scroll',Object.entries(d.scroll_depth||{}).sort((a,b)=>Number(a[0])-Number(b[0])).map(([mark,count])=>({mark,count})),x=>x.mark+'%',x=>x.count);
-    msg('analyticsMsg','Last updated '+new Date(d.generated_at||Date.now()).toLocaleTimeString(),'success');
-    $('globalSync').textContent='Synced '+new Date().toLocaleTimeString();
-    if(window.lucide)lucide.createIcons();
-  }catch(e){
-    if(e.message!=='Unauthorized.')msg('analyticsMsg',e.message,'error');
-    const gs=$('globalSync');if(gs)gs.textContent='Sync error';
-  }finally{
-    if(requestId===analyticsRequestId)setAnalyticsLoading(false);
-  }
+    let q='range='+encodeURIComponent(requestedRange);
+    if(requestedRange==='custom')q=customQuery();
+    const d=await api(analyticsApi+'?'+q,{signal});
+    if(requestedRange!==selectedRange)return;
+    $('rangeLabel').textContent=rangeLabel(requestedRange);
+    $('kActive').textContent=d.active_users||0;$('liveUsers').textContent=(d.active_users||0)+' active';$('kVisitors').textContent=d.funnel?.visitors||0;$('kViews').textContent=d.funnel?.page_views||0;$('kClicks').textContent=d.funnel?.buy_clicks||0;$('kPurchases').textContent=d.funnel?.purchases||0;$('kRevenue').textContent='₹'+Number(d.funnel?.revenue||0).toFixed(0);$('kCheckout').textContent=d.funnel?.checkout_views||0;$('kAttempts').textContent=d.funnel?.payment_attempts||0;$('kFailures').textContent=d.funnel?.payment_failures||0;$('kSuccess').textContent=Number(d.payment_success_rate||0).toFixed(1)+'%';$('kSuccessSmall').textContent=Number(d.payment_success_rate||0).toFixed(1)+'%';$('kSuccessRing').textContent=Number(d.payment_success_rate||0).toFixed(1)+'%';$('successRing').style.setProperty('--rate',Math.min(100,Math.max(0,Number(d.payment_success_rate||0)))+'%');$('conv').textContent=Number(d.conversion_rate||0).toFixed(2)+'% click → purchase';
+    const f=[['Unique visitors',d.funnel?.visitors],['Page views',d.funnel?.page_views],['Buy clicks',d.funnel?.buy_clicks],['Checkout views',d.funnel?.checkout_views],['Payment attempts',d.funnel?.payment_attempts],['Purchases',d.funnel?.purchases]],max=Math.max(1,...f.map(x=>Number(x[1]||0)));$('funnel').innerHTML=f.map(x=>'<div class="funnel-row"><span>'+x[0]+'</span><div class="bar"><i style="width:'+Math.max(2,Number(x[1]||0)/max*100)+'%"></i></div><b>'+Number(x[1]||0)+'</b></div>').join('');
+    const list=(id,a,l,r)=>$(id).innerHTML=a?.length?a.map(x=>'<div class="list-row"><span><span class="rankDot"></span>'+esc(l(x))+'</span><b>'+esc(r(x))+'</b></div>').join(''):'<div class="empty">No data yet.</div>';list('pages',d.top_pages,x=>x.page,x=>x.count);list('sources',d.traffic_sources,x=>x.source,x=>x.count);list('devices',d.devices,x=>x.device,x=>x.count);list('scroll',Object.entries(d.scroll_depth||{}).sort((a,b)=>Number(a[0])-Number(b[0])).map(([mark,count])=>({mark,count})),x=>x.mark+'%',x=>x.count);
+    msg('analyticsMsg','Last updated '+new Date(d.generated_at||Date.now()).toLocaleTimeString(),'success');$('globalSync').textContent='Synced '+new Date().toLocaleTimeString();if(window.lucide)lucide.createIcons();
+  }catch(e){if(e.name==='AbortError')return;if(e.message!=='Unauthorized.')msg('analyticsMsg',e.message,'error');const gs=$('globalSync');if(gs)gs.textContent='Sync error'}
 }
-
+async function migrateAnalytics(){
+  if(!secret)return;
+  const btn=$('migrateBtn');if(!btn||btn.disabled)return;
+  if(!confirm('Rebuild historical analytics from the retained raw event stream? Verified purchases, revenue and payment totals will not be deleted.'))return;
+  btn.disabled=true;btn.textContent='Starting migration…';msg('migrationMsg','Migration started…','success');
+  try{
+    const d=await api('/api/analytics/migrate',{method:'POST',body:JSON.stringify({confirm:'REBUILD_ANALYTICS_DIMENSIONS'})});
+    const detail=' Rebuilt '+Number(d.affected_days||0)+' day(s) from '+Number(d.parsed_events||0)+' retained event(s).';
+    msg('migrationMsg',(d.message||'Migration completed successfully.')+detail,'success');
+    toast('Migration done','success');
+    await loadAnalytics();
+  }catch(e){if(e.message!=='Unauthorized.'){msg('migrationMsg','Migration failed: '+e.message,'error');toast('Migration failed','error')}}
+  finally{btn.disabled=false;btn.textContent='Rebuild historical analytics'}
+}
 async function loadCoupons(){if(!secret)return;try{const d=await api(couponApi);renderCoupons(d.coupons||[]);$('couponUpdated').textContent='Synced '+new Date().toLocaleTimeString()}catch(e){if(e.message!=='Unauthorized.')msg('listMsg',e.message,'error')}}
 function renderCoupons(cs){$('couponRows').innerHTML=cs.length?cs.map(c=>{const used=Number(c.used||0),limit=Number(c.maxUses||1),active=!!c.active&&(!c.expiresAt||Date.now()<Number(c.expiresAt))&&used<limit,disc=c.type==='percent'?Number(c.discount)+'%':'₹'+Number(c.discount).toFixed(2),code=esc(c.code),exp=c.expiresAt?new Date(Number(c.expiresAt)).toLocaleString():'Never';return '<tr><td><b>'+code+'</b></td><td>'+disc+'</td><td>'+used+' / '+limit+'</td><td><div class="limitEdit"><input id="limit-'+code+'" type="number" min="'+used+'" value="'+limit+'"><button type="button" class="secondary smallBtn" onclick="updateLimit(\''+code+'\')">Save</button></div></td><td>'+(active?'<span class="pill">Active</span>':'<span class="pill off">Inactive</span>')+'</td><td>'+esc(exp)+'</td><td><button type="button" class="secondary smallBtn" onclick="toggleCoupon(\''+code+'\','+(!c.active)+')">'+(c.active?'Disable':'Enable')+'</button> <button type="button" class="danger smallBtn" onclick="deleteCoupon(\''+code+'\')">Delete</button></td></tr>'}).join(''):'<tr><td colspan="7"><div class="empty"><b>No coupons yet</b><br>Create your first coupon above.</div></td></tr>'}
 window.toggleCoupon=async(code,active)=>{try{await api(couponApi,{method:'PATCH',body:JSON.stringify({code,active})});msg('listMsg',active?'Coupon enabled.':'Coupon disabled.','success');await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('listMsg',e.message,'error')}};
@@ -499,53 +479,14 @@ $('analyticsTab').onclick=()=>tab('analyticsTab');$('couponsTab').onclick=()=>ta
 $('createBtn').onclick=async()=>{const code=$('code').value.trim().toUpperCase().replace(/\s+/g,'');const type=$('type').value;const discount=Number($('discount').value);const maxUses=Number($('maxUses').value);const expires=$('expiresAt').value;if(!code)return msg('createMsg','Enter a coupon code.','error');if(!Number.isFinite(discount)||discount<=0)return msg('createMsg','Enter a valid discount.','error');if(type==='percent'&&discount>=100)return msg('createMsg','Percentage discount must be below 100%.','error');if(!Number.isInteger(maxUses)||maxUses<1)return msg('createMsg','Usage limit must be at least 1.','error');const btn=$('createBtn');btn.disabled=true;btn.textContent='Creating…';try{await api(couponApi,{method:'POST',body:JSON.stringify({code,type,discount,maxUses,expiresAt:expires?new Date(expires).toISOString():null})});msg('createMsg','Coupon created successfully.','success');$('code').value='';$('discount').value='';$('maxUses').value='1';$('expiresAt').value='';await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('createMsg',e.message,'error')}finally{btn.disabled=false;btn.textContent='Create coupon'}};
 $('removeBtn').onclick=async()=>{const code=$('removeCode').value.trim().toUpperCase();if(!code)return msg('removeMsg','Enter a coupon code.','error');if(!confirm('Permanently remove '+code+'?'))return;try{await api(couponApi,{method:'DELETE',body:JSON.stringify({code})});msg('removeMsg','Coupon removed permanently.','success');$('removeCode').value='';await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('removeMsg',e.message,'error')}};
 
-// Range controls: never disable them while analytics is loading. A new selection
-// cancels the previous request and immediately starts the selected range.
-document.addEventListener('click',e=>{
-  const btn=e.target.closest && e.target.closest('.rangeBtn');
-  if(!btn)return;
-  const next=btn.getAttribute('data-range');
-  if(!next)return;
-  e.preventDefault();
-  selectedRange=next;
-  setRangeActive(next);
-  loadAnalytics();
-},true);
-$('customApply').onclick=()=>{try{selectedRange='custom';setRangeActive('custom');loadAnalytics()}catch(e){msg('analyticsMsg',e.message,'error')}};
+// Reliable range controls: each button updates the UI immediately and starts a fresh request.
+document.addEventListener('click',e=>{const btn=e.target.closest('.rangeBtn');if(!btn)return;e.preventDefault();e.stopPropagation();const next=btn.dataset.range;if(!next)return;selectedRange=next;setRangeActive(next);loadAnalytics();},{capture:true});
+$('customApply').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();try{selectedRange='custom';setRangeActive('custom');loadAnalytics()}catch(err){msg('analyticsMsg',err.message,'error')}},{capture:true});
+$('migrateBtn').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();migrateAnalytics()},{capture:true});
 $('refreshBtn').onclick=()=>{if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();else loadCoupons()};
 $('mobileMenu').onclick=()=>{$('sidebar').classList.toggle('open');$('sidebarBackdrop').classList.toggle('show')};
 $('sidebarBackdrop').onclick=()=>{$('sidebar').classList.remove('open');$('sidebarBackdrop').classList.remove('show')};
 document.querySelectorAll('.sideNav button').forEach(b=>b.onclick=()=>{tab(b.dataset.tab==='analytics'?'analyticsTab':'couponsTab');$('sidebar').classList.remove('open');$('sidebarBackdrop').classList.remove('show')});
-
-$('analyticsTools').onchange=async()=>{
-  const select=$('analyticsTools');
-  const tool=select.value;
-  select.value='';
-  if(tool!=='rebuild'||!secret)return;
-  if(!confirm('Rebuild historical analytics from the retained raw event stream? This repairs page/source/device and primary buy-click aggregates only. Verified purchases, revenue and payment totals are preserved.'))return;
-
-  select.disabled=true;
-  msg('migrationMsg','Migration started…','');
-  toast('Migration started','Historical analytics rebuild is running. Please wait.','info',0);
-  const stack=$('toastStack');
-  const running=stack?.lastElementChild;
-  try{
-    const d=await api('/api/analytics/migrate',{method:'POST',body:JSON.stringify({confirm:'REBUILD_ANALYTICS_DIMENSIONS'})});
-    if(running){running.remove();}
-    const detail='Rebuilt '+Number(d.affected_days||0)+' day(s) from '+Number(d.parsed_events||0)+' retained event(s).';
-    msg('migrationMsg',(d.message||'Historical analytics rebuilt successfully.')+' '+detail,'success');
-    toast('Migration done',detail,'success');
-    await loadAnalytics();
-  }catch(e){
-    if(running)running.remove();
-    if(e.message!=='Unauthorized.'){
-      msg('migrationMsg',e.message||'Historical analytics migration failed.','error');
-      toast('Migration failed',e.message||'Historical analytics migration failed.','error',6500);
-    }
-  }finally{
-    select.disabled=false;
-  }
-};
 
 setInterval(()=>{if(document.hidden||!secret)return;if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();else loadCoupons()},30000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&secret){if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();else loadCoupons()}});
@@ -553,5 +494,6 @@ if(secret)showApp();else showLogin();
 if(window.lucide)lucide.createIcons();
 })();
 </script>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
