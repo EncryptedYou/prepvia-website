@@ -158,38 +158,27 @@ module.exports = async (req, res) => {
 
     const rows = Array.isArray(eventsRaw.result) ? eventsRaw.result : [];
     let eventRevenue = 0;
-    for (const raw of rows) {
-      let e;
-      try { e = typeof raw === "string" ? JSON.parse(raw) : raw; } catch (_) { continue; }
-      if (!e || e.event !== "purchase" || Number(e.ts) < start || Number(e.ts) >= end) continue;
-      const amount = Number(e.data && e.data.amount);
-      if (Number.isFinite(amount)) eventRevenue += amount;
-    }
 
-    // The event stream is capped, so daily aggregates are the primary source.
-    // max() recovers older purchase amounts that predate daily revenue tracking
-    // without double-counting events that exist in both sources.
-    const eventCounts = daily.events;
-    const pageViews = Number(eventCounts.page_view || 0);
-    const buyClicks = Number(eventCounts.buy_click || 0);
-    const checkoutViews = Number(eventCounts.checkout_view || 0);
-
-    // Count only unique server-created Razorpay orders. Older click-only events
-    // without an order_id are intentionally excluded because they are not reliable payment attempts.
-    const attemptOrders = new Set();
-    const failedOrders = new Set();
     for (const raw of rows) {
       let e;
       try { e = typeof raw === "string" ? JSON.parse(raw) : raw; } catch (_) { continue; }
       const ts = Number(e?.ts);
       if (!e || ts < start || ts >= end) continue;
-      const orderId = String(e?.data?.order_id || "").trim();
-      if (!orderId) continue;
-      if (e.event === "payment_attempt") attemptOrders.add(orderId);
-      if (e.event === "payment_failed") failedOrders.add(orderId);
+      if (e.event === "purchase") {
+        const amount = Number(e.data && e.data.amount);
+        if (Number.isFinite(amount)) eventRevenue += amount;
+      }
     }
-    const paymentAttempts = attemptOrders.size;
-    const paymentFailures = [...failedOrders].filter(id => attemptOrders.has(id)).length;
+
+    // Daily aggregates are authoritative for page views, top pages, traffic
+    // sources and devices. This avoids the 10,000-event stream cap for normal
+    // dashboard ranges and uses the repaired dimensions after migration.
+    const eventCounts = daily.events;
+    const pageViews = Number(eventCounts.page_view || 0);
+    const buyClicks = Number(eventCounts.buy_click || 0);
+    const checkoutViews = Number(eventCounts.checkout_view || 0);
+    const paymentAttempts = Number(eventCounts.payment_attempt_unique || 0);
+    const paymentFailures = Number(eventCounts.payment_failed_unique || 0);
     const purchases = Number(eventCounts.purchase || 0);
     const revenue = Number(Math.max(daily.revenue, eventRevenue).toFixed(2));
 
@@ -215,7 +204,7 @@ module.exports = async (req, res) => {
       funnel,
       conversion_rate: buyClicks ? Number((purchases / buyClicks * 100).toFixed(2)) : 0,
       visitor_to_purchase_rate: daily.visitors ? Number((purchases / daily.visitors * 100).toFixed(2)) : 0,
-      payment_success_rate: paymentAttempts ? Number((Math.max(0, paymentAttempts - paymentFailures) / paymentAttempts * 100).toFixed(2)) : 0,
+      payment_success_rate: paymentAttempts ? Number((purchases / paymentAttempts * 100).toFixed(2)) : 0,
       events: eventCounts,
       top_pages: Object.entries(daily.pages).sort((a,b) => b[1] - a[1]).slice(0, 8).map(([page,count]) => ({ page, count })),
       traffic_sources: Object.entries(daily.sources).sort((a,b) => b[1] - a[1]).slice(0, 8).map(([source,count]) => ({ source, count })),

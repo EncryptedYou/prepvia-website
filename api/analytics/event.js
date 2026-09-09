@@ -53,6 +53,7 @@ module.exports = async (req, res) => {
       utm_medium: body.utm_medium,
       utm_campaign: body.utm_campaign,
       device: body.device,
+      host: req.headers.host || "",
       data: body.data
     };
 
