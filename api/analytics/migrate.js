@@ -18,27 +18,36 @@ function authorized(req) {
 }
 
 function dayKey(ts) {
-  return new Date(ts || Date.now()).toISOString().slice(0, 10);
+  return new Date(ts).toISOString().slice(0, 10);
 }
 
 function sourceFromEvent(e) {
-  const explicit = String(e?.utm_source || "").trim().toLowerCase();
-  if (explicit) return explicit;
+  let source = String(e?.utm_source || "").trim().toLowerCase();
+  if (source) return source;
+
   try {
     const ref = e?.referrer ? new URL(e.referrer) : null;
     const host = ref ? String(ref.hostname || "").toLowerCase().replace(/^www\./, "") : "";
     const currentHost = String(e?.host || "").toLowerCase().replace(/^www\./, "");
-    if (host && (!currentHost || host !== currentHost) && host !== "localhost") return host;
+    if (host && host !== "localhost" && (!currentHost || host !== currentHost)) return host;
   } catch (_) {}
+
   return "direct";
 }
 
 function isPrimaryBuyClick(e) {
   if (e?.event !== "buy_click") return false;
-  const id = String(e?.data?.id || "").trim();
-  const cta = String(e?.data?.cta || "").trim();
-  return cta === "hero" || cta === "purchase_card" || cta === "package_preview" ||
-    id === "heroGetSuccess" || id === "package-buy-button" || id === "package-preview-buy";
+  const d = e?.data && typeof e.data === "object" ? e.data : {};
+  if (["hero", "purchase_card", "package_preview"].includes(String(d.cta || ""))) return true;
+  return ["heroGetSuccess", "package-buy-button", "package-preview-buy"].includes(String(d.id || ""));
+}
+
+async function setHash(key, values) {
+  const entries = Object.entries(values).filter(([, value]) => Number.isFinite(Number(value)) && Number(value) !== 0);
+  if (!entries.length) return;
+  const args = [];
+  for (const [field, value] of entries) args.push(field, Math.round(Number(value)));
+  await redis("hset", key, ...args);
 }
 
 module.exports = async (req, res) => {
@@ -46,89 +55,86 @@ module.exports = async (req, res) => {
   if (!authorized(req)) return res.status(401).json({ message: "Unauthorized" });
 
   try {
-    const confirm = String(req.body?.confirm || "");
-    if (confirm !== "REBUILD_ANALYTICS_DIMENSIONS") {
-      return res.status(400).json({
-        message: "Confirmation required. Send confirm=REBUILD_ANALYTICS_DIMENSIONS to run the one-time rebuild."
-      });
+    const body = req.body || {};
+    if (body.confirm !== "REBUILD_ANALYTICS_DIMENSIONS") {
+      return res.status(400).json({ message: "Confirmation required." });
     }
 
-    const rawResult = await redis("lrange", "analytics:events", "0", "9999");
-    const rows = Array.isArray(rawResult.result) ? rawResult.result : [];
-    const days = new Set();
-    const pages = {}, sources = {}, devices = {}, buyClicks = {}, attempts = {}, failures = {};
-    let parsed = 0;
-    let oldest = Infinity;
-    let newest = 0;
+    const rawResponse = await redis("lrange", "analytics:events", "0", "9999");
+    const rows = Array.isArray(rawResponse.result) ? rawResponse.result : [];
+
+    const byDay = new Map();
+    let parsedEvents = 0;
+    let oldest = null;
+    let newest = null;
 
     for (const raw of rows) {
       let e;
       try { e = typeof raw === "string" ? JSON.parse(raw) : raw; } catch (_) { continue; }
-      if (!e) continue;
-      const ts = Number(e.ts);
-      if (!Number.isFinite(ts)) continue;
-      parsed++;
-      oldest = Math.min(oldest, ts);
-      newest = Math.max(newest, ts);
+      const ts = Number(e?.ts);
+      if (!e || !Number.isFinite(ts)) continue;
+      parsedEvents++;
+      oldest = oldest == null ? ts : Math.min(oldest, ts);
+      newest = newest == null ? ts : Math.max(newest, ts);
+
       const day = dayKey(ts);
-      days.add(day);
+      if (!byDay.has(day)) {
+        byDay.set(day, {
+          pages: {},
+          sources: {},
+          devices: {},
+          buyClicks: 0,
+          paymentAttempts: 0,
+          paymentFailures: 0
+        });
+      }
+      const d = byDay.get(day);
 
       if (e.event === "page_view") {
-        const page = String(e.page || "/");
-        pages[day] ||= {};
-        pages[day][page] = (pages[day][page] || 0) + 1;
+        const page = String(e.page || "").slice(0, 200);
+        if (page) d.pages[page] = (d.pages[page] || 0) + 1;
         const source = sourceFromEvent(e);
-        sources[day] ||= {};
-        sources[day][source] = (sources[day][source] || 0) + 1;
-        const device = String(e.device || "unknown");
-        devices[day] ||= {};
-        devices[day][device] = (devices[day][device] || 0) + 1;
+        d.sources[source] = (d.sources[source] || 0) + 1;
+        const device = String(e.device || "").slice(0, 20);
+        if (device) d.devices[device] = (d.devices[device] || 0) + 1;
       }
 
-      if (isPrimaryBuyClick(e)) {
-        buyClicks[day] = (buyClicks[day] || 0) + 1;
-      }
-      const orderId = String(e?.data?.order_id || "").trim();
-      if (orderId && e.event === "payment_attempt") attempts[day] = (attempts[day] || 0) + 1;
-      if (orderId && e.event === "payment_failed") failures[day] = (failures[day] || 0) + 1;
+      if (isPrimaryBuyClick(e)) d.buyClicks++;
+      if (e.event === "payment_attempt" && e.data?.order_id) d.paymentAttempts++;
+      if (e.event === "payment_failed" && e.data?.order_id) d.paymentFailures++;
     }
 
-    // Only days represented by the retained raw event stream are rebuilt.
-    // Redis intentionally caps this stream at 10,000 events, so the response
-    // tells the admin exactly what historical window was available for repair.
-    const affectedDays = [...days].sort();
-    for (const day of affectedDays) {
+    // Only rewrite days represented in the retained raw stream. We cannot
+    // safely reconstruct days whose raw events have already fallen out of the
+    // capped stream.
+    for (const [day, d] of byDay) {
       await Promise.all([
         redis("del", "analytics:pages:" + day),
         redis("del", "analytics:sources:" + day),
         redis("del", "analytics:devices:" + day)
       ]);
-      const counterKey = "analytics:counter:" + day;
       await Promise.all([
-        redis("hdel", counterKey, "buy_click"),
-        redis("hdel", counterKey, "payment_attempt_unique"),
-        redis("hdel", counterKey, "payment_failed_unique")
+        setHash("analytics:pages:" + day, d.pages),
+        setHash("analytics:sources:" + day, d.sources),
+        setHash("analytics:devices:" + day, d.devices)
       ]);
 
-      for (const [key, value] of Object.entries(pages[day] || {})) await redis("hincrby", "analytics:pages:" + day, key, value);
-      for (const [key, value] of Object.entries(sources[day] || {})) await redis("hincrby", "analytics:sources:" + day, key, value);
-      for (const [key, value] of Object.entries(devices[day] || {})) await redis("hincrby", "analytics:devices:" + day, key, value);
-      if (buyClicks[day]) await redis("hincrby", counterKey, "buy_click", buyClicks[day]);
-      if (attempts[day]) await redis("hincrby", counterKey, "payment_attempt_unique", attempts[day]);
-      if (failures[day]) await redis("hincrby", counterKey, "payment_failed_unique", failures[day]);
+      // Preserve all other event counters. Only replace metrics whose old
+      // aggregation rules were known to be wrong.
+      await redis("hset", "analytics:counter:" + day, "buy_click", d.buyClicks, "payment_attempt_unique", d.paymentAttempts, "payment_failed_unique", d.paymentFailures);
     }
 
     return res.status(200).json({
-      success: true,
-      message: "Analytics dimensions rebuilt from the retained raw event stream.",
-      parsed_events: parsed,
-      affected_days: affectedDays.length,
-      oldest_event: Number.isFinite(oldest) ? new Date(oldest).toISOString() : null,
-      newest_event: newest ? new Date(newest).toISOString() : null,
-      note: "The raw analytics stream is capped at 10,000 events. Events older than the retained stream cannot be reconstructed by this migration. Verified purchase/revenue records were not deleted."
+      ok: true,
+      message: "Historical analytics dimensions rebuilt from the retained raw event stream.",
+      affected_days: byDay.size,
+      parsed_events: parsedEvents,
+      oldest_event: oldest,
+      newest_event: newest,
+      note: "Only days represented in the retained 10,000-event stream were rebuilt. Verified purchase and revenue aggregates were preserved."
     });
   } catch (error) {
     console.error("Analytics migration error:", error);
-    return res.status(500).json({ message: error.message || "Analytics migration failed." });
+    return res.status(500).json({ message: error.message || "Unable to rebuild historical analytics." });
   }
 };
