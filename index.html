@@ -6767,6 +6767,8 @@ html{scroll-behavior:auto;}
         </div>
 
         <a class="video-preview-purchase-button"
+           id="package-preview-buy"
+           data-buy-cta="package_preview"
            href="/checkout.html"
            aria-label="Get lifetime access to Prep Via Success Package for ₹249">
           <strong>Get Lifetime Access</strong>
@@ -8010,7 +8012,8 @@ html{scroll-behavior:auto;}
       utm_medium: p.get("utm_medium") || "",
       utm_campaign: p.get("utm_campaign") || "",
       screen_width: window.innerWidth,
-      device: window.innerWidth <= 700 ? "mobile" : (window.innerWidth <= 1100 ? "tablet" : "desktop")
+      device: window.innerWidth <= 700 ? "mobile" : (window.innerWidth <= 1100 ? "tablet" : "desktop"),
+      host: window.location.host
     };
   }
 
@@ -8059,12 +8062,13 @@ html{scroll-behavior:auto;}
     const text = (el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 80);
     const href = el.getAttribute("href") || "";
 
-    if (
-      id === "package-buy-button" ||
-      id === "package-buy-cta" ||
-      /buy\s*now|purchase|get\s+the\s+package|place\s+order/i.test(text)
-    ) {
-      send("buy_click", {id, label:text, href});
+    const buyCta =
+      id === "heroGetSuccess" ? "hero" :
+      id === "package-buy-button" ? "purchase_card" :
+      id === "package-preview-buy" ? "package_preview" : "";
+
+    if (buyCta) {
+      send("buy_click", {id, cta: buyCta, label:text, href});
     }
   });
 

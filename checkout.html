@@ -1026,6 +1026,7 @@ body{
       utm_medium: params.get("utm_medium") || "",
       utm_campaign: params.get("utm_campaign") || "",
       device: innerWidth <= 700 ? "mobile" : (innerWidth <= 1100 ? "tablet" : "desktop"),
+      host: window.location.host,
       ts: Date.now(),
       data: data || {}
     });
