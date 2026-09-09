@@ -51,6 +51,13 @@ input:focus,select:focus{border-color:#93b4ff;box-shadow:0 0 0 4px rgba(37,99,23
 .primaryBtn:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(37,99,235,.27)}
 .status{min-height:18px;font-size:13px;margin-top:10px}
 .status.error{color:#b91c1c}.status.success{color:#047857}
+/* TOASTS */
+.toastStack{position:fixed;right:18px;bottom:18px;z-index:9999;display:grid;gap:10px;width:min(380px,calc(100vw - 36px));pointer-events:none}
+.toast{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 14px;box-shadow:0 18px 45px rgba(15,23,42,.16);font-size:13px;font-weight:750;animation:toastIn .22s ease both;pointer-events:auto}
+.toast.success{border-color:#bbf7d0;color:#166534}.toast.error{border-color:#fecaca;color:#991b1b}.toast.info{border-color:#bfdbfe;color:#1d4ed8}
+.toast b{display:block;margin-bottom:2px}.toast small{display:block;font-weight:600;color:#64748b;line-height:1.45}
+@keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(max-width:600px){.toastStack{right:12px;bottom:12px;width:calc(100vw - 24px)}}
 /* APP */
 .shell{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
 .sidebar{position:sticky;top:0;height:100vh;background:#0d1f3d;color:#fff;padding:22px 14px;display:flex;flex-direction:column;z-index:40}
@@ -195,6 +202,7 @@ input:focus,select:focus{border-color:#93b4ff;box-shadow:0 0 0 4px rgba(37,99,23
 </style>
 </head>
 <body>
+<div id="toastStack" class="toastStack" aria-live="polite" aria-atomic="true"></div>
 
 <!-- Improved login -->
 <div id="login" class="loginPage">
@@ -391,9 +399,11 @@ let secret=localStorage.getItem('prepvia_admin_secret')||sessionStorage.getItem(
 let selectedRange='today';
 let analyticsRequestId=0;
 let analyticsBusy=false;
+let analyticsAbortController=null;
 
 function auth(){return {Authorization:'Bearer '+secret,'Content-Type':'application/json'}}
 function msg(id,text,type=''){const el=$(id);if(!el)return;el.textContent=text||'';el.className='status '+type}
+function toast(title,text='',type='info',ms=4200){const stack=$('toastStack');if(!stack)return;const el=document.createElement('div');el.className='toast '+type;el.innerHTML='<div><b>'+esc(title)+'</b>'+(text?'<small>'+esc(text)+'</small>':'')+'</div>';stack.appendChild(el);if(ms>0)setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(8px)';setTimeout(()=>el.remove(),220)},ms)}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function clearAuth(){secret='';localStorage.removeItem('prepvia_admin_secret');sessionStorage.removeItem('prepvia_admin_secret')}
 function showLogin(){ $('login').classList.remove('hidden'); $('app').classList.add('hidden'); $('secret').value=''; $('secret').focus(); }
@@ -424,7 +434,7 @@ function setRangeActive(value){
 }
 function setAnalyticsLoading(on){
   analyticsBusy=on;
-  document.querySelectorAll('.rangeBtn,#customApply').forEach(b=>b.disabled=on);
+  document.querySelectorAll('.rangeBtn,#customApply').forEach(b=>b.disabled=false);
   const refresh=$('refreshBtn');
   if(refresh)refresh.disabled=on;
 }
@@ -432,11 +442,13 @@ function setAnalyticsLoading(on){
 async function loadAnalytics(){
   if(!secret)return;
   const requestId=++analyticsRequestId;
+  if(analyticsAbortController) analyticsAbortController.abort();
+  analyticsAbortController=new AbortController();
   setAnalyticsLoading(true);
   try{
     let q='range='+encodeURIComponent(selectedRange);
     if(selectedRange==='custom')q=customQuery();
-    const d=await api(analyticsApi+'?'+q);
+    const d=await api(analyticsApi+'?'+q,{signal:analyticsAbortController.signal});
     // Ignore a slower response that belongs to an older click.
     if(requestId!==analyticsRequestId)return;
     $('rangeLabel').textContent=rangeLabel(selectedRange);
@@ -487,17 +499,18 @@ $('analyticsTab').onclick=()=>tab('analyticsTab');$('couponsTab').onclick=()=>ta
 $('createBtn').onclick=async()=>{const code=$('code').value.trim().toUpperCase().replace(/\s+/g,'');const type=$('type').value;const discount=Number($('discount').value);const maxUses=Number($('maxUses').value);const expires=$('expiresAt').value;if(!code)return msg('createMsg','Enter a coupon code.','error');if(!Number.isFinite(discount)||discount<=0)return msg('createMsg','Enter a valid discount.','error');if(type==='percent'&&discount>=100)return msg('createMsg','Percentage discount must be below 100%.','error');if(!Number.isInteger(maxUses)||maxUses<1)return msg('createMsg','Usage limit must be at least 1.','error');const btn=$('createBtn');btn.disabled=true;btn.textContent='Creating…';try{await api(couponApi,{method:'POST',body:JSON.stringify({code,type,discount,maxUses,expiresAt:expires?new Date(expires).toISOString():null})});msg('createMsg','Coupon created successfully.','success');$('code').value='';$('discount').value='';$('maxUses').value='1';$('expiresAt').value='';await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('createMsg',e.message,'error')}finally{btn.disabled=false;btn.textContent='Create coupon'}};
 $('removeBtn').onclick=async()=>{const code=$('removeCode').value.trim().toUpperCase();if(!code)return msg('removeMsg','Enter a coupon code.','error');if(!confirm('Permanently remove '+code+'?'))return;try{await api(couponApi,{method:'DELETE',body:JSON.stringify({code})});msg('removeMsg','Coupon removed permanently.','success');$('removeCode').value='';await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('removeMsg',e.message,'error')}};
 
-// Use delegated pointer/click handling so mobile taps and dynamically-rendered controls work reliably.
+// Range controls: never disable them while analytics is loading. A new selection
+// cancels the previous request and immediately starts the selected range.
 document.addEventListener('click',e=>{
-  const btn=e.target.closest('.rangeBtn');
-  if(!btn||btn.disabled)return;
-  e.preventDefault();
-  const next=btn.dataset.range;
+  const btn=e.target.closest && e.target.closest('.rangeBtn');
+  if(!btn)return;
+  const next=btn.getAttribute('data-range');
   if(!next)return;
+  e.preventDefault();
   selectedRange=next;
   setRangeActive(next);
   loadAnalytics();
-});
+},true);
 $('customApply').onclick=()=>{try{selectedRange='custom';setRangeActive('custom');loadAnalytics()}catch(e){msg('analyticsMsg',e.message,'error')}};
 $('refreshBtn').onclick=()=>{if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();else loadCoupons()};
 $('mobileMenu').onclick=()=>{$('sidebar').classList.toggle('open');$('sidebarBackdrop').classList.toggle('show')};
@@ -505,16 +518,33 @@ $('sidebarBackdrop').onclick=()=>{$('sidebar').classList.remove('open');$('sideb
 document.querySelectorAll('.sideNav button').forEach(b=>b.onclick=()=>{tab(b.dataset.tab==='analytics'?'analyticsTab':'couponsTab');$('sidebar').classList.remove('open');$('sidebarBackdrop').classList.remove('show')});
 
 $('analyticsTools').onchange=async()=>{
-  const tool=$('analyticsTools').value;$('analyticsTools').value='';
+  const select=$('analyticsTools');
+  const tool=select.value;
+  select.value='';
   if(tool!=='rebuild'||!secret)return;
   if(!confirm('Rebuild historical analytics from the retained raw event stream? This repairs page/source/device and primary buy-click aggregates only. Verified purchases, revenue and payment totals are preserved.'))return;
-  const select=$('analyticsTools');select.disabled=true;msg('migrationMsg','Rebuilding historical analytics…');
+
+  select.disabled=true;
+  msg('migrationMsg','Migration started…','');
+  toast('Migration started','Historical analytics rebuild is running. Please wait.','info',0);
+  const stack=$('toastStack');
+  const running=stack?.lastElementChild;
   try{
-    // The migration is handled by the existing stats endpoint; no separate migrate.js is required.
-    const d=await api(analyticsApi,{method:'POST',body:JSON.stringify({confirm:'REBUILD_ANALYTICS_DIMENSIONS'})});
-    msg('migrationMsg',(d.message||'Historical analytics rebuilt.')+' Rebuilt '+(d.affected_days||0)+' day(s) from '+(d.parsed_events||0)+' retained event(s).'+(d.oldest_event?' Available raw-event window: '+new Date(d.oldest_event).toLocaleString()+' → '+new Date(d.newest_event).toLocaleString()+'.':'')+' '+(d.note||''),'success');
+    const d=await api('/api/analytics/migrate',{method:'POST',body:JSON.stringify({confirm:'REBUILD_ANALYTICS_DIMENSIONS'})});
+    if(running){running.remove();}
+    const detail='Rebuilt '+Number(d.affected_days||0)+' day(s) from '+Number(d.parsed_events||0)+' retained event(s).';
+    msg('migrationMsg',(d.message||'Historical analytics rebuilt successfully.')+' '+detail,'success');
+    toast('Migration done',detail,'success');
     await loadAnalytics();
-  }catch(e){if(e.message!=='Unauthorized.')msg('migrationMsg',e.message,'error')}finally{select.disabled=false}
+  }catch(e){
+    if(running)running.remove();
+    if(e.message!=='Unauthorized.'){
+      msg('migrationMsg',e.message||'Historical analytics migration failed.','error');
+      toast('Migration failed',e.message||'Historical analytics migration failed.','error',6500);
+    }
+  }finally{
+    select.disabled=false;
+  }
 };
 
 setInterval(()=>{if(document.hidden||!secret)return;if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();else loadCoupons()},30000);
