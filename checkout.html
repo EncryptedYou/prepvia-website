@@ -765,19 +765,16 @@ body{
     }
   });
 
-  $("applyCoupon").addEventListener("click", async () => {
+  async function applyCouponCode(rawCode, automatic = false) {
     const btn = $("applyCoupon");
-    const code = $("couponCode").value.trim().toUpperCase();
-
+    const code = String(rawCode || "").trim().toUpperCase();
     if (!code) {
-      couponMessage("Enter a coupon code first.", "error");
-      return;
+      if (!automatic) couponMessage("Enter a coupon code first.", "error");
+      return false;
     }
-
     btn.disabled = true;
     btn.textContent = "Checking…";
     couponMessage("", "");
-
     try {
       const response = await fetch(COUPON_VALIDATE_URL, {
         method: "POST",
@@ -785,37 +782,34 @@ body{
         body: JSON.stringify({ code })
       });
       const data = await response.json().catch(() => ({}));
-
       if (!response.ok || !data.valid) {
         resetCoupon();
         $("couponCode").value = code;
-        couponMessage(data.message || "Invalid coupon code.", "error");
-        return;
+        if (!automatic) couponMessage(data.message || "Invalid coupon code.", "error");
+        return false;
       }
-
-      appliedCoupon = {
-        code: data.code,
-        discount_amount: Number(data.discount),
-        final_amount: Number(data.amount)
-      };
+      appliedCoupon = { code: data.code, discount_amount: Number(data.discount), final_amount: Number(data.amount) };
       currentAmount = Number(data.amount);
-
+      $("couponCode").value = data.code;
       $("couponOriginal").textContent = money(BASE_AMOUNT);
       $("couponDiscount").textContent = "−" + money(Number(data.discount));
       $("couponPayable").textContent = money(Number(data.amount));
       $("couponSummary").hidden = false;
-
-      couponMessage("Coupon applied. Final availability will be confirmed by the payment server.", "success");
-      if (typeof window.prepViaCheckoutTrack === "function") window.prepViaCheckoutTrack("coupon_applied", {coupon: code.slice(0,40)});
+      couponMessage(automatic ? "Referral discount applied automatically." : "Coupon applied. Final availability will be confirmed by the payment server.", "success");
+      if (typeof window.prepViaCheckoutTrack === "function") window.prepViaCheckoutTrack("coupon_applied", {coupon: code.slice(0,40), automatic: !!automatic});
       btn.textContent = "Applied";
       updatePriceUI();
+      return true;
     } catch (error) {
-      couponMessage("Unable to check coupon right now. Please try again.", "error");
+      if (!automatic) couponMessage("Unable to check coupon right now. Please try again.", "error");
+      return false;
     } finally {
       btn.disabled = false;
       if (!appliedCoupon) btn.textContent = "Apply";
     }
-  });
+  }
+
+  $("applyCoupon").addEventListener("click", () => applyCouponCode($("couponCode").value, false));
 
   $("payBtn").addEventListener("click", async () => {
     const name = $("name").value.trim();
@@ -980,6 +974,28 @@ body{
   });
 
   resetCoupon();
+
+  // If this checkout was reached through a referral link, resolve its linked
+  // coupon and apply the discount automatically. The server still validates
+  // the coupon again when the payment order is created.
+  (async function applyReferralDiscount() {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem("prepvia_attribution") || "null");
+      const params = new URLSearchParams(location.search);
+      const referral = String(params.get("ref") || params.get("referral") || saved?.referral_code || "").trim().toUpperCase();
+      if (!referral) return;
+      const response = await fetch("/api/referral-coupon?code=" + encodeURIComponent(referral), {cache:"no-store"});
+      const data = await response.json().catch(() => ({}));
+      if (data.linked && data.coupon) {
+        const ok = await applyCouponCode(data.coupon, true);
+        if (ok) {
+          $("couponApplyBox").hidden = false;
+          $("couponTrigger").textContent = "Hide";
+          $("couponTrigger").setAttribute("aria-expanded", "true");
+        }
+      }
+    } catch (_) {}
+  })();
 })();
 </script>
 
