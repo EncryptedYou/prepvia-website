@@ -46,7 +46,17 @@ module.exports = async (req, res) => {
       const coupon = await getCoupon(code);
       if (!coupon) return res.status(404).json({ message: 'Coupon not found.' });
       if (typeof req.body.active === 'boolean') coupon.active = req.body.active;
-      if (req.body.expiresAt !== undefined) coupon.expiresAt = req.body.expiresAt ? new Date(req.body.expiresAt).getTime() : null;
+      if (req.body.type !== undefined || req.body.discount !== undefined) {
+        const type = req.body.type !== undefined ? (req.body.type === 'percent' ? 'percent' : 'fixed') : coupon.type;
+        const input = Number(req.body.discount);
+        if (!Number.isFinite(input) || input <= 0 || (type === 'percent' && input >= 100)) return res.status(400).json({ message: 'Invalid discount.' });
+        coupon.type = type;
+        coupon.discount = type === 'fixed' ? Math.round(input * 100) : input;
+      }
+      if (req.body.expiresAt !== undefined) {
+        coupon.expiresAt = req.body.expiresAt ? new Date(req.body.expiresAt).getTime() : null;
+        if (coupon.expiresAt && coupon.expiresAt <= Date.now()) return res.status(400).json({ message: 'Expiry must be in the future.' });
+      }
       if (req.body.maxUses !== undefined) {
         const maxUses = Number(req.body.maxUses);
         if (!Number.isInteger(maxUses) || maxUses < Number(coupon.used || 0)) return res.status(400).json({ message: 'Invalid usage limit.' });
