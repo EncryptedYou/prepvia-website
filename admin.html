@@ -118,6 +118,10 @@ input:focus,select:focus{border-color:#a69df5;box-shadow:0 0 0 4px rgba(91,75,23
 .referralTable{min-width:1180px}.referralTable th:last-child{min-width:270px}.refLinkCell{display:flex;align-items:center;gap:7px;min-width:290px}.refLinkCell .refLink{flex:1;max-width:300px}.refActions{display:flex;gap:6px;flex-wrap:wrap}.refActions button,.refCopyBtn{flex:none}.referralTable td{white-space:nowrap}.referralTable td:first-child{white-space:normal;min-width:150px}.referralTable td:nth-child(3){white-space:normal;min-width:140px}
 @media(min-width:1500px){.wrap{padding-left:24px;padding-right:24px}.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:900px){.refLinkCell{min-width:250px}.refActions{min-width:245px}}
+
+.referralCustomRange{margin-top:10px}.referralDetailKpis{grid-template-columns:repeat(7,minmax(0,1fr))}.referralTable{width:100%}
+@media(max-width:1250px){.referralDetailKpis{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:850px){.referralDetailKpis{grid-template-columns:repeat(2,1fr)}}
 /* Final UI polish */
 .card{transition:box-shadow .18s ease,border-color .18s ease}
 .card:hover{box-shadow:0 10px 34px rgba(28,35,54,.075)}
@@ -265,9 +269,9 @@ input:focus,select:focus{border-color:#a69df5;box-shadow:0 0 0 4px rgba(91,75,23
     </div>
     <div id="refDetail" class="card cardPad hidden">
       <div class="sectionHead"><div><h2 id="refDetailTitle">Referral analytics</h2><div class="muted" id="refDetailMeta"></div></div><button class="secondary smallBtn" id="refClose">Close</button></div>
-      <div class="filterbar" style="margin-top:12px"><button class="refRange active" data-range="today">Today</button><button class="refRange" data-range="7d">Last 7 Days</button><button class="refRange" data-range="30d">Last 30 Days</button></div>
-      <div class="kpis" style="margin-top:12px">
-        <div class="kpi"><div class="label">Views</div><div class="value" id="rdViews">0</div></div><div class="kpi"><div class="label">Unique users</div><div class="value" id="rdVisitors">0</div></div><div class="kpi"><div class="label">Buy clicks</div><div class="value" id="rdClicks">0</div></div><div class="kpi"><div class="label">Purchases</div><div class="value" id="rdPurchases">0</div></div><div class="kpi green"><div class="label">Revenue</div><div class="value" id="rdRevenue">₹0</div></div>
+      <div class="filterbar" style="margin-top:12px"><button class="refRange active" data-range="today">Today</button><button class="refRange" data-range="7d">Last 7 Days</button><button class="refRange" data-range="30d">Last 30 Days</button></div><div class="customRange referralCustomRange"><input id="refCustomStart" type="date" aria-label="Referral start date"><span class="muted">to</span><input id="refCustomEnd" type="date" aria-label="Referral end date"><button id="refCustomApply" class="secondary smallBtn">Apply custom dates</button></div>
+      <div class="kpis referralDetailKpis" style="margin-top:12px">
+        <div class="kpi"><div class="label">Views</div><div class="value" id="rdViews">0</div></div><div class="kpi"><div class="label">Unique users</div><div class="value" id="rdVisitors">0</div></div><div class="kpi"><div class="label">Sessions</div><div class="value" id="rdSessions">0</div></div><div class="kpi"><div class="label">Buy clicks</div><div class="value" id="rdClicks">0</div></div><div class="kpi"><div class="label">Checkout views</div><div class="value" id="rdCheckout">0</div></div><div class="kpi"><div class="label">Purchases</div><div class="value" id="rdPurchases">0</div></div><div class="kpi green"><div class="label">Revenue</div><div class="value" id="rdRevenue">₹0</div></div>
       </div>
       <div class="grid2" style="margin-top:14px">
         <div class="card cardPad"><div class="sectionHead"><h2>Traffic sources</h2><i data-lucide="share-2"></i></div><div class="list" id="rdSources"></div></div>
@@ -312,6 +316,7 @@ $('analyticsTab').onclick=()=>tab('analyticsTab');$('couponsTab').onclick=()=>ta
 
 let selectedReferralCode="", selectedReferralRange="today";
 function referralUrl(code){return location.origin+'/?ref='+encodeURIComponent(code)}
+function referralCustomQuery(){const a=$('refCustomStart').value,b=$('refCustomEnd').value;if(!a||!b)throw new Error('Choose both custom dates.');if(b<a)throw new Error('End date must be on or after start date.');const start=a+'T00:00:00.000Z',end=b+'T23:59:59.999Z';return 'range=custom&start='+encodeURIComponent(start)+'&end='+encodeURIComponent(end)}
 async function loadReferrals(){
   if(!secret)return;
   try{
@@ -383,10 +388,12 @@ window.viewReferral=async code=>{
 async function loadReferralDetail(){
   if(!selectedReferralCode)return;
   try{
-    const d=await api(referralStatsApi+'?code='+encodeURIComponent(selectedReferralCode)+'&range='+selectedReferralRange),f=d.funnel||{};
+    let q='range='+encodeURIComponent(selectedReferralRange);if(selectedReferralRange==='custom')q=referralCustomQuery();const d=await api(referralStatsApi+'?code='+encodeURIComponent(selectedReferralCode)+'&'+q),f=d.funnel||{};
     $('rdViews').textContent=Number(f.views||0).toLocaleString();
     $('rdVisitors').textContent=Number(f.unique_users||0).toLocaleString();
+    $('rdSessions').textContent=Number(f.sessions||0).toLocaleString();
     $('rdClicks').textContent=Number(f.buy_clicks||0).toLocaleString();
+    $('rdCheckout').textContent=Number(f.checkout_views||0).toLocaleString();
     $('rdPurchases').textContent=Number(f.purchases||0).toLocaleString();
     $('rdRevenue').textContent='₹'+Number(f.revenue||0).toLocaleString('en-IN',{maximumFractionDigits:0});
     const list=(id,a,l,r)=>$(id).innerHTML=a?.length?a.map(x=>'<div class="list-row"><span>'+esc(l(x))+'</span><b>'+esc(r(x))+'</b></div>').join(''):'<div class="empty">No data yet.</div>';
@@ -399,6 +406,7 @@ async function loadReferralDetail(){
 }
 $('refClose').onclick=()=>{$('refDetail').classList.add('hidden');selectedReferralCode=''};
 document.querySelectorAll('.refRange').forEach(b=>b.onclick=()=>{selectedReferralRange=b.dataset.range;document.querySelectorAll('.refRange').forEach(x=>x.classList.toggle('active',x===b));loadReferralDetail()});
+$('refCustomApply').onclick=()=>{try{referralCustomQuery();selectedReferralRange='custom';document.querySelectorAll('.refRange').forEach(x=>x.classList.remove('active'));loadReferralDetail()}catch(e){msg('refDetailMsg',e.message,'error')}};
 $('refRows').addEventListener('click',e=>{
   const b=e.target.closest('button[data-action]');if(!b)return;
   const code=b.dataset.code,action=b.dataset.action;
