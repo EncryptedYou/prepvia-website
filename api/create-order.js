@@ -58,18 +58,6 @@ module.exports = async (req, res) => {
       return res.status(r.status).json({ message: data.error?.description || 'Order creation failed.' });
     }
 
-    // A payment attempt is counted only after Razorpay has successfully created a real order.
-    try {
-      await recordEvent('payment_attempt', {
-        visitor_id: analytics?.visitor_id, session_id: analytics?.session_id,
-        page: '/checkout.html', page_title: 'Checkout — Prep.via',
-        referrer: analytics?.referrer, utm_source: analytics?.utm_source,
-        referral_code: analytics?.referral_code,
-        utm_medium: analytics?.utm_medium, utm_campaign: analytics?.utm_campaign,
-        device: analytics?.device, host: req.headers.host || '',
-        data: { order_id:String(data.id).slice(0,120), amount:finalAmount/100, currency:'INR', product:'JEE & NEET Success Package' }
-      });
-    } catch (analyticsError) { console.error('Payment-attempt analytics error:', analyticsError); }
 
     if (analytics?.referral_code) {
       const rc = String(analytics.referral_code).trim().toUpperCase().replace(/[^A-Z0-9_-]/g, "").slice(0,40);
