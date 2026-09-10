@@ -8177,6 +8177,46 @@ html{scroll-behavior:auto;}
 }
 </style>
 
+
+<style id="prepvia-desktop-hero-auto-final">
+/* Final requested adjustment:
+   - Navigation bar colour is restored to the original dark style.
+   - Desktop hero height is content-driven by the mockup image.
+   - No forced viewport height and no artificial mockup max-height.
+   - Tablet/mobile rules remain unchanged.
+*/
+
+/* Restore original dark navigation appearance */
+.navbar{
+    background:#212121 !important;
+    color:#fff !important;
+    border-bottom:1px solid rgba(255,255,255,.10) !important;
+}
+
+/* Desktop: let the mockup determine the hero height naturally */
+@media (min-width:1101px){
+    .hero{
+        min-height:auto !important;
+        height:auto !important;
+    }
+
+    .hero-split{
+        min-height:auto !important;
+        height:auto !important;
+        padding-top:28px !important;
+        padding-bottom:42px !important;
+        align-items:center !important;
+    }
+
+    .hero-mockup{
+        width:min(100%,610px) !important;
+        height:auto !important;
+        max-height:none !important;
+        object-fit:contain !important;
+    }
+}
+</style>
+
 </body>
 </html>
 
