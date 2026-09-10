@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
     if (JSON.stringify(body).length > 12000) return res.status(413).json({message:"Analytics payload too large."});
     const allowed = new Set([
       "page_view","heartbeat","buy_click","scroll_depth","checkout_view",
-      "coupon_attempt","coupon_applied","payment_failed",
+      "coupon_attempt","coupon_applied","payment_attempt","payment_failed",
       "session_end"
     ]);
 
