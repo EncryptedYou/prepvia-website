@@ -7980,110 +7980,24 @@ html{scroll-behavior:auto;}
 <script id="prepvia-realtime-analytics">
 (() => {
   "use strict";
-  const ENDPOINT = "/api/analytics/event";
-
-  function getId(storage, key) {
-    try {
-      let id = storage.getItem(key);
-      if (!id) {
-        id = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
-        storage.setItem(key, id);
-      }
-      return id;
-    } catch (_) { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+  const ENDPOINT="/api/analytics/event";
+  function getId(storage,key){try{let id=storage.getItem(key);if(!id){id=crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);storage.setItem(key,id)}return id}catch(_){return Date.now().toString(36)+Math.random().toString(36).slice(2)}}
+  const visitorId=getId(localStorage,"prepvia_visitor_id"),sessionId=getId(sessionStorage,"prepvia_session_id");
+  function attribution(){
+    const p=new URLSearchParams(location.search);let source=(p.get("utm_source")||"").trim().toLowerCase(),medium=(p.get("utm_medium")||"").trim().toLowerCase(),campaign=(p.get("utm_campaign")||"").trim();
+    try{const saved=JSON.parse(sessionStorage.getItem("prepvia_attribution")||"null");if(!source&&saved){source=saved.source||"";medium=saved.medium||"";campaign=saved.campaign||""}}catch(_){ }
+    if(!source){try{const ref=document.referrer?new URL(document.referrer):null;const host=ref?String(ref.hostname||"").toLowerCase().replace(/^www\./,""):"";const cur=String(location.hostname||"").toLowerCase().replace(/^www\./,"");if(host&&host!==cur&&host!=="localhost"){source=host;medium=medium||"referral"}}catch(_){}}
+    if(!source)source="direct";const value={source,medium,campaign};try{sessionStorage.setItem("prepvia_attribution",JSON.stringify(value))}catch(_){ }return value;
   }
-
-  const visitorId = getId(localStorage, "prepvia_visitor_id");
-  const sessionId = getId(sessionStorage, "prepvia_session_id");
-
-  function resolveAttribution() {
-    const p = new URLSearchParams(location.search);
-    let source = (p.get("utm_source") || "").trim().toLowerCase();
-    let medium = (p.get("utm_medium") || "").trim().toLowerCase();
-    let campaign = (p.get("utm_campaign") || "").trim();
-
-    try {
-      const saved = JSON.parse(sessionStorage.getItem("prepvia_attribution") || "null");
-      if (!source && saved) { source = saved.source || ""; medium = saved.medium || ""; campaign = saved.campaign || ""; }
-    } catch (_) {}
-
-    if (!source) {
-      try {
-        const ref = document.referrer ? new URL(document.referrer) : null;
-        const host = ref ? String(ref.hostname || "").toLowerCase().replace(/^www\./, "") : "";
-        const current = String(location.hostname || "").toLowerCase().replace(/^www\./, "");
-        if (host && host !== current && host !== "localhost") { source = host; medium = medium || "referral"; }
-      } catch (_) {}
-    }
-
-    if (!source) source = "direct";
-    const value = {source, medium, campaign};
-    try { sessionStorage.setItem("prepvia_attribution", JSON.stringify(value)); } catch (_) {}
-    return value;
-  }
-
-  const attr = resolveAttribution();
-  function context() {
-    return {
-      visitor_id: visitorId,
-      session_id: sessionId,
-      page: location.pathname || "/",
-      page_title: document.title,
-      referrer: document.referrer || "",
-      utm_source: attr.source,
-      utm_medium: attr.medium,
-      utm_campaign: attr.campaign,
-      screen_width: window.innerWidth,
-      device: window.innerWidth <= 700 ? "mobile" : (window.innerWidth <= 1100 ? "tablet" : "desktop"),
-      host: window.location.host
-    };
-  }
-
-  function send(event, data, keepalive=false) {
-    const body = JSON.stringify(Object.assign(context(), {event, ts: Date.now(), data: data || {}}));
-    try {
-      if (navigator.sendBeacon && keepalive) {
-        navigator.sendBeacon(ENDPOINT, new Blob([body], {type:"application/json"}));
-        return;
-      }
-      fetch(ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json"}, body, keepalive:true}).catch(()=>{});
-    } catch (_) {}
-  }
-
-  window.prepViaRealtimeTrack = send;
-  send("page_view");
-  send("heartbeat");
-  setInterval(() => send("heartbeat"), 60000);
-
-  document.addEventListener("click", (e) => {
-    const el = e.target.closest("a,button");
-    if (!el) return;
-    const id = el.id || "";
-    const text = (el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 80);
-    const href = el.getAttribute("href") || "";
-    const cta = id === "heroGetSuccess" ? "hero" :
-      id === "package-buy-button" ? "purchase_card" :
-      id === "package-preview-buy" ? "package_preview" : "";
-    if (cta) send("buy_click", {id, cta, label:text, href});
-  });
-
-  const marks = [25, 50, 75, 90, 100];
-  const seen = new Set();
-  let scrollTicking = false;
-  function scrollDepthNow() {
-    const doc = document.documentElement;
-    const max = Math.max(1, doc.scrollHeight - window.innerHeight);
-    const pct = Math.round((window.scrollY / max) * 100);
-    marks.forEach(mark => {
-      if (pct >= mark && !seen.has(mark)) { seen.add(mark); send("scroll_depth", {percent_scrolled: mark}); }
-    });
-  }
-  window.addEventListener("scroll", () => {
-    if (scrollTicking) return;
-    scrollTicking = true;
-    requestAnimationFrame(() => { scrollDepthNow(); scrollTicking = false; });
-  }, {passive:true});
-  window.addEventListener("beforeunload", () => send("session_end", {}, true));
+  const attr=attribution();
+  function context(){return {visitor_id:visitorId,session_id:sessionId,page:location.pathname||"/",page_title:document.title,referrer:document.referrer||"",utm_source:attr.source,utm_medium:attr.medium,utm_campaign:attr.campaign,screen_width:innerWidth,device:innerWidth<=700?"mobile":(innerWidth<=1100?"tablet":"desktop"),host:location.host}}
+  function send(event,data,keepalive=false){const body=JSON.stringify(Object.assign(context(),{event,ts:Date.now(),data:data||{}}));try{if(navigator.sendBeacon&&keepalive){navigator.sendBeacon(ENDPOINT,new Blob([body],{type:"application/json"}));return}fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body,keepalive:true}).catch(()=>{})}catch(_){} }
+  window.prepViaRealtimeTrack=send;
+  send("page_view");send("heartbeat");setInterval(()=>send("heartbeat"),60000);
+  document.addEventListener("click",e=>{const el=e.target.closest("a,button");if(!el)return;const id=el.id||"",text=(el.textContent||"").trim().replace(/\s+/g," ").slice(0,80),href=el.getAttribute("href")||"";const cta=id==="heroGetSuccess"?"hero":id==="package-buy-button"?"purchase_card":id==="package-preview-buy"?"package_preview":"";if(cta)send("buy_click",{id,cta,label:text,href})});
+  const marks=[25,50,75,90,100],seen=new Set();let ticking=false;
+  function scrollDepth(){if(ticking)return;ticking=true;requestAnimationFrame(()=>{const doc=document.documentElement,max=Math.max(1,doc.scrollHeight-innerHeight),pct=Math.round(scrollY/max*100);marks.forEach(mark=>{if(pct>=mark&&!seen.has(mark)){seen.add(mark);send("scroll_depth",{percent_scrolled:mark})}});ticking=false})}
+  addEventListener("scroll",scrollDepth,{passive:true});addEventListener("load",scrollDepth);
 })();
 </script>
 <style id="prep-via-review-final-ui">
