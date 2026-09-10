@@ -141,6 +141,8 @@ input:focus,select:focus{border-color:#a69df5;box-shadow:0 0 0 4px rgba(91,75,23
   .customRange button{width:100%}
   .customRange #migrateBtn{grid-column:1/-1}
 }
+
+.nav{flex-wrap:wrap}.nav button{white-space:nowrap}.refLink{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle}.miniStats{font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -158,7 +160,7 @@ input:focus,select:focus{border-color:#a69df5;box-shadow:0 0 0 4px rgba(91,75,23
     <div class="topActions"><span class="connection"><span class="dot"></span><span id="globalSync">Connected</span></span><button class="secondary logout" id="logout">Log out</button></div>
   </header>
 
-  <nav class="nav"><button id="analyticsTab" class="active"><i data-lucide="bar-chart-3"></i> Analytics</button><button id="couponsTab"><i data-lucide="ticket"></i> Coupons</button></nav>
+  <nav class="nav"><button id="analyticsTab" class="active"><i data-lucide="bar-chart-3"></i> Analytics</button><button id="couponsTab"><i data-lucide="ticket"></i> Coupons</button><button id="referralsTab"><i data-lucide="share-2"></i> Referral & Promotions</button></nav>
 
   <section id="analyticsPanel">
     <div class="card">
@@ -226,13 +228,60 @@ input:focus,select:focus{border-color:#a69df5;box-shadow:0 0 0 4px rgba(91,75,23
        <div id="listMsg" class="status"></div>
      </div>
    </section>
+  <section id="referralsPanel" class="hidden">
+    <div class="card couponIntro">
+      <div class="brand"><div class="iconBox"><i data-lucide="link-2"></i></div><div><h2 style="margin:0 0 5px">Referral & Promotions</h2><div class="muted">Create trackable promoter links and measure the traffic, clicks and sales they generate.</div></div></div>
+      <div class="muted" id="referralUpdated">Automatic sync</div>
+    </div>
+    <div class="couponStats">
+      <div class="couponStat"><div class="muted">Referral links</div><div class="num" id="refTotal">—</div></div>
+      <div class="couponStat"><div class="muted">Active links</div><div class="num" id="refActive">—</div></div>
+      <div class="couponStat"><div class="muted">Tracked visitors</div><div class="num" id="refVisitors">—</div></div>
+      <div class="couponStat"><div class="muted">Attributed sales</div><div class="num" id="refSales">—</div></div>
+    </div>
+    <div class="card couponCreate">
+      <div class="sectionHead"><div><h2>Create referral link</h2><div class="muted">Use a custom code or leave it blank to generate a random one.</div></div><i data-lucide="plus-circle"></i></div>
+      <div class="createGrid">
+        <div class="field"><label for="refCode">Referral code</label><input id="refCode" placeholder="RAHULJEE" maxlength="40" autocomplete="off"></div>
+        <div class="field"><label for="refPromoter">Promoter name</label><input id="refPromoter" placeholder="Rahul Sharma" maxlength="100"></div>
+        <div class="field"><label for="refContact">Contact / handle</label><input id="refContact" placeholder="@rahul / email" maxlength="160"></div>
+        <div class="field"><label for="refPlatform">Platform</label><select id="refPlatform"><option value="">Select platform</option><option>Instagram</option><option>YouTube</option><option>WhatsApp</option><option>Telegram</option><option>Facebook</option><option>Website</option><option>Offline</option><option>Other</option></select></div>
+        <div class="field"><label for="refCampaign">Campaign</label><input id="refCampaign" placeholder="JEE 2027" maxlength="120"></div>
+        <div class="field"><label for="refCoupon">Linked coupon (optional)</label><input id="refCoupon" placeholder="RAHUL50" maxlength="40" autocomplete="off"></div>
+        <button id="generateRefBtn" class="secondary createAction">Generate random</button>
+        <button id="createRefBtn" class="primary createAction">Create link</button>
+      </div>
+      <div class="muted" style="margin-top:9px">Generated links use <b>/?ref=CODE</b>. UTM parameters can be added by the promoter for more detailed source tracking.</div>
+      <div id="refCreateMsg" class="status"></div>
+    </div>
+    <div class="card cardPad">
+      <div class="sectionHead"><div><h2>Referral links</h2><div class="muted">Open a link to see its detailed performance.</div></div><i data-lucide="list"></i></div>
+      <div class="tableWrap"><table class="table"><thead><tr><th>Promoter</th><th>Code</th><th>Campaign</th><th>Coupon</th><th>Status</th><th>Link</th><th>Action</th></tr></thead><tbody id="refRows"></tbody></table></div>
+      <div id="refListMsg" class="status"></div>
+    </div>
+    <div id="refDetail" class="card cardPad hidden">
+      <div class="sectionHead"><div><h2 id="refDetailTitle">Referral analytics</h2><div class="muted" id="refDetailMeta"></div></div><button class="secondary smallBtn" id="refClose">Close</button></div>
+      <div class="filterbar" style="margin-top:12px"><button class="refRange active" data-range="today">Today</button><button class="refRange" data-range="7d">Last 7 Days</button><button class="refRange" data-range="30d">Last 30 Days</button></div>
+      <div class="kpis" style="margin-top:12px">
+        <div class="kpi"><div class="label">Views</div><div class="value" id="rdViews">0</div></div><div class="kpi"><div class="label">Unique users</div><div class="value" id="rdVisitors">0</div></div><div class="kpi"><div class="label">Buy clicks</div><div class="value" id="rdClicks">0</div></div><div class="kpi"><div class="label">Purchases</div><div class="value" id="rdPurchases">0</div></div><div class="kpi green"><div class="label">Revenue</div><div class="value" id="rdRevenue">₹0</div></div>
+      </div>
+      <div class="grid2" style="margin-top:14px">
+        <div class="card cardPad"><div class="sectionHead"><h2>Traffic sources</h2><i data-lucide="share-2"></i></div><div class="list" id="rdSources"></div></div>
+        <div class="card cardPad"><div class="sectionHead"><h2>Devices</h2><i data-lucide="smartphone"></i></div><div class="list" id="rdDevices"></div></div>
+        <div class="card cardPad"><div class="sectionHead"><h2>Views by hour (UTC)</h2><i data-lucide="clock-3"></i></div><div class="list" id="rdHours"></div></div>
+        <div class="card cardPad"><div class="sectionHead"><h2>Daily performance</h2><i data-lucide="calendar-days"></i></div><div class="list" id="rdDaily"></div></div>
+      </div>
+      <div id="refDetailMsg" class="status"></div>
+    </div>
+  </section>
+
 </div>
 
 <script>
 (()=>{
 'use strict';
 const $=id=>document.getElementById(id);
-const couponApi='/api/admin-coupons', analyticsApi='/api/analytics/stats';
+const couponApi='/api/admin-coupons', analyticsApi='/api/analytics/stats', referralApi='/api/admin-referrals', referralStatsApi='/api/referral-stats';
 let secret=sessionStorage.getItem('prepvia_admin_secret')||'';
 let selectedRange='today', loading=false;
 function auth(){return {Authorization:'Bearer '+secret,'Content-Type':'application/json'}}
@@ -241,7 +290,7 @@ function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&l
 function toastlessSync(t){$('globalSync').textContent=t}
 function clearAuth(){secret='';localStorage.removeItem('prepvia_admin_secret');sessionStorage.removeItem('prepvia_admin_secret')}
 function showLogin(){ $('login').classList.remove('hidden'); $('app').classList.add('hidden'); $('secret').value=''; $('secret').focus(); }
-function showApp(){ $('login').classList.add('hidden'); $('app').classList.remove('hidden'); lucide.createIcons(); loadAnalytics(); loadCoupons(); }
+function showApp(){ $('login').classList.add('hidden'); $('app').classList.remove('hidden'); lucide.createIcons(); loadAnalytics(); loadCoupons(); loadReferrals(); }
 async function api(url,opts={}){let r;try{r=await fetch(url,{...opts,headers:{...auth(),...(opts.headers||{})},cache:'no-store'});}catch(e){throw new Error('Network error. Check your connection.')}const d=await r.json().catch(()=>({}));if(r.status===401){clearAuth();showLogin();msg('loginMsg','Session expired or admin credentials are invalid.','error');throw new Error('Unauthorized.')}if(!r.ok)throw new Error(d.message||'Request failed.');return d}
 function rangeLabel(r){return {today:'Today',yesterday:'Yesterday','7d':'Last 7 Days','30d':'Last 30 Days',this_week:'This Week',last_week:'Last Week',this_month:'This Month',last_month:'Last Month'}[r]||'Custom Range'}
 function customQuery(){const a=$('customStart').value,b=$('customEnd').value;if(!a||!b)throw Error('Choose both custom dates.');const start=new Date(a+'T00:00:00');const end=new Date(b+'T23:59:59.999');if(end<start)throw Error('End date must be on or after start date.');return 'range=custom&start='+encodeURIComponent(start.toISOString())+'&end='+encodeURIComponent(end.toISOString())}
@@ -255,13 +304,38 @@ $('loginBtn').onclick=async()=>{const candidate=$('secret').value.trim();if(!can
 $('secret').addEventListener('keydown',e=>{if(e.key==='Enter')$('loginBtn').click()});
 $('logout').onclick=()=>{clearAuth();showLogin();msg('loginMsg','You have been logged out.','success')};
 function tab(active){[['analyticsTab','analyticsPanel'],['couponsTab','couponsPanel']].forEach(([b,p])=>{$(b).classList.toggle('active',b===active);$(p).classList.toggle('hidden',b!==active)});if(active==='analyticsTab')loadAnalytics();else loadCoupons()}
-$('analyticsTab').onclick=()=>tab('analyticsTab');$('couponsTab').onclick=()=>tab('couponsTab');
+$('analyticsTab').onclick=()=>tab('analyticsTab');$('couponsTab').onclick=()=>tab('couponsTab');$('referralsTab').onclick=()=>tab('referralsTab');
+
+let selectedReferralCode="", selectedReferralRange="today";
+async function loadReferrals(){
+  if(!secret)return;
+  try{
+    const d=await api(referralApi), refs=d.referrals||[];
+    $('refTotal').textContent=refs.length;
+    $('refActive').textContent=refs.filter(x=>x.active).length;
+    const all=await Promise.all(refs.map(async x=>{try{return await api(referralStatsApi+"?code="+encodeURIComponent(x.code)+"&range=30d")}catch(_){return null}}));
+    $('refVisitors').textContent=all.reduce((n,x)=>n+Number(x?.funnel?.unique_users||0),0);
+    $('refSales').textContent=all.reduce((n,x)=>n+Number(x?.funnel?.purchases||0),0);
+    $('refRows').innerHTML=refs.length?refs.map(r=>{const url=location.origin+"/?ref="+encodeURIComponent(r.code);return '<tr><td><b>'+esc(r.promoter||'—')+'</b><div class="miniStats">'+esc(r.platform||'')+'</div></td><td><b>'+esc(r.code)+'</b></td><td>'+esc(r.campaign||'—')+'</td><td>'+esc(r.coupon||'—')+'</td><td>'+(r.active?'<span class="pill">Active</span>':'<span class="pill off">Paused</span>')+'</td><td><button class="secondary smallBtn" onclick="copyReferral('+JSON.stringify(url)+')">Copy</button></td><td><button class="secondary smallBtn" onclick="viewReferral('+JSON.stringify(r.code)+')">Analytics</button> <button class="secondary smallBtn" onclick="toggleReferral('+JSON.stringify(r.code)+','+(!r.active)+')">'+(r.active?'Pause':'Enable')+'</button> <button class="danger smallBtn" onclick="deleteReferral('+JSON.stringify(r.code)+')">Delete</button></td></tr>'}).join(''):'<tr><td colspan="7"><div class="empty"><b>No referral links yet</b><br>Create your first promoter link above.</div></td></tr>';
+    $('referralUpdated').textContent='Synced '+new Date().toLocaleTimeString(); lucide.createIcons();
+  }catch(e){if(e.message!=='Unauthorized.')msg('refListMsg',e.message,'error')}
+}
+window.copyReferral=async url=>{try{await navigator.clipboard.writeText(url);msg('refListMsg','Referral link copied.','success')}catch(_){window.prompt('Copy referral link:',url)}};
+window.toggleReferral=async(code,active)=>{try{await api(referralApi,{method:'PATCH',body:JSON.stringify({code,active})});msg('refListMsg',active?'Referral link enabled.':'Referral link paused.','success');await loadReferrals()}catch(e){msg('refListMsg',e.message,'error')}};
+window.deleteReferral=async code=>{if(!confirm('Delete referral link '+code+'? Historical analytics will remain stored.'))return;try{await api(referralApi,{method:'DELETE',body:JSON.stringify({code})});msg('refListMsg','Referral link deleted.','success');$('refDetail').classList.add('hidden');await loadReferrals()}catch(e){msg('refListMsg',e.message,'error')}};
+window.viewReferral=async code=>{selectedReferralCode=code;$('refDetail').classList.remove('hidden');$('refDetailTitle').textContent='Referral analytics — '+code;const refs=(await api(referralApi)).referrals||[];const r=refs.find(x=>x.code===code);$('refDetailMeta').textContent=(r?.promoter||'')+(r?.campaign?' · '+r.campaign:'')+' · '+location.origin+'/?ref='+code;await loadReferralDetail()};
+async function loadReferralDetail(){if(!selectedReferralCode)return;try{const d=await api(referralStatsApi+'?code='+encodeURIComponent(selectedReferralCode)+'&range='+selectedReferralRange),f=d.funnel||{};$('rdViews').textContent=f.views||0;$('rdVisitors').textContent=f.unique_users||0;$('rdClicks').textContent=f.buy_clicks||0;$('rdPurchases').textContent=f.purchases||0;$('rdRevenue').textContent='₹'+Number(f.revenue||0).toFixed(0);const list=(id,a,l,r)=>$(id).innerHTML=a?.length?a.map(x=>'<div class="list-row"><span>'+esc(l(x))+'</span><b>'+esc(r(x))+'</b></div>').join(''):'<div class="empty">No data yet.</div>';list('rdSources',d.traffic_sources,x=>x.source,x=>x.count);list('rdDevices',d.devices,x=>x.device,x=>x.count);list('rdHours',d.views_by_hour,x=>x.hour+':00',x=>x.count);list('rdDaily',(d.daily||[]).slice().reverse().slice(0,14),x=>x.day,x=>String(x.views)+' views · '+String(x.purchases)+' sales');lucide.createIcons();msg('refDetailMsg','Updated '+new Date().toLocaleTimeString(),'success')}catch(e){msg('refDetailMsg',e.message,'error')}}
+$('refClose').onclick=()=>{$('refDetail').classList.add('hidden');selectedReferralCode=''};
+document.querySelectorAll('.refRange').forEach(b=>b.onclick=()=>{selectedReferralRange=b.dataset.range;document.querySelectorAll('.refRange').forEach(x=>x.classList.toggle('active',x===b));loadReferralDetail()});
+$('generateRefBtn').onclick=()=>{const a=new Uint8Array(8);if(window.crypto?.getRandomValues)crypto.getRandomValues(a);else for(let i=0;i<a.length;i++)a[i]=Math.floor(Math.random()*256);let s='';for(const n of a)s+=(n%36).toString(36);const code=('PV'+s).toUpperCase().slice(0,10);$('refCode').value=code;msg('refCreateMsg','Random code generated: '+code+' — click Create link.','success')};
+$('createRefBtn').onclick=async()=>{const btn=$('createRefBtn');btn.disabled=true;btn.textContent='Creating…';try{const d=await api(referralApi,{method:'POST',body:JSON.stringify({code:$('refCode').value,promoter:$('refPromoter').value,contact:$('refContact').value,platform:$('refPlatform').value,campaign:$('refCampaign').value,coupon:$('refCoupon').value})});msg('refCreateMsg','Referral link created: '+location.origin+'/?ref='+d.referral.code,'success');$('refCode').value='';$('refPromoter').value='';$('refContact').value='';$('refCampaign').value='';$('refCoupon').value='';$('refPlatform').value='';await loadReferrals()}catch(e){msg('refCreateMsg',e.message,'error')}finally{btn.disabled=false;btn.textContent='Create link'}};
+
 $('createBtn').onclick=async()=>{const code=$('code').value.trim().toUpperCase().replace(/\s+/g,'');const type=$('type').value;const enteredDiscount=Number($('discount').value);const maxUses=Number($('maxUses').value);const expires=$('expiresAt').value;if(!code)return msg('createMsg','Enter a coupon code.','error');if(!Number.isFinite(enteredDiscount)||enteredDiscount<=0)return msg('createMsg','Enter a valid discount amount.','error');if(type==='percent'&&enteredDiscount>=100)return msg('createMsg','Percentage discount must be below 100%.','error');if(!Number.isInteger(maxUses)||maxUses<1)return msg('createMsg','Usage limit must be at least 1.','error');const discount=type==='fixed'?Math.round(enteredDiscount*100):enteredDiscount;const btn=$('createBtn');btn.disabled=true;btn.textContent='Creating…';try{await api(couponApi,{method:'POST',body:JSON.stringify({code,type,discount,maxUses,expiresAt:expires?new Date(expires).toISOString():null})});msg('createMsg','Coupon created successfully.','success');$('code').value='';$('discount').value='';$('maxUses').value='1';$('expiresAt').value='';await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('createMsg',e.message,'error')}finally{btn.disabled=false;btn.textContent='Create coupon'}};
 $('removeBtn').onclick=async()=>{const code=$('removeCode').value.trim().toUpperCase();if(!code)return msg('removeMsg','Enter a coupon code.','error');if(!confirm('Permanently remove '+code+'?'))return;try{await api(couponApi,{method:'DELETE',body:JSON.stringify({code})});msg('removeMsg','Coupon removed permanently.','success');$('removeCode').value='';await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('removeMsg',e.message,'error')}};
 document.querySelectorAll('.rangeBtn').forEach(b=>b.onclick=()=>{selectedRange=b.dataset.range;document.querySelectorAll('.rangeBtn').forEach(x=>x.classList.toggle('active',x===b));loadAnalytics()});$('customApply').onclick=()=>{selectedRange='custom';document.querySelectorAll('.rangeBtn').forEach(x=>x.classList.remove('active'));loadAnalytics()};
 $('migrateBtn').onclick=async()=>{const b=$('migrateBtn');if(!confirm('Rebuild analytics dimensions from retained raw events? This will keep verified purchases and revenue unchanged.'))return;b.disabled=true;b.textContent='Migrating…';msg('analyticsMsg','Analytics migration started…','success');toastlessSync('Migration started…');try{const d=await api('/api/analytics/migrate',{method:'POST',body:JSON.stringify({confirm:'REBUILD_ANALYTICS_DIMENSIONS'})});msg('analyticsMsg','Analytics migration completed. '+(d.note||''),'success');toastlessSync('Migration done');await loadAnalytics()}catch(e){if(e.message!=='Unauthorized.')msg('analyticsMsg',e.message,'error');toastlessSync('Migration failed')}finally{b.disabled=false;b.textContent='Migrate analytics'}};
-setInterval(()=>{if(document.hidden||!secret)return;if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();else loadCoupons()},30000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&secret){if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();else loadCoupons()}});
+setInterval(()=>{if(document.hidden||!secret)return;if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();else if(!$('couponsPanel').classList.contains('hidden'))loadCoupons();else loadReferrals()},30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&secret){if(!$('analyticsPanel').classList.contains('hidden'))loadAnalytics();else if(!$('couponsPanel').classList.contains('hidden'))loadCoupons();else loadReferrals()}});
 if(secret)showApp();else showLogin();lucide.createIcons();
 })();
 </script>

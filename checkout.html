@@ -924,7 +924,8 @@ body{
                 coupon: appliedCoupon ? appliedCoupon.code : null,
                 order_id: payment.razorpay_order_id,
                 payment_id: payment.razorpay_payment_id,
-                signature: payment.razorpay_signature
+                signature: payment.razorpay_signature,
+                analytics: typeof window.prepViaAnalyticsContext === "function" ? window.prepViaAnalyticsContext() : null
               })
             });
 
@@ -989,13 +990,13 @@ body{
   function idFor(storage,key){try{let id=storage.getItem(key);if(!id){id=(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));storage.setItem(key,id)}return id}catch(_){return Date.now().toString(36)}}
   const visitorId=idFor(localStorage,"prepvia_visitor_id"), sessionId=idFor(sessionStorage,"prepvia_session_id");
   function attribution(){
-    const p=new URLSearchParams(location.search); let source=(p.get("utm_source")||"").trim().toLowerCase(), medium=(p.get("utm_medium")||"").trim().toLowerCase(), campaign=(p.get("utm_campaign")||"").trim();
-    try{const saved=JSON.parse(sessionStorage.getItem("prepvia_attribution")||"null");if(!source&&saved){source=saved.source||"";medium=saved.medium||"";campaign=saved.campaign||""}}catch(_){ }
+    const p=new URLSearchParams(location.search); let source=(p.get("utm_source")||"").trim().toLowerCase(), medium=(p.get("utm_medium")||"").trim().toLowerCase(), campaign=(p.get("utm_campaign")||"").trim(), referralCode=(p.get("ref")||p.get("referral")||"").trim().toUpperCase().replace(/[^A-Z0-9_-]/g,"").slice(0,40);
+    try{const saved=JSON.parse(sessionStorage.getItem("prepvia_attribution")||"null");if(saved){if(!source)source=saved.source||"";if(!medium)medium=saved.medium||"";if(!campaign)campaign=saved.campaign||"";if(!referralCode)referralCode=saved.referral_code||""}}catch(_){ }
     if(!source){try{const ref=document.referrer?new URL(document.referrer):null;const host=ref?String(ref.hostname||"").toLowerCase().replace(/^www\./,""):"";const cur=String(location.hostname||"").toLowerCase().replace(/^www\./,"");if(host&&host!==cur&&host!=="localhost"){source=host;medium=medium||"referral"}}catch(_){}}
-    if(!source)source="direct"; const value={source,medium,campaign}; try{sessionStorage.setItem("prepvia_attribution",JSON.stringify(value))}catch(_){ } return value;
+    if(!source)source=referralCode?"referral":"direct";if(referralCode&&!medium)medium="referral"; const value={source,medium,campaign,referral_code:referralCode}; try{sessionStorage.setItem("prepvia_attribution",JSON.stringify(value))}catch(_){ } return value;
   }
   const attr=attribution();
-  function context(){return {visitor_id:visitorId,session_id:sessionId,referrer:document.referrer||"",utm_source:attr.source,utm_medium:attr.medium,utm_campaign:attr.campaign,device:innerWidth<=700?"mobile":(innerWidth<=1100?"tablet":"desktop")}}
+  function context(){return {visitor_id:visitorId,session_id:sessionId,referrer:document.referrer||"",utm_source:attr.source,utm_medium:attr.medium,utm_campaign:attr.campaign,referral_code:attr.referral_code,device:innerWidth<=700?"mobile":(innerWidth<=1100?"tablet":"desktop")}}
   window.prepViaAnalyticsContext=context;
   function send(event,data,beacon=false){const body=JSON.stringify(Object.assign(context(),{event,page:location.pathname||"/checkout.html",page_title:document.title,host:location.host,ts:Date.now(),data:data||{}}));try{if(beacon&&navigator.sendBeacon){navigator.sendBeacon(ENDPOINT,new Blob([body],{type:"application/json"}));return}fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body,keepalive:true}).catch(()=>{})}catch(_){} }
   window.prepViaCheckoutTrack=send; send("checkout_view"); send("heartbeat"); setInterval(()=>send("heartbeat"),30000);
