@@ -115,7 +115,7 @@ input:focus,select:focus{border-color:#a69df5;box-shadow:0 0 0 4px rgba(91,75,23
 @media(max-width:620px){.wrap{padding:12px 10px 32px}.top{align-items:flex-start}.top .muted{display:none}.brand h1{font-size:15px}.brandMark{width:40px;height:40px}.nav{width:100%;top:6px;justify-content:stretch}.nav button{flex:1;justify-content:center;padding:10px 8px}.kpis{grid-template-columns:repeat(2,1fr);gap:8px}.kpi{padding:13px}.kpi .value{font-size:21px}.health{grid-template-columns:1fr 1fr}.funnel-row{grid-template-columns:120px 1fr 52px}.createGrid{grid-template-columns:1fr 1fr}.createGrid .field:first-child{grid-column:1/-1}.createGrid .createAction{grid-column:1/-1}.removeRow{flex-direction:column}.removeRow input,.removeRow button{max-width:none;width:100%}.couponStats{grid-template-columns:1fr 1fr}.couponStats .couponStat:last-child{grid-column:1/-1}.sectionHead{align-items:center}}
 
 
-.referralTable{min-width:1180px}.referralTable th:last-child{min-width:270px}.refLinkCell{display:flex;align-items:center;gap:7px;min-width:290px}.refLinkCell .refLink{flex:1;max-width:300px}.refActions{display:flex;gap:6px;flex-wrap:wrap}.refActions button,.refCopyBtn{flex:none}.referralTable td{white-space:nowrap}.referralTable td:first-child{white-space:normal;min-width:150px}.referralTable td:nth-child(3){white-space:normal;min-width:140px}
+.referralTable{min-width:1450px}.referralTable th:last-child{min-width:285px}.refLinkCell{display:flex;align-items:center;gap:7px;min-width:290px}.refLinkCell .refLink{flex:1;max-width:300px}.refActions{display:flex;gap:6px;flex-wrap:wrap}.refActions button,.refCopyBtn{flex:none}.referralTable td{white-space:nowrap}.referralTable td:first-child{white-space:normal;min-width:150px}.referralTable td:nth-child(3){white-space:normal;min-width:140px}
 @media(min-width:1500px){.wrap{padding-left:24px;padding-right:24px}.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:900px){.refLinkCell{min-width:250px}.refActions{min-width:245px}}
 
@@ -264,7 +264,7 @@ input:focus,select:focus{border-color:#a69df5;box-shadow:0 0 0 4px rgba(91,75,23
     </div>
     <div class="card cardPad">
       <div class="sectionHead"><div><h2>Referral links</h2><div class="muted">Open a link to see its detailed performance.</div></div><i data-lucide="list"></i></div>
-      <div class="tableWrap"><table class="table referralTable"><thead><tr><th>Promoter</th><th>Code</th><th>Campaign</th><th>Coupon</th><th>Status</th><th>Referral link</th><th>Actions</th></tr></thead><tbody id="refRows"></tbody></table></div>
+      <div class="tableWrap"><table class="table referralTable"><thead><tr><th>Promoter</th><th>Code</th><th>Campaign</th><th>Coupon</th><th>30d views</th><th>30d clicks</th><th>30d sales</th><th>Status</th><th>Referral link</th><th>Actions</th></tr></thead><tbody id="refRows"></tbody></table></div>
       <div id="refListMsg" class="status"></div>
     </div>
     <div id="refDetail" class="card cardPad hidden">
@@ -323,16 +323,19 @@ async function loadReferrals(){
     const d=await api(referralApi), refs=d.referrals||[];
     $('refTotal').textContent=refs.length;
     $('refActive').textContent=refs.filter(x=>x.active).length;
-    const all=await Promise.all(refs.map(async x=>{try{return await api(referralStatsApi+'?code='+encodeURIComponent(x.code)+'&range=30d')}catch(_){return null}}));
-    $('refVisitors').textContent=all.reduce((n,x)=>n+Number(x?.funnel?.unique_users||0),0);
-    $('refSales').textContent=all.reduce((n,x)=>n+Number(x?.funnel?.purchases||0),0);
-    $('refRows').innerHTML=refs.length?refs.map(r=>{
-      const url=referralUrl(r.code);
+    const all=await Promise.all(refs.map(async x=>{try{return await api(referralStatsApi+'?code='+encodeURIComponent(x.code)+'&range=30d')}catch(e){return {__error:e.message,funnel:{}}}}));
+    $('refVisitors').textContent=all.reduce((n,x)=>n+Number(x?.funnel?.unique_users||0),0).toLocaleString();
+    $('refSales').textContent=all.reduce((n,x)=>n+Number(x?.funnel?.purchases||0),0).toLocaleString();
+    $('refRows').innerHTML=refs.length?refs.map((r,i)=>{
+      const url=referralUrl(r.code), f=all[i]?.funnel||{};
       return '<tr data-ref-code="'+esc(r.code)+'">'
         +'<td><b>'+esc(r.promoter||'—')+'</b><div class="miniStats">'+esc(r.platform||'')+'</div></td>'
         +'<td><b>'+esc(r.code)+'</b></td>'
         +'<td>'+esc(r.campaign||'—')+'</td>'
         +'<td>'+esc(r.coupon||'—')+'</td>'
+        +'<td><b>'+Number(f.views||0).toLocaleString()+'</b></td>'
+        +'<td><b>'+Number(f.buy_clicks||0).toLocaleString()+'</b></td>'
+        +'<td><b>'+Number(f.purchases||0).toLocaleString()+'</b></td>'
         +'<td>'+(r.active?'<span class="pill">Active</span>':'<span class="pill off">Paused</span>')+'</td>'
         +'<td><div class="refLinkCell"><span class="refLink" title="'+esc(url)+'">'+esc(url)+'</span><button type="button" class="secondary smallBtn refCopyBtn" data-action="copy" data-code="'+esc(r.code)+'">Copy</button></div></td>'
         +'<td><div class="refActions">'
@@ -340,7 +343,7 @@ async function loadReferrals(){
         +'<button type="button" class="secondary smallBtn" data-action="toggle" data-code="'+esc(r.code)+'" data-active="'+(!r.active)+'">'+(r.active?'Pause':'Enable')+'</button>'
         +'<button type="button" class="danger smallBtn" data-action="delete" data-code="'+esc(r.code)+'">Delete</button>'
         +'</div></td></tr>'
-    }).join(''):'<tr><td colspan="7"><div class="empty"><b>No referral links yet</b><br>Create your first promoter link above.</div></td></tr>';
+    }).join(''):'<tr><td colspan="10"><div class="empty"><b>No referral links yet</b><br>Create your first promoter link above.</div></td></tr>';
     $('referralUpdated').textContent='Synced '+new Date().toLocaleTimeString();
     lucide.createIcons();
   }catch(e){if(e.message!=='Unauthorized.')msg('refListMsg',e.message,'error')}
@@ -373,6 +376,8 @@ window.deleteReferral=async code=>{
 };
 window.viewReferral=async code=>{
   selectedReferralCode=code;
+  selectedReferralRange='today';
+  document.querySelectorAll('.refRange').forEach(x=>x.classList.toggle('active',x.dataset.range==='today'));
   $('refDetail').classList.remove('hidden');
   $('refDetailTitle').textContent='Referral analytics — '+code;
   $('refDetailMeta').textContent='Loading referral details…';
