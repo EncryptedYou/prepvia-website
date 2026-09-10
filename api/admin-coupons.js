@@ -1,9 +1,9 @@
 const { cleanCode, getCoupon, redisGet, redisSet, redisDel } = require('../lib/coupons');
 
 function authorized(req) {
-  const h = String(req.headers.authorization || '');
-  const secret = String(process.env.ADMIN_SECRET || '').trim();
-  return Boolean(secret) && h === 'Bearer ' + secret;
+  const secret = process.env.ADMIN_SECRET;
+  if (!secret) return false;
+  return String(req.headers.authorization || '') === 'Bearer ' + secret;
 }
 
 async function listCoupons() {

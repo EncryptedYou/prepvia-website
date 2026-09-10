@@ -58,6 +58,18 @@ module.exports = async (req, res) => {
       return res.status(r.status).json({ message: data.error?.description || 'Order creation failed.' });
     }
 
+    // A payment attempt is counted only after Razorpay has successfully created a real order.
+    try {
+      await recordEvent('payment_attempt', {
+        visitor_id: analytics?.visitor_id, session_id: analytics?.session_id,
+        page: '/checkout.html', page_title: 'Checkout — Prep.via',
+        referrer: analytics?.referrer, utm_source: analytics?.utm_source,
+        utm_medium: analytics?.utm_medium, utm_campaign: analytics?.utm_campaign,
+        device: analytics?.device, host: req.headers.host || '',
+        data: { order_id:String(data.id).slice(0,120), amount:finalAmount/100, currency:'INR', product:'JEE & NEET Success Package' }
+      });
+    } catch (analyticsError) { console.error('Payment-attempt analytics error:', analyticsError); }
+
     if (couponRecord) {
       orderCouponKey = 'coupon:order:' + data.id;
       const snapshot = {
@@ -69,31 +81,6 @@ module.exports = async (req, res) => {
         createdAt: Date.now()
       };
       await redisSet(orderCouponKey, JSON.stringify(snapshot), RESERVATION_TTL);
-    }
-
-    // A payment attempt is a real Razorpay order, so record it server-side.
-    // This avoids counting client button clicks as payment attempts.
-    try {
-      await recordEvent('payment_attempt', {
-        visitor_id: analytics?.visitor_id,
-        session_id: analytics?.session_id,
-        page: '/checkout.html',
-        page_title: 'Checkout — Prep.via',
-        referrer: analytics?.referrer,
-        utm_source: analytics?.utm_source,
-        utm_medium: analytics?.utm_medium,
-        utm_campaign: analytics?.utm_campaign,
-        device: analytics?.device,
-        host: req.headers.host || '',
-        data: {
-          order_id: String(data.id).slice(0,120),
-          amount: finalAmount / 100,
-          currency: 'INR',
-          product: 'JEE & NEET Success Package'
-        }
-      });
-    } catch (analyticsError) {
-      console.error('Payment-attempt analytics error:', analyticsError);
     }
 
     return res.status(200).json({ order_id: data.id, key_id: key, amount: finalAmount, discount, coupon: code || null });
