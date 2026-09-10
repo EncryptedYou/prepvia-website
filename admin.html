@@ -20,7 +20,7 @@ body{margin:0;font-family:"DM Sans",Inter,system-ui,-apple-system,"Segoe UI",Ari
 button,input,select{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
-.wrap{max-width:1440px;margin:0 auto;padding:28px 30px 50px}
+.wrap{width:100%;max-width:1680px;margin:0 auto;padding:24px clamp(18px,2.2vw,34px) 50px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
 .brand{display:flex;align-items:center;gap:12px}
 .brandMark{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--primary),#887cf4);color:#fff;display:grid;place-items:center;font-family:"Plus Jakarta Sans";font-weight:800;box-shadow:0 8px 18px rgba(91,75,231,.22)}
@@ -83,7 +83,7 @@ input:focus,select:focus{border-color:#a69df5;box-shadow:0 0 0 4px rgba(91,75,23
 .updated{font-size:12px;color:#7b8494;margin-top:10px}
 .row{display:grid;grid-template-columns:1.2fr .8fr .8fr .8fr 1fr;gap:10px}
 .tableWrap{overflow:auto;margin-top:10px}
-.table{width:100%;border-collapse:separate;border-spacing:0;min-width:900px}
+.table{width:100%;border-collapse:separate;border-spacing:0;min-width:1080px}
 .table th{padding:12px 10px;background:#fafbfc;color:#7a8393;font-size:11px;text-transform:uppercase;letter-spacing:.5px;text-align:left;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .table th:first-child{border-left:1px solid var(--line);border-radius:11px 0 0 11px}.table th:last-child{border-right:1px solid var(--line);border-radius:0 11px 11px 0}
 .table td{padding:13px 10px;border-bottom:1px solid #f0f1f4;text-align:left;font-size:13px;vertical-align:middle}
@@ -114,6 +114,10 @@ input:focus,select:focus{border-color:#a69df5;box-shadow:0 0 0 4px rgba(91,75,23
 @media(max-width:850px){.wrap{padding:18px 16px 38px}.grid2{grid-template-columns:1fr}.health{grid-template-columns:repeat(2,1fr)}.couponStats{grid-template-columns:repeat(3,1fr)}.top{padding:15px}.topActions .connection{display:none}}
 @media(max-width:620px){.wrap{padding:12px 10px 32px}.top{align-items:flex-start}.top .muted{display:none}.brand h1{font-size:15px}.brandMark{width:40px;height:40px}.nav{width:100%;top:6px;justify-content:stretch}.nav button{flex:1;justify-content:center;padding:10px 8px}.kpis{grid-template-columns:repeat(2,1fr);gap:8px}.kpi{padding:13px}.kpi .value{font-size:21px}.health{grid-template-columns:1fr 1fr}.funnel-row{grid-template-columns:120px 1fr 52px}.createGrid{grid-template-columns:1fr 1fr}.createGrid .field:first-child{grid-column:1/-1}.createGrid .createAction{grid-column:1/-1}.removeRow{flex-direction:column}.removeRow input,.removeRow button{max-width:none;width:100%}.couponStats{grid-template-columns:1fr 1fr}.couponStats .couponStat:last-child{grid-column:1/-1}.sectionHead{align-items:center}}
 
+
+.referralTable{min-width:1180px}.referralTable th:last-child{min-width:270px}.refLinkCell{display:flex;align-items:center;gap:7px;min-width:290px}.refLinkCell .refLink{flex:1;max-width:300px}.refActions{display:flex;gap:6px;flex-wrap:wrap}.refActions button,.refCopyBtn{flex:none}.referralTable td{white-space:nowrap}.referralTable td:first-child{white-space:normal;min-width:150px}.referralTable td:nth-child(3){white-space:normal;min-width:140px}
+@media(min-width:1500px){.wrap{padding-left:24px;padding-right:24px}.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){.refLinkCell{min-width:250px}.refActions{min-width:245px}}
 /* Final UI polish */
 .card{transition:box-shadow .18s ease,border-color .18s ease}
 .card:hover{box-shadow:0 10px 34px rgba(28,35,54,.075)}
@@ -142,7 +146,7 @@ input:focus,select:focus{border-color:#a69df5;box-shadow:0 0 0 4px rgba(91,75,23
   .customRange #migrateBtn{grid-column:1/-1}
 }
 
-.nav{flex-wrap:wrap}.nav button{white-space:nowrap}.refLink{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle}.miniStats{font-size:12px;color:var(--muted)}
+.nav{flex-wrap:wrap;width:100%;max-width:100%;}.nav button{white-space:nowrap}.nav button:last-child{margin-left:auto}.refLink{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle}.miniStats{font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -256,7 +260,7 @@ input:focus,select:focus{border-color:#a69df5;box-shadow:0 0 0 4px rgba(91,75,23
     </div>
     <div class="card cardPad">
       <div class="sectionHead"><div><h2>Referral links</h2><div class="muted">Open a link to see its detailed performance.</div></div><i data-lucide="list"></i></div>
-      <div class="tableWrap"><table class="table"><thead><tr><th>Promoter</th><th>Code</th><th>Campaign</th><th>Coupon</th><th>Status</th><th>Link</th><th>Action</th></tr></thead><tbody id="refRows"></tbody></table></div>
+      <div class="tableWrap"><table class="table referralTable"><thead><tr><th>Promoter</th><th>Code</th><th>Campaign</th><th>Coupon</th><th>Status</th><th>Referral link</th><th>Actions</th></tr></thead><tbody id="refRows"></tbody></table></div>
       <div id="refListMsg" class="status"></div>
     </div>
     <div id="refDetail" class="card cardPad hidden">
@@ -307,26 +311,103 @@ function tab(active){[['analyticsTab','analyticsPanel'],['couponsTab','couponsPa
 $('analyticsTab').onclick=()=>tab('analyticsTab');$('couponsTab').onclick=()=>tab('couponsTab');$('referralsTab').onclick=()=>tab('referralsTab');
 
 let selectedReferralCode="", selectedReferralRange="today";
+function referralUrl(code){return location.origin+'/?ref='+encodeURIComponent(code)}
 async function loadReferrals(){
   if(!secret)return;
   try{
     const d=await api(referralApi), refs=d.referrals||[];
     $('refTotal').textContent=refs.length;
     $('refActive').textContent=refs.filter(x=>x.active).length;
-    const all=await Promise.all(refs.map(async x=>{try{return await api(referralStatsApi+"?code="+encodeURIComponent(x.code)+"&range=30d")}catch(_){return null}}));
+    const all=await Promise.all(refs.map(async x=>{try{return await api(referralStatsApi+'?code='+encodeURIComponent(x.code)+'&range=30d')}catch(_){return null}}));
     $('refVisitors').textContent=all.reduce((n,x)=>n+Number(x?.funnel?.unique_users||0),0);
     $('refSales').textContent=all.reduce((n,x)=>n+Number(x?.funnel?.purchases||0),0);
-    $('refRows').innerHTML=refs.length?refs.map(r=>{const url=location.origin+"/?ref="+encodeURIComponent(r.code);return '<tr><td><b>'+esc(r.promoter||'—')+'</b><div class="miniStats">'+esc(r.platform||'')+'</div></td><td><b>'+esc(r.code)+'</b></td><td>'+esc(r.campaign||'—')+'</td><td>'+esc(r.coupon||'—')+'</td><td>'+(r.active?'<span class="pill">Active</span>':'<span class="pill off">Paused</span>')+'</td><td><button class="secondary smallBtn" onclick="copyReferral('+JSON.stringify(url)+')">Copy</button></td><td><button class="secondary smallBtn" onclick="viewReferral('+JSON.stringify(r.code)+')">Analytics</button> <button class="secondary smallBtn" onclick="toggleReferral('+JSON.stringify(r.code)+','+(!r.active)+')">'+(r.active?'Pause':'Enable')+'</button> <button class="danger smallBtn" onclick="deleteReferral('+JSON.stringify(r.code)+')">Delete</button></td></tr>'}).join(''):'<tr><td colspan="7"><div class="empty"><b>No referral links yet</b><br>Create your first promoter link above.</div></td></tr>';
-    $('referralUpdated').textContent='Synced '+new Date().toLocaleTimeString(); lucide.createIcons();
+    $('refRows').innerHTML=refs.length?refs.map(r=>{
+      const url=referralUrl(r.code);
+      return '<tr data-ref-code="'+esc(r.code)+'">'
+        +'<td><b>'+esc(r.promoter||'—')+'</b><div class="miniStats">'+esc(r.platform||'')+'</div></td>'
+        +'<td><b>'+esc(r.code)+'</b></td>'
+        +'<td>'+esc(r.campaign||'—')+'</td>'
+        +'<td>'+esc(r.coupon||'—')+'</td>'
+        +'<td>'+(r.active?'<span class="pill">Active</span>':'<span class="pill off">Paused</span>')+'</td>'
+        +'<td><div class="refLinkCell"><span class="refLink" title="'+esc(url)+'">'+esc(url)+'</span><button type="button" class="secondary smallBtn refCopyBtn" data-action="copy" data-code="'+esc(r.code)+'">Copy</button></div></td>'
+        +'<td><div class="refActions">'
+        +'<button type="button" class="secondary smallBtn" data-action="analytics" data-code="'+esc(r.code)+'">Analytics</button>'
+        +'<button type="button" class="secondary smallBtn" data-action="toggle" data-code="'+esc(r.code)+'" data-active="'+(!r.active)+'">'+(r.active?'Pause':'Enable')+'</button>'
+        +'<button type="button" class="danger smallBtn" data-action="delete" data-code="'+esc(r.code)+'">Delete</button>'
+        +'</div></td></tr>'
+    }).join(''):'<tr><td colspan="7"><div class="empty"><b>No referral links yet</b><br>Create your first promoter link above.</div></td></tr>';
+    $('referralUpdated').textContent='Synced '+new Date().toLocaleTimeString();
+    lucide.createIcons();
   }catch(e){if(e.message!=='Unauthorized.')msg('refListMsg',e.message,'error')}
 }
-window.copyReferral=async url=>{try{await navigator.clipboard.writeText(url);msg('refListMsg','Referral link copied.','success')}catch(_){window.prompt('Copy referral link:',url)}};
-window.toggleReferral=async(code,active)=>{try{await api(referralApi,{method:'PATCH',body:JSON.stringify({code,active})});msg('refListMsg',active?'Referral link enabled.':'Referral link paused.','success');await loadReferrals()}catch(e){msg('refListMsg',e.message,'error')}};
-window.deleteReferral=async code=>{if(!confirm('Delete referral link '+code+'? Historical analytics will remain stored.'))return;try{await api(referralApi,{method:'DELETE',body:JSON.stringify({code})});msg('refListMsg','Referral link deleted.','success');$('refDetail').classList.add('hidden');await loadReferrals()}catch(e){msg('refListMsg',e.message,'error')}};
-window.viewReferral=async code=>{selectedReferralCode=code;$('refDetail').classList.remove('hidden');$('refDetailTitle').textContent='Referral analytics — '+code;const refs=(await api(referralApi)).referrals||[];const r=refs.find(x=>x.code===code);$('refDetailMeta').textContent=(r?.promoter||'')+(r?.campaign?' · '+r.campaign:'')+' · '+location.origin+'/?ref='+code;await loadReferralDetail()};
-async function loadReferralDetail(){if(!selectedReferralCode)return;try{const d=await api(referralStatsApi+'?code='+encodeURIComponent(selectedReferralCode)+'&range='+selectedReferralRange),f=d.funnel||{};$('rdViews').textContent=f.views||0;$('rdVisitors').textContent=f.unique_users||0;$('rdClicks').textContent=f.buy_clicks||0;$('rdPurchases').textContent=f.purchases||0;$('rdRevenue').textContent='₹'+Number(f.revenue||0).toFixed(0);const list=(id,a,l,r)=>$(id).innerHTML=a?.length?a.map(x=>'<div class="list-row"><span>'+esc(l(x))+'</span><b>'+esc(r(x))+'</b></div>').join(''):'<div class="empty">No data yet.</div>';list('rdSources',d.traffic_sources,x=>x.source,x=>x.count);list('rdDevices',d.devices,x=>x.device,x=>x.count);list('rdHours',d.views_by_hour,x=>x.hour+':00',x=>x.count);list('rdDaily',(d.daily||[]).slice().reverse().slice(0,14),x=>x.day,x=>String(x.views)+' views · '+String(x.purchases)+' sales');lucide.createIcons();msg('refDetailMsg','Updated '+new Date().toLocaleTimeString(),'success')}catch(e){msg('refDetailMsg',e.message,'error')}}
+async function copyTextFallback(text){
+  const ta=document.createElement('textarea');
+  ta.value=text;ta.setAttribute('readonly','');
+  ta.style.position='fixed';ta.style.opacity='0';ta.style.pointerEvents='none';
+  document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);
+  let ok=false;try{ok=document.execCommand('copy')}catch(_){}
+  document.body.removeChild(ta);return ok;
+}
+window.copyReferral=async code=>{
+  const url=referralUrl(code);let copied=false;
+  try{if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url);copied=true}}catch(_){ }
+  if(!copied)copied=await copyTextFallback(url);
+  if(copied)msg('refListMsg','Referral link copied to clipboard.','success');
+  else window.prompt('Copy referral link:',url);
+};
+window.toggleReferral=async(code,active)=>{
+  const buttons=[...document.querySelectorAll('[data-action="toggle"][data-code="'+CSS.escape(code)+'"]')];
+  buttons.forEach(b=>{b.disabled=true;b.textContent=active?'Enabling…':'Pausing…'});
+  try{await api(referralApi,{method:'PATCH',body:JSON.stringify({code,active})});msg('refListMsg',active?'Referral link enabled.':'Referral link paused.','success');await loadReferrals()}
+  catch(e){msg('refListMsg',e.message,'error');await loadReferrals()}
+};
+window.deleteReferral=async code=>{
+  if(!confirm('Delete referral link '+code+'? Historical analytics will remain stored.'))return;
+  try{await api(referralApi,{method:'DELETE',body:JSON.stringify({code})});msg('refListMsg','Referral link deleted.','success');if(selectedReferralCode===code){$('refDetail').classList.add('hidden');selectedReferralCode=''}await loadReferrals()}
+  catch(e){msg('refListMsg',e.message,'error')}
+};
+window.viewReferral=async code=>{
+  selectedReferralCode=code;
+  $('refDetail').classList.remove('hidden');
+  $('refDetailTitle').textContent='Referral analytics — '+code;
+  $('refDetailMeta').textContent='Loading referral details…';
+  $('refDetailMsg').textContent='Loading…';
+  try{
+    const refs=(await api(referralApi)).referrals||[],r=refs.find(x=>x.code===code);
+    if(!r)throw new Error('Referral link not found.');
+    $('refDetailMeta').textContent=(r.promoter||'')+(r.campaign?' · '+r.campaign:'')+' · '+referralUrl(code);
+    await loadReferralDetail();
+    $('refDetail').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){msg('refDetailMsg',e.message,'error')}
+};
+async function loadReferralDetail(){
+  if(!selectedReferralCode)return;
+  try{
+    const d=await api(referralStatsApi+'?code='+encodeURIComponent(selectedReferralCode)+'&range='+selectedReferralRange),f=d.funnel||{};
+    $('rdViews').textContent=Number(f.views||0).toLocaleString();
+    $('rdVisitors').textContent=Number(f.unique_users||0).toLocaleString();
+    $('rdClicks').textContent=Number(f.buy_clicks||0).toLocaleString();
+    $('rdPurchases').textContent=Number(f.purchases||0).toLocaleString();
+    $('rdRevenue').textContent='₹'+Number(f.revenue||0).toLocaleString('en-IN',{maximumFractionDigits:0});
+    const list=(id,a,l,r)=>$(id).innerHTML=a?.length?a.map(x=>'<div class="list-row"><span>'+esc(l(x))+'</span><b>'+esc(r(x))+'</b></div>').join(''):'<div class="empty">No data yet.</div>';
+    list('rdSources',d.traffic_sources,x=>x.source,x=>x.count);
+    list('rdDevices',d.devices,x=>x.device,x=>x.count);
+    list('rdHours',d.views_by_hour,x=>x.hour+':00',x=>x.count);
+    list('rdDaily',(d.daily||[]).slice().reverse().slice(0,14),x=>x.day,x=>String(x.views)+' views · '+String(x.purchases)+' sales');
+    lucide.createIcons();msg('refDetailMsg','Updated '+new Date().toLocaleTimeString(),'success');
+  }catch(e){msg('refDetailMsg',e.message,'error')}
+}
 $('refClose').onclick=()=>{$('refDetail').classList.add('hidden');selectedReferralCode=''};
 document.querySelectorAll('.refRange').forEach(b=>b.onclick=()=>{selectedReferralRange=b.dataset.range;document.querySelectorAll('.refRange').forEach(x=>x.classList.toggle('active',x===b));loadReferralDetail()});
+$('refRows').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-action]');if(!b)return;
+  const code=b.dataset.code,action=b.dataset.action;
+  if(action==='copy')window.copyReferral(code);
+  else if(action==='analytics')window.viewReferral(code);
+  else if(action==='toggle')window.toggleReferral(code,b.dataset.active==='true');
+  else if(action==='delete')window.deleteReferral(code);
+});
+
 $('generateRefBtn').onclick=()=>{const a=new Uint8Array(8);if(window.crypto?.getRandomValues)crypto.getRandomValues(a);else for(let i=0;i<a.length;i++)a[i]=Math.floor(Math.random()*256);let s='';for(const n of a)s+=(n%36).toString(36);const code=('PV'+s).toUpperCase().slice(0,10);$('refCode').value=code;msg('refCreateMsg','Random code generated: '+code+' — click Create link.','success')};
 $('createRefBtn').onclick=async()=>{const btn=$('createRefBtn');btn.disabled=true;btn.textContent='Creating…';try{const d=await api(referralApi,{method:'POST',body:JSON.stringify({code:$('refCode').value,promoter:$('refPromoter').value,contact:$('refContact').value,platform:$('refPlatform').value,campaign:$('refCampaign').value,coupon:$('refCoupon').value})});msg('refCreateMsg','Referral link created: '+location.origin+'/?ref='+d.referral.code,'success');$('refCode').value='';$('refPromoter').value='';$('refContact').value='';$('refCampaign').value='';$('refCoupon').value='';$('refPlatform').value='';await loadReferrals()}catch(e){msg('refCreateMsg',e.message,'error')}finally{btn.disabled=false;btn.textContent='Create link'}};
 
