@@ -509,7 +509,7 @@ button:active{transform:scale(.98)}
   </div>
 </div>
       <div class="customRange" style="margin-top:10px"><input id="customStart" type="date"><span class="muted">to</span><input id="customEnd" type="date"><button id="customApply" class="secondary" style="width:auto">Apply</button><button id="migrateBtn" class="secondary" style="width:auto">Migrate analytics</button></div>
-      <div class="muted rangeNote">Payment attempts are counted from unique Razorpay orders created by the checkout, not repeated button clicks.</div>
+      <div class="muted rangeNote">Payment attempts = successful payments + failed payments.</div>
     </div>
 
     <div class="kpis">
@@ -518,7 +518,7 @@ button:active{transform:scale(.98)}
 
     <div class="card cardPad"><div class="sectionHead"><h2>Purchase Funnel</h2><div class="muted" id="conv">0% click → purchase</div></div><div class="funnel" id="funnel" style="margin-top:14px"></div></div>
 
-    <div class="card cardPad"><div class="sectionHead"><h2>Payment Health</h2><div class="muted">Checkout reliability</div></div><div class="health" style="margin-top:12px"><div class="kpi"><div class="label">🧾 Checkout views</div><div class="value" id="kCheckout">0</div></div><div class="kpi blue"><div class="label">💳 Payment attempts</div><div class="value" id="kAttempts">0</div></div><div class="kpi"><div class="label">⚠️ Payment failures</div><div class="value" id="kFailures">0</div></div><div class="kpi green"><div class="label">✨ Success rate</div><div class="value" id="kSuccess">0%</div></div></div><div class="muted" style="margin-top:10px">Attempts are tied to a server-created order. A user clicking the button repeatedly before an order exists is not counted.</div></div>
+    <div class="card cardPad"><div class="sectionHead"><h2>Payment Health</h2><div class="muted">Checkout reliability</div></div><div class="health" style="margin-top:12px"><div class="kpi"><div class="label">🧾 Checkout views</div><div class="value" id="kCheckout">0</div></div><div class="kpi blue"><div class="label">💳 Payment attempts</div><div class="value" id="kAttempts">0</div></div><div class="kpi"><div class="label">⚠️ Payment failures</div><div class="value" id="kFailures">0</div></div><div class="kpi green"><div class="label">✨ Success rate</div><div class="value" id="kSuccess">0%</div></div></div><div class="muted" style="margin-top:10px">Payment attempts are calculated as successful payments + failed payments. Success rate = successful payments ÷ payment attempts × 100.</div></div>
 
     <div class="grid2">
        <div class="card cardPad"><div class="sectionHead"><h2>Top pages</h2><i data-lucide="file-bar-chart-2"></i></div><div class="list" id="pages"></div></div>
