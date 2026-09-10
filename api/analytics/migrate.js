@@ -12,21 +12,26 @@ module.exports=async(req,res)=>{
  try{
   const confirm=String(req.body?.confirm||"");if(confirm!=="REBUILD_ANALYTICS_DIMENSIONS")return res.status(400).json({message:"Confirmation required. Send confirm=REBUILD_ANALYTICS_DIMENSIONS to run the one-time rebuild."});
   const raw=await redis("lrange","analytics:events","0","9999");const rows=Array.isArray(raw.result)?raw.result:[];
-  const days=new Set(),pages={},sources={},devices={},ctas={},counters={};const attempts={},failures={};let parsed=0,oldest=Infinity,newest=0;
+  const days=new Set(),pages={},sources={},devices={},ctas={},counters={},newVisitors={};const attempts={},failures={};const firstVisitor=new Map(),seenSessions=new Set();let parsed=0,oldest=Infinity,newest=0;
   for(const item of rows){let e;try{e=typeof item==="string"?JSON.parse(item):item}catch(_){continue}const ts=Number(e?.ts);if(!e||!Number.isFinite(ts))continue;parsed++;oldest=Math.min(oldest,ts);newest=Math.max(newest,ts);const day=dayKey(ts);days.add(day);counters[day] ||= {};
-   if(e.event==="page_view"){const page=String(e.page||"/");pages[day] ||= {};pages[day][page]=(pages[day][page]||0)+1;const src=sourceFromEvent(e);sources[day] ||= {};sources[day][src]=(sources[day][src]||0)+1;const dev=String(e.device||"unknown");devices[day] ||= {};devices[day][dev]=(devices[day][dev]||0)+1;counters[day].page_view=(counters[day].page_view||0)+1}
+   if(e.event==="page_view"){const page=String(e.page||"/");if((page==="/"||page==="/index.html")&&e.session_id&&!seenSessions.has(String(e.session_id))){seenSessions.add(String(e.session_id));pages[day] ||= {};pages[day]["/"]=(pages[day]["/"]||0)+1;const src=sourceFromEvent(e);sources[day] ||= {};sources[day][src]=(sources[day][src]||0)+1;const dev=String(e.device||"unknown");devices[day] ||= {};devices[day][dev]=(devices[day][dev]||0)+1;counters[day].page_view=(counters[day].page_view||0)+1;const vid=String(e.visitor_id||"");if(vid){const old=firstVisitor.get(vid);if(old==null||ts<old)firstVisitor.set(vid,ts)}}}
    const cta=ctaFromEvent(e);if(cta){ctas[day] ||= {};ctas[day][cta]=(ctas[day][cta]||0)+1;counters[day].buy_click=(counters[day].buy_click||0)+1}
    const orderId=String(e?.data?.order_id||"").trim();if(orderId&&e.event==="payment_attempt")attempts[day]=(attempts[day]||0)+1;if(orderId&&e.event==="payment_failed")failures[day]=(failures[day]||0)+1;
   }
+  for(const [vid,ts] of firstVisitor.entries()){const day=dayKey(ts);newVisitors[day] ||= [];newVisitors[day].push(vid);days.add(day)}
   const affected=[...days].sort();
+  await redis("del","analytics:visitors");
+  for(const vid of firstVisitor.keys()) await redis("sadd","analytics:visitors",vid);
+  for(const sid of seenSessions) await redis("set","analytics:index_view:session:"+sid.slice(0,100),"1","nx","ex",2592000);
   for(const day of affected){
-   await Promise.all([redis("del","analytics:pages:"+day),redis("del","analytics:sources:"+day),redis("del","analytics:devices:"+day),redis("del","analytics:buy_ctas:"+day)]);
+   await Promise.all([redis("del","analytics:pages:"+day),redis("del","analytics:sources:"+day),redis("del","analytics:devices:"+day),redis("del","analytics:buy_ctas:"+day),redis("del","analytics:new_visitors:"+day)]);
    const ck="analytics:counter:"+day;
    await Promise.all([redis("hdel",ck,"page_view"),redis("hdel",ck,"buy_click"),redis("hdel",ck,"payment_attempt_unique"),redis("hdel",ck,"payment_failed_unique")]);
    for(const [k,v] of Object.entries(pages[day]||{}))await redis("hincrby","analytics:pages:"+day,k,v);
    for(const [k,v] of Object.entries(sources[day]||{}))await redis("hincrby","analytics:sources:"+day,k,v);
    for(const [k,v] of Object.entries(devices[day]||{}))await redis("hincrby","analytics:devices:"+day,k,v);
    for(const [k,v] of Object.entries(ctas[day]||{}))await redis("hincrby","analytics:buy_ctas:"+day,k,v);
+   for(const vid of new Set(newVisitors[day]||[]))await redis("sadd","analytics:new_visitors:"+day,vid);
    if(counters[day]?.page_view)await redis("hincrby",ck,"page_view",counters[day].page_view);
    if(counters[day]?.buy_click)await redis("hincrby",ck,"buy_click",counters[day].buy_click);
    if(attempts[day])await redis("hincrby",ck,"payment_attempt_unique",attempts[day]);
