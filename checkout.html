@@ -998,7 +998,7 @@ body{
   function context(){return {visitor_id:visitorId,session_id:sessionId,referrer:document.referrer||"",utm_source:attr.source,utm_medium:attr.medium,utm_campaign:attr.campaign,device:innerWidth<=700?"mobile":(innerWidth<=1100?"tablet":"desktop")}}
   window.prepViaAnalyticsContext=context;
   function send(event,data,beacon=false){const body=JSON.stringify(Object.assign(context(),{event,page:location.pathname||"/checkout.html",page_title:document.title,host:location.host,ts:Date.now(),data:data||{}}));try{if(beacon&&navigator.sendBeacon){navigator.sendBeacon(ENDPOINT,new Blob([body],{type:"application/json"}));return}fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body,keepalive:true}).catch(()=>{})}catch(_){} }
-  window.prepViaCheckoutTrack=send; send("page_view"); send("checkout_view"); send("heartbeat"); setInterval(()=>send("heartbeat"),30000);
+  window.prepViaCheckoutTrack=send; send("checkout_view"); send("heartbeat"); setInterval(()=>send("heartbeat"),30000);
   const coupon=document.getElementById("applyCoupon"); if(coupon)coupon.addEventListener("click",()=>{const code=(document.getElementById("couponCode")?.value||"").trim();if(code)send("coupon_attempt",{coupon:code.slice(0,40)})});
   window.addEventListener("beforeunload",()=>send("session_end",{},true));
 })();

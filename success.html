@@ -234,17 +234,7 @@ h1{font-size:clamp(46px,8vw,88px);line-height:.95;letter-spacing:-4px;margin:22p
 })();
 </script>
 
-<script id="prepvia-success-analytics">
-(() => {
-  "use strict";
-  const ENDPOINT="/api/analytics/event";
-  function idFor(storage,key){try{let id=storage.getItem(key);if(!id){id=crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);storage.setItem(key,id)}return id}catch(_){return Date.now().toString(36)}}
-  const visitorId=idFor(localStorage,"prepvia_visitor_id"),sessionId=idFor(sessionStorage,"prepvia_session_id");
-  let attr={};try{attr=JSON.parse(sessionStorage.getItem("prepvia_attribution")||"{}")}catch(_){ }
-  function send(){const body=JSON.stringify({event:"page_view",visitor_id:visitorId,session_id:sessionId,page:"/success.html",page_title:document.title,referrer:document.referrer||"",utm_source:attr.source||"direct",utm_medium:attr.medium||"",utm_campaign:attr.campaign||"",device:innerWidth<=700?"mobile":(innerWidth<=1100?"tablet":"desktop"),host:location.host,ts:Date.now(),data:{}});try{fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body,keepalive:true}).catch(()=>{})}catch(_){} }
-  send();
-})();
-</script>
+
 <script>
 (() => {
   // Browser-delivered HTML/CSS/JS can never be made impossible to save or inspect.
