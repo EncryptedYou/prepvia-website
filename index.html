@@ -8178,23 +8178,38 @@ html{scroll-behavior:auto;}
 </style>
 
 
-<style id="prepvia-desktop-hero-auto-final">
-/* Final requested adjustment:
-   - Navigation bar colour is restored to the original dark style.
-   - Desktop hero height is content-driven by the mockup image.
-   - No forced viewport height and no artificial mockup max-height.
-   - Tablet/mobile rules remain unchanged.
+<style id="prepvia-content-driven-hero-final">
+/* Final hero spacing fix:
+   The hero must size itself to its actual content/mockup instead of filling
+   the viewport. Navbar colour remains unchanged (dark).
 */
-
-/* Restore original dark navigation appearance */
-.navbar{
-    background:#212121 !important;
-    color:#fff !important;
-    border-bottom:1px solid rgba(255,255,255,.10) !important;
+.hero{
+    min-height:auto !important;
+    height:auto !important;
 }
 
-/* Desktop: let the mockup determine the hero height naturally */
+.hero-split{
+    min-height:auto !important;
+    height:auto !important;
+}
+
+/* Desktop: compact but still comfortable around the mockup. */
 @media (min-width:1101px){
+    .hero-split{
+        padding-top:28px !important;
+        padding-bottom:42px !important;
+    }
+
+    .hero-mockup{
+        width:min(100%,610px) !important;
+        height:auto !important;
+        max-height:none !important;
+        object-fit:contain !important;
+    }
+}
+
+/* Mobile: remove the viewport-sized empty area below the hero content. */
+@media (max-width:700px){
     .hero{
         min-height:auto !important;
         height:auto !important;
@@ -8203,16 +8218,18 @@ html{scroll-behavior:auto;}
     .hero-split{
         min-height:auto !important;
         height:auto !important;
+        padding-top:30px !important;
+        padding-bottom:42px !important;
+    }
+}
+
+/* Small phones: retain a little breathing room without the large blank area. */
+@media (max-width:390px){
+    .hero-split{
+        min-height:auto !important;
+        height:auto !important;
         padding-top:28px !important;
         padding-bottom:42px !important;
-        align-items:center !important;
-    }
-
-    .hero-mockup{
-        width:min(100%,610px) !important;
-        height:auto !important;
-        max-height:none !important;
-        object-fit:contain !important;
     }
 }
 </style>
