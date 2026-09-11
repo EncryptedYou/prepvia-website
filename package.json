@@ -1,0 +1,1 @@
+{"name":"prepvia-education","private":true,"version":"1.0.0","type":"module","scripts":{"build":"vite build","dev":"vite","preview":"vite preview"},"dependencies":{"@supabase/supabase-js":"^2.57.0","lucide":"^0.468.0"},"devDependencies":{"vite":"^7.3.6"}}
