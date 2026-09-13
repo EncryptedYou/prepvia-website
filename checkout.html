@@ -1039,6 +1039,7 @@ body{
     if(!source){try{const ref=document.referrer?new URL(document.referrer):null;const host=ref?String(ref.hostname||"").toLowerCase().replace(/^www\./,""):"";const cur=String(location.hostname||"").toLowerCase().replace(/^www\./,"");if(host&&host!==cur&&host!=="localhost"){source=host;medium=medium||"referral"}}catch(_){} }
     if(!source)source=referralCode?"referral":"direct";
     if(referralCode&&!medium)medium="referral";
+    if(saved && saved.referral_code && !explicitReferral) return saved;
     const value={source,medium,campaign,referral_code:referralCode};
     saveAttribution(value);
     return value;

@@ -7993,6 +7993,7 @@ html{scroll-behavior:auto;}
     if(!source&&saved)source=saved.source||"";if(!medium&&saved)medium=saved.medium||"";if(!campaign&&saved)campaign=saved.campaign||"";
     if(!source){try{const ref=document.referrer?new URL(document.referrer):null;const host=ref?String(ref.hostname||"").toLowerCase().replace(/^www\./,""):"";const cur=String(location.hostname||"").toLowerCase().replace(/^www\./,"");if(host&&host!==cur&&host!=="localhost"){source=host;medium=medium||"referral"}}catch(_) {}}
     if(!source)source=referralCode?"referral":"direct";if(referralCode&&!medium)medium="referral";
+    if(saved && saved.referral_code && !explicitReferral) return saved;
     const value={source,medium,campaign,referral_code:referralCode,expires_at:Date.now()+ATTRIBUTION_TTL,updated_at:Date.now()};
     try{localStorage.setItem(ATTRIBUTION_KEY,JSON.stringify(value))}catch(_){}
     return value;
