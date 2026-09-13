@@ -966,9 +966,7 @@ body{
 
       if (typeof window.prepViaCheckoutTrack === "function") {
         window.prepViaCheckoutTrack("payment_attempt", {
-          order_id: String(data.order_id || "").slice(0,120),
-          amount: serverAmount / 100,
-          currency: "INR"
+          order_id: String(data.order_id || "").slice(0,120)
         });
       }
       rzp.open();
@@ -987,7 +985,7 @@ body{
   // the coupon again when the payment order is created.
   (async function applyReferralDiscount() {
     try {
-      const saved = JSON.parse(localStorage.getItem("prepvia_attribution_v2") || "null");
+      const saved = JSON.parse(sessionStorage.getItem("prepvia_attribution") || "null");
       const params = new URLSearchParams(location.search);
       const referral = String(params.get("ref") || params.get("referral") || saved?.referral_code || "").trim().toUpperCase();
       if (!referral) return;
@@ -1012,36 +1010,23 @@ body{
   const ENDPOINT = "/api/analytics/event";
   function idFor(storage,key){try{let id=storage.getItem(key);if(!id){id=(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));storage.setItem(key,id)}return id}catch(_){return Date.now().toString(36)}}
   const visitorId=idFor(localStorage,"prepvia_visitor_id"), sessionId=idFor(sessionStorage,"prepvia_session_id");
-  const ATTRIBUTION_KEY = "prepvia_attribution_v2";
-  const ATTRIBUTION_TTL = 30 * 24 * 60 * 60 * 1000;
-  function readStoredAttribution(){
-    try{
-      const saved=JSON.parse(localStorage.getItem(ATTRIBUTION_KEY)||"null");
-      if(!saved || Number(saved.expires_at||0)<=Date.now()) return null;
-      return saved;
-    }catch(_){return null}
-  }
-  function saveAttribution(value){
-    try{localStorage.setItem(ATTRIBUTION_KEY,JSON.stringify({...value,expires_at:Date.now()+ATTRIBUTION_TTL,updated_at:Date.now()}));}catch(_){}
-  }
   function attribution(){
-    const p=new URLSearchParams(location.search), saved=readStoredAttribution();
-    const explicitReferral=(p.get("ref")||p.get("referral")||"").trim().toUpperCase().replace(/[^A-Z0-9_-]/g,"").slice(0,40);
+    const KEY="prepvia_attribution_v1", TTL=30*24*60*60*1000;
+    const p=new URLSearchParams(location.search);
     let source=(p.get("utm_source")||"").trim().toLowerCase();
     let medium=(p.get("utm_medium")||"").trim().toLowerCase();
     let campaign=(p.get("utm_campaign")||"").trim();
-    // First-touch attribution persists for 30 days. An existing referral is
-    // never replaced by an unrelated later page visit.
-    let referralCode=saved?.referral_code||explicitReferral||"";
-    if(!source&&saved?.source)source=saved.source||"";
-    if(!medium&&saved?.medium)medium=saved.medium||"";
-    if(!campaign&&saved?.campaign)campaign=saved.campaign||"";
+    let referralCode=(p.get("ref")||p.get("referral")||"").trim().toUpperCase().replace(/[^A-Z0-9_-]/g,"").slice(0,40);
+    let saved=null;
+    try{saved=JSON.parse(localStorage.getItem(KEY)||"null");if(saved&&(!saved.saved_at||Date.now()-Number(saved.saved_at)>TTL)){localStorage.removeItem(KEY);saved=null}}catch(_){saved=null}
+    // First touch wins for 30 days. A real referral/UTM URL is stored when no
+    // active attribution exists; later direct visits cannot erase it.
+    if(saved){source=saved.source||source;medium=saved.medium||medium;campaign=saved.campaign||campaign;referralCode=saved.referral_code||referralCode}
     if(!source){try{const ref=document.referrer?new URL(document.referrer):null;const host=ref?String(ref.hostname||"").toLowerCase().replace(/^www\./,""):"";const cur=String(location.hostname||"").toLowerCase().replace(/^www\./,"");if(host&&host!==cur&&host!=="localhost"){source=host;medium=medium||"referral"}}catch(_){} }
     if(!source)source=referralCode?"referral":"direct";
     if(referralCode&&!medium)medium="referral";
-    if(saved && saved.referral_code && !explicitReferral) return saved;
-    const value={source,medium,campaign,referral_code:referralCode};
-    saveAttribution(value);
+    const value={source,medium,campaign,referral_code:referralCode,saved_at:saved?.saved_at||Date.now()};
+    try{localStorage.setItem(KEY,JSON.stringify(value));sessionStorage.setItem("prepvia_attribution",JSON.stringify(value))}catch(_){ }
     return value;
   }
   const attr=attribution();
