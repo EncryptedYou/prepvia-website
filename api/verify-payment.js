@@ -113,6 +113,28 @@ module.exports = async (req, res) => {
     }
 
 
+    // A captured Razorpay payment is a real sale. Record it before optional
+    // external fulfillment so a webhook failure cannot make the sale disappear
+    // from the admin analytics. Analytics errors remain non-fatal.
+    try {
+      await recordVerifiedPurchase({
+        order_id,
+        payment_id,
+        amount: actualAmount / 100,
+        coupon: couponSnapshot ? couponSnapshot.coupon : null,
+        referral_code: referralSnapshot?.referral_code,
+        session_id: referralSnapshot?.session_id,
+        visitor_id: referralSnapshot?.visitor_id,
+        referrer: referralSnapshot?.referrer,
+        utm_source: referralSnapshot?.utm_source,
+        utm_medium: referralSnapshot?.utm_medium,
+        utm_campaign: referralSnapshot?.utm_campaign,
+        device: referralSnapshot?.device
+      });
+    } catch (analyticsError) {
+      console.error('Verified purchase analytics error:', analyticsError);
+    }
+
     const webhook = process.env.ACTIVEPIECES_WEBHOOK_URL;
     if (webhook) {
       const wr = await fetch(webhook, {
