@@ -594,6 +594,31 @@ button:active{transform:scale(.98)}
       <div id="refCreateMsg" class="status"></div>
     </div>
     <div class="card cardPad">
+      <div class="sectionHead"><div><h2>Referral attribution</h2><div class="muted">Choose how long a referral/UTM attribution stays active in the visitor's browser.</div></div><i data-lucide="clock-3"></i></div>
+      <div class="createGrid" style="margin-top:12px">
+        <div class="field">
+          <label for="attributionPreset">Attribution window</label>
+          <select id="attributionPreset">
+            <option value="7">7 days</option>
+            <option value="15">15 days</option>
+            <option value="30">30 days</option>
+            <option value="60">60 days</option>
+            <option value="90">90 days</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+        <div class="field" id="attributionCustomWrap" style="display:none">
+          <label for="attributionDays">Custom days</label>
+          <input id="attributionDays" type="number" min="1" max="3650" step="1" placeholder="30">
+        </div>
+        <div class="createAction" style="align-self:end">
+          <button id="saveAttributionBtn" class="primary">Save window</button>
+        </div>
+      </div>
+      <div class="muted" style="margin-top:8px">First-touch attribution is used. Direct visits do not reset an existing referral. The setting affects new attribution checks and expiry; existing browser data is evaluated against the current window.</div>
+      <div id="attributionMsg" class="status"></div>
+    </div>
+    <div class="card cardPad">
       <div class="sectionHead"><div><h2>Referral links</h2><div class="muted">Open a link to see its detailed performance.</div></div><i data-lucide="list"></i></div>
       <div class="tableWrap"><table class="table referralTable"><thead><tr><th>Promoter</th><th>Code</th><th>Campaign</th><th>Coupon</th><th>30d views</th><th>30d clicks</th><th>30d sales</th><th>Status</th><th>Referral link</th><th>Actions</th></tr></thead><tbody id="refRows"></tbody></table></div>
       <div id="refListMsg" class="status"></div>
@@ -676,6 +701,7 @@ async function loadReferrals(){
   if(!secret)return;
   try{
     const d=await api(referralApi), refs=d.referrals||[];
+    setAttributionUI(Number(d.attribution_days||30));
     $('refTotal').textContent=refs.length;
     $('refActive').textContent=refs.filter(x=>x.active).length;
     const all=await Promise.all(refs.map(async x=>{try{return await api(referralStatsApi+'?code='+encodeURIComponent(x.code)+'&range=30d')}catch(e){return {__error:e.message,funnel:{}}}}));
@@ -818,6 +844,37 @@ async function saveReferralEditor(){
 }
 $('refEditClose').onclick=$('refEditCancel').onclick=()=>{$('refEditModal').classList.add('hidden');editingReferral=null;editingCoupon=null};$('refEditModal').addEventListener('click',e=>{if(e.target===$('refEditModal'))$('refEditClose').click()});$('refEditSave').onclick=saveReferralEditor;
 $('generateRefBtn').onclick=()=>{const a=new Uint8Array(8);if(window.crypto?.getRandomValues)crypto.getRandomValues(a);else for(let i=0;i<a.length;i++)a[i]=Math.floor(Math.random()*256);let s='';for(const n of a)s+=(n%36).toString(36);const code=('PV'+s).toUpperCase().slice(0,10);$('refCode').value=code;msg('refCreateMsg','Random code generated: '+code+' — click Create link.','success')};
+function setAttributionUI(days){
+  const n=Math.max(1,Math.min(3650,Math.floor(Number(days)||30)));
+  const presets=['7','15','30','60','90'];
+  if(presets.includes(String(n))){
+    $('attributionPreset').value=String(n);
+    $('attributionCustomWrap').style.display='none';
+  }else{
+    $('attributionPreset').value='custom';
+    $('attributionCustomWrap').style.display='';
+    $('attributionDays').value=n;
+  }
+  $('attributionDays').value=n;
+}
+$('attributionPreset').onchange=()=>{
+  const custom=$('attributionPreset').value==='custom';
+  $('attributionCustomWrap').style.display=custom?'':'none';
+  if(!custom)$('attributionDays').value=$('attributionPreset').value;
+};
+$('saveAttributionBtn').onclick=async()=>{
+  const btn=$('saveAttributionBtn');
+  const days=$('attributionPreset').value==='custom'?Number($('attributionDays').value):Number($('attributionPreset').value);
+  if(!Number.isInteger(days)||days<1||days>3650){msg('attributionMsg','Enter a whole number from 1 to 3650 days.','error');return}
+  btn.disabled=true;btn.textContent='Saving…';
+  try{
+    const d=await api(referralApi,{method:'POST',body:JSON.stringify({action:'attribution_settings',days})});
+    setAttributionUI(d.attribution_days);
+    msg('attributionMsg','Referral attribution window saved: '+d.attribution_days+' days.','success');
+  }catch(e){msg('attributionMsg',e.message,'error')}
+  finally{btn.disabled=false;btn.textContent='Save window'}
+};
+
 $('createRefBtn').onclick=async()=>{const btn=$('createRefBtn');btn.disabled=true;btn.textContent='Creating…';try{const d=await api(referralApi,{method:'POST',body:JSON.stringify({code:$('refCode').value,promoter:$('refPromoter').value,contact:$('refContact').value,platform:$('refPlatform').value,campaign:$('refCampaign').value,coupon:$('refCoupon').value})});msg('refCreateMsg','Referral link created: '+location.origin+'/?ref='+d.referral.code,'success');$('refCode').value='';$('refPromoter').value='';$('refContact').value='';$('refCampaign').value='';$('refCoupon').value='';$('refPlatform').value='';await loadReferrals()}catch(e){msg('refCreateMsg',e.message,'error')}finally{btn.disabled=false;btn.textContent='Create link'}};
 
 $('createBtn').onclick=async()=>{const code=$('code').value.trim().toUpperCase().replace(/\s+/g,'');const type=$('type').value;const enteredDiscount=Number($('discount').value);const maxUses=Number($('maxUses').value);const expires=$('expiresAt').value;if(!code)return msg('createMsg','Enter a coupon code.','error');if(!Number.isFinite(enteredDiscount)||enteredDiscount<=0)return msg('createMsg','Enter a valid discount amount.','error');if(type==='percent'&&enteredDiscount>=100)return msg('createMsg','Percentage discount must be below 100%.','error');if(!Number.isInteger(maxUses)||maxUses<1)return msg('createMsg','Usage limit must be at least 1.','error');const discount=type==='fixed'?Math.round(enteredDiscount*100):enteredDiscount;const btn=$('createBtn');btn.disabled=true;btn.textContent='Creating…';try{await api(couponApi,{method:'POST',body:JSON.stringify({code,type,discount,maxUses,expiresAt:expires?new Date(expires).toISOString():null})});msg('createMsg','Coupon created successfully.','success');$('code').value='';$('discount').value='';$('maxUses').value='1';$('expiresAt').value='';await loadCoupons()}catch(e){if(e.message!=='Unauthorized.')msg('createMsg',e.message,'error')}finally{btn.disabled=false;btn.textContent='Create coupon'}};
