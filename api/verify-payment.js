@@ -79,9 +79,8 @@ module.exports = async (req, res) => {
     if (referralRaw) {
       try { referralSnapshot = JSON.parse(referralRaw); } catch { referralSnapshot = null; }
     }
-    // Do not fall back to browser analytics here. Referral attribution must
-    // come from the validated order snapshot created by create-order.js.
-
+    // Referral attribution must come from the server-side order snapshot.
+    // Never trust a browser-supplied referral code during payment verification.
 
     const payload = {
       order_id, payment_id, name: String(name || ''), email: String(email || ''), phone: String(phone || ''),
@@ -91,31 +90,8 @@ module.exports = async (req, res) => {
     const encoded = Buffer.from(JSON.stringify(payload)).toString('base64url');
     const token = encoded + '.' + sign(encoded, secret);
 
-    // Record the verified sale before optional external fulfillment.
-    // Analytics failure is intentionally non-fatal so a valid payment remains valid.
-    try {
-      await recordVerifiedPurchase({
-        order_id,
-        payment_id,
-        amount: actualAmount / 100,
-        coupon: couponSnapshot ? couponSnapshot.coupon : null,
-        referral_code: referralSnapshot?.referral_code,
-        session_id: referralSnapshot?.session_id,
-        visitor_id: referralSnapshot?.visitor_id,
-        referrer: referralSnapshot?.referrer,
-        utm_source: referralSnapshot?.utm_source,
-        utm_medium: referralSnapshot?.utm_medium,
-        utm_campaign: referralSnapshot?.utm_campaign,
-        device: referralSnapshot?.device
-      });
-    } catch (analyticsError) {
-      console.error('Verified purchase analytics error:', analyticsError);
-    }
-
-
-    // A captured Razorpay payment is a real sale. Record it before optional
-    // external fulfillment so a webhook failure cannot make the sale disappear
-    // from the admin analytics. Analytics errors remain non-fatal.
+    // Record the verified sale before optional external fulfillment. This keeps
+    // the admin revenue/purchase analytics correct even if Activepieces is down.
     try {
       await recordVerifiedPurchase({
         order_id,
@@ -137,12 +113,16 @@ module.exports = async (req, res) => {
 
     const webhook = process.env.ACTIVEPIECES_WEBHOOK_URL;
     if (webhook) {
-      const wr = await fetch(webhook, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ event: 'payment.verified', name: payload.name, email: payload.email, phone: payload.phone,
-          product: 'JEE & NEET Success Package', amount: payload.amount, currency: 'INR', coupon: payload.coupon, order_id, payment_id })
-      });
-      if (!wr.ok) throw new Error('Activepieces webhook failed.');
+      try {
+        const wr = await fetch(webhook, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ event: 'payment.verified', name: payload.name, email: payload.email, phone: payload.phone,
+            product: 'JEE & NEET Success Package', amount: payload.amount, currency: 'INR', coupon: payload.coupon, order_id, payment_id })
+        });
+        if (!wr.ok) console.error('Activepieces webhook failed:', wr.status);
+      } catch (webhookError) {
+        console.error('Activepieces webhook error:', webhookError);
+      }
     }
 
     if (couponSnapshot) {
