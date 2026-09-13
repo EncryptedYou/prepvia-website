@@ -79,10 +79,9 @@ module.exports = async (req, res) => {
     if (referralRaw) {
       try { referralSnapshot = JSON.parse(referralRaw); } catch { referralSnapshot = null; }
     }
-    if (!referralSnapshot && analytics?.referral_code) {
-      const rc = String(analytics.referral_code).trim().toUpperCase().replace(/[^A-Z0-9_-]/g, "").slice(0,40);
-      if (rc) referralSnapshot = { referral_code: rc, ...analytics };
-    }
+    // Do not fall back to browser analytics here. Referral attribution must
+    // come from the validated order snapshot created by create-order.js.
+
 
     const payload = {
       order_id, payment_id, name: String(name || ''), email: String(email || ''), phone: String(phone || ''),
@@ -91,6 +90,28 @@ module.exports = async (req, res) => {
     };
     const encoded = Buffer.from(JSON.stringify(payload)).toString('base64url');
     const token = encoded + '.' + sign(encoded, secret);
+
+    // Record the verified sale before optional external fulfillment.
+    // Analytics failure is intentionally non-fatal so a valid payment remains valid.
+    try {
+      await recordVerifiedPurchase({
+        order_id,
+        payment_id,
+        amount: actualAmount / 100,
+        coupon: couponSnapshot ? couponSnapshot.coupon : null,
+        referral_code: referralSnapshot?.referral_code,
+        session_id: referralSnapshot?.session_id,
+        visitor_id: referralSnapshot?.visitor_id,
+        referrer: referralSnapshot?.referrer,
+        utm_source: referralSnapshot?.utm_source,
+        utm_medium: referralSnapshot?.utm_medium,
+        utm_campaign: referralSnapshot?.utm_campaign,
+        device: referralSnapshot?.device
+      });
+    } catch (analyticsError) {
+      console.error('Verified purchase analytics error:', analyticsError);
+    }
+
 
     const webhook = process.env.ACTIVEPIECES_WEBHOOK_URL;
     if (webhook) {
@@ -112,28 +133,6 @@ module.exports = async (req, res) => {
       await redisDel('coupon:order:' + order_id).catch(() => {});
     }
     if (referralSnapshot) await redisDel('referral:order:' + order_id).catch(() => {});
-
-    // Record the purchase only after Razorpay signature + order amount
-    // verification and all payment-side processing have succeeded.
-    // Analytics failure must never turn a valid payment into a failed payment.
-    try {
-      await recordVerifiedPurchase({
-        order_id,
-        payment_id,
-        amount: actualAmount / 100,
-        coupon: couponSnapshot ? couponSnapshot.coupon : null,
-        referral_code: referralSnapshot?.referral_code,
-        session_id: referralSnapshot?.session_id,
-        visitor_id: referralSnapshot?.visitor_id,
-        referrer: referralSnapshot?.referrer,
-        utm_source: referralSnapshot?.utm_source,
-        utm_medium: referralSnapshot?.utm_medium,
-        utm_campaign: referralSnapshot?.utm_campaign,
-        device: referralSnapshot?.device
-      });
-    } catch (analyticsError) {
-      console.error('Verified purchase analytics error:', analyticsError);
-    }
 
     return res.status(200).json({ success: true, verified_token: token });
   } catch (error) {

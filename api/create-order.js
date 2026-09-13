@@ -4,6 +4,8 @@ const {
   calculateDiscount, redisSet, redisSetNX, redisDel, reservationKey, randomId, redisGet
 } = require('../lib/coupons');
 const { recordEvent } = require('../lib/analytics-store');
+
+const REFERRAL_TTL = 7 * 24 * 60 * 60;
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ message: 'Method not allowed' });
   let reservation = null;
@@ -61,17 +63,26 @@ module.exports = async (req, res) => {
 
     if (analytics?.referral_code) {
       const rc = String(analytics.referral_code).trim().toUpperCase().replace(/[^A-Z0-9_-]/g, "").slice(0,40);
-      if (rc) {
-        await redisSet('referral:order:' + data.id, JSON.stringify({
-          referral_code: rc,
-          visitor_id: String(analytics?.visitor_id || '').slice(0,100),
-          session_id: String(analytics?.session_id || '').slice(0,100),
-          referrer: String(analytics?.referrer || '').slice(0,300),
-          utm_source: String(analytics?.utm_source || '').slice(0,100),
-          utm_medium: String(analytics?.utm_medium || '').slice(0,100),
-          utm_campaign: String(analytics?.utm_campaign || '').slice(0,150),
-          device: String(analytics?.device || '').slice(0,20)
-        }), RESERVATION_TTL);
+      if (/^[A-Z0-9_-]{3,40}$/.test(rc)) {
+        // Never trust a browser-supplied referral as proof of attribution.
+        // Resolve it against the server-side referral definition and only
+        // persist attribution when the referral is active.
+        const referralRaw = await redisGet('referral:def:' + rc);
+        let referralDef = null;
+        try { referralDef = referralRaw ? JSON.parse(referralRaw) : null; } catch (_) {}
+        if (referralDef && referralDef.active === true) {
+          await redisSet('referral:order:' + data.id, JSON.stringify({
+            referral_code: rc,
+            visitor_id: String(analytics?.visitor_id || '').slice(0,100),
+            session_id: String(analytics?.session_id || '').slice(0,100),
+            referrer: String(analytics?.referrer || '').slice(0,300),
+            utm_source: String(analytics?.utm_source || '').slice(0,100),
+            utm_medium: String(analytics?.utm_medium || '').slice(0,100),
+            utm_campaign: String(analytics?.utm_campaign || '').slice(0,150),
+            device: String(analytics?.device || '').slice(0,20),
+            createdAt: Date.now()
+          }), REFERRAL_TTL);
+        }
       }
     }
 
