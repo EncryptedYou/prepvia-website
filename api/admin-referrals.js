@@ -39,8 +39,19 @@ async function saveIndex(codes) {
 module.exports = async (req,res) => {
   if (!authorized(req)) return res.status(401).json({message:"Unauthorized"});
   try {
-    if (req.method === "GET") return res.status(200).json({referrals: await list()});
+    if (req.method === "GET") {
+      const settingsRaw = await redis("get", "prepvia:attribution:days");
+      const n = Number(settingsRaw.result || 30);
+      return res.status(200).json({referrals: await list(), attribution_days: Number.isFinite(n) ? Math.min(3650, Math.max(1, Math.floor(n))) : 30});
+    }
     const body = req.body || {};
+    if (req.method === "POST" && body.action === "attribution_settings") {
+      const days = Number(body.days);
+      if (!Number.isInteger(days) || days < 1 || days > 3650)
+        return res.status(400).json({message:"Attribution window must be between 1 and 3650 days."});
+      await redis("set", "prepvia:attribution:days", String(days));
+      return res.status(200).json({success:true, attribution_days:days});
+    }
     const code = cleanCode(body.code);
     if (req.method === "POST") {
       let finalCode = code;

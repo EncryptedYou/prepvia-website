@@ -3,6 +3,12 @@ const { redisGet, getCoupon, validateCoupon, calculateDiscount, BASE_AMOUNT, cle
 module.exports = async (req, res) => {
   if (req.method !== 'GET') return res.status(405).json({ message: 'Method not allowed.' });
   try {
+    if (String(req.query?.settings || "") === "1") {
+      const raw = await redisGet("prepvia:attribution:days");
+      const n = Number(raw || 30);
+      const attribution_days = Number.isFinite(n) ? Math.min(3650, Math.max(1, Math.floor(n))) : 30;
+      return res.status(200).json({ attribution_days });
+    }
     const referral = cleanCode(req.query?.code);
     if (!/^[A-Z0-9_-]{3,40}$/.test(referral)) return res.status(200).json({ linked: false });
 
