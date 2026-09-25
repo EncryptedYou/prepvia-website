@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6XBM1BSLTY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6XBM1BSLTY', { send_page_view: true });
+  </script>
+
   <meta name="description" content="Prep Via — JEE & NEET Resources Kit with 50GB+ study resources.">
   <title>Prep Via | JEE & NEET Resources Kit</title>
 
@@ -4668,6 +4677,253 @@ html{scroll-behavior:smooth}
   }
   function init(){mark();stagger();reveal();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+\n<!-- Prep Via Analytics: GA4 + first-touch attribution + realtime backend tracking -->
+<script id="prepvia-analytics-system">
+(function(){
+  'use strict';
+
+  /* ---------------- Google Analytics 4 ---------------- */
+  var GA_ID='G-6XBM1BSLTY';
+  window.prepViaTracking={googleAnalyticsId:GA_ID};
+
+  /* ---------------- Realtime backend analytics ---------------- */
+  var ENDPOINT='/api/analytics/event';
+
+  function getId(storage,key){
+    try{
+      var id=storage.getItem(key);
+      if(!id){
+        id=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
+        storage.setItem(key,id);
+      }
+      return id;
+    }catch(_){
+      return Date.now().toString(36)+Math.random().toString(36).slice(2);
+    }
+  }
+
+  var visitorId=getId(localStorage,'prepvia_visitor_id');
+  var sessionId=getId(sessionStorage,'prepvia_session_id');
+
+  /* First-touch attribution. The backend can change the retention window. */
+  function attribution(){
+    var KEY='prepvia_attribution_v1';
+    var days=30;
+    try{
+      var cfg=JSON.parse(localStorage.getItem('prepvia_attribution_config')||'null');
+      var n=Number(cfg&&cfg.days);
+      if(isFinite(n)&&n>=1&&n<=3650) days=Math.floor(n);
+    }catch(_){ }
+
+    var TTL=days*24*60*60*1000;
+    var p=new URLSearchParams(location.search);
+    var source=(p.get('utm_source')||'').trim().toLowerCase();
+    var medium=(p.get('utm_medium')||'').trim().toLowerCase();
+    var campaign=(p.get('utm_campaign')||'').trim();
+    var referralCode=(p.get('ref')||p.get('referral')||'').trim().toUpperCase().replace(/[^A-Z0-9_-]/g,'').slice(0,40);
+    var saved=null;
+
+    try{
+      saved=JSON.parse(localStorage.getItem(KEY)||'null');
+      if(saved&&(!saved.saved_at||Date.now()-Number(saved.saved_at)>TTL)){
+        localStorage.removeItem(KEY);
+        saved=null;
+      }
+    }catch(_){ saved=null; }
+
+    if(saved){
+      source=saved.source||source;
+      medium=saved.medium||medium;
+      campaign=saved.campaign||campaign;
+      referralCode=saved.referral_code||referralCode;
+    }else{
+      if(!source){
+        try{
+          var ref=document.referrer?new URL(document.referrer):null;
+          var host=ref?String(ref.hostname||'').toLowerCase().replace(/^www\./,''):'';
+          var cur=String(location.hostname||'').toLowerCase().replace(/^www\./,'');
+          if(host&&host!==cur&&host!=='localhost'){
+            source=host;
+            medium=medium||'referral';
+          }
+        }catch(_){ }
+      }
+
+      if(referralCode&&!medium) medium='referral';
+      var meaningful=!!(referralCode||source||campaign);
+      if(meaningful){
+        saved={source:source||'referral',medium:medium,campaign:campaign,referral_code:referralCode,saved_at:Date.now()};
+        try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(_){ }
+      }
+    }
+
+    var value=saved||{source:source||'direct',medium:medium,campaign:campaign,referral_code:referralCode,saved_at:null};
+    try{sessionStorage.setItem('prepvia_attribution',JSON.stringify(value));}catch(_){ }
+    return value;
+  }
+
+  function refreshAttributionConfig(){
+    fetch('/api/referral-coupon?settings=1',{cache:'no-store'})
+      .then(function(r){return r.ok?r.json():null;})
+      .then(function(d){
+        var n=Number(d&&d.attribution_days);
+        if(isFinite(n)&&n>=1&&n<=3650){
+          try{localStorage.setItem('prepvia_attribution_config',JSON.stringify({days:Math.floor(n),saved_at:Date.now()}));}catch(_){ }
+        }
+      }).catch(function(){ });
+  }
+
+  refreshAttributionConfig();
+  var attr=attribution();
+
+  function context(){
+    return {
+      visitor_id:visitorId,
+      session_id:sessionId,
+      page:location.pathname||'/',
+      page_title:document.title,
+      referrer:document.referrer||'',
+      utm_source:attr.source,
+      utm_medium:attr.medium,
+      utm_campaign:attr.campaign,
+      referral_code:attr.referral_code,
+      screen_width:window.innerWidth,
+      screen_height:window.innerHeight,
+      device:window.innerWidth<=700?'mobile':(window.innerWidth<=1100?'tablet':'desktop'),
+      host:location.host
+    };
+  }
+
+  function send(event,data,keepalive){
+    var body=JSON.stringify(Object.assign(context(),{
+      event:event,
+      ts:Date.now(),
+      data:data||{}
+    }));
+
+    try{
+      if(navigator.sendBeacon&&keepalive){
+        navigator.sendBeacon(ENDPOINT,new Blob([body],{type:'application/json'}));
+        return;
+      }
+      fetch(ENDPOINT,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:body,
+        keepalive:true
+      }).catch(function(){ });
+    }catch(_){ }
+  }
+
+  window.prepViaRealtimeTrack=send;
+
+  /* Exactly one index-page view per browser session. */
+  var counted=false;
+  try{counted=sessionStorage.getItem('prepvia_index_view_recorded')==='1';}catch(_){ }
+  if(!counted){
+    try{sessionStorage.setItem('prepvia_index_view_recorded','1');}catch(_){ }
+    send('page_view');
+  }
+
+  /* Keep the visitor/session active for realtime analytics. */
+  send('heartbeat');
+  window.setInterval(function(){send('heartbeat');},60000);
+
+  /* ---------------- CTA / checkout click tracking ---------------- */
+  function cleanText(value){
+    return String(value||'').replace(/\s+/g,' ').trim().slice(0,120);
+  }
+
+  function isCheckoutLink(el){
+    if(!el) return false;
+    var href=el.getAttribute('href')||'';
+    var id=el.id||'';
+    var buyAttr=el.getAttribute('data-buy-cta');
+    return /(^|\/)checkout\.html(?:[?#]|$)/i.test(href)||!!buyAttr||/buy|kit|access|purchase|checkout/i.test(id);
+  }
+
+  function trackCta(el){
+    var id=el.id||'unknown_cta';
+    var label=cleanText(el.getAttribute('aria-label')||el.textContent||'');
+    var href=el.getAttribute('href')||'';
+    var cta=el.getAttribute('data-buy-cta')||id||'checkout_cta';
+
+    if(typeof window.gtag==='function'){
+      window.gtag('event','cta_click',{
+        cta_id:id,
+        cta_label:label,
+        cta_type:'checkout',
+        page_location:window.location.href,
+        page_title:document.title
+      });
+    }
+
+    send('buy_click',{
+      id:id,
+      cta:cta,
+      label:label,
+      href:href,
+      value:249,
+      currency:'INR'
+    });
+  }
+
+  document.addEventListener('click',function(e){
+    var el=e.target.closest('a,button');
+    if(!el||!isCheckoutLink(el)) return;
+    trackCta(el);
+  },true);
+
+  /* ---------------- Scroll-depth tracking ---------------- */
+  var marks=[25,50,75,90,100];
+  var seen={};
+  var ticking=false;
+
+  function scrollDepth(){
+    if(ticking) return;
+    ticking=true;
+    requestAnimationFrame(function(){
+      var doc=document.documentElement;
+      var max=Math.max(1,doc.scrollHeight-window.innerHeight);
+      var pct=Math.round((window.scrollY/max)*100);
+
+      marks.forEach(function(mark){
+        if(pct>=mark&&!seen[mark]){
+          seen[mark]=true;
+          var data={percent_scrolled:mark};
+
+          if(typeof window.gtag==='function'){
+            window.gtag('event','scroll_depth',Object.assign({},data,{
+              page_location:window.location.href,
+              page_title:document.title
+            }));
+          }
+
+          send('scroll_depth',data);
+        }
+      });
+      ticking=false;
+    });
+  }
+
+  window.addEventListener('scroll',scrollDepth,{passive:true});
+  window.addEventListener('load',scrollDepth,{once:true});
+
+  /* ---------------- Useful interaction tracking ---------------- */
+  document.addEventListener('click',function(e){
+    var el=e.target.closest('button,[role="button"]');
+    if(!el) return;
+    var label=cleanText(el.getAttribute('aria-label')||el.textContent||'');
+    if(!label) return;
+
+    var id=el.id||'';
+    if(/menu|faq|preview|play|pause|sample|review/i.test(id+' '+label)){
+      send('interaction_click',{id:id,label:label});
+    }
+  },true);
+
 })();
 </script>
 </body>
