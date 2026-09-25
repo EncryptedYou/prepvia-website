@@ -1645,6 +1645,28 @@
     background:linear-gradient(180deg,#f8fbff 0%,#f5f9fe 100%);
     border-top:1px solid #e9eff7;
   }
+  /* Package includes full-width preview image */
+  .package-includes-preview{
+    width:100%;
+    margin-top:24px;
+    border-radius:18px;
+    overflow:hidden;
+    background:#fff;
+    border:1px solid rgba(37,99,235,.12);
+    box-shadow:0 14px 38px rgba(37,99,235,.10);
+  }
+  .package-includes-preview img{
+    display:block;
+    width:100%;
+    height:auto;
+    aspect-ratio:2 / 3;
+    object-fit:contain;
+    object-position:center;
+  }
+  @media (max-width:700px){
+    .package-includes-preview{margin-top:18px;border-radius:13px;}
+  }
+
   .package-offer-card{
     width:min(1180px,100%);
     min-height:390px;
@@ -2633,7 +2655,7 @@
 .books-slider-head p{margin:8px auto 0;color:#68758a;font-size:13.5px;line-height:1.55;max-width:650px;}
 .books-slider-shell{position:relative;overflow:hidden;border-radius:24px;padding:24px 0 20px;background:linear-gradient(135deg,#f8fbff 0%,#eef6ff 50%,#fbfdff 100%);border:1px solid #dfeaf6;box-shadow:0 16px 38px rgba(43,80,119,.09);}
 .books-slider-track{display:flex;align-items:center;gap:18px;transition:transform .6s cubic-bezier(.22,.7,.2,1);will-change:transform;}
-.books-slide{flex:0 0 clamp(360px,55vw,620px);aspect-ratio:16/9;position:relative;border-radius:18px;overflow:hidden;background:#e8edf4;border:4px solid #fff;box-shadow:0 12px 28px rgba(28,53,82,.12);transform:scale(.90);opacity:.56;transition:transform .5s ease,opacity .5s ease,box-shadow .5s ease;cursor:pointer;}
+.books-slide{flex:0 0 clamp(360px,55vw,620px);aspect-ratio:3/2;position:relative;border-radius:18px;overflow:hidden;background:#e8edf4;border:4px solid #fff;box-shadow:0 12px 28px rgba(28,53,82,.12);transform:scale(.90);opacity:.56;transition:transform .5s ease,opacity .5s ease,box-shadow .5s ease;cursor:pointer;}
 .books-slide.is-active{transform:scale(1);opacity:1;box-shadow:0 20px 44px rgba(29,67,109,.18);}
 .books-slide img{width:100%;height:100%;display:block;object-fit:cover;}
 .books-slide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,29,52,.03) 45%,rgba(10,29,52,.62) 100%);pointer-events:none;}
@@ -2646,10 +2668,65 @@
 .books-slider-dot.is-active{width:22px;border-radius:99px;background:#2d7dd2;}
 .books-slider-progress{height:3px;width:min(180px,35%);margin:10px auto 0;border-radius:99px;background:#dce9f5;overflow:hidden;}
 .books-slider-progress span{display:block;height:100%;width:0;background:#2d7dd2;border-radius:inherit;}
-@media(max-width:900px){.books-slider-section{margin-top:34px;padding-left:12px;padding-right:12px;}.books-slider-shell{border-radius:20px;padding:18px 0 17px;}.books-slide{flex-basis:min(72vw,520px);border-radius:15px;}}
-@media(max-width:600px){.books-slider-section{margin-top:28px;padding:0 9px 26px;}.books-slider-head{margin-bottom:14px;}.books-slider-head h3{font-size:24px;}.books-slider-head p{font-size:12.5px;line-height:1.5;margin-top:6px;max-width:92%;}.books-slider-shell{border-radius:17px;padding:13px 0 15px;}.books-slider-track{gap:10px;}.books-slide{flex-basis:calc(100vw - 42px);border-width:3px;border-radius:13px;}.books-slide-content{left:13px;right:13px;bottom:12px;}.books-slide-content strong{font-size:15px;}.books-slide-content span{font-size:10px;}.books-slide-badge{top:10px;left:10px;padding:5px 8px;font-size:9px;}}
+@media(max-width:900px){.books-slider-section{margin-top:34px;padding-left:12px;padding-right:12px;}.books-slider-shell{border-radius:20px;padding:18px 0 17px;}.books-slide{flex-basis:min(72vw,520px);aspect-ratio:3/2;border-radius:15px;}}
+@media(max-width:600px){.books-slider-section{margin-top:28px;padding:0 9px 26px;}.books-slider-head{margin-bottom:14px;}.books-slider-head h3{font-size:24px;}.books-slider-head p{font-size:12.5px;line-height:1.5;margin-top:6px;max-width:92%;}.books-slider-shell{border-radius:17px;padding:13px 0 15px;}.books-slider-track{gap:10px;}.books-slide{flex-basis:calc(100vw - 42px);aspect-ratio:3/2;border-width:3px;border-radius:13px;}.books-slide-content{left:13px;right:13px;bottom:12px;}.books-slide-content strong{font-size:15px;}.books-slide-content span{font-size:10px;}.books-slide-badge{top:10px;left:10px;padding:5px 8px;font-size:9px;}}
 </style>
 
+
+<style id="books-sample-note-v46">
+.books-sample-note{
+  max-width:860px; margin:18px auto 0; padding:0 18px; text-align:center;
+  color:#64748b; font-size:14px; line-height:1.65; font-weight:500;
+}
+.books-sample-note strong{color:#1e3a8a;font-weight:700}
+@media(max-width:600px){.books-sample-note{margin-top:15px;font-size:13px;line-height:1.6;padding:0 10px}}
+</style>
+
+<style id="testimonials-section-v49">
+  
+  .testimonials-section{
+    position:relative; overflow:hidden; padding:72px 0 78px;
+    background:linear-gradient(180deg,#f8fbff 0%,#ffffff 52%,#f7fbff 100%);
+    border-top:1px solid #e8eef8;
+  }
+  .testimonials-section:before{content:"";position:absolute;width:360px;height:360px;border-radius:50%;background:rgba(42,112,220,.07);filter:blur(8px);top:-190px;left:-120px;pointer-events:none}
+  .testimonials-section:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(112,83,220,.055);filter:blur(10px);bottom:-170px;right:-100px;pointer-events:none}
+  .testimonials-inner{position:relative;z-index:1}
+  .testimonials-kicker{width:max-content;margin:0 auto 14px;padding:8px 14px;border-radius:999px;border:1px solid #cfe0fb;background:#f1f7ff;color:#1f69c8;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+  .testimonials-kicker-dot{width:7px;height:7px;border-radius:50%;background:#2875d7;box-shadow:0 0 0 5px rgba(40,117,215,.10)}
+  .testimonials-title{text-align:center;margin:0;color:#14213d;font-size:clamp(30px,4vw,45px);line-height:1.08;font-weight:800;letter-spacing:-.035em}
+  .testimonials-title span{color:#2474d4}
+  .testimonials-desc{max-width:700px;margin:14px auto 0;text-align:center;color:#66758d;font-size:15px;line-height:1.65}
+  .testimonials-grid{margin:38px auto 0;max-width:1180px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .testimonial-card{position:relative;min-height:235px;padding:24px 24px 21px;border-radius:18px;border:1px solid rgba(22,38,66,.08);box-shadow:0 12px 30px rgba(32,61,105,.07);overflow:hidden;transition:transform .2s ease,box-shadow .2s ease;display:flex;flex-direction:column}
+  .testimonial-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(32,61,105,.12)}
+  .testimonial-card--blue{background:linear-gradient(135deg,#dff0ff,#c9e5ff)}
+  .testimonial-card--peach{background:linear-gradient(135deg,#ffe0d6,#ffd1c5)}
+  .testimonial-card--yellow{background:linear-gradient(135deg,#fff0bd,#ffe6a0)}
+  .testimonial-card--green{background:linear-gradient(135deg,#dff6e3,#c7edcf)}
+  .testimonial-card--lavender{background:linear-gradient(135deg,#e8dcff,#d9c7ff)}
+  .testimonial-card--pink{background:linear-gradient(135deg,#ffdcef,#ffcbe6)}
+  .testimonial-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;z-index:2}
+  .testimonial-tag{font-size:10px;font-weight:800;letter-spacing:.055em;text-transform:uppercase;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.62);color:#243b5b;border:1px solid rgba(255,255,255,.72);white-space:nowrap}
+  
+  .testimonial-quote{position:absolute;right:18px;top:34px;font-family:Georgia,serif;font-size:62px;line-height:1;color:rgba(255,255,255,.52);font-weight:700;pointer-events:none}
+  .testimonial-text{position:relative;z-index:1;margin:28px 0 22px;color:#283a54;font-size:14px;line-height:1.68;font-weight:600;max-width:95%}
+  .testimonial-user{margin-top:auto;padding-top:13px;border-top:1px solid rgba(255,255,255,.58);position:relative;z-index:1}
+  .testimonial-name{color:#16243b;font-size:14px;font-weight:850}
+  .testimonials-note{max-width:780px;margin:22px auto 0;text-align:center;color:#8a95a6;font-size:11px;line-height:1.55}
+  @media (max-width:900px){.testimonials-section{padding:58px 0 62px}.testimonials-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:30px}}
+  @media (max-width:620px){.testimonials-section{padding:48px 0 54px}.testimonials-kicker{font-size:10px;padding:7px 12px;margin-bottom:12px}.testimonials-title{font-size:29px}.testimonials-desc{font-size:13px;margin-top:11px;padding:0 10px}.testimonials-grid{grid-template-columns:1fr;gap:13px;margin-top:25px}.testimonial-card{min-height:0;padding:20px 18px 18px;border-radius:17px}.testimonial-text{margin:24px 0 20px;font-size:13px;line-height:1.65}.testimonial-tag{font-size:9px;padding:6px 8px}.testimonials-note{padding:0 12px}}
+</style>
+
+
+<style id="testimonial-sample-image-v53">
+  .testimonial-sample-wrap{max-width:1180px;margin:34px auto 0;text-align:center;}
+  .testimonial-sample-heading{margin:0 0 14px;color:#14213d;font-size:clamp(18px,2.2vw,24px);line-height:1.2;font-weight:800;letter-spacing:-.02em;}
+  .testimonial-sample-heading span{color:#2474d4;}
+  .testimonial-sample-frame{width:100%;border-radius:20px;overflow:hidden;background:#fff;border:1px solid #e3ebf7;box-shadow:0 14px 38px rgba(30,70,120,.10);}
+  .testimonial-sample-frame img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain;}
+  @media(max-width:700px){.testimonial-sample-wrap{margin-top:26px;padding:0 4px}.testimonial-sample-heading{margin-bottom:11px;font-size:19px}.testimonial-sample-frame{border-radius:15px}}
+</style>
 </head>
 
 <body>
@@ -2923,6 +3000,10 @@
           </div>
         </div>
       </div>
+
+      <div class="package-includes-preview" aria-label="What's included in the package preview">
+        <img src="https://github.com/EncryptedYou/prepvia-website/raw/refs/heads/main/assets/package-includes.png" data-fallback="assets/package-includes.png" alt="What is included in the JEE and NEET package" loading="eager" decoding="async">
+      </div>
     </div>
 
       <!-- HANDWRITTEN NOTES SAMPLE SLIDER -->
@@ -2970,22 +3051,22 @@
         <div class="books-slider-shell" id="booksSlider">
           <div class="books-slider-track" id="booksTrack">
             <article class="books-slide is-active">
-              <img src="https://raw.githubusercontent.com/EncryptedYou/prepvia-website/main/assets/jee-neet-books-1.jpg" data-fallback="assets/jee-neet-books-1.jpg" alt="JEE books sample" loading="eager" decoding="async">
+              <img src="https://github.com/EncryptedYou/prepvia-website/raw/refs/heads/main/assets/jee-neet-books-1.jpg" data-fallback="assets/jee-neet-books-1.jpg" alt="JEE books sample" loading="eager" decoding="async">
               <span class="books-slide-badge">JEE</span>
               <div class="books-slide-content"><strong>JEE Books Collection</strong><span>Concept building, practice and exam-focused resources</span></div>
             </article>
             <article class="books-slide">
-              <img src="https://raw.githubusercontent.com/EncryptedYou/prepvia-website/main/assets/jee-neet-books-2.jpg" data-fallback="assets/jee-neet-books-2.jpg" alt="NEET books sample" loading="eager" decoding="async">
+              <img src="https://github.com/EncryptedYou/prepvia-website/raw/refs/heads/main/assets/jee-neet-books-2.jpg" data-fallback="assets/jee-neet-books-2.jpg" alt="NEET books sample" loading="eager" decoding="async">
               <span class="books-slide-badge">NEET</span>
               <div class="books-slide-content"><strong>NEET Books Collection</strong><span>Subject-wise study material for focused preparation</span></div>
             </article>
             <article class="books-slide">
-              <img src="https://raw.githubusercontent.com/EncryptedYou/prepvia-website/main/assets/jee-neet-books-3.jpg" data-fallback="assets/jee-neet-books-3.jpg" alt="Reference books sample 1" loading="eager" decoding="async">
+              <img src="https://github.com/EncryptedYou/prepvia-website/raw/refs/heads/main/assets/jee-neet-books-3.jpg" data-fallback="assets/jee-neet-books-3.jpg" alt="Reference books sample 1" loading="eager" decoding="async">
               <span class="books-slide-badge">REFERENCE</span>
               <div class="books-slide-content"><strong>Reference Books</strong><span>Additional books to strengthen concepts and revision</span></div>
             </article>
             <article class="books-slide">
-              <img src="https://raw.githubusercontent.com/EncryptedYou/prepvia-website/main/assets/jee-neet-books-4.jpg" data-fallback="assets/jee-neet-books-4.jpg" alt="Reference books sample 2" loading="eager" decoding="async">
+              <img src="https://github.com/EncryptedYou/prepvia-website/raw/refs/heads/main/assets/jee-neet-books-4.jpg" data-fallback="assets/jee-neet-books-4.jpg" alt="Reference books sample 2" loading="eager" decoding="async">
               <span class="books-slide-badge">REFERENCE</span>
               <div class="books-slide-content"><strong>More Reference Material</strong><span>Extra resources included for deeper preparation</span></div>
             </article>
@@ -2993,11 +3074,21 @@
         </div>
         <div class="books-slider-dots" id="booksDots" aria-label="Choose book preview"></div>
         <div class="books-slider-progress" aria-hidden="true"><span id="booksProgress"></span></div>
+        <p class="books-sample-note">These are just a few sample books from the collection. The package includes <strong>many more books and study resources</strong> for both <strong>JEE &amp; NEET</strong> preparation.</p>
       </div>
 
   </section>
 
   <script>
+    document.querySelectorAll('img[data-fallback]').forEach(function(img){
+      img.addEventListener('error', function(){
+        const fallback = img.getAttribute('data-fallback');
+        if (fallback && img.src !== new URL(fallback, window.location.href).href) {
+          img.src = fallback;
+        }
+      }, { once:true });
+    });
+
     const video = document.getElementById('packageVideo');
     const player = document.getElementById('packageVideoPlayer');
     const playPause = document.getElementById('playPause');
@@ -3343,6 +3434,67 @@
   restart();
 })();
 </script>
+
+
+<section class="testimonials-section" id="testimonials" aria-labelledby="testimonialsTitle">
+  <div class="container testimonials-inner">
+    <div class="testimonials-kicker"><span class="testimonials-kicker-dot"></span> STUDENT FEEDBACK</div>
+    <h2 class="testimonials-title" id="testimonialsTitle">What Students Say About <span>Prep Via</span></h2>
+    <p class="testimonials-desc">A few words from JEE &amp; NEET aspirants about the study resources, organization and convenience of the Prep Via package.</p>
+
+    <div class="testimonials-grid">
+      <article class="testimonial-card testimonial-card--blue">
+        <div class="testimonial-card-top"><span class="testimonial-tag">JEE 2027 Aspirant</span></div>
+        <span class="testimonial-quote">“</span>
+        <p class="testimonial-text">Really useful package for JEE 2027. Almost all the important study materials are available in one place. It saves a lot of time while preparing.</p>
+        <div class="testimonial-user"><div class="testimonial-name">Srishti Sharma</div></div>
+      </article>
+
+      <article class="testimonial-card testimonial-card--peach">
+        <div class="testimonial-card-top"><span class="testimonial-tag">JEE 2027 Aspirant</span></div>
+        <span class="testimonial-quote">“</span>
+        <p class="testimonial-text">I liked how simple and well-organized everything is. Finding notes, modules and other resources is very easy.</p>
+        <div class="testimonial-user"><div class="testimonial-name">Rahul M.</div></div>
+      </article>
+
+      <article class="testimonial-card testimonial-card--yellow">
+        <div class="testimonial-card-top"><span class="testimonial-tag">JEE 2027 Aspirant</span></div>
+        <span class="testimonial-quote">“</span>
+        <p class="testimonial-text">Totally worth it for the amount of resources included. I got handwritten notes, PYQs, modules and much more in one place.</p>
+        <div class="testimonial-user"><div class="testimonial-name">Aryan Sharma</div></div>
+      </article>
+
+      <article class="testimonial-card testimonial-card--green">
+        <div class="testimonial-card-top"><span class="testimonial-tag">NEET 2027 Aspirant</span></div>
+        <span class="testimonial-quote">“</span>
+        <p class="testimonial-text">I was looking for handwritten notes and institute material in one place, and this package has both. Really helpful for preparation.</p>
+        <div class="testimonial-user"><div class="testimonial-name">Mangesh Parte</div></div>
+      </article>
+
+      <article class="testimonial-card testimonial-card--lavender">
+        <div class="testimonial-card-top"><span class="testimonial-tag">NEET 2027 Aspirant</span></div>
+        <span class="testimonial-quote">“</span>
+        <p class="testimonial-text">Great resource collection for NEET aspirants. The package covers study material, notes and practice resources in a well-organized way.</p>
+        <div class="testimonial-user"><div class="testimonial-name">Neha P.</div></div>
+      </article>
+
+      <article class="testimonial-card testimonial-card--pink">
+        <div class="testimonial-card-top"><span class="testimonial-tag">NEET 2027 Aspirant</span></div>
+        <span class="testimonial-quote">“</span>
+        <p class="testimonial-text">Instead of collecting PDFs from different places, I found most of what I need here. It makes my preparation much more organized.</p>
+        <div class="testimonial-user"><div class="testimonial-name">Kunal R.</div></div>
+      </article>
+    </div>
+    <p class="testimonials-note">Real student experiences, shared to help you understand what’s included in the Prep Via package.</p>
+    <div class="testimonial-sample-wrap" aria-label="Student feedback sample">
+      <h3 class="testimonial-sample-heading">A Glimpse of <span>Real Student Feedback</span></h3>
+      <div class="testimonial-sample-frame">
+        <img src="https://raw.githubusercontent.com/EncryptedYou/prepvia-website/main/assets/testimonial-feedback.png" alt="Student feedback sample" onerror="this.onerror=null;this.src='assets/testimonial-feedback.png';">
+      </div>
+    </div>
+
+  </div>
+</section>
 
 </body>
 </html>
