@@ -2970,22 +2970,22 @@
         <div class="books-slider-shell" id="booksSlider">
           <div class="books-slider-track" id="booksTrack">
             <article class="books-slide is-active">
-              <img src="assets/jee-neet-books-1.jpg" alt="JEE books sample" loading="lazy">
+              <img src="https://raw.githubusercontent.com/EncryptedYou/prepvia-website/main/assets/jee-neet-books-1.jpg" data-fallback="assets/jee-neet-books-1.jpg" alt="JEE books sample" loading="eager" decoding="async">
               <span class="books-slide-badge">JEE</span>
               <div class="books-slide-content"><strong>JEE Books Collection</strong><span>Concept building, practice and exam-focused resources</span></div>
             </article>
             <article class="books-slide">
-              <img src="assets/jee-neet-books-2.jpg" alt="NEET books sample" loading="lazy">
+              <img src="https://raw.githubusercontent.com/EncryptedYou/prepvia-website/main/assets/jee-neet-books-2.jpg" data-fallback="assets/jee-neet-books-2.jpg" alt="NEET books sample" loading="eager" decoding="async">
               <span class="books-slide-badge">NEET</span>
               <div class="books-slide-content"><strong>NEET Books Collection</strong><span>Subject-wise study material for focused preparation</span></div>
             </article>
             <article class="books-slide">
-              <img src="assets/jee-neet-books-3.jpg" alt="Reference books sample 1" loading="lazy">
+              <img src="https://raw.githubusercontent.com/EncryptedYou/prepvia-website/main/assets/jee-neet-books-3.jpg" data-fallback="assets/jee-neet-books-3.jpg" alt="Reference books sample 1" loading="eager" decoding="async">
               <span class="books-slide-badge">REFERENCE</span>
               <div class="books-slide-content"><strong>Reference Books</strong><span>Additional books to strengthen concepts and revision</span></div>
             </article>
             <article class="books-slide">
-              <img src="assets/jee-neet-books-4.jpg" alt="Reference books sample 2" loading="lazy">
+              <img src="https://raw.githubusercontent.com/EncryptedYou/prepvia-website/main/assets/jee-neet-books-4.jpg" data-fallback="assets/jee-neet-books-4.jpg" alt="Reference books sample 2" loading="eager" decoding="async">
               <span class="books-slide-badge">REFERENCE</span>
               <div class="books-slide-content"><strong>More Reference Material</strong><span>Extra resources included for deeper preparation</span></div>
             </article>
@@ -3249,6 +3249,19 @@
   goTo(0);
   restart();
   if(window.lucide) lucide.createIcons();
+})();
+</script>
+
+<script>
+(function(){
+  // Load book previews directly from the GitHub repository, with a local fallback.
+  document.querySelectorAll('#booksSlider img[data-fallback]').forEach(function(img){
+    img.addEventListener('error', function(){
+      if (img.dataset.fallbackUsed === '1') return;
+      img.dataset.fallbackUsed = '1';
+      img.src = img.dataset.fallback;
+    }, {once:false});
+  });
 })();
 </script>
 
