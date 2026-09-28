@@ -64,6 +64,43 @@ h1{font-size:clamp(46px,8vw,88px);line-height:.95;letter-spacing:-4px;margin:22p
 
 .neon-btn{width:min(620px,100%);margin:auto;position:relative;display:flex;align-items:center;justify-content:center;gap:14px;padding:20px 28px;border-radius:16px;text-decoration:none;color:white;font-size:17px;font-weight:850;letter-spacing:.2px;background:linear-gradient(110deg,#ff2fb3,#8b5cf6,#20b7ff);background-size:180% 100%;animation:buttonShift 5s ease infinite;transition:transform .25s,filter .25s}.neon-btn:hover{transform:translateY(-3px);filter:brightness(1.08)}@keyframes buttonShift{50%{background-position:100% 0}}
 .gift-small{font-size:22px}.arrow{font-size:23px;transition:.25s}.neon-btn:hover .arrow{transform:translateX(7px)}
+.access-action{width:min(620px,100%);margin:0 auto}
+.access-note{
+  margin-top:14px;
+  padding:16px 18px 15px;
+  text-align:left;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
+  box-shadow:0 12px 35px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.06);
+}
+.access-note-head{display:flex;align-items:center;gap:9px;color:#fff;font-size:13px;margin-bottom:9px}
+.access-note-icon{
+  width:22px;height:22px;display:grid;place-items:center;flex:0 0 22px;
+  border-radius:50%;font-size:13px;font-weight:900;
+  color:#fff;background:linear-gradient(135deg,var(--pink),var(--purple));
+  box-shadow:0 0 16px rgba(139,92,246,.28)
+}
+.access-note ul{margin:0;padding-left:29px;color:#aeb2c3;font-size:12.5px;line-height:1.62}
+.access-note li{padding-left:3px;margin:2px 0}
+.access-note li::marker{color:#8b5cf6}
+.access-note strong{color:#f4f5fa}
+.telegram-support{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  margin-top:12px;padding-top:11px;border-top:1px solid rgba(255,255,255,.08);
+  color:#cfd8ff;text-decoration:none;font-size:12px;font-weight:700;
+  transition:color .2s,transform .2s
+}
+.telegram-support:hover{color:#fff;transform:translateY(-1px)}
+.telegram-support svg{width:17px;height:17px;fill:#29a9ea;flex:0 0 17px}
+@media(max-width:600px){
+  .access-action{width:100%}
+  .access-note{padding:14px 14px 13px;border-radius:14px;margin-top:11px}
+  .access-note-head{font-size:12.5px}
+  .access-note ul{font-size:11.5px;line-height:1.55;padding-left:25px}
+  .telegram-support{font-size:11.5px;line-height:1.45;text-align:center}
+}
+
 
 .meta{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:28px;color:#aeb2c3;font-size:13px}
 .meta b{color:white}.meta span{color:#6f7486}
@@ -109,20 +146,41 @@ h1{font-size:clamp(46px,8vw,88px);line-height:.95;letter-spacing:-4px;margin:22p
 
     <div class="dream">Your next step starts here</div>
 
-    <a class="neon-btn"
-       href="https://drive.google.com/drive/folders/1V3GtPtz0YFBndpbs6j7Hq1c8g2aes99Z?usp=drive_link"
-       target="_blank" rel="noopener">
-      <span class="gift-small">🎁</span>
-      <span id="buttonText">Access Your Success Package</span>
-      <span class="arrow">→</span>
-    </a>
+    <div class="access-action">
+      <a class="neon-btn"
+         href="https://drive.google.com/drive/folders/1V3GtPtz0YFBndpbs6j7Hq1c8g2aes99Z?usp=drive_link"
+         target="_blank" rel="noopener">
+        <span class="gift-small">🎁</span>
+        <span id="buttonText">Access Your Success Package</span>
+        <span class="arrow">→</span>
+      </a>
+
+      <div class="access-note" role="note" aria-label="Important access instructions">
+        <div class="access-note-head">
+          <span class="access-note-icon" aria-hidden="true">!</span>
+          <strong>Important access instructions</strong>
+        </div>
+        <ul>
+          <li>Request access only from the <strong>email address used during checkout</strong>.</li>
+          <li>Please <strong>do not send multiple access requests at the same time</strong>.</li>
+          <li>Sharing this package link with others may result in your access being <strong>permanently revoked</strong>.</li>
+          <li>Access requests are generally reviewed and accepted <strong>within 1 hour</strong>.</li>
+        </ul>
+        <a class="telegram-support" href="https://t.me/PrepviaSupport" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21.6 3.2 2.9 10.4c-1.28.5-1.27 1.2-.23 1.5l4.8 1.5 1.84 5.62c.22.62.11.87.75.87.5 0 .72-.23.99-.5l2.32-2.26 4.83 3.57c.89.49 1.53.24 1.75-.83l3.17-14.94c.33-1.33-.5-1.93-1.52-1.73Zm-12.86 9.86 10.98-6.93c.55-.33 1.05-.15.64.21l-8.9 8.04-.35 3.53-1.37-4.85-1-.31Z"/>
+          </svg>
+          Need help? Contact us on Telegram <b>@PrepviaSupport</b>
+        </a>
+      </div>
+    </div>
 
     <div class="meta">
       <b>Curated resources</b><span>•</span><b>Instant access</b><span>•</span><b>Study with confidence</b>
     </div>
   </section>
 
-  <div class="footer">Prep.via © 2026 · All Rights Reserved · <a href="mailto:prepVia.edu@gmail.com">Support</a></div>
+  <div class="footer">Prep.via © 2026 · All Rights Reserved · <a href="https://t.me/PrepviaSupport" target="_blank" rel="noopener noreferrer">Support on Telegram · @PrepviaSupport</a></div>
 </main>
 
 <script>
