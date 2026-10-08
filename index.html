@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b1735">
+<meta name="description" content="PrepVia Complete JEE & NEET Resources Package — Get it for ₹249.">
+<title>PrepVia | Complete JEE & NEET Resources</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
+
+<style>
+:root{
+  --blue:#1765ee;
+  --blue-dark:#0d4fd0;
+  --navy:#0b1735;
+  --ink:#111a2d;
+  --muted:#68758b;
+  --muted-2:#8995a8;
+  --bg:#f7f9fd;
+  --white:#fff;
+  --line:#e2e8f1;
+  --soft:#edf4ff;
+  --green:#169b5b;
+  --green-bg:#eaf9f1;
+  --shadow:0 16px 40px rgba(23,55,110,.08);
+  --shadow-blue:0 12px 28px rgba(23,101,238,.22);
+  --radius:18px;
+  --container:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:Inter,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body.menu-open{overflow:hidden}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+img{max-width:100%;display:block}
+.container{width:min(var(--container),calc(100% - 48px));margin-inline:auto}
+.material-symbols-outlined{
+  font-family:'Material Symbols Outlined';
+  font-weight:normal;font-style:normal;font-size:24px;line-height:1;
+  letter-spacing:normal;text-transform:none;display:inline-block;
+  white-space:nowrap;word-wrap:normal;direction:ltr;
+  -webkit-font-feature-settings:'liga';-webkit-font-smoothing:antialiased;
+}
+
+/* Announcement */
+.announcement{
+  background:var(--navy);color:#eaf0fb;
+  min-height:38px;display:flex;align-items:center;justify-content:center;
+  padding:8px 16px;font-size:13px;font-weight:700;
+}
+.announcement span{display:inline-flex;align-items:center;gap:7px;text-align:center}
+
+/* Header */
+.header{
+  position:sticky;top:0;z-index:100;
+  height:76px;background:rgba(255,255,255,.96);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(16px);
+}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;min-width:max-content}
+.brand-mark{
+  width:42px;height:42px;border-radius:13px;background:var(--blue);color:white;
+  display:grid;place-items:center;font-family:'Plus Jakarta Sans';font-size:23px;font-weight:800;
+  box-shadow:var(--shadow-blue);
+}
+.brand-name{font-family:'Plus Jakarta Sans';font-size:23px;font-weight:800;letter-spacing:-.8px}
+.brand-name b{color:var(--blue)}
+.nav-links{display:flex;align-items:center;gap:30px;margin-left:auto}
+.nav-links a{font-size:14px;font-weight:700;color:#536077;transition:.2s}
+.nav-links a:hover{color:var(--blue)}
+.nav-cta,.primary-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  background:var(--blue);color:white;border:1px solid var(--blue);
+  border-radius:12px;font-weight:800;box-shadow:var(--shadow-blue);
+  transition:transform .18s,background .18s,box-shadow .18s;
+}
+.nav-cta{height:44px;padding:0 17px;font-size:14px}
+.primary-btn{min-height:52px;padding:0 22px;font-size:15px}
+.nav-cta:hover,.primary-btn:hover{background:var(--blue-dark);transform:translateY(-1px)}
+.menu-btn{
+  width:44px;height:44px;border:1px solid var(--line);border-radius:12px;
+  background:#f4f6fa;color:var(--navy);display:none;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+
+/* Mobile menu */
+.mobile-panel{
+  position:fixed;inset:76px 0 0;background:rgba(7,19,45,.35);
+  opacity:0;pointer-events:none;transition:.2s;z-index:90;
+}
+.mobile-panel.open{opacity:1;pointer-events:auto}
+.mobile-menu{
+  width:min(340px,calc(100% - 28px));margin:12px 14px 0 auto;background:#fff;
+  border:1px solid var(--line);border-radius:18px;padding:10px;
+  box-shadow:0 18px 50px rgba(7,23,53,.18);transform:translateY(-8px);
+  transition:.2s;
+}
+.mobile-panel.open .mobile-menu{transform:translateY(0)}
+.mobile-menu a{
+  display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;
+  font-weight:700;color:var(--ink)
+}
+.mobile-menu a:hover{background:var(--soft);color:var(--blue)}
+.mobile-menu .mobile-buy{background:var(--blue);color:#fff;margin-top:5px;justify-content:center}
+
+/* Hero */
+.hero{
+  background:#fff;border-bottom:1px solid var(--line);
+  padding:62px 0 46px;
+}
+.hero-grid{
+  display:grid;grid-template-columns:minmax(0,1.06fr) minmax(360px,.94fr);
+  align-items:center;gap:54px;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  color:#1b61d8;background:var(--soft);border:1px solid #d9e7ff;
+  border-radius:999px;padding:9px 14px;font-family:'Plus Jakarta Sans';
+  font-size:13px;font-weight:800;letter-spacing:.3px;margin-bottom:19px;
+}
+.eyebrow .material-symbols-outlined{font-size:20px}
+.hero h1{
+  margin:0;font-family:'Plus Jakarta Sans';font-size:clamp(43px,5.5vw,70px);
+  line-height:1.01;letter-spacing:-3.5px;color:var(--navy);max-width:760px;
+}
+.hero h1 span{color:var(--blue)}
+.hero-copy{
+  margin:20px 0 25px;max-width:650px;color:var(--muted);
+  font-size:17px;line-height:1.75;
+}
+.hero-actions{display:flex;align-items:stretch;gap:12px;flex-wrap:wrap}
+.secondary-btn{
+  min-height:52px;padding:0 20px;border:1px solid #ccd5e2;border-radius:12px;
+  background:#fff;color:#1e2a3d;font-size:15px;font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  transition:.18s;
+}
+.secondary-btn:hover{border-color:#aebbd0;background:#f9fbff}
+.trust-row{
+  display:flex;align-items:center;flex-wrap:wrap;gap:18px 23px;
+  margin-top:22px;color:#65738a;font-size:13px;font-weight:600;
+}
+.trust-item{display:flex;align-items:center;gap:7px}
+.trust-item .material-symbols-outlined{font-size:20px;color:var(--green);font-variation-settings:'FILL' 1}
+
+/* Offer card */
+.offer-card{
+  background:#fff;border:1px solid #dfe6ef;border-radius:22px;
+  box-shadow:var(--shadow);padding:27px;position:relative;
+}
+.offer-top{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}
+.offer-label{
+  display:inline-flex;align-items:center;background:var(--green-bg);color:#107548;
+  border:1px solid #cfeedd;border-radius:999px;padding:7px 11px;
+  font-size:11px;font-weight:900;letter-spacing:.45px;text-transform:uppercase;
+}
+.offer-meta{font-family:'Space Grotesk';font-size:12px;font-weight:700;color:#98a3b5}
+.offer-card h2{
+  font-family:'Plus Jakarta Sans';font-size:27px;line-height:1.18;
+  letter-spacing:-1px;margin:0 0 8px;color:var(--navy)
+}
+.offer-card>p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+.price-line{display:flex;align-items:baseline;flex-wrap:wrap;gap:9px;margin:20px 0 19px}
+.current-price{font-family:'Space Grotesk';font-size:54px;font-weight:700;line-height:1;color:var(--navy);letter-spacing:-3px}
+.price-only{font-size:15px;font-weight:800;color:#4d596c}
+.old-price{font-size:17px;color:#9ba6b7;text-decoration:line-through;font-weight:700}
+.save-pill{font-size:11px;font-weight:900;color:#13754b;background:var(--green-bg);padding:6px 9px;border-radius:7px}
+.offer-divider{height:1px;background:var(--line);margin-bottom:16px}
+.resource-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px 18px}
+.resource{
+  display:flex;align-items:center;gap:9px;font-size:13px;color:#4d5a6d;font-weight:700;
+  min-width:0;
+}
+.resource .material-symbols-outlined{font-size:21px;color:var(--green);font-variation-settings:'FILL' 0}
+.offer-card .primary-btn{width:100%;margin-top:22px}
+
+/* General sections */
+.section{padding:58px 0}
+.section.compact{padding-top:45px}
+.section-head{max-width:700px;margin:0 auto 30px;text-align:center}
+.kicker{
+  display:inline-block;color:var(--blue);font-size:11px;font-weight:900;
+  letter-spacing:1.4px;text-transform:uppercase;margin-bottom:8px
+}
+.section-title{
+  margin:0;font-family:'Plus Jakarta Sans';font-size:clamp(29px,4vw,42px);
+  line-height:1.12;letter-spacing:-1.7px;color:var(--navy)
+}
+.section-desc{margin:11px 0 0;color:var(--muted);font-size:15px;line-height:1.65}
+.resource-cards{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+}
+.info-card{
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:21px;
+  box-shadow:0 5px 20px rgba(30,60,110,.04);
+}
+.info-icon{
+  width:42px;height:42px;border-radius:11px;background:var(--soft);color:var(--blue);
+  display:grid;place-items:center;margin-bottom:14px;
+}
+.info-icon .material-symbols-outlined{font-size:22px}
+.info-card h3{font-family:'Plus Jakarta Sans';font-size:16px;margin:0 0 6px;color:var(--navy)}
+.info-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+
+/* Dark section */
+.dark-section{background:var(--navy);color:white}
+.dark-section .section-title{color:#fff}
+.dark-section .section-desc{color:#afbdd4}
+.dark-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dark-card{
+  background:#10244a;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:23px;
+}
+.dark-card h3{font-family:'Plus Jakarta Sans';font-size:17px;margin:0 0 14px}
+.dark-list{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.dark-list li{display:flex;align-items:flex-start;gap:9px;color:#dbe4f3;font-size:13px}
+.dark-list .material-symbols-outlined{font-size:18px;color:#6fd49e;font-variation-settings:'FILL' 1}
+
+/* CTA */
+.cta-section{padding:52px 0}
+.cta-box{
+  background:var(--blue);border-radius:22px;padding:34px 38px;color:#fff;
+  display:flex;align-items:center;justify-content:space-between;gap:30px;
+  box-shadow:0 18px 40px rgba(23,101,238,.22)
+}
+.cta-box h2{margin:0;font-family:'Plus Jakarta Sans';font-size:32px;letter-spacing:-1.2px;line-height:1.15}
+.cta-box p{margin:8px 0 0;color:#dbe8ff;font-size:14px}
+.cta-box .primary-btn{background:#fff;color:var(--blue);border-color:#fff;box-shadow:none;white-space:nowrap}
+.cta-box .primary-btn:hover{background:#f3f7ff}
+
+/* FAQ */
+.faq{max-width:800px;margin:auto;display:grid;gap:10px}
+details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+summary{cursor:pointer;font-size:14px;font-weight:800;color:var(--navy)}
+details p{margin:10px 0 0;color:var(--muted);font-size:13px;line-height:1.6}
+
+/* Footer */
+.footer{background:#07132d;color:#aebbd1;padding:38px 0 20px}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:35px}
+.footer .brand-name{color:#fff}
+.footer p{max-width:390px;margin:12px 0 0;font-size:13px;line-height:1.65}
+.footer h4{margin:0 0 12px;color:#fff;font-size:13px}
+.footer a:not(.brand){display:block;color:#aebbd1;font-size:13px;margin:8px 0}
+.footer a:not(.brand):hover{color:#fff}
+.copyright{border-top:1px solid rgba(255,255,255,.09);margin-top:28px;padding-top:18px;text-align:center;font-size:11px}
+
+/* Tablet */
+@media (max-width:980px){
+  .nav-links{gap:18px}
+  .hero-grid{grid-template-columns:1fr;gap:32px}
+  .hero-copy{max-width:720px}
+  .offer-card{max-width:720px}
+  .resource-cards{grid-template-columns:1fr 1fr}
+}
+
+/* Mobile */
+@media (max-width:700px){
+  .container{width:min(100% - 32px,var(--container))}
+  .header{height:70px}
+  .nav-links{display:none}
+  .menu-btn{display:flex}
+  .nav-cta{display:inline-flex;height:42px;padding:0 13px;font-size:13px}
+  .brand-mark{width:40px;height:40px;border-radius:12px}
+  .brand-name{font-size:21px}
+  .mobile-panel{inset:70px 0 0}
+  .hero{padding:42px 0 34px}
+  .hero-grid{gap:27px}
+  .eyebrow{font-size:12px;padding:8px 12px;margin-bottom:16px}
+  .hero h1{font-size:clamp(39px,11.2vw,55px);letter-spacing:-2.7px}
+  .hero-copy{font-size:15px;line-height:1.7;margin:16px 0 21px}
+  .hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .primary-btn,.secondary-btn{width:100%;min-height:50px;padding:0 11px;font-size:13px}
+  .trust-row{gap:11px 17px;margin-top:18px}
+  .trust-item{font-size:12px}
+  .offer-card{padding:20px;border-radius:18px}
+  .offer-top{align-items:flex-start;margin-bottom:15px}
+  .offer-label{font-size:10px}
+  .offer-meta{font-size:10px}
+  .offer-card h2{font-size:23px}
+  .current-price{font-size:48px}
+  .price-line{margin:17px 0}
+  .resource-grid{gap:11px 12px}
+  .resource{font-size:12px}
+  .resource .material-symbols-outlined{font-size:19px}
+  .section{padding:45px 0}
+  .section.compact{padding-top:35px}
+  .section-head{margin-bottom:22px}
+  .section-desc{font-size:14px}
+  .resource-cards{grid-template-columns:1fr 1fr;gap:10px}
+  .info-card{padding:16px;border-radius:14px}
+  .info-icon{width:38px;height:38px;margin-bottom:11px}
+  .info-card h3{font-size:14px}
+  .info-card p{font-size:12px;line-height:1.5}
+  .dark-grid{grid-template-columns:1fr;gap:10px}
+  .dark-card{padding:18px}
+  .cta-section{padding:38px 0}
+  .cta-box{padding:27px 21px;border-radius:18px;display:block}
+  .cta-box h2{font-size:27px}
+  .cta-box p{font-size:13px;margin-bottom:19px}
+  .cta-box .primary-btn{width:100%}
+  .footer{padding-top:34px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:25px}
+  .footer-grid>div:first-child{grid-column:1/-1}
+}
+
+/* Very small phones */
+@media (max-width:430px){
+  .container{width:calc(100% - 28px)}
+  .nav-cta{font-size:0;width:42px;padding:0}
+  .nav-cta .material-symbols-outlined{font-size:21px}
+  .hero-actions{grid-template-columns:1fr}
+  .hero h1{font-size:42px}
+  .trust-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .resource-cards{grid-template-columns:1fr 1fr}
+  .offer-top{gap:7px}
+  .offer-meta{display:none}
+  .current-price{font-size:45px}
+  .old-price{font-size:15px}
+  .save-pill{font-size:10px}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-grid>div:first-child{grid-column:auto}
+}
+
+/* Emoji-focused refinements */
+.announcement{
+  overflow:hidden;
+  white-space:nowrap;
+  justify-content:flex-start;
+  position:relative;
+}
+.announcement-track{
+  display:flex;
+  width:max-content;
+  min-width:100%;
+  animation:announcementRun 18s linear infinite;
+}
+.announcement-track span{
+  display:block;
+  flex:0 0 auto;
+  padding-right:70px;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.1px;
+}
+@keyframes announcementRun{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+.trust-single{
+  flex-wrap:nowrap;
+  white-space:nowrap;
+  align-items:center;
+  gap:12px;
+}
+.trust-single .trust-item{
+  color:#5f6c81;
+  font-size:13px;
+  font-weight:700;
+}
+.trust-single .trust-separator{
+  color:#b0bac9;
+  font-size:16px;
+  font-weight:700;
+}
+.emoji-icon{
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  font-size:22px;
+  background:#edf4ff;
+}
+.resource{
+  font-family:Inter,Arial,sans-serif;
+}
+.resource-grid .resource{
+  line-height:1.3;
+}
+.dark-list li{
+  gap:9px;
+}
+.dark-list li::first-letter{
+  color:#6fd49e;
+}
+@media(max-width:700px){
+  .announcement-track span{font-size:12px;padding-right:55px}
+  .trust-single{
+    width:100%;
+    justify-content:space-between;
+    gap:6px;
+  }
+  .trust-single .trust-item{font-size:11px}
+  .trust-single .trust-separator{font-size:13px}
+}
+@media(max-width:430px){
+  .trust-single .trust-item{font-size:10.5px}
+  .trust-single{gap:3px}
+}
+
+
+/* FINAL: single-line trust strip */
+.trust-single{
+  display:flex !important;
+  flex-direction:row !important;
+  flex-wrap:nowrap !important;
+  width:100%;
+  min-width:0;
+  white-space:nowrap !important;
+  overflow:hidden;
+  justify-content:flex-start;
+  align-items:center;
+  gap:clamp(5px,1.2vw,14px);
+}
+.trust-single .trust-item,
+.trust-single .trust-separator{
+  flex:0 0 auto;
+  white-space:nowrap !important;
+}
+.trust-single .trust-item{
+  font-size:clamp(10px,1.25vw,13px);
+}
+.trust-single .trust-separator{
+  font-size:clamp(11px,1.35vw,16px);
+}
+@media(max-width:430px){
+  .trust-single{
+    gap:4px;
+  }
+  .trust-single .trust-item{
+    font-size:10px;
+  }
+  .trust-single .trust-separator{
+    font-size:12px;
+  }
+}
+
+
+.nav-cart-emoji{
+  width:28px;height:28px;display:grid;place-items:center;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  font-size:21px;line-height:1;
+}
+.trust-single{
+  justify-content:center !important;
+  text-align:center;
+  color:#1d5fda;
+}
+.trust-single .trust-item{
+  color:#4d6da7 !important;
+  font-weight:800;
+}
+.trust-single .trust-separator{
+  color:#9eb1d0 !important;
+}
+@media(max-width:430px){
+  .nav-cart-emoji{font-size:20px}
+}
+
+
+.right-tick{
+  flex:0 0 auto;
+  width:21px;height:21px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#dff7ea;color:#15965a;
+  font-size:13px;font-weight:950;line-height:1;
+}
+.dark-list li{align-items:center}
+.dark-card{padding:20px}
+
+
+/* Compact spacing + package delivery section */
+.section{padding:46px 0}
+.section.compact{padding-top:34px;padding-bottom:42px}
+.section-head{margin-bottom:23px}
+.resource-cards{gap:11px}
+.info-card{padding:18px}
+.dark-section{padding-top:44px;padding-bottom:44px}
+.dark-section .section-head{margin-bottom:23px}
+.cta-section{padding:38px 0}
+.receive-section{
+  padding-top:38px;
+  padding-bottom:40px;
+  background:#f7f9fd;
+}
+.receive-grid{
+  display:grid;
+  grid-template-columns:1fr 30px 1fr 30px 1fr;
+  align-items:center;
+  gap:10px;
+}
+.receive-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:21px;
+  min-height:205px;
+  position:relative;
+  box-shadow:0 6px 22px rgba(30,60,110,.05);
+}
+.receive-number{
+  position:absolute;
+  top:13px;right:14px;
+  color:#aab5c6;font-size:10px;font-weight:900;
+  letter-spacing:1px;
+}
+.receive-emoji{
+  width:48px;height:48px;border-radius:13px;
+  background:#edf4ff;display:grid;place-items:center;
+  font-size:25px;margin-bottom:13px;
+}
+.receive-card h3{
+  margin:0 0 7px;
+  font-family:'Plus Jakarta Sans';
+  font-size:16px;color:var(--navy)
+}
+.receive-card p{
+  margin:0;color:var(--muted);font-size:12.5px;line-height:1.6
+}
+.receive-arrow{
+  color:#6e9df4;font-size:25px;font-weight:700;text-align:center;
+}
+.receive-note{
+  margin:14px auto 0;
+  width:fit-content;max-width:100%;
+  padding:10px 15px;border:1px solid #d7e5ff;
+  background:#edf4ff;border-radius:999px;
+  color:#2a579b;font-size:12px;font-weight:800;
+  display:flex;align-items:center;gap:7px;text-align:center;
+}
+@media(max-width:700px){
+  .section{padding:39px 0}
+  .section.compact{padding-top:28px;padding-bottom:34px}
+  .resource-cards{gap:9px}
+  .info-card{padding:15px}
+  .dark-section{padding-top:38px;padding-bottom:38px}
+  .receive-section{padding-top:32px;padding-bottom:34px}
+  .receive-grid{
+    grid-template-columns:1fr;
+    gap:9px;
+  }
+  .receive-card{
+    min-height:auto;
+    padding:17px;
+  }
+  .receive-arrow{
+    transform:rotate(90deg);
+    height:18px;line-height:18px;
+  }
+  .receive-note{
+    border-radius:13px;
+    width:100%;
+    justify-content:center;
+  }
+}
+
+
+/* =========================================================
+   PREMIUM PROCESS FLOW + MOTION SYSTEM
+   ========================================================= */
+.scroll-progress{
+  position:fixed;
+  top:0;left:0;
+  width:0;height:3px;
+  background:linear-gradient(90deg,#1765ee,#62a0ff);
+  z-index:9999;
+  box-shadow:0 0 12px rgba(23,101,238,.45);
+  transition:width .05s linear;
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1);
+}
+.reveal.is-visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.reveal-delay:nth-child(1){transition-delay:.04s}
+.reveal-delay:nth-child(2){transition-delay:.10s}
+.reveal-delay:nth-child(3){transition-delay:.16s}
+.reveal-delay:nth-child(4){transition-delay:.22s}
+.reveal-delay:nth-child(5){transition-delay:.28s}
+.reveal-delay:nth-child(6){transition-delay:.34s}
+
+.reveal-section{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.reveal-section.is-visible{
+  opacity:1;
+  transform:none;
+}
+
+/* Delivery section: no cards, premium editorial timeline */
+.receive-section{
+  position:relative;
+  overflow:hidden;
+  padding:72px 0 66px;
+  background:
+    radial-gradient(circle at 7% 35%,rgba(23,101,238,.07),transparent 25%),
+    radial-gradient(circle at 94% 65%,rgba(63,128,255,.06),transparent 23%),
+    #f7f9fd;
+}
+.receive-section:before{
+  content:"";
+  position:absolute;
+  width:460px;height:460px;
+  right:-250px;top:-220px;
+  border:1px solid rgba(23,101,238,.09);
+  border-radius:50%;
+}
+.receive-section:after{
+  content:"";
+  position:absolute;
+  width:330px;height:330px;
+  left:-210px;bottom:-220px;
+  border:1px solid rgba(23,101,238,.07);
+  border-radius:50%;
+}
+.receive-head{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:35px;
+  max-width:1000px;
+  margin:0 auto 52px;
+}
+.receive-head .section-title{
+  max-width:700px;
+}
+.receive-head .section-desc{
+  max-width:690px;
+}
+.receive-badge{
+  flex:0 0 auto;
+  padding:10px 14px;
+  border-radius:999px;
+  color:#0f6e46;
+  background:#e9f8f0;
+  border:1px solid #ccebd9;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.premium-flow{
+  position:relative;
+  max-width:1030px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  column-gap:60px;
+  z-index:1;
+}
+.flow-line{
+  position:absolute;
+  left:13%;
+  right:13%;
+  top:43px;
+  height:2px;
+  background:#d7e2f4;
+  z-index:0;
+  overflow:hidden;
+}
+.flow-line span{
+  display:block;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg,#1765ee,#65a0ff);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 1.25s cubic-bezier(.2,.7,.2,1);
+}
+.premium-flow.is-visible .flow-line span{
+  transform:scaleX(1);
+}
+
+.flow-step{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:0 8px;
+}
+.flow-marker{
+  width:86px;height:86px;
+  margin:0 auto 20px;
+  border-radius:28px;
+  background:#fff;
+  border:1px solid #d9e4f5;
+  box-shadow:0 14px 32px rgba(20,64,130,.10);
+  display:grid;
+  place-items:center;
+  position:relative;
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.flow-step:hover .flow-marker{
+  transform:translateY(-5px) rotate(-1deg);
+  box-shadow:0 18px 36px rgba(23,101,238,.17);
+}
+.flow-number{
+  position:absolute;
+  right:-7px;
+  top:-8px;
+  min-width:28px;height:28px;
+  padding:0 6px;
+  border-radius:999px;
+  background:#1765ee;
+  border:3px solid #f7f9fd;
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-family:"Space Grotesk";
+  font-size:10px;
+  font-weight:800;
+}
+.flow-emoji{
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  font-size:35px;
+  line-height:1;
+}
+.flow-content{
+  max-width:285px;
+  margin:auto;
+}
+.flow-label{
+  display:block;
+  margin-bottom:7px;
+  color:#5683c9;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.4px;
+}
+.flow-content h3{
+  margin:0 0 8px;
+  font-family:"Plus Jakarta Sans";
+  font-size:18px;
+  letter-spacing:-.4px;
+  color:#0b1735;
+}
+.flow-content p{
+  margin:0;
+  color:#6b788e;
+  font-size:13px;
+  line-height:1.65;
+}
+.flow-content strong{
+  color:#34435b;
+}
+
+.receive-bottom{
+  position:relative;
+  z-index:1;
+  max-width:850px;
+  margin:43px auto 0;
+  padding:16px 18px 16px 16px;
+  border:1px solid #d8e5fa;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(8px);
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 10px 28px rgba(25,65,125,.06);
+}
+.receive-bottom-icon{
+  width:39px;height:39px;
+  border-radius:11px;
+  background:#edf4ff;
+  display:grid;place-items:center;
+  font-size:20px;
+  flex:0 0 auto;
+}
+.receive-bottom strong{
+  display:block;
+  color:#0b1735;
+  font-family:"Plus Jakarta Sans";
+  font-size:13px;
+}
+.receive-bottom span{
+  display:block;
+  margin-top:2px;
+  color:#6b788e;
+  font-size:11px;
+}
+.receive-bottom a{
+  margin-left:auto;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:40px;
+  padding:0 14px;
+  background:#1765ee;
+  color:#fff;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+  box-shadow:0 8px 18px rgba(23,101,238,.2);
+  transition:.2s;
+}
+.receive-bottom a:hover{
+  background:#0d4fd0;
+  transform:translateY(-1px);
+}
+.receive-bottom a span{
+  display:inline;
+  color:#fff;
+  font-size:16px;
+  margin:0;
+}
+
+@media(max-width:800px){
+  .receive-section{padding:55px 0 50px}
+  .receive-head{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:16px;
+    margin-bottom:38px;
+  }
+  .receive-badge{font-size:11px}
+  .premium-flow{
+    display:block;
+    padding-left:23px;
+  }
+  .flow-line{
+    left:64px;
+    right:auto;
+    top:40px;
+    bottom:40px;
+    width:2px;
+    height:auto;
+  }
+  .flow-line span{
+    width:100%;
+    height:100%;
+    transform:scaleY(0);
+    transform-origin:top;
+  }
+  .premium-flow.is-visible .flow-line span{
+    transform:scaleY(1);
+  }
+  .flow-step{
+    display:grid;
+    grid-template-columns:82px minmax(0,1fr);
+    text-align:left;
+    column-gap:20px;
+    padding:0 0 34px;
+  }
+  .flow-step:last-child{padding-bottom:0}
+  .flow-marker{
+    width:76px;height:76px;
+    margin:0;
+    border-radius:24px;
+  }
+  .flow-content{
+    max-width:none;
+    padding-top:4px;
+  }
+  .receive-bottom{
+    margin-top:31px;
+  }
+}
+
+@media(max-width:520px){
+  .receive-section{padding:46px 0 43px}
+  .receive-head{margin-bottom:32px}
+  .premium-flow{padding-left:8px}
+  .flow-line{left:49px}
+  .flow-step{
+    grid-template-columns:64px minmax(0,1fr);
+    column-gap:15px;
+    padding-bottom:29px;
+  }
+  .flow-marker{
+    width:62px;height:62px;border-radius:19px;
+  }
+  .flow-number{
+    min-width:24px;height:24px;
+    right:-6px;top:-7px;
+    font-size:9px;
+  }
+  .flow-emoji{font-size:27px}
+  .flow-label{font-size:9px}
+  .flow-content h3{font-size:16px}
+  .flow-content p{font-size:12px;line-height:1.58}
+  .receive-bottom{
+    display:grid;
+    grid-template-columns:39px minmax(0,1fr);
+    gap:10px;
+    padding:14px;
+  }
+  .receive-bottom a{
+    grid-column:1/-1;
+    width:100%;
+    justify-content:center;
+    margin:2px 0 0;
+  }
+}
+
+/* Respect reduced-motion accessibility preferences */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+    transition-duration:.01ms !important;
+  }
+  .reveal,.reveal-section{opacity:1;transform:none}
+}
+
+
+/* Final brand/logo + navigation icon correction */
+.brand-logo{
+  width:52px !important;
+  height:52px !important;
+  min-width:52px;
+  min-height:52px;
+  object-fit:contain;
+  display:block;
+  flex:0 0 52px;
+}
+.brand{
+  gap:10px;
+}
+.nav-cta{
+  min-width:52px;
+  min-height:52px;
+  height:52px;
+  padding:0 15px;
+  border-radius:14px;
+}
+.nav-cart-icon{
+  width:28px;
+  height:28px;
+  display:grid;
+  place-items:center;
+  flex:0 0 28px;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  font-size:24px;
+  line-height:1;
+  transform:translateY(0);
+}
+.menu-btn{
+  width:52px;
+  height:52px;
+  border-radius:14px;
+}
+@media(max-width:700px){
+  .brand-logo{
+    width:52px !important;
+    height:52px !important;
+    flex-basis:52px;
+  }
+  .nav-cta{
+    width:52px;
+    min-width:52px;
+    max-width:52px;
+    height:52px;
+    padding:0;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+  }
+  .nav-cta .nav-cart-icon{
+    width:30px;
+    height:30px;
+    font-size:25px;
+  }
+  .nav-cta-text{display:none}
+  .menu-btn{
+    width:52px;
+    height:52px;
+  }
+}
+@media(max-width:430px){
+  .brand-logo{
+    width:52px !important;
+    height:52px !important;
+  }
+  .nav-cta,.menu-btn{
+    width:52px;
+    min-width:52px;
+    height:52px;
+  }
+  .nav{
+    gap:9px;
+  }
+  .brand{
+    gap:9px;
+  }
+  .brand-name{font-size:20px}
+}
+
+</style>
+</head>
+
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<div class="announcement" aria-label="PrepVia announcement">
+  <div class="announcement-track">
+    <span>📚 Complete JEE &amp; NEET Resources&nbsp;&nbsp;•&nbsp;&nbsp;Student-friendly price: ₹249</span>
+    <span>📚 Complete JEE &amp; NEET Resources&nbsp;&nbsp;•&nbsp;&nbsp;Student-friendly price: ₹249</span>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container nav">
+    <a href="#" class="brand" aria-label="PrepVia Home">
+      <img class="brand-logo" src="data:image/png;base64,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" width="52" height="52" alt="PrepVia logo">
+      <span class="brand-name">Prep<span>Via</span></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#resources">Resources</a>
+      <a href="#why">Why PrepVia</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div style="display:flex;align-items:center;gap:9px">
+      <a class="nav-cta" href="https://PrepVia.Shop/checkout.html" aria-label="Get Package">
+        <span class="nav-cart-icon" aria-hidden="true">🛒</span>
+        <span class="nav-cta-text">Get Package</span>
+      </a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+  <div class="mobile-menu">
+    <a href="#resources"><span class="material-symbols-outlined">auto_stories</span>Resources</a>
+    <a href="#why"><span class="material-symbols-outlined">verified</span>Why PrepVia</a>
+<a href="#how-to-receive"><span class="material-symbols-outlined">mark_email_read</span>How You Receive</a>
+    <a href="#faq"><span class="material-symbols-outlined">help</span>FAQ</a>
+    <a class="mobile-buy" href="https://PrepVia.Shop/checkout.html">
+      <span class="material-symbols-outlined">shopping_cart</span> Get Package — ₹249
+    </a>
+  </div>
+</div>
+
+<main>
+<section class="hero reveal-section">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">
+        <span class="material-symbols-outlined">menu_book</span>
+        JEE &amp; NEET COMPLETE PACKAGE
+      </div>
+
+      <h1>Stop Searching.<br><span>Start Preparing.</span></h1>
+
+      <p class="hero-copy">
+        Get a complete collection of JEE &amp; NEET study resources in one organized digital package.
+        Built to help students spend less time searching and more time preparing.
+      </p>
+
+      <div class="hero-actions">
+        <a class="primary-btn" href="https://PrepVia.Shop/checkout.html">
+          <span class="material-symbols-outlined">shopping_cart</span>
+          Get Complete Kit — ₹249
+        </a>
+        <a class="secondary-btn" href="#resources">
+          <span class="material-symbols-outlined">visibility</span>
+          Explore Resources
+        </a>
+      </div>
+
+      <div class="trust-row trust-single">
+        <span class="trust-item">🎯 JEE + NEET</span>
+        <span class="trust-separator">•</span>
+        <span class="trust-item">📚 Class 11 + 12</span>
+        <span class="trust-separator">•</span>
+        <span class="trust-item">💾 50GB+ Resources</span>
+      </div>
+    </div>
+
+    <aside class="offer-card">
+      <div class="offer-top">
+        <span class="offer-label">🔥 Special Package Price</span>
+        <span class="offer-meta">PREPVIA&nbsp;&nbsp;/&nbsp;&nbsp;2026–27</span>
+      </div>
+
+      <h2>JEE &amp; NEET Resource Kit</h2>
+      <p>Books, PYQs, notes, mind maps, test material and more — organized in one package.</p>
+
+      <div class="price-line">
+        <span class="current-price">₹249</span>
+        <span class="price-only">only</span>
+        <span class="old-price">₹499</span>
+        <span class="save-pill">SAVE 50%</span>
+      </div>
+
+      <div class="offer-divider"></div>
+
+      <div class="resource-grid">
+        <div class="resource">📚 Reference Books</div>
+        <div class="resource">✍️ Handwritten Notes</div>
+        <div class="resource">📝 PYQs</div>
+        <div class="resource">🧠 Mind Maps</div>
+        <div class="resource">🧪 Test Series</div>
+        <div class="resource">📐 Formula Sheets</div>
+      </div>
+
+      <a class="primary-btn" href="https://PrepVia.Shop/checkout.html">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        Get Complete Package — ₹249
+      </a>
+    </aside>
+  </div>
+</section>
+
+<section class="section compact reveal-section" id="resources">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">What's included</span>
+      <h2 class="section-title">Complete 50GB+ JEE &amp; NEET Resources.</h2>
+      <p class="section-desc">Books, PYQs, handwritten notes, mind maps, test material, formula sheets and more — organized for focused preparation.</p>
+    </div>
+
+    <div class="resource-cards">
+      <article class="info-card reveal reveal-delay"><div class="info-icon emoji-icon">📚</div><h3>Reference Books</h3><p>Useful reference material for deeper concept understanding.</p></article>
+      <article class="info-card reveal reveal-delay"><div class="info-icon emoji-icon">📝</div><h3>PYQs</h3><p>Previous-year practice material for exam-oriented preparation.</p></article>
+      <article class="info-card reveal reveal-delay"><div class="info-icon emoji-icon">✍️</div><h3>Handwritten Notes</h3><p>Quick, revision-friendly notes for important concepts.</p></article>
+      <article class="info-card reveal reveal-delay"><div class="info-icon emoji-icon">🧠</div><h3>Mind Maps</h3><p>Visual revision material to connect important topics faster.</p></article>
+      <article class="info-card reveal reveal-delay"><div class="info-icon emoji-icon">🧪</div><h3>Test Series</h3><p>Practice resources to check your preparation and progress.</p></article>
+      <article class="info-card reveal reveal-delay"><div class="info-icon emoji-icon">📐</div><h3>Formula Sheets</h3><p>Important formulas gathered for quick last-minute revision.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section dark-section reveal-section" id="why">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker" style="color:#72a1ff">Why PrepVia</span>
+      <h2 class="section-title">Less searching. More focused preparation.</h2>
+      <p class="section-desc">PrepVia keeps your study resources organized so you can focus on what actually matters — preparing.</p>
+    </div>
+
+    <div class="dark-grid">
+      <div class="dark-card reveal reveal-delay">
+        <h3>🎯 Built for JEE &amp; NEET Students</h3>
+        <ul class="dark-list">
+          <li>✓Focused on competitive-exam preparation.</li>
+          <li>✓Useful across Class 11 and Class 12.</li>
+          <li>✓Learning, practice and revision resources.</li>
+        </ul>
+      </div>
+      <div class="dark-card reveal reveal-delay">
+        <h3>⚡ Made to Save Your Time</h3>
+        <ul class="dark-list">
+          <li>✓Keep multiple resource types together.</li>
+          <li>✓Reduce repeated searching across platforms.</li>
+          <li>✓Simple digital package at ₹249.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="receive-section" id="how-to-receive">
+  <div class="container">
+    <div class="receive-head reveal">
+      <div>
+        <span class="kicker">✨ Simple delivery</span>
+        <h2 class="section-title">How students receive the package</h2>
+        <p class="section-desc">Three simple steps. No complicated process — complete your payment and the package link is delivered to the email you enter at checkout.</p>
+      </div>
+      <div class="receive-badge">⚡ Delivered digitally</div>
+    </div>
+
+    <div class="premium-flow reveal">
+      <div class="flow-line"><span></span></div>
+
+      <div class="flow-step">
+        <div class="flow-marker">
+          <span class="flow-number">01</span>
+          <span class="flow-emoji">💳</span>
+        </div>
+        <div class="flow-content">
+          <span class="flow-label">STEP ONE</span>
+          <h3>Make your payment</h3>
+          <p>Click <strong>Get Package</strong>, choose the PrepVia package and complete the payment securely through checkout.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-marker">
+          <span class="flow-number">02</span>
+          <span class="flow-emoji">📧</span>
+        </div>
+        <div class="flow-content">
+          <span class="flow-label">STEP TWO</span>
+          <h3>Enter your email</h3>
+          <p>During checkout, enter the email address you want to use for receiving your PrepVia package link.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-marker">
+          <span class="flow-number">03</span>
+          <span class="flow-emoji">📦</span>
+        </div>
+        <div class="flow-content">
+          <span class="flow-label">STEP THREE</span>
+          <h3>Receive &amp; start preparing</h3>
+          <p>After successful payment, your package link is sent directly to your given email. Open it and start preparing.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="receive-bottom reveal">
+      <div class="receive-bottom-icon">🚀</div>
+      <div>
+        <strong>That's it.</strong>
+        <span>Pay → Enter email → Receive your package link</span>
+      </div>
+      <a href="https://PrepVia.Shop/checkout.html">Get Package — ₹249 <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section reveal-section">
+  <div class="container">
+    <div class="cta-box">
+      <div>
+        <h2>Ready to start preparing?</h2>
+        <p>Get the complete PrepVia JEE &amp; NEET package for just ₹249.</p>
+      </div>
+      <a class="primary-btn" href="https://PrepVia.Shop/checkout.html">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        Get Package — ₹249
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal-section" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">FAQ</span>
+      <h2 class="section-title">Frequently asked questions</h2>
+    </div>
+    <div class="faq">
+      <details><summary>What is included in the PrepVia package?</summary><p>The package includes reference books, PYQs, handwritten notes, mind maps, test material, formula sheets and other JEE &amp; NEET preparation resources.</p></details>
+      <details><summary>How much does the package cost?</summary><p>The current package price is ₹249 as a one-time purchase.</p></details>
+      <details><summary>How do I purchase it?</summary><p>Click any Get Package button on this page. You will be redirected to the official PrepVia checkout page.</p></details>
+      <details><summary>Is the website mobile friendly?</summary><p>Yes. The layout is responsive and specifically optimized for mobile phones, tablets and laptop/desktop screens.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="#">
+          <img class="brand-logo" src="data:image/png;base64,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" width="52" height="52" alt="PrepVia logo">
+          <span class="brand-name">Prep<span>Via</span></span>
+        </a>
+        <p>Complete JEE &amp; NEET digital preparation resources — organized, accessible and student-focused.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="#resources">Resources</a>
+        <a href="#why">Why PrepVia</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div>
+        <h4>Get Started</h4>
+        <a href="https://PrepVia.Shop/checkout.html">Get Package — ₹249</a>
+      </div>
+    </div>
+    <div class="copyright">© 2026 PrepVia. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn=document.getElementById('menuBtn');
+  var panel=document.getElementById('mobilePanel');
+
+  function closeMenu(){
+    panel.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    btn.setAttribute('aria-expanded','false');
+    btn.innerHTML='<span class="material-symbols-outlined">menu</span>';
+  }
+
+  btn.addEventListener('click',function(){
+    var open=!panel.classList.contains('open');
+    panel.classList.toggle('open',open);
+    document.body.classList.toggle('menu-open',open);
+    btn.setAttribute('aria-expanded',String(open));
+    btn.innerHTML=open
+      ? '<span class="material-symbols-outlined">close</span>'
+      : '<span class="material-symbols-outlined">menu</span>';
+  });
+
+  panel.addEventListener('click',function(e){
+    if(e.target===panel || e.target.closest('a')) closeMenu();
+  });
+
+  window.addEventListener('resize',function(){
+    if(window.innerWidth>700) closeMenu();
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var progress = document.getElementById('scrollProgress');
+
+  function updateProgress(){
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - window.innerHeight;
+    var percent = max > 0 ? (window.scrollY / max) * 100 : 0;
+    progress.style.width = percent + '%';
+  }
+
+  window.addEventListener('scroll', updateProgress, {passive:true});
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+
+  var targets = document.querySelectorAll('.reveal, .reveal-section, .premium-flow');
+  if('IntersectionObserver' in window){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -35px 0px'});
+    targets.forEach(function(el){ observer.observe(el); });
+  }else{
+    targets.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+})();
+</script>
+
+</body>
+</html>
