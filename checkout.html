@@ -722,10 +722,13 @@ body{
   const BASE_AMOUNT = 24900;
   const COUPON_VALIDATE_URL = "/api/validate-coupon";
 
-  const CREATE_ORDER_URL = "/api/create-order";
-  const VERIFY_PAYMENT_URL = "/api/verify-payment";
+    const CREATE_ORDER_URL = "/api/create-order";
+    const VERIFY_PAYMENT_URL = "/api/verify-payment";
+    // A random association token created by the Telegram bot. The server stores it
+    // in Razorpay order notes; only the Worker can map it back to a Telegram chat.
+    const TELEGRAM_LINK_TOKEN = new URLSearchParams(window.location.search).get("tg_link") || "";
 
-  let currentAmount = BASE_AMOUNT;
+    let currentAmount = BASE_AMOUNT;
   let appliedCoupon = null;
   let RAZORPAY_KEY_ID = "";
 
@@ -877,7 +880,8 @@ body{
           amount: currentAmount,
           coupon: appliedCoupon ? appliedCoupon.code : null,
           analytics: typeof window.prepViaAnalyticsContext === "function" ? window.prepViaAnalyticsContext() : null,
-          product: "JEE & NEET Success Package"
+          product: "JEE & NEET Success Package",
+          telegram_link: /^[a-f0-9]{64}$/i.test(TELEGRAM_LINK_TOKEN) ? TELEGRAM_LINK_TOKEN : null
         })
       });
 
