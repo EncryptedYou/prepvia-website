@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
   let reservation = null;
   let orderCouponKey = null;
   try {
-    const { name, email, phone, coupon, analytics } = req.body || {};
+    const { name, email, phone, coupon, analytics, telegram_link } = req.body || {};
     if (!name || !email || !/^\d{10}$/.test(String(phone || '')))
       return res.status(400).json({ message: 'Invalid customer details.' });
 
@@ -48,7 +48,10 @@ module.exports = async (req, res) => {
         receipt: 'pv_' + Date.now() + '_' + crypto.randomBytes(4).toString('hex'),
         notes: {
           product: 'JEE & NEET Success Package', name: String(name), email: String(email), phone: String(phone),
-          coupon: code || 'NONE', discount_paise: String(discount)
+          coupon: code || 'NONE', discount_paise: String(discount),
+          ...(typeof telegram_link === 'string' && /^[a-f0-9]{64}$/i.test(telegram_link)
+            ? { telegram_link: telegram_link.toLowerCase() }
+            : {})
         }
       })
     });
