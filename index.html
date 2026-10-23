@@ -57,11 +57,11 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      gap: 28px;
+      gap: 34px;
       width: max-content;
       min-width: max-content;
       height: 100%;
-      padding: 0 42px 0 20px;
+      padding: 0 165px 0 48px;
       white-space: nowrap;
       animation: offer-marquee 34s linear infinite;
       will-change: transform;
@@ -100,6 +100,15 @@
     }
     .announcement-cta:hover { transform: translateY(-1px); background: #d7f58a; }
     .announcement-cta svg { width: 16px; height: 16px; }
+    .fixed-buy {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      right: 38px;
+      transform: translateY(-50%);
+      box-shadow: 0 2px 8px rgba(0,0,0,.12);
+    }
+    .fixed-buy:hover { transform: translateY(calc(-50% - 1px)); }
     .close-banner {
       position: absolute;
       right: 5px;
@@ -371,11 +380,13 @@
     @media (max-width: 600px) {
       /* Tight, fluid mobile layout: prevent horizontal overflow on narrow phones. */
       .announcement { height: 43px; font-size: 11px; }
-      .offer-track { gap: 18px; padding-left: 12px; padding-right: 38px; animation-duration: 27s; }
-      .offer-item { gap: 6px; }
+      .offer-track { gap: 22px; padding-left: 20px; padding-right: 155px; animation-duration: 27s; }
+      .offer-item { gap: 7px; }
       .announcement-cta { padding: 6px 11px; font-size: 11px; }
+      .fixed-buy { right: 8px; padding: 7px 10px; font-size: 10px; }
       .coupon { padding: 2px 5px; font-size: 10px; }
       .close-banner { right: 2px; width: 26px; height: 26px; }
+      .announcement .close-banner { display: none; }
       .nav-wrap { width: calc(100% - 28px); min-height: 60px; gap: 8px; }
       .brand { gap: 7px; min-width: 0; }
       .brand-logo { width: 36px; height: 36px; flex-basis: 36px; }
@@ -435,7 +446,8 @@
       .spark-three { right: 6%; bottom: 5%; font-size: 14px; }
     }
     @media (max-width: 380px) {
-      .offer-track { gap: 14px; padding-left: 9px; animation-duration: 24s; }
+      .offer-track { gap: 16px; padding-left: 14px; padding-right: 130px; animation-duration: 24s; }
+      .fixed-buy { right: 6px; padding: 6px 8px; font-size: 9px; }
       .nav-link { padding: 0 9px; }
       .brand-tagline { max-width: 155px; }
       .hero { padding-left: 14px; padding-right: 14px; }
@@ -469,15 +481,14 @@
       <span class="offer-item">📚 JEE + NEET resources in one kit</span>
       <span class="offer-item">⚡ Instant digital access after purchase</span>
       <span class="offer-item">🎯 Class 11 &amp; 12 study essentials</span>
-      <a class="announcement-cta" href="checkout.html">Buy now <i data-lucide="arrow-right" aria-hidden="true"></i></a>
       <span class="offer-item" aria-hidden="true"><span class="offer-spark">✦</span> Special launch offer</span>
       <span class="offer-item" aria-hidden="true">Use code <strong class="coupon">PREPVIA50</strong></span>
       <span class="offer-item" aria-hidden="true"><strong class="offer-discount">₹50 OFF</strong> your first order</span>
       <span class="offer-item" aria-hidden="true">📚 JEE + NEET resources in one kit</span>
       <span class="offer-item" aria-hidden="true">⚡ Instant digital access after purchase</span>
       <span class="offer-item" aria-hidden="true">🎯 Class 11 &amp; 12 study essentials</span>
-      <a class="announcement-cta" href="checkout.html" aria-hidden="true" tabindex="-1">Buy now <i data-lucide="arrow-right" aria-hidden="true"></i></a>
     </div>
+    <a class="announcement-cta fixed-buy" href="checkout.html">Buy now <i data-lucide="arrow-right" aria-hidden="true"></i></a>
     <button class="close-banner" id="closeBanner" aria-label="Close offer banner"><i data-lucide="x"></i></button>
   </div>
 
