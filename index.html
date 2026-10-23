@@ -228,7 +228,65 @@
     }
     .hero::before { width: 450px; height: 450px; left: -300px; bottom: -210px; }
     .hero::after { width: 520px; height: 520px; right: -350px; top: -260px; }
-    .hero-content { width: min(900px, 100%); margin: auto; }
+    .hero-layout {
+      width: min(1240px, 100%);
+      margin: auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+      align-items: center;
+      gap: clamp(28px, 4vw, 64px);
+    }
+    .hero-content { width: 100%; min-width: 0; margin: auto; }
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      min-height: 440px;
+      isolation: isolate;
+    }
+    .mockup-glow {
+      position: absolute;
+      z-index: -1;
+      width: 78%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(171,210,250,.55) 0%, rgba(118,146,255,.20) 45%, rgba(200,237,104,.12) 68%, transparent 72%);
+      filter: blur(8px);
+    }
+    .package-mockup {
+      display: block;
+      width: min(100%, 540px);
+      max-height: 560px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 28px 30px rgba(9,21,64,.18));
+      animation: mockup-float 6s ease-in-out infinite;
+    }
+    @keyframes mockup-float {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-10px) rotate(1deg); }
+    }
+    .mockup-badge {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 12px 16px;
+      border: 1px solid rgba(255,255,255,.85);
+      border-radius: 16px;
+      background: rgba(255,255,255,.88);
+      color: var(--ink);
+      box-shadow: 0 12px 28px rgba(9,21,64,.12);
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .badge-top { top: 17%; right: 0; }
+    .badge-bottom { bottom: 15%; left: 0; }
+    .mockup-badge span:first-child { font-size: 19px; }
     .eyebrow {
       display: inline-flex;
       align-items: center;
@@ -371,12 +429,23 @@
     .spark-three { bottom: 17%; right: 17%; font-size: 18px; }
 
     @media (min-width: 900px) {
-      .hero { min-height: 700px; padding-top: 88px; padding-bottom: 96px; }
-      .hero-buttons { flex-direction: row; width: auto; justify-content: center; }
-      .hero-buttons .btn { min-width: 230px; }
-      .btn { min-height: 60px; font-size: 15px; }
-      .hero-copy { font-size: 18px; }
-      .exam-pill { min-height: 44px; }
+      .hero { min-height: 700px; padding: 72px 36px 82px; text-align: left; }
+      .hero-content { text-align: left; }
+      .eyebrow { margin-bottom: 24px; }
+      h1 { margin-left: 0; margin-right: 0; font-size: clamp(42px, 4.2vw, 60px); }
+      .hero-copy { margin-left: 0; margin-right: 0; font-size: 16px; line-height: 1.75; }
+      .exam-pills { justify-content: flex-start; gap: 9px; margin: 23px 0; }
+      .exam-pill { min-height: 42px; padding: 0 13px; font-size: 12px; }
+      .hero-buttons { flex-direction: row; width: 100%; justify-content: flex-start; gap: 10px; }
+      .hero-buttons .btn { min-width: 0; flex: 1; padding: 15px 17px; }
+      .btn { min-height: 58px; font-size: 13px; }
+      .trust-note { justify-content: flex-start; font-size: 10px; }
+      .hero-visual { min-height: 480px; }
+    }
+    @media (min-width: 1200px) {
+      .hero { padding-left: 48px; padding-right: 48px; }
+      .hero-copy { font-size: 17px; }
+      .hero-buttons .btn { font-size: 14px; }
     }
     @media (max-width: 600px) {
       /* Tight, fluid mobile layout: prevent horizontal overflow on narrow phones. */
@@ -395,8 +464,10 @@
       .nav-link { min-height: 38px; padding: 0 11px; font-size: 11px; }
       .menu-toggle { width: 38px; height: 38px; flex-shrink: 0; }
       .mobile-menu { right: 14px; }
-      .hero { min-height: 0; padding: 34px 16px 42px; }
+      .hero { min-height: 0; padding: 34px 16px 42px; text-align: center; }
+      .hero-layout { display: flex; flex-direction: column; gap: 0; width: 100%; }
       .hero-content { width: 100%; max-width: 460px; }
+      .hero-visual { display: none; }
       .eyebrow {
         gap: 7px;
         max-width: 100%;
@@ -520,6 +591,7 @@
       <span class="floating-spark spark-one" aria-hidden="true">✦</span>
       <span class="floating-spark spark-two" aria-hidden="true">✦</span>
       <span class="floating-spark spark-three" aria-hidden="true">✧</span>
+      <div class="hero-layout">
       <div class="hero-content">
         <div class="eyebrow"><span class="eyebrow-dot"></span> Everything you need, in one place</div>
 
@@ -547,6 +619,13 @@
           <span class="separator">•</span>
           <i data-lucide="zap" aria-hidden="true"></i><span>Instant access after purchase</span>
         </div>
+      </div>
+      <div class="hero-visual" aria-label="PrepVia package mockup">
+        <div class="mockup-glow"></div>
+        <img src="assets/mockup.png" alt="PrepVia JEE and NEET resources package mockup" class="package-mockup" fetchpriority="high">
+        <div class="mockup-badge badge-top"><span aria-hidden="true">📚</span><span>Complete study kit</span></div>
+        <div class="mockup-badge badge-bottom"><span aria-hidden="true">⚡</span><span>Study smarter</span></div>
+      </div>
       </div>
     </section>
 
