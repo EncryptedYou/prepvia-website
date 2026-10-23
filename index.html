@@ -47,6 +47,7 @@
       overflow: hidden;
       display: flex;
       align-items: center;
+      justify-content: center;
       color: #fff;
       background: #20246c;
       border-bottom: 3px solid var(--lime);
@@ -61,18 +62,25 @@
       width: max-content;
       min-width: max-content;
       height: 100%;
-      padding: 0 165px 0 48px;
+      padding: 0 180px 0 48px;
       white-space: nowrap;
+      pointer-events: none;
       animation: offer-marquee 34s linear infinite;
       will-change: transform;
     }
-    .announcement:hover .offer-track,
-    .announcement:focus-within .offer-track { animation-play-state: paused; }
     @keyframes offer-marquee {
       from { transform: translateX(0); }
       to { transform: translateX(-50%); }
     }
-    .offer-item { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+    .offer-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      flex: 0 0 auto;
+      padding: 0 12px;
+      line-height: 1;
+    }
     .offer-spark { color: var(--lime); font-size: 17px; }
     .coupon {
       display: inline-block;
@@ -88,43 +96,36 @@
     .announcement-cta {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      justify-content: center;
+      gap: 8px;
       flex: 0 0 auto;
-      padding: 7px 15px;
-      border-radius: 99px;
-      background: var(--lime);
+      min-height: 34px;
+      padding: 8px 17px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d7f58a 0%, #b9e252 100%);
       color: var(--navy);
+      font-size: 12px;
       font-weight: 800;
       white-space: nowrap;
-      transition: transform .2s, background .2s;
+      box-shadow: 0 3px 0 rgba(0,0,0,.12), 0 6px 14px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.75);
+      transition: box-shadow .2s, background .2s;
+      text-decoration: none;
     }
-    .announcement-cta:hover { transform: translateY(-1px); background: #d7f58a; }
-    .announcement-cta svg { width: 16px; height: 16px; }
+    .announcement-cta:hover {
+      background: linear-gradient(135deg, #e2ffa0 0%, #c8ed68 100%);
+      box-shadow: 0 3px 0 rgba(0,0,0,.12), 0 8px 18px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.8);
+    }
+    .announcement-cta svg { width: 15px; height: 15px; }
     .fixed-buy {
       position: absolute;
       z-index: 3;
       top: 50%;
-      right: 38px;
+      right: 14px;
       transform: translateY(-50%);
-      box-shadow: 0 2px 8px rgba(0,0,0,.12);
+      min-width: 112px;
     }
-    .fixed-buy:hover { transform: translateY(calc(-50% - 1px)); }
-    .close-banner {
-      position: absolute;
-      right: 5px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 28px;
-      height: 28px;
-      display: grid;
-      place-items: center;
-      color: white;
-      background: #20246c;
-      border: 0;
-      cursor: pointer;
-      opacity: .9;
-    }
-    .close-banner svg { width: 17px; height: 17px; }
+    .fixed-buy:hover { transform: translateY(-50%); }
     .site-header {
       position: relative;
       z-index: 10;
@@ -380,13 +381,11 @@
     @media (max-width: 600px) {
       /* Tight, fluid mobile layout: prevent horizontal overflow on narrow phones. */
       .announcement { height: 43px; font-size: 11px; }
-      .offer-track { gap: 22px; padding-left: 20px; padding-right: 155px; animation-duration: 27s; }
-      .offer-item { gap: 7px; }
-      .announcement-cta { padding: 6px 11px; font-size: 11px; }
-      .fixed-buy { right: 8px; padding: 7px 10px; font-size: 10px; }
+      .offer-track { gap: 20px; padding-left: 18px; padding-right: 145px; animation-duration: 26s; }
+      .offer-item { gap: 7px; padding: 0 8px; }
+      .announcement-cta { padding: 7px 11px; font-size: 10px; min-height: 31px; }
+      .fixed-buy { right: 7px; min-width: 98px; padding: 7px 10px; font-size: 10px; }
       .coupon { padding: 2px 5px; font-size: 10px; }
-      .close-banner { right: 2px; width: 26px; height: 26px; }
-      .announcement .close-banner { display: none; }
       .nav-wrap { width: calc(100% - 28px); min-height: 60px; gap: 8px; }
       .brand { gap: 7px; min-width: 0; }
       .brand-logo { width: 36px; height: 36px; flex-basis: 36px; }
@@ -446,8 +445,9 @@
       .spark-three { right: 6%; bottom: 5%; font-size: 14px; }
     }
     @media (max-width: 380px) {
-      .offer-track { gap: 16px; padding-left: 14px; padding-right: 130px; animation-duration: 24s; }
-      .fixed-buy { right: 6px; padding: 6px 8px; font-size: 9px; }
+      .offer-track { gap: 15px; padding-left: 12px; padding-right: 125px; animation-duration: 24s; }
+      .offer-item { padding: 0 6px; }
+      .fixed-buy { right: 5px; min-width: 92px; padding: 6px 8px; font-size: 9px; }
       .nav-link { padding: 0 9px; }
       .brand-tagline { max-width: 155px; }
       .hero { padding-left: 14px; padding-right: 14px; }
@@ -489,7 +489,6 @@
       <span class="offer-item" aria-hidden="true">🎯 Class 11 &amp; 12 study essentials</span>
     </div>
     <a class="announcement-cta fixed-buy" href="checkout.html">Buy now <i data-lucide="arrow-right" aria-hidden="true"></i></a>
-    <button class="close-banner" id="closeBanner" aria-label="Close offer banner"><i data-lucide="x"></i></button>
   </div>
 
   <header class="site-header">
@@ -563,11 +562,6 @@
     }
 
     const banner = document.getElementById('announcement');
-    const closeBanner = document.getElementById('closeBanner');
-    closeBanner.addEventListener('click', function () {
-      banner.hidden = true;
-    });
-
     const menuToggle = document.getElementById('menuToggle');
     const mobileMenu = document.getElementById('mobileMenu');
     menuToggle.addEventListener('click', function () {
