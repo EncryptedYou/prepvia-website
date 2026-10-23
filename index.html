@@ -719,6 +719,104 @@
       *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
       .offer-track { animation: none; }
     }
+
+    /* PrepVia sample gallery */
+    .sample-section {
+      padding: 78px 24px 76px;
+      background:
+        radial-gradient(circle at 8% 12%, rgba(171,210,250,.22), transparent 28%),
+        linear-gradient(180deg, #f7f9ff 0%, #eef3ff 100%);
+      border-top: 1px solid rgba(9,21,64,.06);
+    }
+    .sample-wrap { width: min(1160px, 100%); margin: 0 auto; }
+    .sample-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:28px; }
+    .sample-head .section-heading { text-align:left; margin:0; }
+    .sample-head .section-heading p { margin:0; }
+    .sample-note { display:flex; align-items:center; gap:8px; color:#52618d; font-size:12px; font-weight:700; white-space:nowrap; padding-bottom:5px; }
+    .sample-note svg { width:17px; height:17px; color:var(--royal); }
+    .sample-toolbar { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:22px; }
+    .sample-tabs { display:flex; gap:8px; flex-wrap:wrap; padding:5px; border:1px solid rgba(9,21,64,.09); border-radius:14px; background:rgba(255,255,255,.8); }
+    .sample-tab { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:40px; padding:0 16px; border:0; border-radius:10px; background:transparent; color:#66708b; font-size:12px; font-weight:800; cursor:pointer; transition:background .2s,color .2s,box-shadow .2s; }
+    .sample-tab svg { width:16px; height:16px; }
+    .sample-tab[aria-pressed="true"] { color:#fff; background:var(--navy); box-shadow:0 5px 12px rgba(9,21,64,.16); }
+    .sample-count { color:#75809a; font-size:12px; font-weight:700; }
+    .sample-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:17px; }
+    .sample-card { min-width:0; overflow:hidden; border:1px solid rgba(9,21,64,.09); border-radius:18px; background:#fff; box-shadow:0 7px 22px rgba(9,21,64,.045); transition:transform .22s,border-color .22s,box-shadow .22s; }
+    .sample-card:hover { transform:translateY(-4px); border-color:rgba(118,146,255,.55); box-shadow:0 16px 32px rgba(9,21,64,.10); }
+    .sample-card[hidden] { display:none !important; }
+    .sample-thumb { position:relative; display:flex; align-items:center; justify-content:center; height:250px; padding:16px; overflow:hidden; background:linear-gradient(145deg,#edf3ff,#f9fbff); cursor:zoom-in; }
+    .sample-thumb::before { content:""; position:absolute; width:190px; height:190px; border-radius:50%; background:rgba(118,146,255,.10); top:-90px; right:-55px; }
+    .sample-thumb img { position:relative; z-index:1; display:block; width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 9px 8px rgba(9,21,64,.15)); transition:transform .3s; }
+    .sample-card:hover .sample-thumb img { transform:scale(1.035) rotate(-.5deg); }
+    .sample-zoom { position:absolute; z-index:2; right:12px; top:12px; display:grid; place-items:center; width:34px; height:34px; border:1px solid rgba(255,255,255,.75); border-radius:11px; color:var(--navy); background:rgba(255,255,255,.9); box-shadow:0 3px 10px rgba(9,21,64,.08); }
+    .sample-zoom svg { width:16px; height:16px; }
+    .sample-card-info { padding:16px 16px 17px; }
+    .sample-card-top { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:9px; }
+    .sample-type { display:inline-flex; align-items:center; gap:5px; color:#43539a; font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.045em; }
+    .sample-type svg { width:13px; height:13px; }
+    .sample-subject { padding:5px 8px; border-radius:7px; color:#3b4b88; background:#eef2ff; font-size:9px; font-weight:800; }
+    .sample-card h3 { margin:0 0 6px; color:var(--ink); font-size:14px; line-height:1.4; letter-spacing:-.02em; }
+    .sample-card p { margin:0; color:#778098; font-size:11px; line-height:1.6; }
+    .sample-open { display:inline-flex; align-items:center; gap:6px; margin-top:13px; padding:0; border:0; background:none; color:var(--royal); font-size:11px; font-weight:800; cursor:pointer; }
+    .sample-open svg { width:14px; height:14px; transition:transform .2s; }
+    .sample-open:hover svg { transform:translateX(3px); }
+    .sample-footer { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-top:25px; padding:20px 22px; border:1px solid rgba(118,146,255,.22); border-radius:17px; background:rgba(255,255,255,.78); }
+    .sample-footer-copy { display:flex; align-items:center; gap:12px; }
+    .sample-footer-icon { display:grid; place-items:center; flex:0 0 42px; width:42px; height:42px; border-radius:13px; color:var(--royal); background:#e8edff; }
+    .sample-footer-icon svg { width:20px; height:20px; }
+    .sample-footer strong { display:block; margin-bottom:3px; color:var(--navy); font-size:13px; }
+    .sample-footer p { margin:0; color:#6b7590; font-size:11px; line-height:1.55; }
+    .sample-footer .btn { min-height:45px; padding:0 19px; white-space:nowrap; font-size:12px; }
+    .sample-modal { position:fixed; z-index:1000; inset:0; display:none; align-items:center; justify-content:center; padding:24px; background:rgba(5,12,40,.82); backdrop-filter:blur(9px); }
+    .sample-modal.is-open { display:flex; }
+    .sample-modal-panel { position:relative; display:grid; grid-template-columns:minmax(0,1fr) minmax(220px,.58fr); gap:26px; width:min(980px,100%); max-height:min(88vh,850px); padding:24px; overflow:auto; border:1px solid rgba(255,255,255,.25); border-radius:24px; background:#f9faff; box-shadow:0 30px 100px rgba(0,0,0,.32); }
+    .sample-modal-image { display:flex; align-items:center; justify-content:center; min-height:350px; padding:12px; border-radius:15px; background:linear-gradient(145deg,#e9efff,#fff); }
+    .sample-modal-image img { max-width:100%; max-height:68vh; object-fit:contain; filter:drop-shadow(0 12px 12px rgba(9,21,64,.18)); }
+    .sample-modal-copy { align-self:center; padding:12px 8px 12px 0; }
+    .sample-modal-copy .sample-type { margin-bottom:14px; }
+    .sample-modal-copy h3 { margin:0 0 12px; font-size:clamp(22px,3vw,30px); line-height:1.2; letter-spacing:-.04em; }
+    .sample-modal-copy p { margin:0 0 20px; color:#6a738b; font-size:13px; line-height:1.8; }
+    .sample-modal-close { position:absolute; z-index:2; top:12px; right:12px; display:grid; place-items:center; width:40px; height:40px; border:1px solid rgba(9,21,64,.1); border-radius:12px; background:#fff; color:var(--navy); cursor:pointer; }
+    .sample-modal-close svg { width:19px; height:19px; }
+    .sample-modal-tip { display:flex; align-items:flex-start; gap:9px; padding:12px; border-radius:12px; color:#43517e; background:#edf2ff; font-size:11px; line-height:1.6; }
+    .sample-modal-tip svg { width:16px; height:16px; flex:0 0 16px; margin-top:1px; }
+    body.sample-modal-active { overflow:hidden; }
+    @media (max-width:980px) { .sample-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .sample-thumb { height:280px; } }
+    @media (max-width:650px) {
+      .sample-section { padding:52px 16px 48px; }
+      .sample-head { display:block; margin-bottom:24px; }
+      .sample-head .section-heading { text-align:center; }
+      .sample-head .section-heading p { margin:0 auto; }
+      .sample-note { justify-content:center; margin-top:14px; font-size:11px; }
+      .sample-toolbar { justify-content:center; gap:10px; margin-bottom:17px; }
+      .sample-tabs { width:100%; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:4px; padding:4px; }
+      .sample-tab { gap:5px; min-height:39px; padding:0 6px; font-size:10px; }
+      .sample-tab svg { width:14px; height:14px; }
+      .sample-count { width:100%; text-align:center; font-size:10px; }
+      .sample-grid { gap:10px; }
+      .sample-card { border-radius:14px; }
+      .sample-thumb { height:190px; padding:10px; }
+      .sample-zoom { top:7px; right:7px; width:29px; height:29px; border-radius:9px; }
+      .sample-card-info { padding:12px 11px 13px; }
+      .sample-card-top { align-items:flex-start; flex-direction:column; gap:7px; margin-bottom:8px; }
+      .sample-type { font-size:9px; }
+      .sample-subject { font-size:8px; }
+      .sample-card h3 { font-size:12px; }
+      .sample-card p { font-size:10px; }
+      .sample-open { font-size:10px; margin-top:10px; }
+      .sample-footer { align-items:stretch; flex-direction:column; padding:16px; gap:15px; }
+      .sample-footer .btn { width:100%; }
+      .sample-modal { padding:12px; }
+      .sample-modal-panel { display:block; max-height:92vh; padding:14px; border-radius:18px; }
+      .sample-modal-image { min-height:260px; height:55vh; max-height:520px; margin-top:28px; }
+      .sample-modal-image img { max-height:100%; }
+      .sample-modal-copy { padding:18px 4px 4px; }
+      .sample-modal-copy h3 { font-size:23px; }
+      .sample-modal-copy p { font-size:12px; margin-bottom:14px; }
+      .sample-modal-tip { font-size:10px; }
+    }
+    @media (max-width:360px) { .sample-thumb { height:160px; } .sample-card-info { padding:10px 9px 11px; } }
+
   </style>
 </head>
 <body>
@@ -890,6 +988,101 @@
       </div>
     </section>
 
+
+    <section class="sample-section" id="samples" aria-labelledby="sampleTitle">
+      <div class="sample-wrap">
+        <div class="sample-head">
+          <div class="section-heading">
+            <span class="section-kicker"><span class="kicker-dot"></span> Take a closer look</span>
+            <h2 id="sampleTitle">Preview the <span>Quality</span></h2>
+            <p>Explore sample pages from handwritten notes and study books before you choose your PrepVia kit.</p>
+          </div>
+          <div class="sample-note"><i data-lucide="scan-eye" aria-hidden="true"></i> Tap any page to view it larger</div>
+        </div>
+
+        <div class="sample-toolbar">
+          <div class="sample-tabs" role="group" aria-label="Filter sample gallery">
+            <button class="sample-tab" type="button" data-sample-filter="all" aria-pressed="true"><i data-lucide="layout-grid" aria-hidden="true"></i> All samples</button>
+            <button class="sample-tab" type="button" data-sample-filter="notes" aria-pressed="false"><i data-lucide="notebook-pen" aria-hidden="true"></i> Handwritten notes</button>
+            <button class="sample-tab" type="button" data-sample-filter="books" aria-pressed="false"><i data-lucide="book-open" aria-hidden="true"></i> Book pages</button>
+          </div>
+          <span class="sample-count" id="sampleCount" aria-live="polite">6 sample previews</span>
+        </div>
+
+        <div class="sample-grid" id="sampleGrid">
+          <article class="sample-card" data-sample-category="notes">
+            <button class="sample-thumb sample-open-viewer" type="button" aria-label="View Physics handwritten notes sample"
+              data-title="Physics — Laws of Motion" data-type="Handwritten notes" data-subject="Physics"
+              data-description="A sample preview layout for concise, topic-wise Physics notes. Replace this illustrative page with an actual page from your PrepVia package."
+              data-image="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' rx='14' fill='%23fffdf6'/%3E%3Cpath d='M72 0V820' stroke='%23f3a6a6' stroke-width='2'/%3E%3Cg stroke='%23d8e5f6' stroke-width='2'%3E%3Cpath d='M0 86H620M0 126H620M0 166H620M0 206H620M0 246H620M0 286H620M0 326H620M0 366H620M0 406H620M0 446H620M0 486H620M0 526H620M0 566H620M0 606H620M0 646H620M0 686H620M0 726H620M0 766H620'/%3E%3C/g%3E%3Ctext x='98' y='62' font-family='Arial' font-size='27' font-weight='700' fill='%231b2cc1'%3EPHYSICS%20%7C%20CHAPTER%2005%3C/text%3E%3Ctext x='98' y='112' font-family='Arial' font-size='24' font-weight='700' fill='%232c467b'%3ELaws%20of%20Motion%3C/text%3E%3Cg font-family='Arial' font-size='19' fill='%233e5a8b'%3E%3Ctext x='98' y='157'%3E%F0%9F%93%8C%20Newton%27s%20Second%20Law%3C/text%3E%3Ctext x='105' y='196'%3EF%20%3D%20ma%3C/text%3E%3Ctext x='98' y='237'%3E%CE%A3F%20%3D%20dp%2Fdt%3C/text%3E%3Ctext x='98' y='317'%3EImpulse%20%3D%20Force%20%C3%97%20Time%3C/text%3E%3Ctext x='98' y='357'%3EJ%20%3D%20%CE%94p%20%3D%20F%CE%94t%3C/text%3E%3Ctext x='98' y='437'%3EFriction%20Force%3C/text%3E%3Ctext x='105' y='477'%3Ef%20%E2%89%A4%20%CE%BCN%3C/text%3E%3Ctext x='98' y='557'%3EQuick%20Revision%3C/text%3E%3Ctext x='105' y='597'%3E%2A%20Action%20and%20reaction%3C/text%3E%3Ctext x='105' y='637'%3E%2A%20Momentum%20is%20conserved%3C/text%3E%3Ctext x='105' y='677'%3E%2A%20Draw%20a%20free-body%20diagram%3C/text%3E%3C/g%3E%3Crect x='95' y='700' width='440' height='54' rx='8' fill='%23e9efff'/%3E%3Ctext x='115' y='733' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EPREPvia%20SAMPLE%20PAGE%3C/text%3E%3C/svg%3E">
+              <img alt="Illustrative Physics handwritten notes page" loading="lazy" src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' rx='14' fill='%23fffdf6'/%3E%3Cpath d='M72 0V820' stroke='%23f3a6a6' stroke-width='2'/%3E%3Cg stroke='%23d8e5f6' stroke-width='2'%3E%3Cpath d='M0 86H620M0 126H620M0 166H620M0 206H620M0 246H620M0 286H620M0 326H620M0 366H620M0 406H620M0 446H620M0 486H620M0 526H620M0 566H620M0 606H620M0 646H620M0 686H620M0 726H620M0 766H620'/%3E%3C/g%3E%3Ctext x='98' y='62' font-family='Arial' font-size='27' font-weight='700' fill='%231b2cc1'%3EPHYSICS%20%7C%20CHAPTER%2005%3C/text%3E%3Ctext x='98' y='112' font-family='Arial' font-size='24' font-weight='700' fill='%232c467b'%3ELaws%20of%20Motion%3C/text%3E%3Cg font-family='Arial' font-size='19' fill='%233e5a8b'%3E%3Ctext x='98' y='157'%3ENewton%27s%20Second%20Law%3C/text%3E%3Ctext x='105' y='196'%3EF%20%3D%20ma%3C/text%3E%3Ctext x='98' y='237'%3E%CE%A3F%20%3D%20dp%2Fdt%3C/text%3E%3Ctext x='98' y='317'%3EImpulse%20%3D%20Force%20%C3%97%20Time%3C/text%3E%3Ctext x='105' y='357'%3EJ%20%3D%20%CE%94p%20%3D%20F%CE%94t%3C/text%3E%3Ctext x='98' y='437'%3EFriction%20Force%3C/text%3E%3Ctext x='105' y='477'%3Ef%20%E2%89%A4%20%CE%BCN%3C/text%3E%3Ctext x='98' y='557'%3EQuick%20Revision%3C/text%3E%3Ctext x='105' y='597'%3EAction%20and%20reaction%3C/text%3E%3Ctext x='105' y='637'%3EMomentum%20is%20conserved%3C/text%3E%3C/g%3E%3Crect x='95' y='700' width='440' height='54' rx='8' fill='%23e9efff'/%3E%3Ctext x='115' y='733' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EPREPvia%20SAMPLE%20PAGE%3C/text%3E%3C/svg%3E">
+              <span class="sample-zoom"><i data-lucide="maximize-2" aria-hidden="true"></i></span>
+            </button>
+            <div class="sample-card-info"><div class="sample-card-top"><span class="sample-type"><i data-lucide="notebook-pen" aria-hidden="true"></i> Handwritten notes</span><span class="sample-subject">PHYSICS</span></div><h3>Physics — Laws of Motion</h3><p>Key concepts and formulas in one place.</p><button class="sample-open sample-open-viewer" type="button" data-title="Physics — Laws of Motion" data-type="Handwritten notes" data-subject="Physics" data-description="Illustrative sample page. Replace it with your actual PrepVia notes." data-image="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fffdf6'/%3E%3Cpath d='M72 0V820' stroke='%23f3a6a6' stroke-width='2'/%3E%3Cg stroke='%23d8e5f6' stroke-width='2'%3E%3Cpath d='M0 86H620M0 126H620M0 166H620M0 206H620M0 246H620M0 286H620M0 326H620M0 366H620M0 406H620M0 446H620M0 486H620M0 526H620M0 566H620M0 606H620M0 646H620M0 686H620M0 726H620M0 766H620'/%3E%3C/g%3E%3Ctext x='98' y='62' font-family='Arial' font-size='27' font-weight='700' fill='%231b2cc1'%3EPHYSICS%20NOTES%3C/text%3E%3Ctext x='98' y='112' font-family='Arial' font-size='24' font-weight='700' fill='%232c467b'%3ELaws%20of%20Motion%3C/text%3E%3Cg font-family='Arial' font-size='19' fill='%233e5a8b'%3E%3Ctext x='98' y='157'%3ENewton%27s%20Second%20Law%3C/text%3E%3Ctext x='105' y='196'%3EF%20%3D%20ma%3C/text%3E%3Ctext x='98' y='237'%3EImpulse%20%3D%20F%CE%94t%3C/text%3E%3Ctext x='98' y='317'%3EFriction%20Force%3C/text%3E%3Ctext x='105' y='357'%3Ef%20%E2%89%A4%20%CE%BCN%3C/text%3E%3C/g%3E%3Crect x='95' y='700' width='440' height='54' rx='8' fill='%23e9efff'/%3E%3Ctext x='115' y='733' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EPREPvia%20SAMPLE%20PAGE%3C/text%3E%3C/svg%3E"><i data-lucide="expand" aria-hidden="true"></i> View sample</button></div>
+          </article>
+
+          <article class="sample-card" data-sample-category="notes">
+            <button class="sample-thumb sample-open-viewer" type="button" aria-label="View Chemistry handwritten notes sample" data-title="Chemistry — Chemical Bonding" data-type="Handwritten notes" data-subject="Chemistry" data-description="A visual sample of structured Chemistry revision notes. Swap this illustrative artwork for your real notes image when ready." data-image="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fffdf6'/%3E%3Cpath d='M72 0V820' stroke='%23f3a6a6' stroke-width='2'/%3E%3Cg stroke='%23d8e5f6' stroke-width='2'%3E%3Cpath d='M0 86H620M0 126H620M0 166H620M0 206H620M0 246H620M0 286H620M0 326H620M0 366H620M0 406H620M0 446H620M0 486H620M0 526H620M0 566H620M0 606H620M0 646H620M0 686H620M0 726H620M0 766H620'/%3E%3C/g%3E%3Ctext x='98' y='62' font-family='Arial' font-size='27' font-weight='700' fill='%231b2cc1'%3ECHEMISTRY%20NOTES%3C/text%3E%3Ctext x='98' y='112' font-family='Arial' font-size='24' font-weight='700' fill='%232c467b'%3EChemical%20Bonding%3C/text%3Cg font-family='Arial' font-size='19' fill='%233e5a8b'%3E%3Ctext x='98' y='157'%3EIonic%20bond%20%3D%20electron%20transfer%3C/text%3E%3Ctext x='98' y='197'%3ECovalent%20bond%20%3D%20sharing%3C/text%3E%3Ctext x='98' y='277'%3EBond%20polarity%3C/text%3E%3Ctext x='105' y='317'%3E%CE%BC%20%3D%20q%20%C3%97%20r%3C/text%3E%3Ctext x='98' y='397'%3EHybridisation%3C/text%3E%3Ctext x='105' y='437'%3Esp3%20%3D%20tetrahedral%3C/text%3E%3Ctext x='98' y='517'%3EQuick%20revision%3C/text%3E%3Ctext x='105' y='557'%3EVSEPR%20theory%20%2B%20shapes%3C/text%3E%3C/g%3E%3Crect x='95' y='700' width='440' height='54' rx='8' fill='%23e9efff'/%3E%3Ctext x='115' y='733' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EPREPvia%20SAMPLE%20PAGE%3C/text%3E%3C/svg%3E">
+              <img alt="Illustrative Chemistry handwritten notes page" loading="lazy" src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fffdf6'/%3E%3Cpath d='M72 0V820' stroke='%23f3a6a6' stroke-width='2'/%3E%3Cg stroke='%23d8e5f6' stroke-width='2'%3E%3Cpath d='M0 86H620M0 126H620M0 166H620M0 206H620M0 246H620M0 286H620M0 326H620M0 366H620M0 406H620M0 446H620M0 486H620M0 526H620M0 566H620M0 606H620M0 646H620M0 686H620M0 726H620M0 766H620'/%3E%3C/g%3E%3Ctext x='98' y='62' font-family='Arial' font-size='27' font-weight='700' fill='%231b2cc1'%3ECHEMISTRY%20NOTES%3C/text%3E%3Ctext x='98' y='112' font-family='Arial' font-size='24' font-weight='700' fill='%232c467b'%3EChemical%20Bonding%3C/text%3Cg font-family='Arial' font-size='19' fill='%233e5a8b'%3E%3Ctext x='98' y='157'%3EIonic%20bond%20%3D%20electron%20transfer%3C/text%3E%3Ctext x='98' y='197'%3ECovalent%20bond%20%3D%20sharing%3C/text%3E%3Ctext x='98' y='277'%3EBond%20polarity%3C/text%3E%3Ctext x='105' y='317'%3E%CE%BC%20%3D%20q%20%C3%97%20r%3C/text%3E%3Ctext x='98' y='397'%3EHybridisation%3C/text%3E%3Ctext x='105' y='437'%3Esp3%20%3D%20tetrahedral%3C/text%3E%3Ctext x='98' y='517'%3EQuick%20revision%3C/text%3E%3Ctext x='105' y='557'%3EVSEPR%20theory%20%2B%20shapes%3C/text%3E%3C/g%3E%3Crect x='95' y='700' width='440' height='54' rx='8' fill='%23e9efff'/%3E%3Ctext x='115' y='733' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EPREPvia%20SAMPLE%20PAGE%3C/text%3E%3C/svg%3E">
+              <span class="sample-zoom"><i data-lucide="maximize-2" aria-hidden="true"></i></span>
+            </button>
+            <div class="sample-card-info"><div class="sample-card-top"><span class="sample-type"><i data-lucide="notebook-pen" aria-hidden="true"></i> Handwritten notes</span><span class="sample-subject">CHEMISTRY</span></div><h3>Chemistry — Chemical Bonding</h3><p>Clear summaries for quick concept revision.</p><button class="sample-open sample-open-viewer" type="button" data-title="Chemistry — Chemical Bonding" data-type="Handwritten notes" data-subject="Chemistry" data-description="Illustrative sample page. Replace it with your actual PrepVia notes." data-image="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fffdf6'/%3E%3Cpath d='M72 0V820' stroke='%23f3a6a6' stroke-width='2'/%3E%3Cg stroke='%23d8e5f6' stroke-width='2'%3E%3Cpath d='M0 86H620M0 126H620M0 166H620M0 206H620M0 246H620M0 286H620M0 326H620M0 366H620M0 406H620M0 446H620M0 486H620M0 526H620M0 566H620M0 606H620M0 646H620M0 686H620M0 726H620M0 766H620'/%3E%3C/g%3E%3Ctext x='98' y='62' font-family='Arial' font-size='27' font-weight='700' fill='%231b2cc1'%3ECHEMISTRY%20NOTES%3C/text%3E%3Ctext x='98' y='112' font-family='Arial' font-size='24' font-weight='700' fill='%232c467b'%3EChemical%20Bonding%3C/text%3Cg font-family='Arial' font-size='19' fill='%233e5a8b'%3E%3Ctext x='98' y='157'%3EIonic%20bond%20%3D%20electron%20transfer%3C/text%3E%3Ctext x='98' y='197'%3ECovalent%20bond%20%3D%20sharing%3C/text%3E%3Ctext x='98' y='277'%3EBond%20polarity%3C/text%3E%3Ctext x='105' y='317'%3E%CE%BC%20%3D%20q%20%C3%97%20r%3C/text%3E%3Ctext x='98' y='397'%3EHybridisation%3C/text%3E%3Ctext x='105' y='437'%3Esp3%20%3D%20tetrahedral%3C/text%3E%3C/g%3E%3Crect x='95' y='700' width='440' height='54' rx='8' fill='%23e9efff'/%3E%3Ctext x='115' y='733' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EPREPvia%20SAMPLE%20PAGE%3C/text%3E%3C/svg%3E"><i data-lucide="expand" aria-hidden="true"></i> View sample</button></div>
+          </article>
+
+          <article class="sample-card" data-sample-category="notes">
+            <button class="sample-thumb sample-open-viewer" type="button" aria-label="View Biology handwritten notes sample" data-title="Biology — Cell Structure" data-type="Handwritten notes" data-subject="Biology" data-description="A sample layout for Biology diagrams and concise definitions. Replace this illustrative preview with your own package image." data-image="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fffdf6'/%3E%3Cpath d='M72 0V820' stroke='%23f3a6a6' stroke-width='2'/%3E%3Cg stroke='%23d8e5f6' stroke-width='2'%3E%3Cpath d='M0 86H620M0 126H620M0 166H620M0 206H620M0 246H620M0 286H620M0 326H620M0 366H620M0 406H620M0 446H620M0 486H620M0 526H620M0 566H620M0 606H620M0 646H620M0 686H620M0 726H620M0 766H620'/%3E%3C/g%3E%3Ctext x='98' y='62' font-family='Arial' font-size='27' font-weight='700' fill='%231b2cc1'%3EBIOLOGY%20NOTES%3C/text%3E%3Ctext x='98' y='112' font-family='Arial' font-size='24' font-weight='700' fill='%232c467b'%3ECell%20Structure%3C/text%3E%3Cg font-family='Arial' font-size='19' fill='%233e5a8b'%3E%3Ctext x='98' y='157'%3ECell%20Membrane%3C/text%3E%3Ctext x='105' y='197'%3ESelectively%20permeable%3C/text%3E%3Ctext x='98' y='277'%3ECell%20Organelles%3C/text%3E%3Ctext x='105' y='317'%3ENucleus%20%7C%20Mitochondria%3C/text%3E%3Ctext x='98' y='397'%3EQuick%20revision%3C/text%3E%3Ctext x='105' y='437'%3EPlant%20vs%20animal%20cell%3C/text%3E%3C/g%3E%3Crect x='95' y='700' width='440' height='54' rx='8' fill='%23e9efff'/%3E%3Ctext x='115' y='733' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EPREPvia%20SAMPLE%20PAGE%3C/text%3E%3C/svg%3E">
+              <img alt="Illustrative Biology handwritten notes page" loading="lazy" src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fffdf6'/%3E%3Cpath d='M72 0V820' stroke='%23f3a6a6' stroke-width='2'/%3E%3Cg stroke='%23d8e5f6' stroke-width='2'%3E%3Cpath d='M0 86H620M0 126H620M0 166H620M0 206H620M0 246H620M0 286H620M0 326H620M0 366H620M0 406H620M0 446H620M0 486H620M0 526H620M0 566H620M0 606H620M0 646H620M0 686H620M0 726H620M0 766H620'/%3E%3C/g%3E%3Ctext x='98' y='62' font-family='Arial' font-size='27' font-weight='700' fill='%231b2cc1'%3EBIOLOGY%20NOTES%3C/text%3E%3Ctext x='98' y='112' font-family='Arial' font-size='24' font-weight='700' fill='%232c467b'%3ECell%20Structure%3C/text%3E%3Cg font-family='Arial' font-size='19' fill='%233e5a8b'%3E%3Ctext x='98' y='157'%3ECell%20Membrane%3C/text%3E%3Ctext x='105' y='197'%3ESelectively%20permeable%3C/text%3E%3Ctext x='98' y='277'%3ECell%20Organelles%3C/text%3E%3Ctext x='105' y='317'%3ENucleus%20%7C%20Mitochondria%3C/text%3E%3Ctext x='98' y='397'%3EQuick%20revision%3C/text%3E%3Ctext x='105' y='437'%3EPlant%20vs%20animal%20cell%3C/text%3E%3C/g%3E%3Crect x='95' y='700' width='440' height='54' rx='8' fill='%23e9efff'/%3E%3Ctext x='115' y='733' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EPREPvia%20SAMPLE%20PAGE%3C/text%3E%3C/svg%3E">
+              <span class="sample-zoom"><i data-lucide="maximize-2" aria-hidden="true"></i></span>
+            </button>
+            <div class="sample-card-info"><div class="sample-card-top"><span class="sample-type"><i data-lucide="notebook-pen" aria-hidden="true"></i> Handwritten notes</span><span class="sample-subject">BIOLOGY</span></div><h3>Biology — Cell Structure</h3><p>Definitions and revision points at a glance.</p><button class="sample-open sample-open-viewer" type="button" data-title="Biology — Cell Structure" data-type="Handwritten notes" data-subject="Biology" data-description="Illustrative sample page. Replace it with your actual PrepVia notes." data-image="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fffdf6'/%3E%3Cpath d='M72 0V820' stroke='%23f3a6a6' stroke-width='2'/%3E%3Cg stroke='%23d8e5f6' stroke-width='2'%3E%3Cpath d='M0 86H620M0 126H620M0 166H620M0 206H620M0 246H620M0 286H620M0 326H620M0 366H620M0 406H620M0 446H620M0 486H620M0 526H620M0 566H620M0 606H620M0 646H620M0 686H620M0 726H620M0 766H620'/%3E%3C/g%3E%3Ctext x='98' y='62' font-family='Arial' font-size='27' font-weight='700' fill='%231b2cc1'%3EBIOLOGY%20NOTES%3C/text%3E%3Ctext x='98' y='112' font-family='Arial' font-size='24' font-weight='700' fill='%232c467b'%3ECell%20Structure%3C/text%3E%3Cg font-family='Arial' font-size='19' fill='%233e5a8b'%3E%3Ctext x='98' y='157'%3ECell%20Membrane%3C/text%3E%3Ctext x='105' y='197'%3ESelectively%20permeable%3C/text%3E%3Ctext x='98' y='277'%3ECell%20Organelles%3C/text%3E%3Ctext x='105' y='317'%3ENucleus%20%7C%20Mitochondria%3C/text%3E%3C/g%3E%3Crect x='95' y='700' width='440' height='54' rx='8' fill='%23e9efff'/%3E%3Ctext x='115' y='733' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EPREPvia%20SAMPLE%20PAGE%3C/text%3E%3C/svg%3E"><i data-lucide="expand" aria-hidden="true"></i> View sample</button></div>
+          </article>
+
+          <article class="sample-card" data-sample-category="books">
+            <button class="sample-thumb sample-open-viewer" type="button" aria-label="View Mathematics book page sample" data-title="Mathematics — Worked Examples" data-type="Book page" data-subject="Mathematics" data-description="An illustrative textbook-style sample page with worked examples. Replace with a real book sample image you have permission to display." data-image="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fff'/%3E%3Crect x='34' y='28' width='552' height='764' rx='6' fill='%23fff' stroke='%23d7ddea' stroke-width='2'/%3E%3Crect x='58' y='55' width='504' height='54' rx='5' fill='%231b2cc1'/%3E%3Ctext x='80' y='89' font-family='Arial' font-size='23' font-weight='700' fill='%23fff'%3EMATHEMATICS%20%7C%20PRACTICE%3C/text%3E%3Ctext x='66' y='151' font-family='Arial' font-size='23' font-weight='700' fill='%23091540'%3EWorked%20Example%2001%3C/text%3E%3Cg fill='%233f4962' font-family='Arial' font-size='18'%3E%3Ctext x='66' y='193'%3ESolve%20the%20quadratic%20equation%3C/text%3E%3Ctext x='66' y='230'%3Ex%C2%B2%20%E2%88%92%205x%20%2B%206%20%3D%200%3C/text%3E%3Ctext x='66' y='291'%3EStep%201%3A%20Factorise%3C/text%3E%3Ctext x='88' y='328'%3E(x%20%E2%88%92%202)(x%20%E2%88%92%203)%20%3D%200%3C/text%3E%3Ctext x='66' y='389'%3EStep%202%3A%20Set%20each%20factor%20to%20zero%3C/text%3E%3Ctext x='88' y='426'%3Ex%20%E2%88%92%202%20%3D%200%20or%20x%20%E2%88%92%203%20%3D%200%3C/text%3E%3Ctext x='66' y='487'%3EAnswer%3A%20x%20%3D%202%2C%203%3C/text%3E%3C/g%3E%3Crect x='64' y='540' width='490' height='115' rx='8' fill='%23edf2ff'/%3E%3Ctext x='84' y='576' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EExam%20tip%3C/text%3E%3Ctext x='84' y='611' font-family='Arial' font-size='16' fill='%233f4962'%3ECheck%20both%20roots%20in%20the%20original%3C/text%3E%3Ctext x='84' y='638' font-family='Arial' font-size='16' fill='%233f4962'%3Eequation.%3C/text%3E%3C/svg%3E">
+              <img alt="Illustrative Mathematics textbook page" loading="lazy" src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fff'/%3E%3Crect x='34' y='28' width='552' height='764' rx='6' fill='%23fff' stroke='%23d7ddea' stroke-width='2'/%3E%3Crect x='58' y='55' width='504' height='54' rx='5' fill='%231b2cc1'/%3E%3Ctext x='80' y='89' font-family='Arial' font-size='23' font-weight='700' fill='%23fff'%3EMATHEMATICS%20%7C%20PRACTICE%3C/text%3E%3Ctext x='66' y='151' font-family='Arial' font-size='23' font-weight='700' fill='%23091540'%3EWorked%20Example%2001%3C/text%3E%3Cg fill='%233f4962' font-family='Arial' font-size='18'%3E%3Ctext x='66' y='193'%3ESolve%20the%20quadratic%20equation%3C/text%3E%3Ctext x='66' y='230'%3Ex%C2%B2%20%E2%88%92%205x%20%2B%206%20%3D%200%3C/text%3E%3Ctext x='66' y='291'%3EStep%201%3A%20Factorise%3C/text%3E%3Ctext x='88' y='328'%3E(x%20%E2%88%92%202)(x%20%E2%88%92%203)%20%3D%200%3C/text%3E%3Ctext x='66' y='389'%3EStep%202%3A%20Set%20each%20factor%20to%20zero%3C/text%3E%3Ctext x='88' y='426'%3Ex%20%E2%88%92%202%20%3D%200%20or%20x%20%E2%88%92%203%20%3D%200%3C/text%3E%3Ctext x='66' y='487'%3EAnswer%3A%20x%20%3D%202%2C%203%3C/text%3E%3C/g%3E%3Crect x='64' y='540' width='490' height='115' rx='8' fill='%23edf2ff'/%3E%3Ctext x='84' y='576' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EExam%20tip%3C/text%3E%3Ctext x='84' y='611' font-family='Arial' font-size='16' fill='%233f4962'%3ECheck%20both%20roots%20in%20the%20original%3C/text%3E%3Ctext x='84' y='638' font-family='Arial' font-size='16' fill='%233f4962'%3Eequation.%3C/text%3E%3C/svg%3E">
+              <span class="sample-zoom"><i data-lucide="maximize-2" aria-hidden="true"></i></span>
+            </button>
+            <div class="sample-card-info"><div class="sample-card-top"><span class="sample-type"><i data-lucide="book-open" aria-hidden="true"></i> Book page</span><span class="sample-subject">MATHS</span></div><h3>Mathematics — Worked Examples</h3><p>Step-by-step solutions for practice.</p><button class="sample-open sample-open-viewer" type="button" data-title="Mathematics — Worked Examples" data-type="Book page" data-subject="Mathematics" data-description="Illustrative textbook-style sample. Use a book image that you have permission to publish." data-image="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fff'/%3E%3Crect x='34' y='28' width='552' height='764' rx='6' fill='%23fff' stroke='%23d7ddea' stroke-width='2'/%3E%3Crect x='58' y='55' width='504' height='54' rx='5' fill='%231b2cc1'/%3E%3Ctext x='80' y='89' font-family='Arial' font-size='23' font-weight='700' fill='%23fff'%3EMATHEMATICS%20%7C%20PRACTICE%3C/text%3E%3Ctext x='66' y='151' font-family='Arial' font-size='23' font-weight='700' fill='%23091540'%3EWorked%20Example%2001%3C/text%3E%3Cg fill='%233f4962' font-family='Arial' font-size='18'%3E%3Ctext x='66' y='193'%3ESolve%20the%20quadratic%20equation%3C/text%3E%3Ctext x='66' y='230'%3Ex%C2%B2%20%E2%88%92%205x%20%2B%206%20%3D%200%3C/text%3E%3Ctext x='66' y='291'%3EStep%201%3A%20Factorise%3C/text%3E%3Ctext x='88' y='328'%3E(x%20%E2%88%92%202)(x%20%E2%88%92%203)%20%3D%200%3C/text%3E%3Ctext x='66' y='389'%3EStep%202%3A%20Set%20each%20factor%20to%20zero%3C/text%3E%3Ctext x='88' y='426'%3Ex%20%E2%88%92%202%20%3D%200%20or%20x%20%E2%88%92%203%20%3D%200%3C/text%3E%3Ctext x='66' y='487'%3EAnswer%3A%20x%20%3D%202%2C%203%3C/text%3E%3C/g%3E%3Crect x='64' y='540' width='490' height='115' rx='8' fill='%23edf2ff'/%3E%3Ctext x='84' y='576' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EExam%20tip%3C/text%3E%3Ctext x='84' y='611' font-family='Arial' font-size='16' fill='%233f4962'%3ECheck%20both%20roots%20in%20the%20original%3C/text%3E%3Ctext x='84' y='638' font-family='Arial' font-size='16' fill='%233f4962'%3Eequation.%3C/text%3E%3C/svg%3E"><i data-lucide="expand" aria-hidden="true"></i> View sample</button></div>
+          </article>
+
+          <article class="sample-card" data-sample-category="books">
+            <button class="sample-thumb sample-open-viewer" type="button" aria-label="View Physics book page sample" data-title="Physics — Formula Reference" data-type="Book page" data-subject="Physics" data-description="A clean textbook-style formula reference preview. Replace with an actual sample page you are allowed to share." data-image="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fff'/%3E%3Crect x='34' y='28' width='552' height='764' rx='6' fill='%23fff' stroke='%23d7ddea' stroke-width='2'/%3E%3Crect x='58' y='55' width='504' height='54' rx='5' fill='%231b2cc1'/%3E%3Ctext x='80' y='89' font-family='Arial' font-size='23' font-weight='700' fill='%23fff'%3EPHYSICS%20%7C%20FORMULAS%3C/text%3E%3Ctext x='66' y='151' font-family='Arial' font-size='23' font-weight='700' fill='%23091540'%3EKinematics%3C/text%3E%3Cg fill='%233f4962' font-family='Arial' font-size='19'%3E%3Ctext x='66' y='201'%3EFinal%20velocity%3C/text%3E%3Ctext x='88' y='239'%3Ev%20%3D%20u%20%2B%20at%3C/text%3E%3Ctext x='66' y='299'%3EDisplacement%3C/text%3E%3Ctext x='88' y='337'%3Es%20%3D%20ut%20%2B%20%C2%BDat%C2%B2%3C/text%3E%3Ctext x='66' y='397'%3EVelocity relation%3C/text%3E%3Ctext x='88' y='435'%3Ev%C2%B2%20%3D%20u%C2%B2%20%2B%202as%3C/text%3E%3Ctext x='66' y='495'%3EExam%20focus%3C/text%3E%3Ctext x='88' y='533'%3ECheck%20units%20and%20signs%3C/text%3E%3C/g%3E%3Crect x='64' y='590' width='490' height='65' rx='8' fill='%23edf2ff'/%3E%3Ctext x='84' y='630' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EPREPvia%20FORMULA%20SAMPLE%3C/text%3E%3C/svg%3E">
+              <img alt="Illustrative Physics book formula page" loading="lazy" src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fff'/%3E%3Crect x='34' y='28' width='552' height='764' rx='6' fill='%23fff' stroke='%23d7ddea' stroke-width='2'/%3E%3Crect x='58' y='55' width='504' height='54' rx='5' fill='%231b2cc1'/%3E%3Ctext x='80' y='89' font-family='Arial' font-size='23' font-weight='700' fill='%23fff'%3EPHYSICS%20%7C%20FORMULAS%3C/text%3E%3Ctext x='66' y='151' font-family='Arial' font-size='23' font-weight='700' fill='%23091540'%3EKinematics%3C/text%3E%3Cg fill='%233f4962' font-family='Arial' font-size='19'%3E%3Ctext x='66' y='201'%3EFinal%20velocity%3C/text%3E%3Ctext x='88' y='239'%3Ev%20%3D%20u%20%2B%20at%3C/text%3E%3Ctext x='66' y='299'%3EDisplacement%3C/text%3E%3Ctext x='88' y='337'%3Es%20%3D%20ut%20%2B%20%C2%BDat%C2%B2%3C/text%3E%3Ctext x='66' y='397'%3EVelocity%20relation%3C/text%3E%3Ctext x='88' y='435'%3Ev%C2%B2%20%3D%20u%C2%B2%20%2B%202as%3C/text%3E%3C/g%3E%3Crect x='64' y='590' width='490' height='65' rx='8' fill='%23edf2ff'/%3E%3Ctext x='84' y='630' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EPREPvia%20FORMULA%20SAMPLE%3C/text%3E%3C/svg%3E">
+              <span class="sample-zoom"><i data-lucide="maximize-2" aria-hidden="true"></i></span>
+            </button>
+            <div class="sample-card-info"><div class="sample-card-top"><span class="sample-type"><i data-lucide="book-open" aria-hidden="true"></i> Book page</span><span class="sample-subject">PHYSICS</span></div><h3>Physics — Formula Reference</h3><p>Quick access to core formulas and relations.</p><button class="sample-open sample-open-viewer" type="button" data-title="Physics — Formula Reference" data-type="Book page" data-subject="Physics" data-description="Illustrative textbook-style sample. Replace it with an approved book page image." data-image="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fff'/%3E%3Crect x='34' y='28' width='552' height='764' rx='6' fill='%23fff' stroke='%23d7ddea' stroke-width='2'/%3E%3Crect x='58' y='55' width='504' height='54' rx='5' fill='%231b2cc1'/%3E%3Ctext x='80' y='89' font-family='Arial' font-size='23' font-weight='700' fill='%23fff'%3EPHYSICS%20%7C%20FORMULAS%3C/text%3E%3Ctext x='66' y='151' font-family='Arial' font-size='23' font-weight='700' fill='%23091540'%3EKinematics%3C/text%3E%3Cg fill='%233f4962' font-family='Arial' font-size='19'%3E%3Ctext x='66' y='201'%3EFinal%20velocity%3C/text%3E%3Ctext x='88' y='239'%3Ev%20%3D%20u%20%2B%20at%3C/text%3E%3Ctext x='66' y='299'%3EDisplacement%3C/text%3E%3Ctext x='88' y='337'%3Es%20%3D%20ut%20%2B%20%C2%BDat%C2%B2%3C/text%3E%3Ctext x='66' y='397'%3EVelocity%20relation%3C/text%3E%3Ctext x='88' y='435'%3Ev%C2%B2%20%3D%20u%C2%B2%20%2B%202as%3C/text%3E%3C/g%3E%3Crect x='64' y='590' width='490' height='65' rx='8' fill='%23edf2ff'/%3E%3Ctext x='84' y='630' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EPREPvia%20FORMULA%20SAMPLE%3C/text%3E%3C/svg%3E"><i data-lucide="expand" aria-hidden="true"></i> View sample</button></div>
+          </article>
+
+          <article class="sample-card" data-sample-category="books">
+            <button class="sample-thumb sample-open-viewer" type="button" aria-label="View Biology book page sample" data-title="Biology — Quick Revision" data-type="Book page" data-subject="Biology" data-description="An illustrative Biology study page with concise revision content. Replace this artwork with a sample image from your package that you have permission to share." data-image="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fff'/%3E%3Crect x='34' y='28' width='552' height='764' rx='6' fill='%23fff' stroke='%23d7ddea' stroke-width='2'/%3E%3Crect x='58' y='55' width='504' height='54' rx='5' fill='%231b2cc1'/%3E%3Ctext x='80' y='89' font-family='Arial' font-size='23' font-weight='700' fill='%23fff'%3EBIOLOGY%20%7C%20REVISION%3C/text%3E%3Ctext x='66' y='151' font-family='Arial' font-size='23' font-weight='700' fill='%23091540'%3ECell%20Biology%3C/text%3E%3Cg fill='%233f4962' font-family='Arial' font-size='18'%3E%3Ctext x='66' y='201'%3ECell%20membrane%3C/text%3E%3Ctext x='88' y='239'%3EControls%20movement%20of%20substances%3C/text%3E%3Ctext x='66' y='299'%3ECell%20organelles%3C/text%3E%3Ctext x='88' y='337'%3EMitochondria%20-%20ATP%20production%3C/text%3E%3Ctext x='66' y='397'%3ENucleus%3C/text%3E%3Ctext x='88' y='435'%3EContains%20genetic%20material%3C/text%3E%3C/g%3E%3Crect x='64' y='510' width='490' height='110' rx='8' fill='%23edf2ff'/%3E%3Ctext x='84' y='550' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EQuick%20Revision%3C/text%3E%3Ctext x='84' y='585' font-family='Arial' font-size='16' fill='%233f4962'%3EKey%20definitions%20and%20functions%3C/text%3E%3C/svg%3E">
+              <img alt="Illustrative Biology book revision page" loading="lazy" src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fff'/%3E%3Crect x='34' y='28' width='552' height='764' rx='6' fill='%23fff' stroke='%23d7ddea' stroke-width='2'/%3E%3Crect x='58' y='55' width='504' height='54' rx='5' fill='%231b2cc1'/%3E%3Ctext x='80' y='89' font-family='Arial' font-size='23' font-weight='700' fill='%23fff'%3EBIOLOGY%20%7C%20REVISION%3C/text%3E%3Ctext x='66' y='151' font-family='Arial' font-size='23' font-weight='700' fill='%23091540'%3ECell%20Biology%3C/text%3E%3Cg fill='%233f4962' font-family='Arial' font-size='18'%3E%3Ctext x='66' y='201'%3ECell%20membrane%3C/text%3E%3Ctext x='88' y='239'%3EControls%20movement%20of%20substances%3C/text%3E%3Ctext x='66' y='299'%3ECell%20organelles%3C/text%3E%3Ctext x='88' y='337'%3EMitochondria%20-%20ATP%20production%3C/text%3E%3Ctext x='66' y='397'%3ENucleus%3C/text%3E%3Ctext x='88' y='435'%3EContains%20genetic%20material%3C/text%3E%3C/g%3E%3Crect x='64' y='510' width='490' height='110' rx='8' fill='%23edf2ff'/%3E%3Ctext x='84' y='550' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EQuick%20Revision%3C/text%3E%3Ctext x='84' y='585' font-family='Arial' font-size='16' fill='%233f4962'%3EKey%20definitions%20and%20functions%3C/text%3E%3C/svg%3E">
+              <span class="sample-zoom"><i data-lucide="maximize-2" aria-hidden="true"></i></span>
+            </button>
+            <div class="sample-card-info"><div class="sample-card-top"><span class="sample-type"><i data-lucide="book-open" aria-hidden="true"></i> Book page</span><span class="sample-subject">BIOLOGY</span></div><h3>Biology — Quick Revision</h3><p>Organised concepts for efficient review.</p><button class="sample-open sample-open-viewer" type="button" data-title="Biology — Quick Revision" data-type="Book page" data-subject="Biology" data-description="Illustrative textbook-style sample. Replace with an approved sample image." data-image="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='820' viewBox='0 0 620 820'%3E%3Crect width='620' height='820' fill='%23fff'/%3E%3Crect x='34' y='28' width='552' height='764' rx='6' fill='%23fff' stroke='%23d7ddea' stroke-width='2'/%3E%3Crect x='58' y='55' width='504' height='54' rx='5' fill='%231b2cc1'/%3E%3Ctext x='80' y='89' font-family='Arial' font-size='23' font-weight='700' fill='%23fff'%3EBIOLOGY%20%7C%20REVISION%3C/text%3E%3Ctext x='66' y='151' font-family='Arial' font-size='23' font-weight='700' fill='%23091540'%3ECell%20Biology%3C/text%3E%3Cg fill='%233f4962' font-family='Arial' font-size='18'%3E%3Ctext x='66' y='201'%3ECell%20membrane%3C/text%3E%3Ctext x='88' y='239'%3EControls%20movement%20of%20substances%3C/text%3E%3Ctext x='66' y='299'%3ECell%20organelles%3C/text%3E%3Ctext x='88' y='337'%3EMitochondria%20-%20ATP%20production%3C/text%3E%3Ctext x='66' y='397'%3ENucleus%3C/text%3E%3Ctext x='88' y='435'%3EContains%20genetic%20material%3C/text%3E%3C/g%3E%3Crect x='64' y='510' width='490' height='110' rx='8' fill='%23edf2ff'/%3E%3Ctext x='84' y='550' font-family='Arial' font-size='18' font-weight='700' fill='%231b2cc1'%3EQuick%20Revision%3C/text%3E%3Ctext x='84' y='585' font-family='Arial' font-size='16' fill='%233f4962'%3EKey%20definitions%20and%20functions%3C/text%3E%3C/svg%3E"><i data-lucide="expand" aria-hidden="true"></i> View sample</button></div>
+          </article>
+        </div>
+
+        <div class="sample-footer">
+          <div class="sample-footer-copy"><span class="sample-footer-icon"><i data-lucide="book-marked" aria-hidden="true"></i></span><div><strong>Like what you see?</strong><p>Get organised study resources for your JEE &amp; NEET preparation.</p></div></div>
+          <a class="btn btn-primary" href="checkout.html">Get The Complete Kit <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="sample-modal" id="sampleModal" role="dialog" aria-modal="true" aria-labelledby="sampleModalTitle" aria-hidden="true">
+      <div class="sample-modal-panel">
+        <button class="sample-modal-close" id="sampleModalClose" type="button" aria-label="Close sample viewer"><i data-lucide="x" aria-hidden="true"></i></button>
+        <div class="sample-modal-image"><img id="sampleModalImage" src="" alt=""></div>
+        <div class="sample-modal-copy">
+          <span class="sample-type"><i data-lucide="image" aria-hidden="true"></i> <span id="sampleModalType">Sample preview</span></span>
+          <h3 id="sampleModalTitle">Sample preview</h3>
+          <p id="sampleModalDescription"></p>
+          <div class="sample-modal-tip"><i data-lucide="info" aria-hidden="true"></i><span>These are illustrative preview designs. Replace them with your actual sample images before publishing the gallery.</span></div>
+          <a class="btn btn-primary" href="checkout.html">Get The Complete Kit <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+
     <div id="preview" hidden></div>
   </main>
 
@@ -920,7 +1113,67 @@
       });
     });
 
-    // Preview anchor is reserved for the package preview section being added next.
+
+    // Sample gallery filters and full-size viewer
+    const sampleCards = Array.from(document.querySelectorAll('.sample-card'));
+    const sampleTabs = Array.from(document.querySelectorAll('[data-sample-filter]'));
+    const sampleCount = document.getElementById('sampleCount');
+    sampleTabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        const filter = tab.dataset.sampleFilter;
+        sampleTabs.forEach(function (item) {
+          item.setAttribute('aria-pressed', String(item === tab));
+        });
+        let visible = 0;
+        sampleCards.forEach(function (card) {
+          const show = filter === 'all' || card.dataset.sampleCategory === filter;
+          card.hidden = !show;
+          if (show) visible++;
+        });
+        sampleCount.textContent = visible + (visible === 1 ? ' sample preview' : ' sample previews');
+      });
+    });
+
+    const sampleModal = document.getElementById('sampleModal');
+    const sampleModalImage = document.getElementById('sampleModalImage');
+    const sampleModalTitle = document.getElementById('sampleModalTitle');
+    const sampleModalType = document.getElementById('sampleModalType');
+    const sampleModalDescription = document.getElementById('sampleModalDescription');
+    const sampleModalClose = document.getElementById('sampleModalClose');
+    let sampleLastFocus = null;
+
+    function openSampleViewer(button) {
+      sampleLastFocus = button;
+      sampleModalImage.src = button.dataset.image;
+      sampleModalImage.alt = button.dataset.title + ' sample page';
+      sampleModalTitle.textContent = button.dataset.title;
+      sampleModalType.textContent = button.dataset.type + ' · ' + button.dataset.subject;
+      sampleModalDescription.textContent = button.dataset.description;
+      sampleModal.classList.add('is-open');
+      sampleModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('sample-modal-active');
+      sampleModalClose.focus();
+    }
+    function closeSampleViewer() {
+      sampleModal.classList.remove('is-open');
+      sampleModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('sample-modal-active');
+      sampleModalImage.src = '';
+      if (sampleLastFocus) sampleLastFocus.focus();
+    }
+    document.querySelectorAll('.sample-open-viewer').forEach(function (button) {
+      button.addEventListener('click', function () { openSampleViewer(button); });
+    });
+    sampleModalClose.addEventListener('click', closeSampleViewer);
+    sampleModal.addEventListener('click', function (event) {
+      if (event.target === sampleModal) closeSampleViewer();
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && sampleModal.classList.contains('is-open')) closeSampleViewer();
+    });
+
+
+        // Preview anchor is reserved for the package preview section being added next.
     document.getElementById('previewButton').addEventListener('click', function (event) {
       if (document.getElementById('preview').hidden) {
         event.preventDefault();
