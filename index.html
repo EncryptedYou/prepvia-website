@@ -428,6 +428,184 @@
     .spark-two { top: 30%; right: 11%; color: #8bb92c; font-size: 21px; }
     .spark-three { bottom: 17%; right: 17%; font-size: 18px; }
 
+    .resources-section {
+      position: relative;
+      padding: 76px 24px 70px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%);
+      border-top: 1px solid rgba(9,21,64,.05);
+    }
+    .resources-wrap { width: min(1160px, 100%); margin: 0 auto; }
+    .section-heading { max-width: 720px; margin: 0 auto 38px; text-align: center; }
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 7px 12px;
+      border: 1px solid rgba(27,44,193,.12);
+      border-radius: 99px;
+      color: var(--royal);
+      background: #eef2ff;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .kicker-dot { width: 7px; height: 7px; border-radius: 50%; background: #a8d747; }
+    .section-heading h2 {
+      margin: 0 0 13px;
+      color: var(--navy);
+      font-size: clamp(28px, 4vw, 43px);
+      line-height: 1.17;
+      letter-spacing: -.045em;
+      font-weight: 800;
+    }
+    .section-heading h2 span { color: var(--royal); }
+    .section-heading p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .resource-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 0;
+      min-height: 224px;
+      padding: 22px 20px 19px;
+      overflow: hidden;
+      border: 1px solid rgba(9,21,64,.08);
+      border-radius: 20px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 5px 18px rgba(9,21,64,.035);
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .resource-card::after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      right: -48px;
+      top: -48px;
+      border-radius: 50%;
+      background: rgba(118,146,255,.07);
+      transition: transform .25s ease;
+      pointer-events: none;
+    }
+    .resource-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(118,146,255,.42);
+      box-shadow: 0 15px 32px rgba(9,21,64,.09);
+    }
+    .resource-card:hover::after { transform: scale(1.6); }
+    .resource-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 17px;
+      border-radius: 15px;
+    }
+    .resource-icon svg { width: 23px; height: 23px; stroke-width: 2; }
+    .icon-orange { color: #e77a2c; background: #fff0e4; }
+    .icon-purple { color: #8050e8; background: #f0eaff; }
+    .icon-green { color: #258d5b; background: #e2f8eb; }
+    .icon-blue { color: #2875e8; background: #e6f1ff; }
+    .icon-pink { color: #d84d91; background: #ffebf4; }
+    .icon-indigo { color: #4a55d7; background: #eceeff; }
+    .icon-cyan { color: #128da7; background: #e0f8fc; }
+    .icon-coral { color: #e56b40; background: #fff0e8; }
+    .resource-card-copy { min-width: 0; width: 100%; }
+    .resource-card h3 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.35;
+      letter-spacing: -.02em;
+      font-weight: 800;
+    }
+    .resource-card p {
+      margin: 0;
+      color: #687187;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+    .resource-tag {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 14px;
+      padding: 6px 9px;
+      border-radius: 8px;
+      background: #f2f5ff;
+      color: #3e4d91;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .resources-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px 24px;
+      margin-top: 30px;
+      color: #65708a;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .resources-bottom span { display: inline-flex; align-items: center; gap: 6px; }
+    .resources-bottom span svg { width: 15px; height: 15px; color: #31865a; }
+    .resources-bottom a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 17px;
+      border-radius: 99px;
+      background: var(--navy);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      transition: transform .2s, background .2s;
+    }
+    .resources-bottom a:hover { transform: translateY(-2px); background: var(--royal); }
+    .resources-bottom a svg { width: 16px; height: 16px; }
+    @media (max-width: 980px) {
+      .resource-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+      .resource-card { min-height: 205px; }
+    }
+    @media (max-width: 600px) {
+      .resources-section { padding: 50px 16px 45px; }
+      .section-heading { margin-bottom: 25px; }
+      .section-heading h2 { font-size: clamp(27px, 7.5vw, 34px); }
+      .section-heading p { font-size: 13px; line-height: 1.7; }
+      .resource-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .resource-card { min-height: 0; padding: 15px 13px 14px; border-radius: 16px; }
+      .resource-icon { width: 39px; height: 39px; margin-bottom: 12px; border-radius: 12px; }
+      .resource-icon svg { width: 19px; height: 19px; }
+      .resource-card h3 { font-size: 12px; line-height: 1.4; margin-bottom: 6px; }
+      .resource-card p { font-size: 10px; line-height: 1.55; }
+      .resource-tag { margin-top: 10px; padding: 5px 7px; font-size: 9px; }
+      .resources-bottom { gap: 10px 13px; margin-top: 22px; font-size: 10px; }
+      .resources-bottom a { width: 100%; min-height: 47px; margin-top: 4px; }
+    }
+    @media (max-width: 350px) {
+      .resource-grid { gap: 8px; }
+      .resource-card { padding: 12px 10px; }
+      .resource-card h3 { font-size: 11px; }
+      .resource-card p { font-size: 9px; }
+      .resource-tag { font-size: 8px; }
+    }
+
     @media (min-width: 900px) {
       .hero { min-height: 700px; padding: 72px 36px 82px; text-align: left; }
       .hero-content { text-align: left; }
@@ -629,8 +807,89 @@
       </div>
     </section>
 
-    <!-- Anchor targets for the next design sections -->
-    <div id="package" hidden></div>
+    <section class="resources-section" id="package">
+      <div class="resources-wrap">
+        <div class="section-heading">
+          <span class="section-kicker"><span class="kicker-dot"></span> What's inside</span>
+          <h2>Everything You Need to <span>Prepare Smarter</span></h2>
+          <p>A thoughtfully organised collection of resources to support your JEE &amp; NEET preparation — all in one place.</p>
+        </div>
+
+        <div class="resource-grid">
+          <article class="resource-card">
+            <div class="resource-icon icon-orange"><i data-lucide="book-open" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Reference Books</h3>
+              <p>Essential books and study material for JEE &amp; NEET preparation.</p>
+              <span class="resource-tag">📚 Study essentials</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-purple"><i data-lucide="file-text" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Previous Year Questions</h3>
+              <p>Practice past questions to understand exam patterns and question styles.</p>
+              <span class="resource-tag">🎯 Exam practice</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-green"><i data-lucide="notebook-pen" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Handwritten Notes</h3>
+              <p>Subject-wise notes to help you revise important concepts.</p>
+              <span class="resource-tag">✍️ Easy revision</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-blue"><i data-lucide="file-check" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Short Notes</h3>
+              <p>Quick-reference notes for focused revision before tests.</p>
+              <span class="resource-tag">⚡ Quick review</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-pink"><i data-lucide="brain" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Mind Maps</h3>
+              <p>Visual summaries that help connect and remember key topics.</p>
+              <span class="resource-tag">🧠 Visual learning</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-indigo"><i data-lucide="sigma" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Formula Sheets</h3>
+              <p>Important formulas gathered in one convenient place.</p>
+              <span class="resource-tag">➗ Formula revision</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-cyan"><i data-lucide="clipboard-check" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Test Series</h3>
+              <p>Practice questions and tests to check your preparation.</p>
+              <span class="resource-tag">📝 Practice mode</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-coral"><i data-lucide="layers-3" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Institute Modules</h3>
+              <p>Additional learning modules to support topic-wise practice.</p>
+              <span class="resource-tag">📂 Extra resources</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="resources-bottom">
+          <span><i data-lucide="check-circle-2" aria-hidden="true"></i> Organised for Class 11 &amp; 12</span>
+          <span><i data-lucide="check-circle-2" aria-hidden="true"></i> JEE &amp; NEET resources</span>
+          <a href="checkout.html">Get The Complete Kit <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </section>
+
     <div id="preview" hidden></div>
   </main>
 
