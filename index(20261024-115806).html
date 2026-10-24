@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#091540">
+  <meta name="description" content="PrepVia JEE & NEET Resources Kit — study smarter with notes, PYQs, formula sheets, modules and test series.">
+  <title>PrepVia — Your Complete JEE & NEET Resource Kit</title>
+
+  <!-- Fonts: Plus Jakarta Sans from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Icons: Lucide icon library -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --sky: #ABD2FA;
+      --periwinkle: #7692FF;
+      --royal: #1B2CC1;
+      --navy: #091540;
+      --ink: #202957;
+      --muted: #656d83;
+      --lime: #c8ed68;
+      --lime-dark: #b5dc4d;
+      --white: #ffffff;
+      --line: rgba(9, 21, 64, .12);
+      --shadow: 0 12px 30px rgba(9, 21, 64, .10);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; width: 100%; overflow-x: clip; }
+    body { width: 100%; max-width: 100%; overflow-x: clip; }
+    body {
+      margin: 0;
+      color: var(--navy);
+      font-family: "Plus Jakarta Sans", sans-serif;
+      background: #f7f8ff;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .announcement {
+      position: relative;
+      height: 46px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      background: #20246c;
+      border-bottom: 3px solid var(--lime);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .offer-track {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 34px;
+      width: max-content;
+      min-width: max-content;
+      height: 100%;
+      padding: 0 180px 0 48px;
+      white-space: nowrap;
+      pointer-events: none;
+      animation: offer-marquee 34s linear infinite;
+      will-change: transform;
+    }
+    @keyframes offer-marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .offer-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      flex: 0 0 auto;
+      padding: 0 12px;
+      line-height: 1;
+    }
+    .offer-spark { color: var(--lime); font-size: 17px; }
+    .coupon {
+      display: inline-block;
+      padding: 3px 7px;
+      color: #fff;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 6px;
+      letter-spacing: .05em;
+      font-weight: 800;
+    }
+    .offer-discount { color: var(--lime); }
+    .announcement-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex: 0 0 auto;
+      min-height: 34px;
+      padding: 8px 17px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d7f58a 0%, #b9e252 100%);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+      box-shadow: 0 3px 0 rgba(0,0,0,.12), 0 6px 14px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.75);
+      transition: box-shadow .2s, background .2s;
+      text-decoration: none;
+    }
+    .announcement-cta:hover {
+      background: linear-gradient(135deg, #e2ffa0 0%, #c8ed68 100%);
+      box-shadow: 0 3px 0 rgba(0,0,0,.12), 0 8px 18px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.8);
+    }
+    .announcement-cta svg { width: 15px; height: 15px; }
+    .fixed-buy {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      right: 14px;
+      transform: translateY(-50%);
+      min-width: 112px;
+    }
+    .fixed-buy:hover { transform: translateY(-50%); }
+    .site-header {
+      position: relative;
+      z-index: 10;
+      background: rgba(255,255,255,.94);
+      border-bottom: 1px solid rgba(9,21,64,.06);
+    }
+    .nav-wrap {
+      width: min(1180px, calc(100% - 48px));
+      min-height: 68px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      flex-shrink: 0;
+      min-width: 0;
+    }
+    .brand-logo {
+      display: block;
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      flex: 0 0 38px;
+    }
+    .brand-copy { display: flex; flex-direction: column; min-width: 0; }
+    .brand-name { font-size: 23px; line-height: 1; font-weight: 800; letter-spacing: -1px; }
+    .brand-name span { color: var(--royal); }
+    .brand-tagline { margin-top: 5px; font-size: 9px; letter-spacing: .09em; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 47px;
+      padding: 0 22px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      background: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      transition: border-color .2s, transform .2s;
+    }
+    .nav-link:hover { border-color: var(--periwinkle); transform: translateY(-1px); }
+    .menu-toggle {
+      width: 47px;
+      height: 47px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--navy);
+      cursor: pointer;
+    }
+    .menu-toggle svg { width: 22px; height: 22px; }
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% - 1px);
+      right: 24px;
+      width: min(280px, calc(100vw - 48px));
+      padding: 10px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+    .mobile-menu.open { display: grid; }
+    .mobile-menu a { padding: 13px 14px; border-radius: 10px; font-weight: 700; font-size: 14px; }
+    .mobile-menu a:hover { background: #f1f4ff; }
+
+    .hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      min-height: 680px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 68px 24px 82px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 8% 20%, rgba(171,210,250,.32), transparent 37%),
+        radial-gradient(ellipse at 92% 18%, rgba(200,237,104,.22), transparent 34%),
+        radial-gradient(ellipse at 55% 100%, rgba(118,146,255,.14), transparent 42%),
+        linear-gradient(145deg, #fbfcff 0%, #f5f6ff 100%);
+    }
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      border: 1px solid rgba(118,146,255,.17);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero::before { width: 450px; height: 450px; left: -300px; bottom: -210px; }
+    .hero::after { width: 520px; height: 520px; right: -350px; top: -260px; }
+    .hero-layout {
+      width: min(1240px, 100%);
+      margin: auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+      align-items: center;
+      gap: clamp(28px, 4vw, 64px);
+    }
+    .hero-content { width: 100%; min-width: 0; margin: auto; }
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      min-height: 440px;
+      isolation: isolate;
+    }
+    .mockup-glow {
+      position: absolute;
+      z-index: -1;
+      width: 78%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(171,210,250,.55) 0%, rgba(118,146,255,.20) 45%, rgba(200,237,104,.12) 68%, transparent 72%);
+      filter: blur(8px);
+    }
+    .package-mockup {
+      display: block;
+      width: min(100%, 540px);
+      max-height: 560px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 28px 30px rgba(9,21,64,.18));
+      animation: mockup-float 6s ease-in-out infinite;
+    }
+    @keyframes mockup-float {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-10px) rotate(1deg); }
+    }
+    .mockup-badge {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 12px 16px;
+      border: 1px solid rgba(255,255,255,.85);
+      border-radius: 16px;
+      background: rgba(255,255,255,.88);
+      color: var(--ink);
+      box-shadow: 0 12px 28px rgba(9,21,64,.12);
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .badge-top { top: 17%; right: 0; }
+    .badge-bottom { bottom: 15%; left: 0; }
+    .mockup-badge span:first-child { font-size: 19px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      max-width: 100%;
+      padding: 11px 19px;
+      border: 1px solid rgba(9,21,64,.08);
+      border-radius: 99px;
+      background: rgba(255,255,255,.88);
+      box-shadow: 0 5px 16px rgba(9,21,64,.09);
+      color: #424d82;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 28px;
+    }
+    .eyebrow-dot {
+      width: 9px;
+      height: 9px;
+      flex: 0 0 9px;
+      border-radius: 50%;
+      background: #a8d747;
+      box-shadow: 0 0 0 4px rgba(200,237,104,.22);
+    }
+    h1 {
+      max-width: 880px;
+      margin: 0 auto 22px;
+      color: var(--navy);
+      font-size: clamp(40px, 5.6vw, 68px);
+      line-height: 1.12;
+      letter-spacing: -.055em;
+      font-weight: 800;
+    }
+    h1 .highlight {
+      color: var(--royal);
+      position: relative;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    h1 .highlight::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: 3%;
+      right: 0;
+      bottom: 3px;
+      height: 13px;
+      border-radius: 99px;
+      background: rgba(200,237,104,.82);
+      transform: rotate(-1.5deg);
+    }
+    .hero-copy {
+      max-width: 780px;
+      margin: 0 auto;
+      color: #626b80;
+      font-size: clamp(16px, 2vw, 21px);
+      line-height: 1.8;
+      font-weight: 400;
+    }
+    .hero-copy strong { color: var(--ink); font-weight: 700; }
+    .exam-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 28px 0 28px;
+    }
+    .exam-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 0 20px;
+      border: 1px solid rgba(9,21,64,.08);
+      border-radius: 99px;
+      background: white;
+      color: var(--ink);
+      box-shadow: 0 4px 12px rgba(9,21,64,.07);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .exam-pill .emoji { font-size: 17px; }
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: min(560px, 100%);
+      margin: 0 auto;
+    }
+    .btn {
+      min-height: 66px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 17px 25px;
+      border: 1px solid transparent;
+      border-radius: 99px;
+      font-size: 17px;
+      font-weight: 800;
+      text-align: center;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      color: var(--navy);
+      background: linear-gradient(180deg, #cdec75 0%, #b9e252 100%);
+      box-shadow: 0 12px 24px rgba(161,203,61,.27), inset 0 1px rgba(255,255,255,.6);
+    }
+    .btn-primary:hover { box-shadow: 0 15px 28px rgba(161,203,61,.36); background: #d4f28b; }
+    .btn-secondary {
+      color: var(--ink);
+      background: rgba(255,255,255,.9);
+      border-color: rgba(9,21,64,.13);
+    }
+    .btn-secondary:hover { background: white; border-color: rgba(27,44,193,.35); }
+    .btn svg { width: 20px; height: 20px; }
+    .trust-note {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+      color: #747c90;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .trust-note svg { width: 16px; height: 16px; color: var(--royal); }
+    .trust-note .separator { color: #c0c5d4; padding: 0 3px; }
+    .floating-spark {
+      position: absolute;
+      color: var(--royal);
+      opacity: .25;
+      font-size: 27px;
+      pointer-events: none;
+    }
+    .spark-one { top: 18%; left: 10%; }
+    .spark-two { top: 30%; right: 11%; color: #8bb92c; font-size: 21px; }
+    .spark-three { bottom: 17%; right: 17%; font-size: 18px; }
+
+    .resources-section {
+      position: relative;
+      padding: 76px 24px 70px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%);
+      border-top: 1px solid rgba(9,21,64,.05);
+    }
+    .resources-wrap { width: min(1160px, 100%); margin: 0 auto; }
+    .section-heading { max-width: 720px; margin: 0 auto 38px; text-align: center; }
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 7px 12px;
+      border: 1px solid rgba(27,44,193,.12);
+      border-radius: 99px;
+      color: var(--royal);
+      background: #eef2ff;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .kicker-dot { width: 7px; height: 7px; border-radius: 50%; background: #a8d747; }
+    .section-heading h2 {
+      margin: 0 0 13px;
+      color: var(--navy);
+      font-size: clamp(28px, 4vw, 43px);
+      line-height: 1.17;
+      letter-spacing: -.045em;
+      font-weight: 800;
+    }
+    .section-heading h2 span { color: var(--royal); }
+    .section-heading p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .resource-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 0;
+      min-height: 224px;
+      padding: 22px 20px 19px;
+      overflow: hidden;
+      border: 1px solid rgba(9,21,64,.08);
+      border-radius: 20px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 5px 18px rgba(9,21,64,.035);
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .resource-card::after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      right: -48px;
+      top: -48px;
+      border-radius: 50%;
+      background: rgba(118,146,255,.07);
+      transition: transform .25s ease;
+      pointer-events: none;
+    }
+    .resource-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(118,146,255,.42);
+      box-shadow: 0 15px 32px rgba(9,21,64,.09);
+    }
+    .resource-card:hover::after { transform: scale(1.6); }
+    .resource-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 17px;
+      border-radius: 15px;
+    }
+    .resource-icon svg { width: 23px; height: 23px; stroke-width: 2; }
+    .icon-orange { color: #e77a2c; background: #fff0e4; }
+    .icon-purple { color: #8050e8; background: #f0eaff; }
+    .icon-green { color: #258d5b; background: #e2f8eb; }
+    .icon-blue { color: #2875e8; background: #e6f1ff; }
+    .icon-pink { color: #d84d91; background: #ffebf4; }
+    .icon-indigo { color: #4a55d7; background: #eceeff; }
+    .icon-cyan { color: #128da7; background: #e0f8fc; }
+    .icon-coral { color: #e56b40; background: #fff0e8; }
+    .resource-card-copy { min-width: 0; width: 100%; }
+    .resource-card h3 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.35;
+      letter-spacing: -.02em;
+      font-weight: 800;
+    }
+    .resource-card p {
+      margin: 0;
+      color: #687187;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+    .resource-tag {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 14px;
+      padding: 6px 9px;
+      border-radius: 8px;
+      background: #f2f5ff;
+      color: #3e4d91;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .resources-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px 24px;
+      margin-top: 30px;
+      color: #65708a;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .resources-bottom span { display: inline-flex; align-items: center; gap: 6px; }
+    .resources-bottom span svg { width: 15px; height: 15px; color: #31865a; }
+    .resources-bottom a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 17px;
+      border-radius: 99px;
+      background: var(--navy);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      transition: transform .2s, background .2s;
+    }
+    .resources-bottom a:hover { transform: translateY(-2px); background: var(--royal); }
+    .resources-bottom a svg { width: 16px; height: 16px; }
+    @media (max-width: 980px) {
+      .resource-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+      .resource-card { min-height: 205px; }
+    }
+    @media (max-width: 600px) {
+      .resources-section { padding: 50px 16px 45px; }
+      .section-heading { margin-bottom: 25px; }
+      .section-heading h2 { font-size: clamp(27px, 7.5vw, 34px); }
+      .section-heading p { font-size: 13px; line-height: 1.7; }
+      .resource-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .resource-card { min-height: 0; padding: 15px 13px 14px; border-radius: 16px; }
+      .resource-icon { width: 39px; height: 39px; margin-bottom: 12px; border-radius: 12px; }
+      .resource-icon svg { width: 19px; height: 19px; }
+      .resource-card h3 { font-size: 12px; line-height: 1.4; margin-bottom: 6px; }
+      .resource-card p { font-size: 10px; line-height: 1.55; }
+      .resource-tag { margin-top: 10px; padding: 5px 7px; font-size: 9px; }
+      .resources-bottom { gap: 10px 13px; margin-top: 22px; font-size: 10px; }
+      .resources-bottom a { width: 100%; min-height: 47px; margin-top: 4px; }
+    }
+    @media (max-width: 350px) {
+      .resource-grid { gap: 8px; }
+      .resource-card { padding: 12px 10px; }
+      .resource-card h3 { font-size: 11px; }
+      .resource-card p { font-size: 9px; }
+      .resource-tag { font-size: 8px; }
+    }
+
+    @media (min-width: 900px) {
+      .hero { min-height: 700px; padding: 72px 36px 82px; text-align: left; }
+      .hero-content { text-align: left; }
+      .eyebrow { margin-bottom: 24px; }
+      h1 { margin-left: 0; margin-right: 0; font-size: clamp(42px, 4.2vw, 60px); }
+      .hero-copy { margin-left: 0; margin-right: 0; font-size: 16px; line-height: 1.75; }
+      .exam-pills { justify-content: flex-start; gap: 9px; margin: 23px 0; }
+      .exam-pill { min-height: 42px; padding: 0 13px; font-size: 12px; }
+      .hero-buttons { flex-direction: row; width: 100%; justify-content: flex-start; gap: 10px; }
+      .hero-buttons .btn { min-width: 0; flex: 1; padding: 15px 17px; }
+      .btn { min-height: 58px; font-size: 13px; }
+      .trust-note { justify-content: flex-start; font-size: 10px; }
+      .hero-visual { min-height: 480px; }
+    }
+    @media (min-width: 1200px) {
+      .hero { padding-left: 48px; padding-right: 48px; }
+      .hero-copy { font-size: 17px; }
+      .hero-buttons .btn { font-size: 14px; }
+    }
+    @media (max-width: 600px) {
+      /* Tight, fluid mobile layout: prevent horizontal overflow on narrow phones. */
+      .announcement { height: 43px; font-size: 11px; }
+      .offer-track { gap: 20px; padding-left: 18px; padding-right: 145px; animation-duration: 26s; }
+      .offer-item { gap: 7px; padding: 0 8px; }
+      .announcement-cta { padding: 7px 11px; font-size: 10px; min-height: 31px; }
+      .fixed-buy { right: 7px; min-width: 98px; padding: 7px 10px; font-size: 10px; }
+      .coupon { padding: 2px 5px; font-size: 10px; }
+      .nav-wrap { width: calc(100% - 28px); min-height: 60px; gap: 8px; }
+      .brand { gap: 7px; min-width: 0; }
+      .brand-logo { width: 36px; height: 36px; flex-basis: 36px; }
+      .brand-name { font-size: clamp(17px, 4.8vw, 20px); }
+      .brand-tagline { font-size: 7px; letter-spacing: .04em; }
+      .nav-actions { gap: 7px; }
+      .nav-link { min-height: 38px; padding: 0 11px; font-size: 11px; }
+      .menu-toggle { width: 38px; height: 38px; flex-shrink: 0; }
+      .mobile-menu { right: 14px; }
+      .hero { min-height: 0; padding: 34px 16px 42px; text-align: center; }
+      .hero-layout { display: flex; flex-direction: column; gap: 0; width: 100%; }
+      .hero-content { width: 100%; max-width: 460px; }
+      .hero-visual { display: none; }
+      .eyebrow {
+        gap: 7px;
+        max-width: 100%;
+        padding: 9px 12px;
+        margin-bottom: 20px;
+        font-size: clamp(10px, 3.1vw, 12px);
+        line-height: 1.35;
+      }
+      .eyebrow-dot { width: 7px; height: 7px; flex-basis: 7px; }
+      h1 {
+        max-width: 100%;
+        font-size: clamp(31px, 8.7vw, 43px);
+        line-height: 1.12;
+        letter-spacing: -.055em;
+        margin-bottom: 16px;
+        overflow-wrap: break-word;
+      }
+      h1 .highlight { white-space: normal; }
+      h1 .highlight::after { height: 7px; bottom: 2px; }
+      .hero-copy { max-width: 100%; font-size: clamp(13px, 3.8vw, 15px); line-height: 1.68; }
+      .exam-pills { gap: 8px; margin: 21px 0 22px; }
+      .exam-pill {
+        min-height: 39px;
+        padding: 0 11px;
+        font-size: clamp(10px, 3.1vw, 12px);
+        gap: 5px;
+        white-space: nowrap;
+      }
+      .exam-pill .emoji { font-size: 13px; }
+      .hero-buttons { width: 100%; gap: 10px; }
+      .btn {
+        width: 100%;
+        min-width: 0;
+        min-height: 53px;
+        padding: 13px 14px;
+        gap: 8px;
+        font-size: clamp(12px, 3.7vw, 14px);
+        line-height: 1.25;
+      }
+      .btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+      .trust-note { gap: 6px; margin-top: 17px; font-size: 9px; line-height: 1.5; }
+      .trust-note svg { width: 13px; height: 13px; }
+      .trust-note .separator { padding: 0 1px; }
+      .spark-one { left: 2%; top: 10%; font-size: 17px; }
+      .spark-two { right: 3%; top: 20%; font-size: 15px; }
+      .spark-three { right: 6%; bottom: 5%; font-size: 14px; }
+    }
+    @media (max-width: 380px) {
+      .offer-track { gap: 15px; padding-left: 12px; padding-right: 125px; animation-duration: 24s; }
+      .offer-item { padding: 0 6px; }
+      .fixed-buy { right: 5px; min-width: 92px; padding: 6px 8px; font-size: 9px; }
+      .nav-link { padding: 0 9px; }
+      .brand-tagline { max-width: 155px; }
+      .hero { padding-left: 14px; padding-right: 14px; }
+      h1 { font-size: clamp(29px, 8.4vw, 32px); }
+      .exam-pills { gap: 6px; }
+      .exam-pill { padding: 0 9px; font-size: 10px; }
+      .btn { font-size: 12px; }
+    }
+    @media (max-width: 330px) {
+      .nav-link { display: none; }
+      .brand-logo { width: 34px; height: 34px; flex-basis: 34px; }
+      .hero { padding-left: 12px; padding-right: 12px; }
+      .eyebrow { font-size: 10px; }
+      h1 { font-size: 28px; }
+      .exam-pills { flex-direction: column; align-items: stretch; }
+      .exam-pill { justify-content: center; }
+      .trust-note { font-size: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+      .offer-track { animation: none; }
+    }
+
+
+
+    /* Conversion sections */
+    .info-section { padding: 82px 24px; }
+    .info-wrap { width: min(1120px, 100%); margin: 0 auto; }
+    .section-heading { max-width: 760px; margin: 0 auto 38px; text-align: center; }
+    .section-kicker { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px; color: var(--royal); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .kicker-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime-dark); box-shadow: 0 0 0 4px rgba(200,237,104,.25); }
+    .section-heading h2 { margin: 0 0 14px; font-size: clamp(29px, 4vw, 44px); line-height: 1.15; letter-spacing: -.045em; }
+    .section-heading h2 span { color: var(--royal); }
+    .section-heading p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; }
+    .step-card, .benefit-card, .support-card { background: #fff; border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 10px 28px rgba(9,21,64,.055); }
+    .step-card { padding: 27px; position: relative; overflow: hidden; }
+    .step-number { display: inline-grid; place-items: center; width: 46px; height: 46px; margin-bottom: 20px; border-radius: 14px; background: #eaf1ff; color: var(--royal); font-weight: 800; }
+    .step-card h3, .benefit-card h3 { margin: 0 0 10px; font-size: 17px; letter-spacing: -.02em; }
+    .step-card p, .benefit-card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.75; }
+    .step-note { margin-top: 24px; padding: 15px 18px; display: flex; gap: 11px; align-items: flex-start; border: 1px solid rgba(27,44,193,.12); border-radius: 14px; background: #edf2ff; color: #27336d; font-size: 13px; line-height: 1.7; }
+    .step-note svg { flex: 0 0 19px; margin-top: 2px; }
+    .benefits-section { background: linear-gradient(180deg, #eef3ff 0%, #f7f8ff 100%); }
+    .benefits-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 17px; }
+    .benefit-card { padding: 23px; }
+    .benefit-icon { display: grid; place-items: center; width: 43px; height: 43px; margin-bottom: 16px; border-radius: 13px; background: #edf2ff; color: var(--royal); }
+    .benefit-icon svg { width: 21px; height: 21px; }
+    .faq-list { max-width: 850px; margin: 0 auto; display: grid; gap: 12px; }
+    .faq-list details { background: #fff; border: 1px solid var(--line); border-radius: 15px; box-shadow: 0 5px 18px rgba(9,21,64,.035); }
+    .faq-list summary { display: flex; align-items: center; justify-content: space-between; gap: 18px; cursor: pointer; list-style: none; padding: 19px 21px; font-size: 14px; font-weight: 800; }
+    .faq-list summary::-webkit-details-marker { display: none; }
+    .faq-list summary::after { content: '+'; color: var(--royal); font-size: 24px; line-height: 1; font-weight: 500; }
+    .faq-list details[open] summary::after { content: '−'; }
+    .faq-answer { padding: 0 21px 20px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+    .support-section { padding-top: 16px; }
+    .support-card { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px; padding: clamp(24px, 5vw, 42px); color: #fff; background: radial-gradient(circle at 85% 10%, rgba(118,146,255,.4), transparent 35%), linear-gradient(135deg, #091540, #1b2cc1); border: 0; }
+    .support-card h2 { margin: 0 0 10px; font-size: clamp(25px, 3.5vw, 36px); letter-spacing: -.04em; }
+    .support-card p { max-width: 650px; margin: 0; color: rgba(255,255,255,.78); font-size: 14px; line-height: 1.75; }
+    .support-btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 14px 20px; border-radius: 12px; background: var(--lime); color: var(--navy); font-size: 13px; font-weight: 800; white-space: nowrap; }
+    .support-btn:hover { background: #d8f68f; }
+    .site-footer { margin-top: 72px; padding: 42px 24px 22px; color: #fff; background: #07102f; }
+    .footer-wrap { width: min(1120px, 100%); margin: auto; }
+    .footer-main { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; padding-bottom: 30px; }
+    .footer-brand { display: flex; align-items: center; gap: 12px; }
+    .footer-brand img { width: 44px; height: 44px; object-fit: contain; }
+    .footer-brand strong { display: block; font-size: 21px; letter-spacing: -.04em; }
+    .footer-brand strong span { color: var(--sky); }
+    .footer-brand small { display: block; margin-top: 3px; color: rgba(255,255,255,.58); font-size: 10px; }
+    .footer-copy { max-width: 430px; margin: 16px 0 0; color: rgba(255,255,255,.65); font-size: 12px; line-height: 1.8; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; color: rgba(255,255,255,.8); font-size: 12px; font-weight: 700; }
+    .footer-links a:hover { color: var(--sky); }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 14px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.13); color: rgba(255,255,255,.5); font-size: 11px; }
+    @media (max-width: 760px) { .info-section { padding: 60px 18px; } .steps-grid { grid-template-columns: 1fr; gap: 13px; } .step-card { padding: 23px; } .benefits-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; } .benefit-card { padding: 18px; } .support-card { grid-template-columns: 1fr; } .support-btn { justify-self: start; } .footer-main { flex-direction: column; } }
+    @media (max-width: 460px) { .benefits-grid { grid-template-columns: 1fr; } .faq-list summary { padding: 17px; font-size: 13px; } .faq-answer { padding: 0 17px 17px; } .footer-links { gap: 14px; } .footer-bottom { flex-direction: column; } }
+
+
+    /* Refined spacing, motion and support CTA */
+    .info-section { padding: 56px 24px; }
+    .section-heading { margin-bottom: 28px; }
+    .section-kicker { margin-bottom: 9px; }
+    .section-heading h2 { margin-bottom: 10px; }
+    .steps-grid { gap: 16px; }
+    .step-card, .benefit-card, .faq-list details { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+    .step-card:hover, .benefit-card:hover { transform: translateY(-5px); border-color: rgba(27,44,193,.24); box-shadow: 0 18px 36px rgba(9,21,64,.10); }
+    .step-number { transition: transform .25s ease, background .25s ease; }
+    .step-card:hover .step-number { transform: rotate(-5deg) scale(1.06); background: #dce7ff; }
+    .benefit-icon { transition: transform .25s ease, background .25s ease; }
+    .benefit-card:hover .benefit-icon { transform: translateY(-2px) scale(1.07); background: #dce7ff; }
+    .step-note { margin-top: 18px; }
+    .benefits-section { background: linear-gradient(180deg, #f0f4ff 0%, #f8f9ff 100%); }
+    .benefits-grid { gap: 14px; }
+    .benefit-card { padding: 21px; }
+    .faq-list { gap: 9px; }
+    .faq-list details:hover { border-color: rgba(27,44,193,.28); box-shadow: 0 9px 22px rgba(9,21,64,.07); }
+    .faq-list summary { padding: 17px 20px; }
+    .faq-list details[open] { border-color: rgba(27,44,193,.28); }
+    .faq-answer { animation: faqReveal .22s ease both; }
+    .support-section { padding-top: 8px; padding-bottom: 48px; }
+    .support-card { gap: 22px; border-radius: 24px; box-shadow: 0 18px 42px rgba(9,21,64,.16); position: relative; overflow: hidden; }
+    .support-card::after { content: ''; position: absolute; width: 220px; height: 220px; border: 1px solid rgba(255,255,255,.12); border-radius: 50%; right: 18%; top: -145px; pointer-events: none; }
+    .support-btn { position: relative; z-index: 1; min-height: 48px; padding: 14px 19px; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 8px 20px rgba(0,0,0,.16); transition: transform .22s ease, box-shadow .22s ease, background .22s ease; }
+    .support-btn:hover { background: #e0f9a6; transform: translateY(-3px); box-shadow: 0 12px 26px rgba(0,0,0,.22); }
+    .support-btn:focus-visible, .footer-links a:focus-visible, .faq-list summary:focus-visible { outline: 3px solid #7692ff; outline-offset: 4px; }
+    .support-btn svg { transition: transform .22s ease; }
+    .support-btn:hover svg { transform: translate(2px,-2px); }
+    .site-footer { margin-top: 0; padding-top: 34px; }
+    .footer-main { padding-bottom: 24px; }
+    .footer-links a { transition: color .2s ease, transform .2s ease; }
+    .footer-links a:hover { transform: translateY(-2px); }
+    .reveal-on-scroll { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s cubic-bezier(.2,.7,.2,1); }
+    .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+    @keyframes faqReveal { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 760px) {
+      .info-section { padding: 42px 18px; }
+      .section-heading { margin-bottom: 22px; }
+      .step-card { padding: 21px; }
+      .benefit-card { padding: 17px; }
+      .support-section { padding-top: 4px; padding-bottom: 34px; }
+      .support-btn { justify-self: stretch; width: 100%; }
+      .site-footer { padding: 30px 18px 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-on-scroll, .reveal-on-scroll.is-visible { opacity: 1; transform: none; transition: none; }
+      .step-card, .benefit-card, .faq-list details, .support-btn, .support-btn svg, .step-number, .benefit-icon { transition: none !important; }
+      .faq-answer { animation: none; }
+    }
+
+
+    /* Premium polish: restore PrepVia blue palette and elevate section cards */
+    :root { --ink-dark: #091540; --brand-blue: #1b2cc1; --brand-soft: #abd2fa; --brand-mid: #7692ff; }
+    .resources-section { padding: 42px 24px 38px; }
+    .resources-section .section-heading { margin-bottom: 22px; }
+    .resources-section .section-heading h2 { color: var(--ink-dark); }
+    .resource-grid { gap: 14px; }
+    .resource-card {
+      position: relative; overflow: hidden; isolation: isolate;
+      min-height: 174px; padding: 20px 18px;
+      border: 1px solid rgba(118,146,255,.22); border-radius: 20px;
+      background: linear-gradient(145deg, #ffffff 0%, #f6f8ff 68%, #edf4ff 100%);
+      box-shadow: 0 8px 24px rgba(9,21,64,.065), inset 0 1px 0 rgba(255,255,255,.95);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .resource-card::before { content: ''; position: absolute; z-index: -1; inset: 0 0 auto; height: 3px; background: linear-gradient(90deg,#7692ff,#1b2cc1,#abd2fa); opacity: .8; }
+    .resource-card::after { content: ''; position: absolute; z-index: -1; width: 115px; height: 115px; right: -52px; top: -54px; border-radius: 50%; background: rgba(118,146,255,.13); transition: transform .3s ease; }
+    .resource-card:hover { transform: translateY(-5px); border-color: rgba(27,44,193,.38); box-shadow: 0 16px 32px rgba(9,21,64,.12); }
+    .resource-card:hover::after { transform: scale(1.3); }
+    .resource-icon { width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(145deg,#eaf1ff,#dbe7ff); color: #1b2cc1; box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 4px 10px rgba(27,44,193,.08); }
+    .resource-card-copy h3 { color: #091540; letter-spacing: -.025em; }
+    .resource-card-copy p { line-height: 1.6; }
+    .resource-tag { display: inline-flex; align-items: center; margin-top: 10px; padding: 5px 9px; border: 1px solid rgba(118,146,255,.17); border-radius: 999px; background: #eef3ff; color: #27336d; font-size: 10px; font-weight: 800; }
+    .resources-bottom { margin-top: 17px; padding: 14px 16px; border: 1px solid rgba(118,146,255,.18); border-radius: 17px; background: linear-gradient(120deg,#edf4ff,#f8faff); color: #091540; box-shadow: 0 5px 16px rgba(9,21,64,.04); }
+    .resources-bottom span { color: #27336d; }
+    .resources-bottom a { padding: 11px 15px; border-radius: 12px; background: linear-gradient(135deg,#1b2cc1,#5269ed); color: #fff; box-shadow: 0 6px 14px rgba(27,44,193,.2); transition: transform .2s ease, box-shadow .2s ease; }
+    .resources-bottom a:hover { transform: translateY(-2px); box-shadow: 0 9px 19px rgba(27,44,193,.27); }
+    .info-section { padding: 36px 24px; }
+    .section-heading { margin-bottom: 21px; }
+    .section-heading h2 { color: #091540; letter-spacing: -.035em; }
+    .section-heading p { line-height: 1.65; }
+    .steps-grid, .benefits-grid { gap: 15px; }
+    .step-card, .benefit-card { position: relative; overflow: hidden; border-radius: 21px; border: 1px solid rgba(118,146,255,.20); box-shadow: 0 8px 24px rgba(9,21,64,.055), inset 0 1px 0 rgba(255,255,255,.95); transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease; }
+    .step-card:hover, .benefit-card:hover { transform: translateY(-4px); border-color: rgba(27,44,193,.32); box-shadow: 0 15px 30px rgba(9,21,64,.10); }
+    .step-card { padding: 23px; background: linear-gradient(145deg,#fff 0%,#f6f8ff 100%); }
+    .step-card::before, .benefit-card::before { content: ''; position: absolute; top: 0; left: 20px; right: 20px; height: 3px; border-radius: 0 0 5px 5px; background: linear-gradient(90deg,#abd2fa,#7692ff,#1b2cc1); opacity: .85; }
+    .step-card h3, .benefit-card h3 { color: #091540; }
+    .step-number { background: linear-gradient(135deg,#1b2cc1,#7692ff); color: #fff; border-radius: 14px; box-shadow: 0 5px 12px rgba(27,44,193,.2); }
+    .step-note { margin-top: 14px; padding: 13px 16px; border: 1px solid rgba(118,146,255,.22); border-radius: 15px; background: linear-gradient(100deg,#eaf2ff,#f6f8ff); color: #17245c; }
+    .benefits-section { background: linear-gradient(180deg,#f0f5ff 0%,#f8faff 55%,#fff 100%); }
+    .benefit-card { padding: 20px; background: linear-gradient(145deg,rgba(255,255,255,.98),rgba(246,249,255,.96)); }
+    .benefit-icon { background: linear-gradient(145deg,#e5edff,#d4e2ff); color: #1b2cc1; border: 1px solid rgba(118,146,255,.22); border-radius: 15px; box-shadow: 0 5px 12px rgba(27,44,193,.07); }
+    .faq-list { gap: 10px; }
+    .faq-list details { border: 1px solid rgba(118,146,255,.2); border-radius: 16px; background: linear-gradient(120deg,#fff,#f8faff); box-shadow: 0 4px 14px rgba(9,21,64,.035); transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+    .faq-list details:hover, .faq-list details[open] { border-color: rgba(27,44,193,.3); box-shadow: 0 8px 20px rgba(9,21,64,.07); }
+    .faq-list summary { padding: 16px 18px; color: #091540; }
+    .support-section { padding-top: 0; padding-bottom: 30px; }
+    .support-card { background: radial-gradient(circle at 88% 10%, rgba(171,210,250,.4), transparent 35%), linear-gradient(135deg,#1b2cc1 0%,#263bb8 58%,#091540 100%); border: 1px solid rgba(118,146,255,.24); border-radius: 24px; box-shadow: 0 14px 32px rgba(9,21,64,.15); }
+    .support-btn { background: #fff; color: #1b2cc1; border-radius: 13px; box-shadow: 0 8px 20px rgba(9,21,64,.18); }
+    .support-btn:hover { background: #edf3ff; }
+    .site-footer { background: linear-gradient(135deg,#091540 0%,#14246e 100%); }
+    .footer-brand strong span { color: #abd2fa; }
+    .footer-links a:hover { color: #abd2fa; }
+    .btn-primary { background: linear-gradient(135deg,#1b2cc1,#5269ed); border-color: #1b2cc1; }
+    .btn-primary:hover { background: linear-gradient(135deg,#1423a8,#4059dc); }
+    .btn-secondary { border-color: rgba(27,44,193,.2); color: #1b2cc1; }
+    .announcement-cta { background: #1b2cc1; }
+    @media (max-width: 760px) {
+      .resources-section { padding: 32px 16px 28px; }
+      .resource-grid { gap: 10px; }
+      .resource-card { min-height: 0; padding: 16px 13px; border-radius: 16px; }
+      .resource-icon { width: 38px; height: 38px; }
+      .resources-bottom { gap: 10px; }
+      .info-section { padding: 29px 16px; }
+      .section-heading { margin-bottom: 17px; }
+      .step-card { padding: 18px; }
+      .benefit-card { padding: 16px; }
+      .support-section { padding-top: 0; padding-bottom: 24px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .resource-card, .resource-card::after, .resources-bottom a, .step-card, .benefit-card, .faq-list details { transition: none !important; }
+    }
+
+
+    /* Lime purchase CTAs with accessible contrast, matching the existing PrepVia palette */
+    .btn-primary,
+    .announcement-cta,
+    .fixed-buy {
+      background: linear-gradient(135deg, #d8f58b 0%, #c8ed68 55%, #b8df4d 100%);
+      color: #091540;
+      border-color: rgba(145, 180, 48, .38);
+      box-shadow: 0 8px 20px rgba(166, 205, 70, .22), inset 0 1px 0 rgba(255,255,255,.72);
+    }
+    .btn-primary:hover,
+    .announcement-cta:hover,
+    .fixed-buy:hover {
+      background: linear-gradient(135deg, #e5ffa9 0%, #d4f58a 55%, #c8ed68 100%);
+      color: #091540;
+      box-shadow: 0 11px 25px rgba(166, 205, 70, .32), inset 0 1px 0 rgba(255,255,255,.82);
+    }
+    .btn-primary:focus-visible,
+    .announcement-cta:focus-visible,
+    .fixed-buy:focus-visible {
+      outline: 3px solid #7692ff;
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement" id="announcement" aria-label="Special offers">
+    <div class="offer-track">
+      <span class="offer-item"><span class="offer-spark">✦</span> Special launch offer</span>
+      <span class="offer-item">Use code <strong class="coupon">PREPVIA50</strong></span>
+      <span class="offer-item"><strong class="offer-discount">₹50 OFF</strong> your first order</span>
+      <span class="offer-item">📚 JEE + NEET resources in one kit</span>
+      <span class="offer-item">⚡ Instant digital access after purchase</span>
+      <span class="offer-item">🎯 Class 11 &amp; 12 study essentials</span>
+      <span class="offer-item" aria-hidden="true"><span class="offer-spark">✦</span> Special launch offer</span>
+      <span class="offer-item" aria-hidden="true">Use code <strong class="coupon">PREPVIA50</strong></span>
+      <span class="offer-item" aria-hidden="true"><strong class="offer-discount">₹50 OFF</strong> your first order</span>
+      <span class="offer-item" aria-hidden="true">📚 JEE + NEET resources in one kit</span>
+      <span class="offer-item" aria-hidden="true">⚡ Instant digital access after purchase</span>
+      <span class="offer-item" aria-hidden="true">🎯 Class 11 &amp; 12 study essentials</span>
+    </div>
+    <a class="announcement-cta fixed-buy" href="https://prepvia.shop/checkout.html">Buy now <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+  </div>
+
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a href="#" class="brand" aria-label="PrepVia home">
+        <img class="brand-logo" src="prepvia-logo-transparent.png" alt="PrepVia logo" width="50" height="50">
+        <span class="brand-copy">
+          <span class="brand-name">Prep<span>Via</span></span>
+          <span class="brand-tagline">Stop searching. Start preparing.</span>
+        </span>
+      </a>
+      <div class="nav-actions">
+        <a class="nav-link" href="https://t.me/PrepViaBot">Support</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Main navigation">
+      <a href="#package">What's inside</a>
+      <a href="#preview">Preview package</a>
+      <a href="https://t.me/PrepViaBot">Contact support</a>
+      <a href="https://prepvia.shop/checkout.html">Get the complete kit →</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <span class="floating-spark spark-one" aria-hidden="true">✦</span>
+      <span class="floating-spark spark-two" aria-hidden="true">✦</span>
+      <span class="floating-spark spark-three" aria-hidden="true">✧</span>
+      <div class="hero-layout">
+      <div class="hero-content">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> Everything you need, in one place</div>
+
+        <h1>Your Complete <span class="highlight">JEE &amp; NEET</span> Preparation Kit</h1>
+
+        <p class="hero-copy">
+          <strong>PrepVia Resources Kit</strong> brings your preparation essentials together — reference books, PYQs, handwritten notes, mind maps, formula sheets, modules and test series. Spend less time searching and more time preparing.
+        </p>
+
+        <div class="exam-pills" aria-label="Included exams and classes">
+          <span class="exam-pill"><span class="emoji" aria-hidden="true">🚀</span> JEE Main &amp; Advanced</span>
+          <span class="exam-pill"><span class="emoji" aria-hidden="true">🧬</span> NEET UG</span>
+          <span class="exam-pill"><span class="emoji" aria-hidden="true">📚</span> Class 11 &amp; 12</span>
+        </div>
+
+        <div class="hero-buttons">
+          <a class="btn btn-primary" href="https://prepvia.shop/checkout.html">Get The Complete Kit <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+          <a class="btn btn-secondary" href="https://t.me/PrepViaBot" id="previewButton" target="_blank" rel="noopener noreferrer">Preview Package <i data-lucide="play-circle" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="trust-note">
+          <i data-lucide="download-cloud" aria-hidden="true"></i><span>Digital resources</span>
+          <span class="separator">•</span>
+          <i data-lucide="folder-check" aria-hidden="true"></i><span>Organised by subject</span>
+          <span class="separator">•</span>
+          <i data-lucide="zap" aria-hidden="true"></i><span>Instant access after purchase</span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="PrepVia package mockup">
+        <div class="mockup-glow"></div>
+        <img src="assets/mockup.png" alt="PrepVia JEE and NEET resources package mockup" class="package-mockup" fetchpriority="high">
+        <div class="mockup-badge badge-top"><span aria-hidden="true">📚</span><span>Complete study kit</span></div>
+        <div class="mockup-badge badge-bottom"><span aria-hidden="true">⚡</span><span>Study smarter</span></div>
+      </div>
+      </div>
+    </section>
+
+    <section class="resources-section" id="package">
+      <div class="resources-wrap">
+        <div class="section-heading">
+          <span class="section-kicker"><span class="kicker-dot"></span> What's inside</span>
+          <h2>Everything You Need to <span>Prepare Smarter</span></h2>
+          <p>A thoughtfully organised collection of resources to support your JEE &amp; NEET preparation — all in one place.</p>
+        </div>
+
+        <div class="resource-grid">
+          <article class="resource-card">
+            <div class="resource-icon icon-orange"><i data-lucide="book-open" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Reference Books</h3>
+              <p>Essential books and study material for JEE &amp; NEET preparation.</p>
+              <span class="resource-tag">📚 Study essentials</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-purple"><i data-lucide="file-text" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Previous Year Questions</h3>
+              <p>Practice past questions to understand exam patterns and question styles.</p>
+              <span class="resource-tag">🎯 Exam practice</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-green"><i data-lucide="notebook-pen" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Handwritten Notes</h3>
+              <p>Subject-wise notes to help you revise important concepts.</p>
+              <span class="resource-tag">✍️ Easy revision</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-blue"><i data-lucide="file-check" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Short Notes</h3>
+              <p>Quick-reference notes for focused revision before tests.</p>
+              <span class="resource-tag">⚡ Quick review</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-pink"><i data-lucide="brain" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Mind Maps</h3>
+              <p>Visual summaries that help connect and remember key topics.</p>
+              <span class="resource-tag">🧠 Visual learning</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-indigo"><i data-lucide="sigma" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Formula Sheets</h3>
+              <p>Important formulas gathered in one convenient place.</p>
+              <span class="resource-tag">➗ Formula revision</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-cyan"><i data-lucide="clipboard-check" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Test Series</h3>
+              <p>Practice questions and tests to check your preparation.</p>
+              <span class="resource-tag">📝 Practice mode</span>
+            </div>
+          </article>
+          <article class="resource-card">
+            <div class="resource-icon icon-coral"><i data-lucide="layers-3" aria-hidden="true"></i></div>
+            <div class="resource-card-copy">
+              <h3>Institute Modules</h3>
+              <p>Additional learning modules to support topic-wise practice.</p>
+              <span class="resource-tag">📂 Extra resources</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="resources-bottom">
+          <span><i data-lucide="check-circle-2" aria-hidden="true"></i> Organised for Class 11 &amp; 12</span>
+          <span><i data-lucide="check-circle-2" aria-hidden="true"></i> JEE &amp; NEET resources</span>
+          <a href="https://prepvia.shop/checkout.html">Get The Complete Kit <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </section>
+
+
+
+
+    <section class="info-section" id="how-it-works">
+      <div class="info-wrap">
+        <div class="section-heading">
+          <span class="section-kicker"><span class="kicker-dot"></span> Simple &amp; convenient</span>
+          <h2>How It <span>Works</span></h2>
+          <p>Get your JEE and NEET study resources through a straightforward digital purchase.</p>
+        </div>
+        <div class="steps-grid">
+          <article class="step-card"><span class="step-number">01</span><h3>Choose Your Kit</h3><p>Review the PrepVia Resources Kit and make sure it fits your JEE and NEET preparation needs.</p></article>
+          <article class="step-card"><span class="step-number">02</span><h3>Complete Payment</h3><p>Continue to checkout and complete your payment. Enter an email address you can access so your delivery details reach you.</p></article>
+          <article class="step-card"><span class="step-number">03</span><h3>Check Your Email</h3><p>After successful payment, the package links are shared with the email address you provided.</p></article>
+        </div>
+        <div class="step-note"><i data-lucide="mail-check" aria-hidden="true"></i><span><strong>One payment, both packages:</strong> your email will include the JEE package link and the NEET package link. You do not need to make two separate payments.</span></div>
+      </div>
+    </section>
+
+    <section class="info-section benefits-section" id="why-prepvia">
+      <div class="info-wrap">
+        <div class="section-heading">
+          <span class="section-kicker"><span class="kicker-dot"></span> Your prep, organised</span>
+          <h2>Why Choose <span>PrepVia?</span></h2>
+          <p>Spend more time learning and practising, and less time hunting for study material across different places.</p>
+        </div>
+        <div class="benefits-grid">
+          <article class="benefit-card"><div class="benefit-icon"><i data-lucide="layers-3" aria-hidden="true"></i></div><h3>Resources in One Place</h3><p>Bring notes, PYQs, formula sheets, books, modules and revision resources together in one organised kit.</p></article>
+          <article class="benefit-card"><div class="benefit-icon"><i data-lucide="book-open-check" aria-hidden="true"></i></div><h3>JEE + NEET Together</h3><p>Get both JEE and NEET package links with a single payment, as described in the offer.</p></article>
+          <article class="benefit-card"><div class="benefit-icon"><i data-lucide="graduation-cap" aria-hidden="true"></i></div><h3>Class 11 &amp; 12 Focus</h3><p>Study resources are presented for students preparing across Class 11 and Class 12 topics.</p></article>
+          <article class="benefit-card"><div class="benefit-icon"><i data-lucide="folder-check" aria-hidden="true"></i></div><h3>Digital &amp; Convenient</h3><p>Access your package links digitally, without waiting for a physical delivery.</p></article>
+          <article class="benefit-card"><div class="benefit-icon"><i data-lucide="refresh-cw" aria-hidden="true"></i></div><h3>Useful for Revision</h3><p>Use short notes, mind maps and formula sheets to support quick revision alongside regular study.</p></article>
+          <article class="benefit-card"><div class="benefit-icon"><i data-lucide="messages-square" aria-hidden="true"></i></div><h3>Support When Needed</h3><p>Contact the PrepVia support bot if you have a question about your purchase or package delivery.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-section" id="faq">
+      <div class="info-wrap">
+        <div class="section-heading">
+          <span class="section-kicker"><span class="kicker-dot"></span> Need to know?</span>
+          <h2>Frequently Asked <span>Questions</span></h2>
+          <p>Quick answers to common questions about the package and delivery.</p>
+        </div>
+        <div class="faq-list">
+          <details><summary>Will I receive both JEE and NEET packages?</summary><div class="faq-answer">Yes. The offer includes both the JEE package link and the NEET package link in one payment.</div></details>
+          <details><summary>How will I receive my package?</summary><div class="faq-answer">After successful payment, the package links are shared with the email address you provide at checkout. Please enter it carefully and check your inbox.</div></details>
+          <details><summary>Do I need to pay separately for JEE and NEET?</summary><div class="faq-answer">No. According to this offer, one payment covers both package links.</div></details>
+          <details><summary>What kind of resources are included?</summary><div class="faq-answer">The kit is presented with resources such as reference books, previous-year questions, handwritten and short notes, mind maps, formula sheets, institute modules and test series. Check the package details before purchasing for the latest inclusions.</div></details>
+          <details><summary>Is this a physical book delivery?</summary><div class="faq-answer">No physical shipment is described here. The package is delivered digitally through links sent to your provided email address.</div></details>
+          <details><summary>What if I don't receive the email after payment?</summary><div class="faq-answer">First check your spam, junk and promotions folders and confirm that you entered the correct email address. If the links still haven't arrived, contact support through the PrepVia Telegram bot and share your order details privately.</div></details>
+          <details><summary>How can I contact PrepVia support?</summary><div class="faq-answer">Open the <a href="https://t.me/PrepViaBot" target="_blank" rel="noopener noreferrer"><strong>PrepVia Support Bot on Telegram</strong></a> to ask for help with your purchase or delivery.</div></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-section support-section" id="support">
+      <div class="info-wrap">
+        <div class="support-card">
+          <div><h2>Need a Hand? We're Here to Help.</h2><p>Questions about checkout, payment confirmation or package delivery? Reach out through the PrepVia Telegram bot for support.</p></div>
+          <a class="support-btn" href="https://t.me/PrepViaBot" target="_blank" rel="noopener noreferrer">💎 Contact Support <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <div id="preview" hidden></div>
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="footer-wrap">
+      <div class="footer-main">
+        <div>
+          <a href="#home" class="footer-brand" aria-label="PrepVia home"><img src="prepvia-logo-transparent.png" alt="" width="44" height="44"><span><strong>Prep<span>Via</span></strong><small>Stop searching. Start preparing.</small></span></a>
+          <p class="footer-copy">Digital study resources for students preparing for JEE Main, JEE Advanced and NEET UG. Organise your preparation and make your study time count.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="#package">What's Inside</a><a href="#how-it-works">How It Works</a><a href="#why-prepvia">Why PrepVia</a><a href="#faq">FAQs</a><a href="https://t.me/PrepViaBot" target="_blank" rel="noopener noreferrer">Support / Contact</a>
+        </nav>
+      </div>
+      <div class="footer-bottom"><span>© <span id="currentYear">2026</span> PrepVia. All rights reserved.</span><span>Made for focused preparation.</span></div>
+    </div>
+  </footer>
+
+  <script>
+    // Render Lucide icons if the CDN is available.
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+
+    const year = document.getElementById('currentYear');
+    if (year) year.textContent = new Date().getFullYear();
+
+    const banner = document.getElementById('announcement');
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuToggle.addEventListener('click', function () {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+      menuToggle.innerHTML = isOpen ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
+      if (window.lucide) window.lucide.createIcons();
+    });
+
+    document.querySelectorAll('.mobile-menu a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        mobileMenu.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Open navigation menu');
+        menuToggle.innerHTML = '<i data-lucide="menu"></i>';
+        if (window.lucide) window.lucide.createIcons();
+      });
+    });
+
+
+
+    // Preview anchor is reserved for the package preview section being added next.
+    document.getElementById('previewButton').addEventListener('click', function (event) {
+      if (document.getElementById('preview').hidden) {
+        event.preventDefault();
+      }
+    });
+
+    // Subtle entrance animation for the newly added content sections.
+    const revealItems = document.querySelectorAll('#how-it-works .section-heading, #how-it-works .step-card, #how-it-works .step-note, #why-prepvia .section-heading, #why-prepvia .benefit-card, #faq .section-heading, #faq .faq-list details, #support .support-card');
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      revealItems.forEach((item, index) => {
+        item.classList.add('reveal-on-scroll');
+        item.style.transitionDelay = `${(index % 3) * 65}ms`;
+      });
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' });
+      revealItems.forEach(item => revealObserver.observe(item));
+    }
+
+  </script>
+</body>
+</html>
