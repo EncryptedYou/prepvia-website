@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#050505">
+<title>Diwali Wishes — PrepVia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050505;--panel:#101010;--gold:#f8ca72;--gold2:#ff9e42;--cream:#fff2d5;--muted:#b5a99a;--line:#ffffff14}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{background:transparent;color:var(--cream);font-family:"Manrope",sans-serif;overflow-x:hidden;min-height:100%;position:relative}
+html{background:#050505}
+.bg-video{z-index:0}
+.video-shade{z-index:1}
+#sky{z-index:4}
+main{z-index:3}
+.bg-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;z-index:0;opacity:.62;filter:saturate(1.12) brightness(.72);pointer-events:none;background:
+radial-gradient(ellipse at 50% 25%,#8a421b 0%,transparent 40%),
+radial-gradient(ellipse at 15% 75%,#5b260f 0%,transparent 35%),#050505}
+.video-shade{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.50) 0%,rgba(4,3,3,.30) 32%,rgba(0,0,0,.68) 72%,rgba(0,0,0,.88) 100%),radial-gradient(ellipse at center,transparent 10%,rgba(0,0,0,.42) 100%)}
+#sky{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}
+main{position:relative;z-index:3;isolation:isolate}
+.wrap{width:min(1120px,100%);margin:auto;padding-inline:clamp(18px,5vw,56px)}
+/* Intro */
+.intro{position:fixed;inset:0;z-index:20;background:#050505;display:grid;place-items:center;animation:exitIntro 1s cubic-bezier(.76,0,.24,1) 1.25s forwards}
+.intro-brand{font:800 clamp(2rem,7vw,4rem) "Manrope";letter-spacing:.12em;color:#fff;text-align:center;animation:brandIn .8s ease both}
+.intro-brand span{color:var(--gold)}
+.intro-brand small{display:block;font-size:.25em;letter-spacing:.35em;color:#a69a8d;margin-top:14px;font-weight:500}
+@keyframes brandIn{from{opacity:0;transform:translateY(15px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@keyframes exitIntro{to{transform:translateY(-100%);visibility:hidden}}
+/* hero */
+.hero{min-height:92svh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:72px 0 58px;overflow:hidden}
+.hero:before{content:"";position:absolute;width:min(850px,100vw);height:550px;top:8%;left:50%;transform:translateX(-50%);background:radial-gradient(ellipse,#9a55151b 0%,transparent 68%);pointer-events:none}
+.hero-inner{position:relative;max-width:930px}
+.brandline{display:inline-flex;align-items:center;gap:9px;color:#c8b9a2;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;margin-bottom:18px;opacity:0;animation:fadeUp .8s 1.5s forwards}
+.brandline:before,.brandline:after{content:"";width:24px;height:1px;background:var(--gold)}
+.kicker{color:var(--gold);font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin-bottom:10px;opacity:0;animation:fadeUp .8s 1.6s forwards}
+h1{font:700 clamp(3.3rem,11vw,8rem)/.98 "Playfair Display",serif;letter-spacing:-.045em;color:#fff8e9;opacity:0;animation:fadeUp 1s 1.75s forwards}
+h1 em{font-style:normal;display:block;background:linear-gradient(100deg,#fff1c5 5%,#f8ca72 43%,#ff9d43 80%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 24px #f9b94b19)}
+.hero-copy{max-width:650px;margin:17px auto 0;color:#bcb2a6;font-size:clamp(.95rem,2vw,1.12rem);line-height:1.9;opacity:0;animation:fadeUp .8s 2s forwards}
+.diya-wrap{height:105px;display:grid;place-items:center;margin:18px auto 0;opacity:0;animation:fadeUp .8s 2.1s forwards}
+.diya{width:105px;height:65px;position:relative}
+.flame{position:absolute;z-index:2;left:42px;top:-33px;width:25px;height:43px;border-radius:80% 0 70% 70%;transform:rotate(45deg);background:linear-gradient(45deg,#ff6a21,#fff2a8 70%);box-shadow:0 0 22px 9px #ff9d3c45;animation:flicker .16s infinite alternate}
+.flame:after{content:"";position:absolute;width:10px;height:22px;left:7px;top:13px;background:#fffde1;border-radius:80% 0 70% 70%}
+.diya-bowl{position:absolute;bottom:0;width:105px;height:42px;background:linear-gradient(180deg,#e9a34b,#6c2d11);border-radius:8px 8px 55px 55px;box-shadow:0 10px 30px #ff9d3c20,inset 0 3px 5px #fff4a5}
+.diya-bowl:before{content:"";position:absolute;top:2px;left:5px;width:95px;height:9px;background:#3d170d;border-radius:50%}
+@keyframes flicker{to{transform:rotate(39deg) scale(.92);filter:brightness(1.2)}}
+.scroll{position:absolute;bottom:22px;color:#786f66;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase}
+.scroll:after{content:"";display:block;margin:12px auto 0;width:1px;height:25px;background:linear-gradient(var(--gold),transparent)}
+/* content */
+.wish{padding:clamp(48px,7vw,85px) 0;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(180deg,#080808,#0b0907,#080808)}
+.eyebrow{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:#dcae5b;font-weight:700}
+.wish h2,.package h2{font:700 clamp(2.1rem,5vw,4.2rem)/1.1 "Playfair Display",serif;color:#fff0d0;margin-top:13px}
+.wish p{max-width:700px;margin:15px auto 0;color:#b7ada1;line-height:1.95;font-size:1rem}
+.motif{display:flex;justify-content:center;align-items:center;gap:15px;margin-top:20px;color:#f8ca72}
+.motif i{width:60px;height:1px;background:linear-gradient(90deg,transparent,#b78b4d)}
+.motif span{font-size:1.45rem;filter:drop-shadow(0 0 12px #ffba48)}
+ .festive-grid{padding:clamp(42px,6vw,72px) 0;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#070707,#0b0908)}
+.grid-heading{font:700 clamp(1.9rem,4.6vw,3.3rem)/1.1 "Playfair Display",serif;color:#fff0d0;text-align:center;margin:14px 0 28px}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tile{position:relative;overflow:hidden;text-align:left;border:1px solid #e9bd6430;border-radius:18px;padding:24px 22px;background:linear-gradient(145deg,#15120e,#0a0908);transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease;min-width:0}
+.tile:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top right,#f8c76a15,transparent 60%);opacity:0;transition:opacity .35s}
+.tile:hover{transform:translateY(-7px);border-color:#e9bd6480;box-shadow:0 15px 35px #0007,0 0 25px #ffca6b0b}
+.tile:hover:before{opacity:1}
+.tile-icon{font-size:1.7rem;display:block;margin-bottom:14px;filter:drop-shadow(0 0 10px #ffba4840)}
+.tile h3{font:700 1.25rem "Playfair Display",serif;color:#ffe5ad;margin-bottom:9px}
+.tile p{color:#b9aea0;font-size:.88rem;line-height:1.75}
+.package{padding:clamp(42px,6vw,72px) 0 56px;min-height:auto}
+.package-card{max-width:850px;margin:auto;border:1px solid #e8b85b35;border-radius:28px;position:relative;overflow:hidden;padding:clamp(30px,6vw,65px);text-align:center;background:linear-gradient(145deg,#14110d,#0b0a09 65%);box-shadow:0 24px 80px #0008,inset 0 1px #fff08}
+.package-card:before{content:"";position:absolute;top:-170px;right:-140px;width:400px;height:400px;background:radial-gradient(circle,#f7b94a13,transparent 70%);pointer-events:none}
+.package-card>*{position:relative}
+.pill{display:inline-flex;border:1px solid #f2c36a50;background:#f5bd4b0b;color:#f6ce83;border-radius:999px;padding:9px 16px;font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+.package h2{margin-top:15px}
+.package-copy{max-width:570px;margin:12px auto 0;color:#b9aea0;line-height:1.85}
+.coupon{margin:18px auto 22px;display:inline-flex;align-items:center;gap:10px;padding:12px 17px;border-radius:12px;border:1px dashed #e9b85a88;background:#050505;color:#d8c9b3;font-size:.9rem;flex-wrap:wrap;justify-content:center}
+.coupon strong{color:#ffcf75;letter-spacing:.14em;font-weight:800}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:13px;position:relative;isolation:isolate;text-decoration:none;color:#1b1004;font-weight:800;font-size:clamp(.9rem,2vw,1.02rem);padding:17px 30px;border-radius:14px;background:linear-gradient(110deg,#ffe7a3 0%,#ffc65e 45%,#ff983c 100%);box-shadow:0 8px 35px #ffad3d2e,inset 0 1px #fff8d5;transition:transform .25s,box-shadow .25s;overflow:hidden}
+.cta:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 20%,#fff9 48%,transparent 70%);transform:translateX(-120%);animation:shine 3s ease-in-out infinite}
+.cta:after{content:"";position:absolute;inset:-4px;border-radius:17px;border:1px solid #ffd77866;animation:ctaPulse 2.5s ease-out infinite;pointer-events:none}
+.cta:hover{transform:translateY(-4px);box-shadow:0 15px 45px #ffad3d50,inset 0 1px #fff8d5}
+.cta .arrow{font-size:1.3rem;transition:transform .25s}
+.cta:hover .arrow{transform:translate(3px,-3px)}
+@keyframes shine{50%,100%{transform:translateX(120%)}}
+@keyframes ctaPulse{0%{transform:scale(1);opacity:.75}100%{transform:scale(1.07);opacity:0}}
+footer{padding:28px 18px calc(35px + env(safe-area-inset-bottom));text-align:center;color:#71675c;font-size:.75rem;letter-spacing:.08em;background:#050505}
+footer b{color:#d6b16c;letter-spacing:.14em}
+.reveal{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.show{opacity:1;transform:none}
+.tile{transition-delay:var(--delay,0ms)}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.tile:last-child{grid-column:1/-1}}
+@media(max-width:560px){.bg-video{object-fit:cover;object-position:center center}.tiles{grid-template-columns:1fr;gap:12px}.tile:last-child{grid-column:auto}.tile{padding:20px}.hero{min-height:85svh;padding:48px 0 60px}.brandline{letter-spacing:.18em}.package-card{border-radius:20px}.cta{width:100%;padding:17px 16px}.coupon{font-size:.83rem}}
+@media(min-width:561px) and (max-width:900px){.bg-video{object-fit:cover;object-position:center center}.hero{min-height:88svh;padding:60px 0}.hero-copy{max-width:560px}.wish{padding:55px 0}.package-card{padding:38px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="intro" aria-hidden="true"><div class="intro-brand">PREP<span>VIA</span><small>LEARN · PREPARE · RISE</small></div></div>
+<video id="diwaliVideo" class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="https://images.pexels.com/videos/34399732/free-video-34399732.jpg" aria-hidden="true">
+ <source src="https://videos.pexels.com/video-files/34399732/14573699_2160_3840_30fps.mp4" type="video/mp4">
+</video>
+<div class="video-shade" aria-hidden="true"></div>
+<canvas id="sky" aria-hidden="true"></canvas>
+<main>
+<section class="hero">
+ <div class="hero-inner wrap">
+  <div class="brandline">PrepVia · Festive Greetings</div>
+  <div class="kicker">A celebration of light & new beginnings</div>
+  <h1>Happy <em>Diwali.</em></h1>
+  <p class="hero-copy">May the glow of every diya brighten your path, the sparkle of every firework inspire new dreams, and this beautiful festival bring peace, prosperity and joy to you and your loved ones.</p>
+  <div class="diya-wrap"><div class="diya"><div class="flame"></div><div class="diya-bowl"></div></div></div>
+ </div>
+ <div class="scroll">Scroll to feel the festive glow</div>
+</section>
+<section class="wish reveal">
+ <div class="wrap">
+  <div class="eyebrow">Warm wishes from PrepVia</div>
+  <h2>Let your dreams shine<br>as bright as the lights.</h2>
+  <p>May this Diwali mark the beginning of brighter opportunities, meaningful achievements and endless reasons to smile. Keep your curiosity alive, your goals high, and your light shining.</p>
+  <div class="motif" aria-hidden="true"><i></i><span>✦</span><span>🪔</span><span>✦</span><i></i></div>
+ </div>
+</section>
+<section class="festive-grid reveal">
+ <div class="wrap">
+  <div class="eyebrow">The spirit of Diwali</div>
+  <h2 class="grid-heading">A little light. A lot of meaning.</h2>
+  <div class="tiles">
+   <article class="tile"><span class="tile-icon">🪔</span><h3>Light & hope</h3><p>May every new light bring fresh hope, courage and beautiful beginnings.</p></article>
+   <article class="tile"><span class="tile-icon">✨</span><h3>Joy & togetherness</h3><p>May your days be filled with warm moments and memories worth keeping.</p></article>
+   <article class="tile"><span class="tile-icon">🌟</span><h3>Dreams & success</h3><p>May every effort lead you closer to your goals and brighter possibilities.</p></article>
+  </div>
+ </div>
+</section>
+<section class="package reveal">
+ <div class="wrap">
+  <div class="package-card">
+   <span class="pill">A festive offer for your goals</span>
+   <h2>Make this Diwali<br>the start of your success.</h2>
+   <p class="package-copy">Give your JEE & NEET preparation a brighter start with PrepVia’s study package.</p>
+   <div class="coupon">Festive coupon <strong>PREPVIA50</strong> <span>·</span> ₹50 instant discount at checkout</div>
+   <br>
+   <a class="cta" href="index.html">Explore JEE & NEET Package <span class="arrow">↗</span></a>
+  </div>
+ </div>
+</section>
+<footer>Wishing you light, happiness & success · <b>PREPVIA</b></footer>
+</main>
+<script>
+(()=> {
+ const c=document.getElementById('sky'),g=c.getContext('2d');let w,h,d=1,parts=[],rockets=[],last=0;
+ const palette=['#ffcf70','#ff8b45','#f7e6a1','#ff5d91','#bba1ff','#70e4ff'];
+ function size(){d=Math.min(devicePixelRatio||1,1.5);w=innerWidth;h=innerHeight;c.width=w*d;c.height=h*d;c.style.width=w+'px';c.style.height=h+'px';g.setTransform(d,0,0,d,0,0)}
+ addEventListener('resize',size);size();
+ function burst(x,y,col){let n=65+Math.random()*40;for(let i=0;i<n;i++){let a=Math.random()*6.283,s=.8+Math.random()*4.2;parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:45+Math.random()*45,max:90,r:.7+Math.random()*1.8,col,gravity:.025+Math.random()*.045})}}
+ function launch(){rockets.push({x:Math.random()*w,y:h+10,target:h*(.12+Math.random()*.42),v:3.5+Math.random()*2,col:palette[Math.floor(Math.random()*palette.length)],trail:[]})}
+ function loop(t){requestAnimationFrame(loop);g.clearRect(0,0,w,h);
+  if(t-last>900+Math.random()*900){launch();last=t}
+  for(let i=rockets.length-1;i>=0;i--){let r=rockets[i];r.y-=r.v;r.trail.push([r.x,r.y]);if(r.trail.length>6)r.trail.shift();g.beginPath();g.strokeStyle=r.col;g.lineWidth=1.8;g.shadowBlur=8;g.shadowColor=r.col;r.trail.forEach((p,j)=>j?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.stroke();g.shadowBlur=0;if(r.y<r.target){burst(r.x,r.y,r.col);rockets.splice(i,1)}}
+  for(let i=parts.length-1;i>=0;i--){let p=parts[i];p.x+=p.vx;p.y+=p.vy;p.vy+=p.gravity;p.vx*=.985;p.life--;g.globalAlpha=Math.max(0,p.life/p.max);g.fillStyle=p.col;g.shadowBlur=9;g.shadowColor=p.col;g.beginPath();g.arc(p.x,p.y,p.r,0,6.28);g.fill();if(p.life<=0)parts.splice(i,1)}
+  g.globalAlpha=1;g.shadowBlur=0;
+ }
+ requestAnimationFrame(loop);
+ const bgVideo=document.getElementById('diwaliVideo');
+ bgVideo.play().catch(()=>{});
+ bgVideo.addEventListener('error',()=>{bgVideo.style.display='none';document.body.classList.add('video-fallback')},{once:true});
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)bgVideo.play().catch(()=>{});
+ bgVideo.addEventListener('error',()=>{bgVideo.style.display='none';document.body.classList.add('video-fallback')},{once:true});});
+ addEventListener('pointerdown',e=>burst(e.clientX,e.clientY,palette[Math.floor(Math.random()*palette.length)]));
+ setTimeout(()=>{burst(w*.24,h*.24,palette[0]);burst(w*.76,h*.21,palette[2]);},1400);
+ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}}),{threshold:.15});
+ document.querySelectorAll('.reveal').forEach(x=>io.observe(x));
+ document.querySelectorAll('.tile').forEach((x,i)=>x.style.setProperty('--delay',(i*90)+'ms'));
+})();
+</script>
+</body>
+</html>
