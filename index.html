@@ -1140,6 +1140,114 @@
 
   </style>
 
+
+  <style id="prepv-motion-refresh">
+    :root {
+      --edu-bg: #f4f7ff;
+      --edu-card: #ffffff;
+      --edu-ink: #101b46;
+      --edu-blue: #3155d9;
+      --edu-violet: #7666f5;
+      --edu-mint: #baf2d1;
+      --edu-border: rgba(49,85,217,.14);
+    }
+
+    /* Slim reading progress indicator attached to the navigation */
+    .site-header { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(18px); }
+    .pv-scroll-progress {
+      position: absolute; left: 0; right: 0; bottom: -1px;
+      height: 3px; overflow: hidden; background: rgba(118,102,245,.10);
+      pointer-events: none;
+    }
+    #pvScrollProgress {
+      display: block; width: 0%; height: 100%;
+      background: linear-gradient(90deg, #7c8cff, #3155d9 55%, #baf2d1);
+      box-shadow: 0 0 12px rgba(118,140,255,.55);
+      transform-origin: left center; transition: width .08s linear;
+    }
+
+    /* More classroom / learning-product color language */
+    body { background: var(--edu-bg); }
+    .hero {
+      background:
+        radial-gradient(ellipse at 8% 18%, rgba(137,190,255,.24), transparent 36%),
+        radial-gradient(ellipse at 90% 20%, rgba(186,242,209,.26), transparent 33%),
+        linear-gradient(145deg, #f9fbff 0%, #eef3ff 100%);
+    }
+    .resources-section { background: linear-gradient(180deg,#fff 0%,#f4f7ff 100%); }
+    .resource-card, .step-card, .benefit-card, .faq-list details {
+      --tile-x: 50%; --tile-y: 50%;
+      background-image: radial-gradient(circle at var(--tile-x) var(--tile-y), rgba(124,140,255,.10), transparent 42%);
+    }
+    .resource-card::before, .step-card::before, .benefit-card::before {
+      background: linear-gradient(90deg,#8bbdff,#7666f5,#baf2d1);
+    }
+    .resource-card:hover, .step-card:hover, .benefit-card:hover {
+      border-color: rgba(118,102,245,.42);
+      box-shadow: 0 18px 38px rgba(37,55,130,.12);
+    }
+    .support-btn { gap: 10px; }
+    .support-emoji { display:inline-block; font-size: 19px; transition: transform .25s ease; }
+    .support-btn:hover .support-emoji { transform: rotate(-10deg) scale(1.18); }
+
+    /* Intro reveal: content and tiles arrive in a soft stagger */
+    .hero .eyebrow, .hero h1, .hero .hero-copy, .hero .exam-pill,
+    .hero .hero-buttons, .hero .trust-note {
+      opacity: 0; animation: pvTextRise .75s cubic-bezier(.2,.75,.2,1) forwards;
+    }
+    .hero .eyebrow { animation-delay: .08s; }
+    .hero h1 { animation-delay: .18s; }
+    .hero .hero-copy { animation-delay: .3s; }
+    .hero .exam-pill:nth-child(1) { animation-delay: .36s; }
+    .hero .exam-pill:nth-child(2) { animation-delay: .44s; }
+    .hero .exam-pill:nth-child(3) { animation-delay: .52s; }
+    .hero .hero-buttons { animation-delay: .58s; }
+    .hero .trust-note { animation-delay: .68s; }
+    .hero-visual { animation: pvVisualEnter 1s cubic-bezier(.16,.8,.2,1) .15s both; }
+    .resource-card, .step-card, .benefit-card {
+      animation: pvTileEnter .7s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .resource-card:nth-child(4n+1), .step-card:nth-child(3n+1), .benefit-card:nth-child(3n+1) { animation-delay: .04s; }
+    .resource-card:nth-child(4n+2), .step-card:nth-child(3n+2), .benefit-card:nth-child(3n+2) { animation-delay: .12s; }
+    .resource-card:nth-child(4n+3), .step-card:nth-child(3n+3), .benefit-card:nth-child(3n+3) { animation-delay: .20s; }
+    .resource-card:nth-child(4n), .resource-card:nth-child(4n+4) { animation-delay: .28s; }
+
+    @keyframes pvTextRise {
+      from { opacity: 0; transform: translateY(22px); filter: blur(5px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    @keyframes pvVisualEnter {
+      from { opacity: 0; transform: translateY(26px) scale(.94); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes pvTileEnter {
+      from { opacity: 0; transform: translateY(22px) scale(.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .hero h1 .highlight { text-shadow: 0 5px 22px rgba(49,85,217,.12); }
+    .btn, .announcement-cta, .nav-link, .support-btn { transition: transform .25s ease, box-shadow .25s ease, background .25s ease; }
+    .btn-primary:hover { transform: translateY(-4px) scale(1.015); }
+    .btn-secondary:hover { transform: translateY(-3px); }
+    .announcement-cta:hover, .nav-link:hover { transform: translateY(-2px); }
+
+    @media (max-width: 600px) {
+      /* Keep product/mockup visuals off phone screens; retain fluid real content. */
+      .hero-visual, .package-mockup, .mockup-badge, .mockup-glow { display: none !important; }
+      .hero-layout { width: 100%; }
+      .hero-content { max-width: 100%; }
+      .hero { overflow: hidden; }
+      .resource-card, .step-card, .benefit-card { animation-duration: .55s; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero .eyebrow, .hero h1, .hero .hero-copy, .hero .exam-pill,
+      .hero .hero-buttons, .hero .trust-note, .hero-visual,
+      .resource-card, .step-card, .benefit-card {
+        animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important;
+      }
+      #pvScrollProgress { transition: none; }
+    }
+  </style>
+
 </head>
 <body>
   <div class="announcement" id="announcement" aria-label="Special offers">
@@ -1161,6 +1269,7 @@
   </div>
 
   <header class="site-header">
+    <div class="pv-scroll-progress" aria-hidden="true"><span id="pvScrollProgress"></span></div>
     <div class="nav-wrap">
       <a href="#" class="brand" aria-label="PrepVia home">
         <img class="brand-logo" src="prepvia-logo-transparent.png" alt="PrepVia logo" width="50" height="50">
@@ -1370,7 +1479,7 @@
       <div class="info-wrap">
         <div class="support-card">
           <div><h2>Need a Hand? We're Here to Help.</h2><p>Questions about checkout, payment confirmation or package delivery? Reach out through the PrepVia Telegram bot for support.</p></div>
-          <a class="support-btn" href="https://t.me/PrepViaBot" target="_blank" rel="noopener noreferrer">💬 Contact Support <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+          <a class="support-btn" href="https://t.me/PrepViaBot" target="_blank" rel="noopener noreferrer">💬 Contact Support <span class="support-emoji" aria-hidden="true">🎓</span></a>
         </div>
       </div>
     </section>
@@ -1395,6 +1504,32 @@
   </footer>
 
   <script>
+
+    // Navigation reading progress: 0% at top, 100% at page end.
+    (function () {
+      const progress = document.getElementById('pvScrollProgress');
+      if (!progress) return;
+      let ticking = false;
+      function updateProgress() {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const percent = scrollable > 0 ? (scrollTop / scrollable) * 100 : 0;
+        progress.style.width = Math.max(0, Math.min(100, percent)) + '%';
+        ticking = false;
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          window.requestAnimationFrame(updateProgress);
+          ticking = true;
+        }
+      }, { passive: true });
+      window.addEventListener('resize', updateProgress);
+      updateProgress();
+    })();
+
+    // Animate hero copy and the first visible resource tiles on initial load.
+    document.documentElement.classList.add('pv-motion-ready');
+
     // Render Lucide icons if the CDN is available.
     if (window.lucide) {
       window.lucide.createIcons();
@@ -1492,5 +1627,37 @@
     }
 
   </script>
+
+  <!-- Basic anti-copy deterrents (not a substitute for server-side content protection). -->
+  <style id="pv-copy-protection">
+    html, body, body * {
+      -webkit-user-select: none !important;
+      user-select: none !important;
+      -webkit-touch-callout: none !important;
+    }
+    input, textarea, select, [contenteditable="true"] {
+      -webkit-user-select: text !important;
+      user-select: text !important;
+      -webkit-touch-callout: default !important;
+    }
+  </style>
+  <script id="pv-copy-protection-script">
+    (() => {
+      // Prevent copy/cut and the context menu on the page.
+      document.addEventListener('copy', event => event.preventDefault());
+      document.addEventListener('cut', event => event.preventDefault());
+      document.addEventListener('contextmenu', event => event.preventDefault());
+      document.addEventListener('selectstart', event => {
+        if (!event.target.closest('input, textarea, select, [contenteditable="true"]')) event.preventDefault();
+      });
+      // Block common copy/view-source shortcuts.
+      document.addEventListener('keydown', event => {
+        const key = event.key.toLowerCase();
+        if ((event.ctrlKey || event.metaKey) && ['c', 'x', 'u'].includes(key)) event.preventDefault();
+        if ((event.ctrlKey || event.metaKey) && event.shiftKey && ['i', 'j', 'c'].includes(key)) event.preventDefault();
+      });
+    })();
+  </script>
+
 </body>
 </html>
