@@ -749,6 +749,7 @@ header a.flex.items-center.gap-2.rounded-sm .prepvia-brand-logo {
   align-items:center;
   justify-content:center;
   min-width:0;
+  perspective:1100px;
 }
 @media (min-width:1024px){
   .prepvia-hero-mockup-wrap{display:flex}
@@ -761,6 +762,8 @@ header a.flex.items-center.gap-2.rounded-sm .prepvia-brand-logo {
   aspect-ratio:4/3;
   overflow:visible;
   isolation:isolate;
+  transform-style:preserve-3d;
+  animation:prepvia-mockup-float 6.5s ease-in-out infinite;
 }
 .prepvia-hero-mockup-frame:before{
   content:"";
@@ -768,8 +771,10 @@ header a.flex.items-center.gap-2.rounded-sm .prepvia-brand-logo {
   inset:12% 8%;
   z-index:-1;
   border-radius:2rem;
-  background:radial-gradient(ellipse at center,rgba(99,102,241,.12),rgba(14,165,233,.07) 48%,transparent 72%);
-  filter:blur(24px);
+  background:radial-gradient(ellipse at center,rgba(99,102,241,.18),rgba(14,165,233,.09) 48%,transparent 72%);
+  filter:blur(25px);
+  opacity:.72;
+  animation:prepvia-mockup-glow 5s ease-in-out infinite;
 }
 .prepvia-hero-mockup{
   display:block;
@@ -779,29 +784,96 @@ header a.flex.items-center.gap-2.rounded-sm .prepvia-brand-logo {
   object-fit:contain;
   object-position:center;
   opacity:0;
-  transform:translate3d(0,12px,0) scale(.985);
-  filter:drop-shadow(0 24px 34px rgba(35,48,78,.16));
-  transition:opacity .55s ease,transform .7s cubic-bezier(.22,1,.36,1);
+  transform:translate3d(0,18px,0) scale(.965) rotateX(2deg);
+  transform-origin:center center;
+  filter:drop-shadow(0 24px 34px rgba(35,48,78,.17));
+  transition:opacity .65s ease,transform .8s cubic-bezier(.22,1,.36,1),filter .4s ease;
   will-change:opacity,transform;
+  backface-visibility:hidden;
 }
 .prepvia-hero-mockup.is-loaded{
   opacity:1;
-  transform:translate3d(0,0,0) scale(1);
+  transform:translate3d(0,0,0) scale(1) rotateX(0deg);
+}
+.prepvia-hero-mockup-frame.is-interactive .prepvia-hero-mockup.is-loaded{
+  transform:
+    translate3d(0,0,0)
+    scale(1)
+    rotateX(var(--mockup-tilt-x,0deg))
+    rotateY(var(--mockup-tilt-y,0deg));
+  filter:drop-shadow(0 30px 38px rgba(35,48,78,.2));
+}
+@keyframes prepvia-mockup-float{
+  0%,100%{transform:translate3d(0,0,0)}
+  50%{transform:translate3d(0,-12px,0)}
+}
+@keyframes prepvia-mockup-glow{
+  0%,100%{opacity:.55;transform:scale(.96)}
+  50%{opacity:.95;transform:scale(1.04)}
 }
 @media(prefers-reduced-motion:reduce){
-  .prepvia-hero-mockup{transition:none;transform:none}
+  .prepvia-hero-mockup-frame,
+  .prepvia-hero-mockup-frame:before{animation:none}
+  .prepvia-hero-mockup{transition:none;transform:none;will-change:auto}
 }
 </style>
 <script>
 document.addEventListener("DOMContentLoaded",function(){
-  var heroImage=document.querySelector(".prepvia-hero-mockup");
-  if(!heroImage)return;
-  function reveal(){heroImage.classList.add("is-loaded");}
-  if(heroImage.complete && heroImage.naturalWidth>0){reveal();}
+  var image=document.querySelector(".prepvia-hero-mockup");
+  var frame=document.querySelector(".prepvia-hero-mockup-frame");
+  if(!image||!frame)return;
+
+  function reveal(){image.classList.add("is-loaded");}
+  if(image.complete && image.naturalWidth>0){reveal();}
   else{
-    heroImage.addEventListener("load",reveal,{once:true});
-    heroImage.addEventListener("error",function(){heroImage.style.opacity="1";},{once:true});
+    image.addEventListener("load",reveal,{once:true});
+    image.addEventListener("error",function(){
+      image.style.opacity="1";
+      image.style.transform="none";
+    },{once:true});
   }
+
+  var reducedMotion=window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePointer=window.matchMedia &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  if(reducedMotion || !finePointer)return;
+
+  frame.classList.add("is-interactive");
+  var bounds=null;
+  var rafPending=false;
+  var pointerX=0;
+  var pointerY=0;
+
+  function updateTilt(){
+    rafPending=false;
+    if(!bounds)return;
+    var x=(pointerX-bounds.left)/bounds.width;
+    var y=(pointerY-bounds.top)/bounds.height;
+    var rotateY=(x-.5)*9;
+    var rotateX=(.5-y)*7;
+    frame.style.setProperty("--mockup-tilt-x",rotateX.toFixed(2)+"deg");
+    frame.style.setProperty("--mockup-tilt-y",rotateY.toFixed(2)+"deg");
+  }
+
+  frame.addEventListener("pointerenter",function(){
+    bounds=frame.getBoundingClientRect();
+  });
+  frame.addEventListener("pointermove",function(event){
+    bounds=frame.getBoundingClientRect();
+    pointerX=event.clientX;
+    pointerY=event.clientY;
+    if(!rafPending){
+      rafPending=true;
+      window.requestAnimationFrame(updateTilt);
+    }
+  },{passive:true});
+  frame.addEventListener("pointerleave",function(){
+    bounds=null;
+    frame.style.setProperty("--mockup-tilt-x","0deg");
+    frame.style.setProperty("--mockup-tilt-y","0deg");
+  });
 });
 </script>
 </body>
