@@ -1378,5 +1378,112 @@ header a[aria-label="Call or contact PrepVia on Telegram"] span[aria-hidden="tru
 }
 </style>
 
+
+<style id="prepvia-sticky-lifetime-cta">
+  .prepvia-sticky-cta-wrap {
+    position: fixed;
+    z-index: 9999;
+    left: 16px;
+    right: 16px;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .prepvia-sticky-cta {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: min(100%, 560px);
+    min-height: 72px;
+    padding: 14px 30px;
+    border: 1px solid rgba(255,255,255,.24);
+    border-radius: 18px;
+    color: #fff !important;
+    background: #5046e5 !important;
+    text-decoration: none !important;
+    box-shadow:
+      0 5px 0 #342bb4,
+      0 8px 0 rgba(27, 22, 105, .16),
+      0 14px 28px rgba(80, 70, 229, .38),
+      inset 0 1px 0 rgba(255,255,255,.25);
+    transform: translateY(0);
+    transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .prepvia-sticky-cta:hover {
+    filter: brightness(1.06);
+    transform: translateY(-2px);
+    box-shadow:
+      0 7px 0 #342bb4,
+      0 10px 0 rgba(27, 22, 105, .14),
+      0 18px 32px rgba(80, 70, 229, .42),
+      inset 0 1px 0 rgba(255,255,255,.28);
+  }
+  .prepvia-sticky-cta:active {
+    transform: translateY(4px);
+    box-shadow:
+      0 1px 0 #342bb4,
+      0 4px 10px rgba(80, 70, 229, .3),
+      inset 0 1px 0 rgba(255,255,255,.2);
+  }
+  .prepvia-sticky-cta-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    line-height: 1.15;
+  }
+  .prepvia-sticky-cta-title {
+    font-size: 18px;
+    font-weight: 850;
+    letter-spacing: .01em;
+  }
+  .prepvia-sticky-cta-price {
+    font-size: 14px;
+    font-weight: 650;
+    opacity: .94;
+  }
+  .prepvia-sticky-cta-arrow {
+    width: 23px;
+    height: 23px;
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+  @media (max-width: 480px) {
+    .prepvia-sticky-cta-wrap {
+      left: 12px;
+      right: 12px;
+      bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    }
+    .prepvia-sticky-cta {
+      min-height: 56px;
+      border-radius: 16px;
+      padding: 9px 18px;
+      gap: 10px;
+    }
+    .prepvia-sticky-cta-title { font-size: 15px; }
+    .prepvia-sticky-cta-price { font-size: 12px; }
+    .prepvia-sticky-cta-arrow { width: 19px; height: 19px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .prepvia-sticky-cta { transition: none; }
+  }
+</style>
+<div class="prepvia-sticky-cta-wrap">
+  <a class="prepvia-sticky-cta" href="https://prepvia.shop/checkout.html" aria-label="Get the PrepVia package for 249 rupees, lifetime access">
+    <span aria-hidden="true">📚</span>
+    <span class="prepvia-sticky-cta-copy">
+      <span class="prepvia-sticky-cta-title">Get Package</span>
+      <span class="prepvia-sticky-cta-price">₹249/- · Lifetime Access</span>
+    </span>
+    <svg class="prepvia-sticky-cta-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+    </svg>
+  </a>
+</div>
+
 </body>
 </html>
