@@ -52,12 +52,12 @@
     .btn-outline:hover{background:rgba(200,241,105,.1)}
     .mobile-toggle{display:none;background:none;border:0;color:white;font-size:1.35rem}
     .hero{min-height:840px;min-height:100svh;position:relative;display:flex;align-items:center;padding:150px 0 70px;overflow:hidden;isolation:isolate}
-    .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;opacity:.53}
-    .hero:before{content:"";position:absolute;inset:0;z-index:-2;background:
+    .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.72;display:block;background:#080b12}
+    .hero:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:
       linear-gradient(90deg,rgba(5,8,15,.96) 0%,rgba(5,8,15,.83) 40%,rgba(5,8,15,.35) 100%),
       linear-gradient(0deg,#080b12 0%,transparent 34%,rgba(4,7,14,.25) 100%)}
-    .hero:after{content:"";position:absolute;inset:0;z-index:-1;opacity:.17;background-image:linear-gradient(rgba(175,198,255,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(175,198,255,.2) 1px,transparent 1px);background-size:74px 74px;mask-image:linear-gradient(90deg,#000,transparent 85%)}
-    .hero-content{max-width:760px;position:relative}
+    .hero:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.17;background-image:linear-gradient(rgba(175,198,255,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(175,198,255,.2) 1px,transparent 1px);background-size:74px 74px;mask-image:linear-gradient(90deg,#000,transparent 85%)}
+    .hero-content{max-width:760px;position:relative;z-index:2}
     .trust-pill{display:inline-flex;align-items:center;gap:9px;padding:9px 14px;border:1px solid rgba(200,241,105,.23);background:rgba(12,18,28,.7);border-radius:999px;color:#dce8b7;font-size:.76rem;font-weight:800;letter-spacing:.09em;margin-bottom:25px}
     .trust-pill i{color:var(--lime);font-size:.55rem}
     .hero h1{font:900 clamp(3.5rem,8.2vw,7.2rem)/.94 Manrope,sans-serif;letter-spacing:-.085em;max-width:850px}
@@ -178,9 +178,9 @@
   <main>
     <section class="hero" id="home">
       <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="">
-        <source src="assets/hero.mp4" type="video/mp4">
+        <source src="./assets/hero.mp4" type="video/mp4">
       </video>
-      <div class="container">
+      <div class="container" style="position:relative;z-index:2">
         <div class="hero-content">
           <div class="trust-pill"><i class="fa-solid fa-circle"></i> MADE FOR JEE & NEET ASPIRANTS</div>
           <h1>PREPARE<br><span class="line-two">SMARTER.</span><span class="accent">RISE HIGHER.</span></h1>
