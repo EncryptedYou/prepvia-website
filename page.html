@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b12">
+  <meta name="description" content="PrepVia — your complete JEE & NEET preparation kit. 50GB+ curated study resources for Class 11 and 12.">
+  <title>PrepVia — Everything You Need. One Place. One Goal.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root{
+      --bg:#080b12;--surface:#0e1421;--surface2:#111a2b;--line:rgba(151,177,255,.14);
+      --text:#f5f7ff;--muted:#a4aec4;--blue:#4778ff;--blue2:#2457e8;
+      --lime:#c8f169;--gold:#f4cf73;--radius:24px;--max:1180px;
+      --shadow:0 22px 70px rgba(0,0,0,.38);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;scroll-padding-top:92px}
+    body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:
+      radial-gradient(ellipse at 15% 8%,rgba(55,100,255,.13),transparent 36%),
+      radial-gradient(ellipse at 90% 40%,rgba(151,190,85,.07),transparent 34%),
+      linear-gradient(180deg,#080b12,#090d16 55%,#070a10)}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .container{width:min(var(--max),calc(100% - 44px));margin:auto}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--lime);font-size:.75rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+    .eyebrow:before{content:"";width:20px;height:1px;background:currentColor}
+    .section{padding:112px 0;position:relative}
+    .section-head{text-align:center;max-width:740px;margin:0 auto 52px}
+    .section-head h2{font:800 clamp(2.15rem,5vw,3.55rem)/1.12 Manrope,sans-serif;letter-spacing:-.055em;margin:18px 0}
+    .section-head h2 span,.gradient-text{background:linear-gradient(100deg,#fff 4%,#a9c1ff 48%,var(--lime) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .section-head p{color:var(--muted);font-size:1.05rem;line-height:1.8}
+    .nav-wrap{position:fixed;top:14px;left:0;width:100%;z-index:1000;transition:.3s}
+    .nav{height:72px;width:min(1240px,calc(100% - 32px));margin:auto;padding:0 18px 0 22px;border:1px solid rgba(157,183,255,.18);
+      background:rgba(9,13,23,.78);backdrop-filter:blur(18px);border-radius:22px;display:flex;align-items:center;justify-content:space-between;
+      box-shadow:0 12px 45px rgba(0,0,0,.25);transition:.3s}
+    .nav.scrolled{background:rgba(7,10,18,.94);border-color:rgba(157,183,255,.25);box-shadow:0 12px 45px rgba(0,0,0,.4)}
+    .brand{display:flex;align-items:center;gap:11px;font:900 1.28rem Manrope;letter-spacing:-.06em}
+    .brand-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,#6791ff,#2349bd);display:grid;place-items:center;color:white;box-shadow:0 0 24px rgba(71,120,255,.35)}
+    .brand em{font-style:normal;color:var(--lime)}
+    .nav-links{display:flex;align-items:center;gap:30px;color:#c2cbe0;font-size:.88rem;font-weight:600}
+    .nav-links a{transition:.2s}.nav-links a:hover{color:var(--lime)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:999px;padding:15px 23px;font-weight:800;font-size:.92rem;transition:transform .25s,box-shadow .25s,background .25s;cursor:pointer}
+    .btn:hover{transform:translateY(-3px)}
+    .btn-primary{background:linear-gradient(110deg,#4d82ff,#2459e9);color:white;box-shadow:0 10px 28px rgba(44,94,255,.3),inset 0 1px rgba(255,255,255,.28)}
+    .btn-primary:hover{box-shadow:0 15px 35px rgba(44,94,255,.44)}
+    .btn-outline{border:1px solid rgba(200,241,105,.38);background:rgba(14,20,33,.72);color:#e9f4c7}
+    .btn-outline:hover{background:rgba(200,241,105,.1)}
+    .mobile-toggle{display:none;background:none;border:0;color:white;font-size:1.35rem}
+    .hero{min-height:840px;min-height:100svh;position:relative;display:flex;align-items:center;padding:150px 0 70px;overflow:hidden;isolation:isolate}
+    .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;opacity:.53}
+    .hero:before{content:"";position:absolute;inset:0;z-index:-2;background:
+      linear-gradient(90deg,rgba(5,8,15,.96) 0%,rgba(5,8,15,.83) 40%,rgba(5,8,15,.35) 100%),
+      linear-gradient(0deg,#080b12 0%,transparent 34%,rgba(4,7,14,.25) 100%)}
+    .hero:after{content:"";position:absolute;inset:0;z-index:-1;opacity:.17;background-image:linear-gradient(rgba(175,198,255,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(175,198,255,.2) 1px,transparent 1px);background-size:74px 74px;mask-image:linear-gradient(90deg,#000,transparent 85%)}
+    .hero-content{max-width:760px;position:relative}
+    .trust-pill{display:inline-flex;align-items:center;gap:9px;padding:9px 14px;border:1px solid rgba(200,241,105,.23);background:rgba(12,18,28,.7);border-radius:999px;color:#dce8b7;font-size:.76rem;font-weight:800;letter-spacing:.09em;margin-bottom:25px}
+    .trust-pill i{color:var(--lime);font-size:.55rem}
+    .hero h1{font:900 clamp(3.5rem,8.2vw,7.2rem)/.94 Manrope,sans-serif;letter-spacing:-.085em;max-width:850px}
+    .hero h1 .line-two{display:block;color:transparent;-webkit-text-stroke:1.4px rgba(231,239,255,.88);text-shadow:0 0 35px rgba(93,135,255,.12)}
+    .hero h1 .accent{color:var(--lime);-webkit-text-stroke:0;text-shadow:0 0 35px rgba(200,241,105,.13)}
+    .hero-sub{color:#c0c9dc;font-size:clamp(1rem,2vw,1.18rem);line-height:1.8;max-width:610px;margin:28px 0 30px}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:13px}
+    .hero-note{margin-top:20px;color:#8995ad;font-size:.82rem}
+    .hero-note i{color:var(--lime);margin-right:6px}
+    .hero-stats{display:flex;gap:12px;margin-top:55px;max-width:680px}
+    .stat{flex:1;min-width:0;padding:17px 18px;border:1px solid rgba(166,190,255,.17);background:rgba(9,14,24,.65);backdrop-filter:blur(12px);border-radius:17px}
+    .stat strong{display:block;font:900 1.65rem Manrope;color:var(--lime);letter-spacing:-.05em}
+    .stat span{display:block;color:#a8b2c8;font-size:.68rem;font-weight:800;letter-spacing:.15em;margin-top:4px}
+    .scroll-cue{position:absolute;bottom:24px;right:8%;color:#8490a9;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+    .scroll-cue:after{content:"";height:35px;width:1px;background:linear-gradient(var(--lime),transparent)}
+    .ticker{border-block:1px solid var(--line);background:rgba(15,22,35,.55);overflow:hidden;padding:19px 0}
+    .ticker-track{display:flex;width:max-content;animation:marquee 28s linear infinite;gap:42px;color:#aeb9cf;font-size:.75rem;font-weight:800;letter-spacing:.18em}
+    .ticker-track span{display:flex;align-items:center;gap:12px}.ticker-track i{color:var(--lime)}
+    @keyframes marquee{to{transform:translateX(-50%)}}
+    .inside-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .inside-card,.feature-card,.step-card,.quote-card,.faq-item{border:1px solid var(--line);background:linear-gradient(145deg,rgba(17,26,43,.9),rgba(10,15,25,.9));border-radius:22px}
+    .inside-card{padding:25px;min-height:205px;position:relative;overflow:hidden;transition:.3s}
+    .inside-card:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;right:-65px;bottom:-65px;background:rgba(71,120,255,.13);filter:blur(5px)}
+    .inside-card:hover,.feature-card:hover,.step-card:hover{transform:translateY(-6px);border-color:rgba(200,241,105,.35);box-shadow:0 20px 55px rgba(0,0,0,.25)}
+    .icon-box{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;color:var(--lime);font-size:1.15rem;background:linear-gradient(145deg,rgba(200,241,105,.15),rgba(71,120,255,.1));border:1px solid rgba(200,241,105,.23);box-shadow:0 0 24px rgba(200,241,105,.08);margin-bottom:22px}
+    .inside-card h3,.feature-card h3{font:800 1.08rem Manrope;margin-bottom:9px}
+    .inside-card p,.feature-card p{color:var(--muted);font-size:.9rem;line-height:1.7}
+    .section-alt{background:linear-gradient(180deg,transparent,rgba(17,26,43,.36),transparent)}
+    .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .step-card{padding:30px;position:relative;transition:.3s}
+    .step-no{font:900 2.7rem Manrope;color:rgba(200,241,105,.22);letter-spacing:-.08em}
+    .step-card h3{font:800 1.2rem Manrope;margin:16px 0 10px}
+    .step-card p{color:var(--muted);line-height:1.75;font-size:.94rem}
+    .step-card .step-icon{position:absolute;right:26px;top:28px;color:#8daaff;font-size:1.35rem}
+    .features-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .feature-card{padding:30px;display:flex;gap:20px;align-items:flex-start;transition:.3s}
+    .feature-card .icon-box{flex:0 0 52px;margin:0}
+    .feature-card h3{margin:3px 0 9px}
+    .testimonials-note{margin:-25px auto 30px;text-align:center;color:#8390a8;font-size:.78rem}
+    .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+    .quote-card{padding:26px}
+    .stars{color:var(--gold);letter-spacing:3px;font-size:.9rem}
+    .quote-card blockquote{color:#d7deed;line-height:1.8;margin:18px 0 22px;font-size:.95rem}
+    .person{display:flex;align-items:center;gap:12px}
+    .avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#6b91ff,#263d83);font-weight:900}
+    .person strong{display:block;font-size:.88rem}.person small{display:block;color:#8995ad;margin-top:3px}
+    .pricing-wrap{max-width:760px;margin:auto;border:1px solid rgba(200,241,105,.3);background:radial-gradient(circle at 90% 0%,rgba(200,241,105,.1),transparent 35%),linear-gradient(145deg,#121c2c,#0c111c);border-radius:30px;padding:38px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .pricing-top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+    .pricing-wrap h3{font:900 1.65rem Manrope;margin:12px 0 8px}
+    .price{font:900 clamp(2.8rem,7vw,4.2rem) Manrope;letter-spacing:-.07em;color:var(--lime)}
+    .price small{font:600 .95rem "DM Sans";color:#9da9bf;letter-spacing:0}
+    .price-old{color:#7f8aa0;text-decoration:line-through;font-size:1rem;margin-left:10px}
+    .price-list{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:28px 0}
+    .price-list span{color:#c4cde0;font-size:.91rem}.price-list i{color:var(--lime);margin-right:9px}
+    .pricing-wrap .btn{width:100%;padding:18px}
+    .pricing-foot{text-align:center;color:#8290a8;font-size:.78rem;margin-top:15px}
+    .faq-list{max-width:850px;margin:auto;display:grid;gap:12px}
+    .faq-item{overflow:hidden}
+    .faq-q{width:100%;background:none;border:0;color:var(--text);padding:22px 24px;display:flex;align-items:center;justify-content:space-between;text-align:left;font-weight:800;cursor:pointer}
+    .faq-q i{color:var(--lime);transition:.25s}
+    .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+    .faq-a p{padding:0 24px 22px;color:var(--muted);line-height:1.8;font-size:.94rem}
+    .faq-item.active .faq-a{max-height:220px}.faq-item.active .faq-q i{transform:rotate(45deg)}
+    .about-box{display:grid;grid-template-columns:1.1fr .9fr;gap:45px;align-items:center;padding:45px;border:1px solid var(--line);border-radius:30px;background:linear-gradient(125deg,rgba(17,26,43,.95),rgba(9,14,23,.9))}
+    .about-box h2{font:900 clamp(2rem,4vw,3rem)/1.12 Manrope;letter-spacing:-.06em;margin:18px 0}
+    .about-box p{color:var(--muted);line-height:1.85;margin-bottom:15px}
+    .about-art{min-height:260px;border-radius:24px;display:grid;place-items:center;position:relative;overflow:hidden;background:radial-gradient(circle,rgba(71,120,255,.26),transparent 60%),linear-gradient(145deg,#152447,#0b1120);border:1px solid rgba(143,170,255,.18)}
+    .book-stack{font-size:6rem;color:#c8f169;filter:drop-shadow(0 12px 30px rgba(200,241,105,.2));transform:rotate(-9deg)}
+    .orb{position:absolute;width:190px;height:190px;border:1px solid rgba(200,241,105,.2);border-radius:50%;animation:spin 18s linear infinite}
+    .orb:before{content:"";position:absolute;width:9px;height:9px;background:var(--lime);border-radius:50%;top:18px;left:30px;box-shadow:0 0 20px var(--lime)}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    footer{border-top:1px solid var(--line);padding:35px 0 28px;background:rgba(5,8,14,.6)}
+    .footer-row{display:flex;justify-content:space-between;gap:25px;align-items:center}
+    .footer-copy{color:#78859d;font-size:.82rem;line-height:1.7;margin-top:12px}
+    .footer-links{display:flex;gap:20px;flex-wrap:wrap;color:#aab5c9;font-size:.85rem}
+    .footer-links a:hover{color:var(--lime)}
+    .reveal{opacity:0;transform:translateY(25px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .glow-cursor{position:fixed;width:260px;height:260px;border-radius:50%;pointer-events:none;z-index:-1;background:radial-gradient(circle,rgba(71,120,255,.09),transparent 70%);transform:translate(-50%,-50%)}
+    @media(max-width:900px){.nav-links{gap:17px}.inside-grid{grid-template-columns:repeat(2,1fr)}.about-box{grid-template-columns:1fr}.about-art{min-height:220px}}
+    @media(max-width:680px){
+      .container{width:min(100% - 32px,var(--max))}.section{padding:82px 0}
+      .nav-wrap{top:8px}.nav{height:64px;width:calc(100% - 20px);padding:0 12px 0 15px;border-radius:18px}
+      .brand{font-size:1.1rem}.brand-mark{width:34px;height:34px}
+      .nav .btn{padding:12px 15px;font-size:.8rem}.nav-links{display:none;position:absolute;top:72px;left:10px;right:10px;padding:18px;background:rgba(8,12,21,.97);border:1px solid var(--line);border-radius:18px;flex-direction:column;align-items:stretch;gap:0}
+      .nav-links.open{display:flex}.nav-links a{padding:13px 8px;border-bottom:1px solid rgba(255,255,255,.06)}
+      .mobile-toggle{display:block;margin-left:10px}.nav-right{display:flex;align-items:center}
+      .hero{min-height:850px;min-height:100svh;padding:125px 0 75px;align-items:flex-start}
+      .hero-video{opacity:.42;object-position:58% center}.hero:before{background:linear-gradient(90deg,rgba(5,8,15,.92),rgba(5,8,15,.62)),linear-gradient(0deg,#080b12 0%,transparent 40%)}
+      .hero h1{font-size:clamp(3.25rem,15vw,5.4rem)}
+      .hero-sub{font-size:1rem;margin:22px 0 25px}.hero-actions{display:grid;grid-template-columns:1fr 1fr}.hero-actions .btn{padding:14px 10px;font-size:.82rem}
+      .hero-stats{gap:8px;margin-top:42px}.stat{padding:13px 9px;text-align:center;border-radius:13px}.stat strong{font-size:1.25rem}.stat span{font-size:.55rem;letter-spacing:.1em}
+      .scroll-cue{display:none}.inside-grid{gap:11px}.inside-card{padding:19px;min-height:190px}.inside-card h3{font-size:.98rem}.inside-card p{font-size:.82rem}
+      .how-grid,.quotes{grid-template-columns:1fr}.step-card{padding:25px}.features-row{grid-template-columns:1fr}.feature-card{padding:22px;gap:15px}
+      .section-head{margin-bottom:38px}.section-head p{font-size:.95rem}
+      .pricing-wrap{padding:27px 21px;border-radius:24px}.pricing-top{display:block}.price{margin-top:18px}.price-list{grid-template-columns:1fr;gap:12px}
+      .about-box{padding:25px 21px;gap:25px}.about-art{min-height:190px}.book-stack{font-size:4.7rem}
+      .footer-row{align-items:flex-start;flex-direction:column}.footer-links{gap:15px}
+    }
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <div class="glow-cursor" id="cursorGlow"></div>
+  <div class="nav-wrap">
+    <nav class="nav" id="navbar">
+      <a class="brand" href="#home" aria-label="PrepVia home"><span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i></span><span>Prep<em>Via</em></span></a>
+      <div class="nav-links" id="navLinks">
+        <a href="#inside">What's Inside</a><a href="#how">How It Works</a><a href="#reviews">Reviews</a><a href="#faq">FAQs</a><a href="#about">About</a>
+      </div>
+      <div class="nav-right">
+        <a class="btn btn-primary" href="https://prepvia.shop/checkout.html">Get Complete Kit <i class="fa-solid fa-arrow-right"></i></a>
+        <button class="mobile-toggle" id="menuToggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </nav>
+  </div>
+
+  <main>
+    <section class="hero" id="home">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="">
+        <source src="assets/hero.mp4" type="video/mp4">
+      </video>
+      <div class="container">
+        <div class="hero-content">
+          <div class="trust-pill"><i class="fa-solid fa-circle"></i> MADE FOR JEE & NEET ASPIRANTS</div>
+          <h1>PREPARE<br><span class="line-two">SMARTER.</span><span class="accent">RISE HIGHER.</span></h1>
+          <p class="hero-sub">Everything You Need. One Place. One Goal. Get your complete JEE & NEET preparation resources in one carefully organised digital kit.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://prepvia.shop/checkout.html"><i class="fa-solid fa-bag-shopping"></i> Get The Complete Kit <i class="fa-solid fa-arrow-right"></i></a>
+            <a class="btn btn-outline" href="https://t.me/PrepViaBot"><i class="fa-regular fa-eye"></i> Sample Package</a>
+          </div>
+          <p class="hero-note"><i class="fa-solid fa-shield-halved"></i> Digital resources • Class 11th + 12th • Instant access after successful order</p>
+          <div class="hero-stats">
+            <div class="stat"><strong>50GB+</strong><span>STUDY RESOURCES</span></div>
+            <div class="stat"><strong>11th + 12th</strong><span>CLASS COVERAGE</span></div>
+            <div class="stat"><strong>All-in-one</strong><span>PREP KIT</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-cue">SCROLL TO EXPLORE</div>
+    </section>
+
+    <div class="ticker"><div class="ticker-track">
+      <span><i class="fa-solid fa-bolt"></i> STUDY SMARTER</span><span><i class="fa-solid fa-book-open"></i> NOTES & MODULES</span><span><i class="fa-solid fa-bullseye"></i> JEE + NEET FOCUSED</span><span><i class="fa-solid fa-brain"></i> PREPARE WITH CLARITY</span><span><i class="fa-solid fa-bolt"></i> STUDY SMARTER</span><span><i class="fa-solid fa-book-open"></i> NOTES & MODULES</span><span><i class="fa-solid fa-bullseye"></i> JEE + NEET FOCUSED</span><span><i class="fa-solid fa-brain"></i> PREPARE WITH CLARITY</span>
+    </div></div>
+
+    <section class="section" id="inside">
+      <div class="container">
+        <div class="section-head reveal"><span class="eyebrow">WHAT'S INSIDE</span><h2>Your preparation.<br><span>Fully equipped.</span></h2><p>A curated digital library of study material to support your learning, revision and practice throughout Class 11th and 12th.</p></div>
+        <div class="inside-grid">
+          <article class="inside-card reveal"><div class="icon-box"><i class="fa-solid fa-book-open"></i></div><h3>Reference Books</h3><p>Useful reference material to strengthen concepts and build deeper understanding.</p></article>
+          <article class="inside-card reveal"><div class="icon-box"><i class="fa-solid fa-pen-to-square"></i></div><h3>Handwritten Notes</h3><p>Organised notes to help you revisit important concepts and topics.</p></article>
+          <article class="inside-card reveal"><div class="icon-box"><i class="fa-solid fa-file-circle-question"></i></div><h3>Previous Year Questions</h3><p>PYQs to practise question patterns and understand exam trends.</p></article>
+          <article class="inside-card reveal"><div class="icon-box"><i class="fa-solid fa-school"></i></div><h3>Institute Modules</h3><p>Structured practice material and learning resources in one place.</p></article>
+          <article class="inside-card reveal"><div class="icon-box"><i class="fa-solid fa-list-check"></i></div><h3>Test Series</h3><p>Practice sets to check your preparation and identify areas to improve.</p></article>
+          <article class="inside-card reveal"><div class="icon-box"><i class="fa-solid fa-diagram-project"></i></div><h3>Mind Maps</h3><p>Visual topic summaries to connect concepts and revise efficiently.</p></article>
+          <article class="inside-card reveal"><div class="icon-box"><i class="fa-solid fa-bolt"></i></div><h3>Short Notes & Handbooks</h3><p>Compact revision resources for quick concept refreshers.</p></article>
+          <article class="inside-card reveal"><div class="icon-box"><i class="fa-solid fa-calculator"></i></div><h3>Formula Sheets</h3><p>Important formulas collected for focused revision and practice.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="how">
+      <div class="container">
+        <div class="section-head reveal"><span class="eyebrow">SIMPLE DELIVERY</span><h2>From order to study.<br><span>In three steps.</span></h2><p>No complicated process. Follow the steps below to get started with your PrepVia kit.</p></div>
+        <div class="how-grid">
+          <article class="step-card reveal"><span class="step-no">01</span><i class="fa-solid fa-cart-shopping step-icon"></i><h3>Choose Your Kit</h3><p>Tap the Get Complete Kit button and continue to the official PrepVia checkout page.</p></article>
+          <article class="step-card reveal"><span class="step-no">02</span><i class="fa-solid fa-credit-card step-icon"></i><h3>Complete Payment</h3><p>Enter the required details and complete your order using the available payment option.</p></article>
+          <article class="step-card reveal"><span class="step-no">03</span><i class="fa-solid fa-cloud-arrow-down step-icon"></i><h3>Access Your Resources</h3><p>Follow the delivery instructions shown after your order is successfully confirmed.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal"><span class="eyebrow">WHY PREPVIA</span><h2>Less searching.<br><span>More focused studying.</span></h2><p>Keep your preparation resources organised so you can spend more time learning, practising and revising.</p></div>
+        <div class="features-row">
+          <article class="feature-card reveal"><div class="icon-box"><i class="fa-solid fa-folder-open"></i></div><div><h3>Organised in One Place</h3><p>Find different kinds of preparation material without jumping between scattered sources.</p></div></article>
+          <article class="feature-card reveal"><div class="icon-box"><i class="fa-solid fa-mobile-screen-button"></i></div><div><h3>Learn Across Devices</h3><p>Access your digital resources on a compatible phone, tablet or computer.</p></div></article>
+          <article class="feature-card reveal"><div class="icon-box"><i class="fa-solid fa-crosshairs"></i></div><div><h3>JEE & NEET Focused</h3><p>Resources curated around the needs of students preparing for competitive exams.</p></div></article>
+          <article class="feature-card reveal"><div class="icon-box"><i class="fa-solid fa-arrows-rotate"></i></div><div><h3>Revise Your Way</h3><p>Use notes, formula sheets, mind maps and practice resources to build a revision routine.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="reviews">
+      <div class="container">
+        <div class="section-head reveal"><span class="eyebrow">STUDENT EXPERIENCES</span><h2>Built around the<br><span>student journey.</span></h2><p>We value honest feedback from students who use PrepVia resources.</p></div>
+        <p class="testimonials-note">Review cards are illustrative layout samples. Replace them with verified student reviews before publishing.</p>
+        <div class="quotes">
+          <article class="quote-card reveal"><div class="stars">★★★★★</div><blockquote>“I like having notes, PYQs and revision material organised together. It makes it easier to find what I need for a study session.”</blockquote><div class="person"><div class="avatar">S</div><div><strong>Student Name</strong><small>Class 12 • JEE Aspirant</small></div></div></article>
+          <article class="quote-card reveal"><div class="stars">★★★★★</div><blockquote>“The different resource categories make planning revision more straightforward. I can choose the material according to the topic.”</blockquote><div class="person"><div class="avatar">A</div><div><strong>Student Name</strong><small>Class 12 • NEET Aspirant</small></div></div></article>
+          <article class="quote-card reveal"><div class="stars">★★★★★</div><blockquote>“Having short notes and formula sheets alongside practice material is useful when I want to do a quick revision.”</blockquote><div class="person"><div class="avatar">R</div><div><strong>Student Name</strong><small>Class 11 • JEE Aspirant</small></div></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-head reveal"><span class="eyebrow">GET STARTED TODAY</span><h2>Your study resources.<br><span>One complete kit.</span></h2><p>Bring your preparation material together with the PrepVia JEE & NEET Resources Kit.</p></div>
+        <div class="pricing-wrap reveal">
+          <div class="pricing-top"><div><span class="eyebrow">PREPVIA COMPLETE KIT</span><h3>JEE & NEET Resources Kit</h3><p style="color:var(--muted)">Class 11th + 12th • Digital access</p></div><div class="price">₹249 <small>one-time</small></div></div>
+          <div class="price-list">
+            <span><i class="fa-solid fa-check"></i> 50GB+ study resources</span><span><i class="fa-solid fa-check"></i> Handwritten notes</span>
+            <span><i class="fa-solid fa-check"></i> PYQs & institute modules</span><span><i class="fa-solid fa-check"></i> Formula sheets & handbooks</span>
+            <span><i class="fa-solid fa-check"></i> Mind maps & short notes</span><span><i class="fa-solid fa-check"></i> Test series resources</span>
+          </div>
+          <a class="btn btn-primary" href="https://prepvia.shop/checkout.html">Get The Complete Kit <i class="fa-solid fa-arrow-right"></i></a>
+          <p class="pricing-foot">Please review the package details and delivery terms on the checkout page before purchasing.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="faq">
+      <div class="container">
+        <div class="section-head reveal"><span class="eyebrow">GOT QUESTIONS?</span><h2>Frequently asked<br><span>questions.</span></h2><p>Quick answers to help you understand the PrepVia package.</p></div>
+        <div class="faq-list">
+          <div class="faq-item reveal"><button class="faq-q">What is included in the PrepVia kit?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><p>The kit includes a collection of digital resources such as reference books, handwritten notes, PYQs, institute modules, test series, mind maps, short notes, handbooks and formula sheets.</p></div></div>
+          <div class="faq-item reveal"><button class="faq-q">Is this package for both JEE and NEET?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><p>Yes. PrepVia is presented as a JEE & NEET preparation resource kit for students studying in Class 11th and 12th. Check the package listing for the latest included material.</p></div></div>
+          <div class="faq-item reveal"><button class="faq-q">How will I receive the package?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><p>After placing your order, follow the delivery instructions displayed during the confirmed order flow. Keep the contact details used at checkout accessible.</p></div></div>
+          <div class="faq-item reveal"><button class="faq-q">Can I access the resources on my phone?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><p>The package is digital, so you can use a compatible device and the apps needed to open the supplied file formats. A phone, tablet or computer may be used.</p></div></div>
+          <div class="faq-item reveal"><button class="faq-q">How can I see a sample before buying?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><p>Tap the Sample Package button in the hero section to visit the PrepVia sample experience on Telegram.</p></div></div>
+          <div class="faq-item reveal"><button class="faq-q">Where can I ask for help?<i class="fa-solid fa-plus"></i></button><div class="faq-a"><p>For package or order-related questions, contact the PrepVia support channel linked from the official website or Telegram presence.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="about-box reveal">
+          <div><span class="eyebrow">ABOUT PREPVIA</span><h2>Make your preparation<br><span class="gradient-text">more organised.</span></h2><p>PrepVia brings useful JEE and NEET preparation resources together in one digital destination. Our goal is to make it easier for students to discover, organise and use study material throughout their learning journey.</p><p>One place for resources. A clearer path for your daily preparation.</p><a class="btn btn-outline" href="https://t.me/PrepViaBot">Explore Sample Package <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+          <div class="about-art"><div class="orb"></div><i class="fa-solid fa-book-open book-stack"></i></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <div><a class="brand" href="#home"><span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i></span><span>Prep<em>Via</em></span></a><p class="footer-copy">Learn. Prepare. Repeat. Rise.<br>© <span id="year"></span> PrepVia. All rights reserved.</p></div>
+      <div class="footer-links"><a href="#inside">What's Inside</a><a href="#faq">FAQs</a><a href="https://t.me/PrepVia.Shop">Telegram</a><a href="https://t.me/PrepViaSupport">Support</a><a href="mailto:prepvia.edu@gmail.com">Email</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const nav=document.getElementById('navbar');
+    const navLinks=document.getElementById('navLinks');
+    const menuToggle=document.getElementById('menuToggle');
+    window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>30));
+    menuToggle.addEventListener('click',()=>{navLinks.classList.toggle('open');menuToggle.innerHTML=navLinks.classList.contains('open')?'<i class="fa-solid fa-xmark"></i>':'<i class="fa-solid fa-bars"></i>';});
+    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');menuToggle.innerHTML='<i class="fa-solid fa-bars"></i>';}));
+    document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>q.parentElement.classList.toggle('active')));
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}}),{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+    document.getElementById('year').textContent=new Date().getFullYear();
+    const glow=document.getElementById('cursorGlow');
+    window.addEventListener('pointermove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';});
+  </script>
+</body>
+</html>
