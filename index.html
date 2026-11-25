@@ -535,4 +535,85 @@ html { scroll-behavior: smooth; }
 })();
 </script>
 
+<style id="prepvia-desktop-layout-fix">
+/* ==========================================================
+   Desktop layout fix (>=1024px)
+   - hero text no longer crushed into a ~300px column
+   - headings use the theme text colour (were near-white on white)
+   - consistent heading / body / button / image sizes
+   ========================================================== */
+@media (min-width:1024px){
+  /* Hero: one clean column next to the sticky price card */
+  .cohort-hero__container{padding-block:clamp(48px,5vw,80px)}
+  .cohort-hero__content{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:auto!important;
+    row-gap:26px!important;
+    align-items:start!important;
+    max-width:none!important;
+    margin-inline:0!important;
+  }
+  .cohort-hero__content>.stack.stack--tight{grid-column:1!important;grid-row:1!important;align-self:start!important;gap:18px!important}
+  .cohort-hero__content>.cohort-hero__features{grid-column:1!important;grid-row:2!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px 28px!important;align-self:start!important}
+  .cohort-hero__content>.prepvia-hero-actions{grid-column:1!important;grid-row:3!important;align-self:start!important;max-width:580px!important;gap:16px!important}
+  .cohort-hero__content>.cohort-hero__image,
+  .cohort-hero__content>.cohort-image{
+    grid-column:1!important;grid-row:4!important;
+    display:block!important;width:100%!important;max-width:640px!important;height:auto!important;
+    aspect-ratio:3/2;object-fit:cover;justify-self:start!important;align-self:start!important;
+    border-radius:20px;margin:16px 0 0!important;
+  }
+
+  /* Headings: readable colour, sensible sizes, no blurry shadow */
+  #cohort-title,.prepvia-hero-heading{
+    color:var(--color-text,#11152f)!important;
+    font-size:clamp(2.6rem,3.7vw,3.75rem)!important;
+    line-height:1.06!important;letter-spacing:-.04em!important;
+    max-width:18ch!important;text-shadow:none!important;text-wrap:balance;
+  }
+  .prepvia-section-heading{
+    color:var(--color-text,#11152f)!important;
+    font-size:clamp(2.1rem,2.9vw,3rem)!important;
+    line-height:1.1!important;letter-spacing:-.035em!important;
+    max-width:22ch!important;text-shadow:none!important;
+  }
+  .prepvia-heading-highlight{text-shadow:none;padding:.02em .14em .08em}
+
+  /* Body text and feature list */
+  .cohort-hero__content .text-body{font-size:1.15rem!important;line-height:1.6!important;max-width:60ch!important}
+  .cohort-hero__features li{font-size:1rem!important;line-height:1.45!important;align-items:flex-start}
+
+  /* Hero buttons: equal width, one row, comfortable height */
+  .cohort-hero__content .prepvia-action{
+    min-height:64px!important;font-size:1.05rem!important;padding:14px 22px!important;
+    border-radius:16px!important;white-space:nowrap!important;gap:10px!important;
+    box-shadow:0 6px 0 rgba(0,0,0,.82),0 12px 22px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.22)!important;
+  }
+  .cohort-hero__content .prepvia-action>svg{width:1.4rem!important;height:1.4rem!important}
+  .cohort-hero__content .prepvia-action .prepvia-action-arrow{width:1.15rem!important;height:1.15rem!important;margin-left:2px!important}
+
+  /* Sections */
+  .section{padding-block:clamp(56px,6vw,88px)!important}
+  .section__inner{gap:clamp(28px,3vw,44px)!important}
+  .prepvia-section-heading{margin-bottom:clamp(20px,2.4vw,32px)!important}
+  .cohort-stats__figure{font-size:clamp(1.9rem,2.4vw,2.4rem)!important;text-shadow:none!important}
+  .cohort-fit{gap:32px!important}
+  .cohort-fit__media{width:min(100%,624px)!important}
+  .cohort-fit__body{width:min(100%,624px)!important;font-size:1.05rem!important;line-height:1.6!important}
+  .cohort-steps{align-items:center}
+  .cohort-steps__media{aspect-ratio:4/3;min-height:0!important;overflow:hidden;border-radius:16px}
+  .cohort-steps__photo{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* Price card in the rail */
+  .cohort-layout__card .reserve-card__title{font-size:1.5rem!important;line-height:1.25!important}
+  .cohort-layout__card .prepvia-price strong{font-size:3rem!important}
+  .cohort-layout__card .prepvia-cta{min-height:54px;display:flex;align-items:center;justify-content:center;font-size:1.05rem}
+}
+/* Very wide screens: slightly larger hero heading, same structure */
+@media (min-width:1600px){
+  #cohort-title,.prepvia-hero-heading{font-size:4rem!important}
+}
+</style>
+
 </body></html>
