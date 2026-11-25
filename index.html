@@ -302,6 +302,51 @@ html { scroll-behavior: smooth; }
 .prepvia-footer__copyright{padding-top:.8rem}
 @media(max-width:700px){.prepvia-footer__inner{gap:1.4rem}}
 </style>
+
+<style id="prepvia-collection-image-layout">
+/* PrepVia collection previews: centered 624 × 350 image views with captions below. */
+.cohort-fit:where(.astro-yptouvtu) {
+  display: grid;
+  gap: 28px;
+}
+.cohort-fit__card:where(.astro-yptouvtu) {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center;
+  gap: 0;
+}
+.cohort-fit__media:where(.astro-yptouvtu) {
+  position: relative;
+  width: min(100%, 624px);
+  height: auto;
+  aspect-ratio: 624 / 350;
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cohort-fit__photo:where(.astro-yptouvtu) {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+.cohort-fit__body:where(.astro-yptouvtu) {
+  width: min(100%, 624px);
+  margin: 0 auto;
+  padding: 22px 0 0;
+  text-align: center;
+}
+@media (max-width: 680px) {
+  .cohort-fit__media:where(.astro-yptouvtu) { width: 100%; }
+  .cohort-fit__body:where(.astro-yptouvtu) { width: 100%; }
+}
+</style>
 </head><body class="astro-tq46r5sz" id="top"><!-- Off-canvas navigation: the checkbox holds the open state (scripts/navigation.ts syncs focus and inert). --><div class="drawer astro-tq46r5sz"><input aria-hidden="true" class="drawer__toggle astro-tq46r5sz" id="navigation-toggle" tabindex="-1" type="checkbox"/><div class="drawer__content astro-tq46r5sz" id="page-content"><a class="btn skip-link astro-tq46r5sz" href="#main">Skip to content</a><header class="navbar astro-l7arcky5" data-navbar=""><nav aria-label="Main navigation" class="container astro-l7arcky5"><div class="navbar__row astro-l7arcky5"><a class="brand astro-6bctqxxv" href="#top">PrepVia</a><div class="astro-l7arcky5"><div class="navbar__desktop astro-l7arcky5"><ul class="navbar__links astro-l7arcky5"><li class="astro-l7arcky5"></li><li class="astro-l7arcky5"></li></ul></div><div class="navbar__mobile astro-l7arcky5"><button aria-controls="mobile-navigation" aria-expanded="false" aria-label="Open navigation" class="btn btn--ghost btn--icon astro-l7arcky5" id="menu-open"><svg aria-hidden="true" class="icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></button></div></div></div></nav></header><!-- A returning learner sees their account menu on first paint; scripts/session.ts confirms or undoes it. --><main class="astro-tq46r5sz" id="main"><div class="cohort-layout astro-ecs2b65g"><div class="cohort-hero astro-4ugen2ya" data-reserve-start=""><div aria-hidden="true" class="hero-bg astro-dqhn45cb"><canvas class="hero-bg__trail astro-dqhn45cb" data-hero-trail=""></canvas></div><section aria-labelledby="cohort-title" class="cohort-hero__section astro-4ugen2ya"><div class="container cohort-hero__container astro-4ugen2ya"><div class="stack cohort-hero__content astro-4ugen2ya"><img alt="PrepVia JEE and NEET study resources preview" class="astro-ovs3waof cohort-image cohort-image--bleed cohort-hero__image astro-4ugen2ya" decoding="async" fetchpriority="high" height="960" loading="lazy" sizes="(min-width: 64rem) 1px, 100vw" src="assets/sample/Package.png" width="1440"/><div class="stack stack--tight astro-4ugen2ya"><h1 class="astro-4ugen2ya prepvia-hero-heading prepvia-section-heading" id="cohort-title">PrepVia JEE &amp; NEET <span class="prepvia-heading-highlight">Complete Kit</span></h1><p class="text-body astro-4ugen2ya">Your complete JEE &amp; NEET preparation library for Class 11 &amp; 12 — organised resources to help you study smarter, revise faster and practise better.</p></div><ul class="cohort-hero__features astro-4ugen2ya"><li class="cluster cluster--label text-meta astro-4ugen2ya">📚 50GB+ Curated Study Resources</li><li class="cluster cluster--label text-meta astro-4ugen2ya">🎯 JEE Main • JEE Advanced • NEET UG</li><li class="cluster cluster--label text-meta astro-4ugen2ya">📖 Class 11 + Class 12 | 2026–27</li><li class="cluster cluster--label text-meta astro-4ugen2ya">⚡ One-time access — only ₹249</li></ul><div class="cluster astro-4ugen2ya prepvia-hero-actions"><button aria-label="Get the PrepVia JEE and NEET package" class="btn btn--primary astro-4ugen2ya prepvia-action prepvia-action--primary" data-reserve-open="" onclick="window.location.href='checkout.html'" type="button"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M1 1h4l2.7 13.2a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg><span>Get the Package</span><svg class="prepvia-action-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button><a class="btn btn--secondary astro-4ugen2ya prepvia-action prepvia-action--secondary" data-syllabus-link="" href="#sessions-title"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="m15.8 8.2-2.4 5.2-5.2 2.4 2.4-5.2 5.2-2.4Z"/><path d="M12 2.8v1.5M21.2 12h-1.5M12 21.2v-1.5M2.8 12h1.5"/></svg><span>Explore Package</span><svg class="prepvia-action-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a></div></div></div></section></div><aside aria-label="Reserve my seat" class="cohort-layout__aside astro-ecs2b65g"><div class="container cohort-layout__rail astro-ecs2b65g"><div class="card cohort-layout__card astro-ecs2b65g" data-reserve-rail="" id="reserve"><div class="stack">
 <span class="prepvia-badge">🔥 Complete 2026–27 Bundle</span>
 <h2 class="reserve-card__title title-block">Everything for your JEE &amp; NEET prep.</h2>
